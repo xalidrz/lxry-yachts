@@ -19,15 +19,7 @@ Vercel project `lxry-yachts` is linked to this repo. It has no framework and no 
 
 ## Motion
 
-Everything runs on GSAP, ScrollTrigger, SplitText and Lenis, all self-hosted in `vendor/`:
-
-- A preloader on the first visit of each session, and a curtain transition between pages
-- Split-text headline intros, masked line reveals on headings, and statements whose words light up as you scroll
-- Image wipes, parallax, a pinned horizontal fleet scroller on desktop, and a marquee that reacts to scroll speed
-- A custom cursor, magnetic buttons, 3D card tilt, count-up specs, and a navbar that hides on scroll
-- Buttons with a text roll and fill sweep on hover, a 0.96 press with a ripple, and a 2px lift
-
-WhatsApp, phone, email and external links are never delayed by any animation. With `prefers-reduced-motion`, all movement is off and only colour changes remain.
+The site has no animations. Hover states are instant colour changes, and JavaScript (`main.js`) only handles the mobile menu, the photo viewer and the navbar turning solid on scroll.
 
 ## Design rules
 

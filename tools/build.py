@@ -159,7 +159,7 @@ def icon(n):
 
 def t(label):
     """Button label with the rolling-text hover effect."""
-    return f'<span class="t"><span>{label}</span><span aria-hidden="true">{label}</span></span>'
+    return label
 
 
 def btn(href, label, cls='btn-primary', ico=None, ext=False, aria=None, magnet=False, attrs=''):
@@ -167,7 +167,7 @@ def btn(href, label, cls='btn-primary', ico=None, ext=False, aria=None, magnet=F
     ar = f' aria-label="{E(aria)}"' if aria else ''
     i = icon(ico) if ico else ''
     h = f'<a class="btn {cls}" href="{href}"{a}{ar}{attrs}>{i}{t(label)}</a>'
-    return f'<span class="magnet">{h}</span>' if magnet else h
+    return h
 
 
 def wa_call(kind, about, size='btn-sm', light=False, magnet=False):
@@ -191,10 +191,10 @@ def img(src, alt, w=900, h=600, lazy=True, extra=''):
 
 
 def head_label(label, title, lead=None, split_cls=True, dark=False):
-    lead_html = f'<p class="lead" data-fade>{lead}</p>' if lead else ''
+    lead_html = f'<p class="lead">{lead}</p>' if lead else ''
     return f'''
       <div class="section-head{' split' if lead else ''}">
-        <div><p class="label" data-fade>{label}</p><h2 data-split>{title}</h2></div>
+        <div><p class="label">{label}</p><h2>{title}</h2></div>
         {lead_html}
       </div>'''
 
@@ -206,7 +206,7 @@ def fleet_card(f):
     fl = ''.join(f'<li>{x}</li>' for x in f['features'])
     return f'''
       <article class="card">
-        <a class="media" href="{f['slug']}.html" data-cursor="View" aria-label="View {E(f['name'])}">{img(f"images/card-{f['key']}.jpg", f['card_alt'])}</a>
+        <a class="media" href="{f['slug']}.html" aria-label="View {E(f['name'])}">{img(f"images/card-{f['key']}.jpg", f['card_alt'])}</a>
         <p class="kicker">{f['kicker']}</p>
         <h3><a href="{f['slug']}.html">{f['name']}</a></h3>
         <dl class="specs">{dl}</dl>
@@ -222,10 +222,10 @@ def included_section(image='images/included.jpg', alt='Shaded yacht deck with wh
     return f'''
   <section class="section" id="included" aria-labelledby="inc-title">
     <div class="wrap included-grid">
-      <div class="media parallax" data-reveal>{img(image, alt, 1400, 933)}</div>
+      <div class="media">{img(image, alt, 1400, 933)}</div>
       <div>
-        <p class="label" data-fade>With every yacht</p>
-        <h2 id="inc-title" data-split>Everything is taken care of.</h2>
+        <p class="label">With every yacht</p>
+        <h2 id="inc-title">Everything is taken care of.</h2>
         <ul class="inc-list">
           <li><span>01</span>Drinking water &amp; ice</li>
           <li><span>02</span>Fresh towels</li>
@@ -233,7 +233,7 @@ def included_section(image='images/included.jpg', alt='Shaded yacht deck with wh
           <li><span>04</span>Meet &amp; greet assistance</li>
           <li><span>05</span>Sound system</li>
         </ul>
-        <p class="note" data-fade>You are welcome to bring your own food.</p>
+        <p class="note">You are welcome to bring your own food.</p>
       </div>
     </div>
   </section>'''
@@ -245,9 +245,9 @@ def offer_section():
     <span class="big-num" aria-hidden="true">20%</span>
     <div class="wrap">
       <div>
-        <p class="label" data-fade>Special offer</p>
-        <h2 id="offer-title" data-split>20% off when you book water sports.</h2>
-        <p class="small" data-fade>Jet Ski · Parasailing · Fly Board · Wake Board · Banana &amp; Donut Ride</p>
+        <p class="label">Special offer</p>
+        <h2 id="offer-title">20% off when you book water sports.</h2>
+        <p class="small">Jet Ski · Parasailing · Fly Board · Wake Board · Banana &amp; Donut Ride</p>
       </div>
       {wa_call('ws', 'the water sports offer', '', True, True)}
     </div>
@@ -259,8 +259,8 @@ def reviews_section():
     return f'''
   <section class="section on-dark" id="reviews" aria-labelledby="rev-title">
     <div class="wrap">
-      <div class="section-head"><p class="label" data-fade>Guest words</p><h2 id="rev-title" data-split>What our guests say.</h2></div>
-      <div class="reviews" data-stagger>{figs}</div>
+      <div class="section-head"><p class="label">Guest words</p><h2 id="rev-title">What our guests say.</h2></div>
+      <div class="reviews">{figs}</div>
     </div>
   </section>'''
 
@@ -270,10 +270,10 @@ def follow_section():
   <section class="follow" aria-labelledby="follow-title">
     <div class="bg">{img('images/follow.jpg', '', 1280, 960)}</div>
     <div class="wrap">
-      <p class="label" data-fade>@lxryae</p>
-      <h2 id="follow-title" data-split>Follow our trips.</h2>
-      <p class="lead" data-fade>Yachts, water sports and celebrations from our days on the water.</p>
-      <div class="btn-row" data-fade>
+      <p class="label">@lxryae</p>
+      <h2 id="follow-title">Follow our trips.</h2>
+      <p class="lead">Yachts, water sports and celebrations from our days on the water.</p>
+      <div class="btn-row">
         {btn('https://instagram.com/lxryae', 'Instagram', 'btn-light btn-lg', 'instagram', True, 'LXRY on Instagram', True)}
         {btn('https://www.youtube.com/watch?v=-a6D9CRf0Cg', 'Watch a tour', 'btn-ghost btn-lg', 'youtube', True, None, True)}
       </div>
@@ -285,12 +285,12 @@ def cta_section():
     return f'''
   <section class="section on-dark" aria-labelledby="cta-title">
     <div class="wrap">
-      <div class="section-head"><p class="label" data-fade>Book your day</p><h2 id="cta-title" data-split>Let’s plan your next trip.</h2></div>
-      <hr class="rule" data-line>
+      <div class="section-head"><p class="label">Book your day</p><h2 id="cta-title">Let’s plan your next trip.</h2></div>
+      <hr class="rule">
       <div class="cta-grid" style="padding-top:48px">
-        <p class="lead" data-fade style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
-        <div data-fade><p class="who">Yacht rental</p><a class="num" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>{wa_call('yacht', 'yacht rental', 'btn-sm', True)}</div>
-        <div data-fade><p class="who">Water sports</p><a class="num" href="tel:{WS_TEL}">{WS_DISP}</a>{wa_call('ws', 'water sports', 'btn-sm', True)}</div>
+        <p class="lead" style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
+        <div><p class="who">Yacht rental</p><a class="num" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>{wa_call('yacht', 'yacht rental', 'btn-sm', True)}</div>
+        <div><p class="who">Water sports</p><a class="num" href="tel:{WS_TEL}">{WS_DISP}</a>{wa_call('ws', 'water sports', 'btn-sm', True)}</div>
       </div>
     </div>
   </section>'''
@@ -298,10 +298,10 @@ def cta_section():
 
 def gallery_grid(items, cls='gallery', base='images/'):
     out = ''.join(
-        f'<button class="g-item media{" wide" if w else ""}" type="button" data-full="{base}{k}.jpg" data-cursor="View" aria-label="Open photo: {E(a)}">'
+        f'<button class="g-item media{" wide" if w else ""}" type="button" data-full="{base}{k}.jpg" aria-label="Open photo: {E(a)}">'
         f'<img src="{base}{k}-sm.jpg" alt="{E(a)}" loading="lazy" decoding="async"></button>'
         for k, a, w in items)
-    return f'<div class="{cls}" data-stagger>{out}</div>'
+    return f'<div class="{cls}">{out}</div>'
 
 
 LIGHTBOX = '''
@@ -343,17 +343,6 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
   <meta name="twitter:image" content="{SITE}/{og_image}">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <script>
-    (function (d) {{
-      d.classList.add('js');
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      try {{
-        if (sessionStorage.getItem('lxry-transition')) d.classList.add('from-transition');
-        else if (!sessionStorage.getItem('lxry-seen')) d.classList.add('show-preloader');
-      }} catch (e) {{}}
-      setTimeout(function () {{ d.classList.add('ready'); d.classList.remove('show-preloader', 'from-transition'); }}, 4000);
-    }})(document.documentElement);
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -362,15 +351,6 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
 <body>
 {SPRITE}
 <a class="skip" href="#main">Skip to content</a>
-<div class="progress" aria-hidden="true"></div>
-<div class="preloader" aria-hidden="true">
-  <div class="pl-word"><span>L</span><span>X</span><span>R</span><span>Y</span></div>
-  <div class="pl-line"></div>
-  <p class="pl-sub">Luxury Yachts · Dubai</p>
-</div>
-<div class="curtain" aria-hidden="true"><span class="brand-mark">LXRY</span></div>
-<div class="cursor is-hidden" aria-hidden="true"><span class="c-label">View</span></div>
-<div class="cursor-dot is-hidden" aria-hidden="true"></div>
 
 <header class="nav">
   <div class="wrap">
@@ -432,12 +412,8 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
   </div>
 </footer>
 
-<a class="btn fab" href="{WS_WA}" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp"><span class="ripple-host"></span>{icon('whatsapp')}</a>
+<a class="btn fab" href="{WS_WA}" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp">{icon('whatsapp')}</a>
 {LIGHTBOX if lightbox else ''}
-<script src="vendor/gsap.min.js" defer></script>
-<script src="vendor/ScrollTrigger.min.js" defer></script>
-<script src="vendor/SplitText.min.js" defer></script>
-<script src="vendor/lenis.min.js" defer></script>
 <script src="main.js" defer></script>
 </body>
 </html>
@@ -450,16 +426,15 @@ def hero(label, title, lead, image, alt, buttons='', short=False, foot=True):
     foot_html = f'''
       <div class="hero-foot">
         <span>Licensed by Dubai Maritime City Authority</span>
-        <span class="scroll-cue hide-sm"><i></i>Scroll</span>
       </div>''' if foot else ''
     return f'''
   <section class="hero{' short' if short else ''}" aria-labelledby="hero-title">
     <div class="hero-media">{img(image, alt, 1500, 1000, lazy=False, extra=' fetchpriority="high"')}</div>
     <div class="wrap">
-      <p class="label" data-hero-fade>{label}</p>
-      <h1 id="hero-title" data-hero-split>{title}</h1>
-      <p class="lead" data-hero-fade>{lead}</p>
-      {f'<div class="btn-row" data-hero-fade>{buttons}</div>' if buttons else ''}
+      <p class="label">{label}</p>
+      <h1 id="hero-title">{title}</h1>
+      <p class="lead">{lead}</p>
+      {f'<div class="btn-row">{buttons}</div>' if buttons else ''}
       {foot_html}
     </div>
   </section>'''
@@ -468,7 +443,7 @@ def hero(label, title, lead, image, alt, buttons='', short=False, foot=True):
 # ================================================================ pages
 def build_home():
     hcards = ''.join(f'''
-        <a class="hcard" href="{f['slug']}.html" data-cursor="View">
+        <a class="hcard" href="{f['slug']}.html">
           <span class="num">0{i}</span>
           <div class="media">{img(f"images/fleet/{f['key']}-1-sm.jpg", f['card_alt'], 720, 480)}</div>
           <h3>{f['name']}</h3>
@@ -481,8 +456,8 @@ def build_home():
     ]
     ph = ''.join(f'''
       <a class="panel-x" href="{h}">
-        <div class="media" data-reveal data-cursor="Explore">{img(im, a, 1400, 933)}</div>
-        <div><span class="idx">{n}</span><h3 data-split>{ttl}</h3><p data-fade>{d}</p><span class="link" data-fade>Explore <span class="arrow">→</span></span></div>
+        <div class="media">{img(im, a, 1400, 933)}</div>
+        <div><span class="idx">{n}</span><h3>{ttl}</h3><p>{d}</p><span class="link">Explore →</span></div>
       </a>''' for h, im, a, n, ttl, d in panels)
     body = hero('Yacht rental · Water sports · Dubai', 'Explore Dubai by sea.',
                 'Private yachts from 38 to 82 feet, water sports, fishing trips and celebrations on board, arranged by Luxury Yachts L.L.C.',
@@ -491,21 +466,20 @@ def build_home():
     body += f'''
   <section class="section" aria-label="Introduction">
     <div class="wrap">
-      <p class="label" data-fade>Luxury Yachts L.L.C</p>
-      <p class="statement" data-scrub-words>Licensed by the Dubai Maritime City Authority, we arrange private yacht charters, water sports, fishing trips and celebrations on board, so you can see Dubai from the sea.</p>
+      <p class="label">Luxury Yachts L.L.C</p>
+      <p class="statement">Licensed by the Dubai Maritime City Authority, we arrange private yacht charters, water sports, fishing trips and celebrations on board, so you can see Dubai from the sea.</p>
     </div>
   </section>
-  <div class="marquee" aria-hidden="true"><div class="marquee-track">{'<span>Yacht Rental · <em>Water Sports</em> · Fishing Trips · <em>Events</em> · </span>' * 4}</div></div>
   <section class="hfleet" aria-labelledby="fleet-title">
     <div class="wrap intro">
       <div class="section-head split" style="margin-bottom:0">
-        <div><p class="label" data-fade>The fleet</p><h2 id="fleet-title" data-split>Eight boats. One sea.</h2></div>
-        <div><p class="lead" data-fade>From a 38 ft jet boat for six to an 82 ft yacht for thirty-five. Scroll to explore, tap any boat for photos and specs.</p></div>
+        <div><p class="label">The fleet</p><h2 id="fleet-title">Eight boats. One sea.</h2></div>
+        <div><p class="lead">From a 38 ft jet boat for six to an 82 ft yacht for thirty-five. Tap any boat for photos and specs.</p></div>
       </div>
     </div>
-    <div class="hscroll"><div class="htrack">{hcards}
-        <a class="hcard end" href="yachts.html"><span>View the<br>whole fleet →</span></a>
-    </div></div>
+    <div class="htrack">{hcards}
+    </div>
+    <p class="more"><a class="link" href="yachts.html">View the whole fleet →</a></p>
   </section>
   <section class="section" aria-labelledby="exp-title">
     <div class="wrap">
@@ -520,7 +494,7 @@ def build_home():
     <div class="wrap">
       {head_label('Gallery', 'Moments at sea.', 'Every picture has a story, and every story has a moment we would love to share with you.')}
       {gallery_grid(GALLERY[:8])}
-      <p style="margin-top:40px" data-fade><a class="link" href="gallery.html">Full gallery <span class="arrow">→</span></a></p>
+      <p style="margin-top:40px"><a class="link" href="gallery.html">Full gallery →</a></p>
     </div>
   </section>
   {follow_section()}
@@ -539,15 +513,15 @@ def build_yachts():
   <section class="section" aria-labelledby="list-title">
     <div class="wrap">
       {head_label('Choose your yacht', 'Find the right size for your group.', 'Tap a yacht for its full specifications and photo gallery, or message us with your date, number of hours and guests.')}
-      <div class="cards" data-stagger>{cards}</div>
+      <div class="cards">{cards}</div>
     </div>
   </section>
-  <hr class="rule" data-line>
+  <hr class="rule">
   {included_section('images/fleet/y55-5.jpg', 'Flybridge lounge with a view of the Burj Al Arab')}
   <section class="section on-dark" aria-labelledby="route-title">
     <div class="wrap two-col">
-      <div><p class="label" data-fade>The route</p><h2 id="route-title" data-split>Where the cruise goes.</h2></div>
-      <dl class="route" data-stagger style="color:var(--ivory)">
+      <div><p class="label">The route</p><h2 id="route-title">Where the cruise goes.</h2></div>
+      <dl class="route" style="color:var(--ivory)">
         <dt style="color:var(--platinum)">In 2 hours</dt><dd class="statement" style="font-size:clamp(1.5rem,2.6vw,2.2rem)">Marina Lagoon, JBR, Bluewaters, Dubai Eye, Kempinski Palace and Atlantis.</dd>
         <dt style="color:var(--platinum);margin-top:28px">In 3 hours</dt><dd class="statement" style="font-size:clamp(1.5rem,2.6vw,2.2rem)">The same route, continuing to the Burj Al Arab.</dd>
       </dl>
@@ -574,17 +548,17 @@ def build_detail(i, f):
   <section class="section" aria-labelledby="spec-title">
     <div class="wrap detail-top">
       <div>
-        <p class="label" data-fade><a class="link" href="{parent[0]}"><span class="arrow">←</span> {E(parent[1])}</a></p>
-        <h2 id="spec-title" data-split>Specifications</h2>
+        <p class="label"><a class="link" href="{parent[0]}">← {E(parent[1])}</a></p>
+        <h2 id="spec-title">Specifications</h2>
         <dl class="big-specs" style="margin-top:40px">
-          <div><dt>Guests</dt><dd data-count="{f['guests']}">{f['guests']}</dd></div>
-          <div><dt>{third_k}</dt><dd data-count="{third_v}">{third_v}</dd></div>
-          <div><dt>Feet</dt><dd data-count="{f['length']}">{f['length']}</dd></div>
+          <div><dt>Guests</dt><dd>{f['guests']}</dd></div>
+          <div><dt>{third_k}</dt><dd>{third_v}</dd></div>
+          <div><dt>Feet</dt><dd>{f['length']}</dd></div>
         </dl>
-        <table class="spec-table" data-fade><tbody>{rows}</tbody></table>
-        <ul class="features" style="margin-top:28px" data-fade>{fl}</ul>
+        <table class="spec-table"><tbody>{rows}</tbody></table>
+        <ul class="features" style="margin-top:28px">{fl}</ul>
       </div>
-      <aside class="book-box" data-fade aria-label="Book the {E(f['name'])}">
+      <aside class="book-box" aria-label="Book the {E(f['name'])}">
         <p class="label">Book the {f['name']}</p>
         <span class="price">Price on request</span>
         <div class="btn-row">
@@ -601,7 +575,7 @@ def build_detail(i, f):
       {gallery_grid(photos, 'photo-grid')}
     </div>
   </section>
-  <a class="next-yacht" href="{nxt['slug']}.html" data-cursor="Next">
+  <a class="next-yacht" href="{nxt['slug']}.html">
     <div class="media">{img(f"images/fleet/{nxt['key']}-1-sm.jpg", '', 720, 480)}</div>
     <div class="wrap"><p class="label">Next</p><h2>{nxt['name']} →</h2></div>
   </a>'''
@@ -616,16 +590,16 @@ def build_sports():
         acts += f'''
       <article class="activity" id="{s['key']}">
         <div class="act-media">
-          <div class="media parallax" data-reveal>{img(f"images/sports/{s['key']}-1.jpg", s['alt'][0], 1400, 933)}</div>
-          <div class="media" data-reveal>{img(f"images/sports/{s['key']}-2.jpg", s['alt'][1], 1080, 720)}</div>
-          <div class="media" data-reveal>{img(f"images/sports/{s['key']}-3.jpg", s['alt'][2], 1080, 720)}</div>
+          <div class="media">{img(f"images/sports/{s['key']}-1.jpg", s['alt'][0], 1400, 933)}</div>
+          <div class="media">{img(f"images/sports/{s['key']}-2.jpg", s['alt'][1], 1080, 720)}</div>
+          <div class="media">{img(f"images/sports/{s['key']}-3.jpg", s['alt'][2], 1080, 720)}</div>
         </div>
         <div>
-          <span class="num" data-fade>0{i} / 0{len(SPORTS)}</span>
-          <h2 data-split>{s['name']}</h2>
-          <dl class="specs" data-fade>{dl}</dl>
-          <p class="desc" data-fade>{s['text']}</p>
-          <div class="card-foot" data-fade><span class="price">Price on request</span>{wa_call('ws', s['name'])}</div>
+          <span class="num">0{i} / 0{len(SPORTS)}</span>
+          <h2>{s['name']}</h2>
+          <dl class="specs">{dl}</dl>
+          <p class="desc">{s['text']}</p>
+          <div class="card-foot"><span class="price">Price on request</span>{wa_call('ws', s['name'])}</div>
         </div>
       </article>'''
     jump = ''.join(f'<li><a class="link" href="#{s["key"]}">{s["name"]}</a></li>' for s in SPORTS)
@@ -634,10 +608,9 @@ def build_sports():
                 btn(WS_WA, 'WhatsApp', 'btn-primary', 'whatsapp', True, 'WhatsApp about water sports', True)
                 + btn(f'tel:{WS_TEL}', 'Call', 'btn-ghost', 'phone', False, 'Call about water sports', True), short=True)
     body += f'''
-  <div class="marquee" aria-hidden="true"><div class="marquee-track">{'<span>Jet Ski · <em>Parasailing</em> · Fly Board · <em>Wake Board</em> · Water Ski · <em>Banana</em> · Donut · </span>' * 3}</div></div>
   <section class="section" style="padding-bottom:0" aria-label="Activities">
     <div class="wrap">
-      <ul class="pill-list" data-stagger style="margin-bottom:56px">{jump}</ul>
+      <ul class="pill-list" style="margin-bottom:56px">{jump}</ul>
       {acts}
     </div>
   </section>
@@ -659,15 +632,15 @@ def build_fishing_events():
     body += f'''
   <section class="section" id="fishing" aria-labelledby="fish-title">
     <div class="wrap included-grid">
-      <div class="media parallax" data-reveal>{img('images/sports/fishing-1.jpg', 'Guest reeling in a fish from the boat', 1400, 933)}</div>
+      <div class="media">{img('images/sports/fishing-1.jpg', 'Guest reeling in a fish from the boat', 1400, 933)}</div>
       <div>
-        <p class="label" data-fade>Fishing trips</p>
-        <h2 id="fish-title" data-split>Cast off from the Tarrad 40 ft.</h2>
-        <dl class="specs" style="margin-top:36px" data-fade>
+        <p class="label">Fishing trips</p>
+        <h2 id="fish-title">Cast off from the Tarrad 40 ft.</h2>
+        <dl class="specs" style="margin-top:36px">
           <div><dt>Guests</dt><dd>12</dd></div><div><dt>Crew</dt><dd>2</dd></div><div><dt>Length</dt><dd>40 ft</dd></div>
         </dl>
-        <p class="desc" data-fade>Cruising and fishing with a captain and sailor, fishing equipment, a Bluetooth sound system, an outdoor sunbed and an ice box, with water, ice and soft drinks included.</p>
-        <div class="btn-row" data-fade style="margin-top:28px">
+        <p class="desc">Cruising and fishing with a captain and sailor, fishing equipment, a Bluetooth sound system, an outdoor sunbed and an ice box, with water, ice and soft drinks included.</p>
+        <div class="btn-row" style="margin-top:28px">
           {btn('tarrad-40ft.html', 'See the Tarrad', 'btn-outline', None, False, None, True)}
           {btn(YACHT_WA, 'WhatsApp', 'btn-primary', 'whatsapp', True, 'WhatsApp about a fishing trip', True)}
         </div>
@@ -676,16 +649,16 @@ def build_fishing_events():
   </section>
   <section class="section on-dark" aria-labelledby="cal-title">
     <div class="wrap two-col">
-      <div><p class="label" data-fade>Fishing calendar</p><h2 id="cal-title" data-split>What you might catch in Dubai.</h2></div>
-      <ul class="pill-list" data-stagger>{fish}</ul>
+      <div><p class="label">Fishing calendar</p><h2 id="cal-title">What you might catch in Dubai.</h2></div>
+      <ul class="pill-list">{fish}</ul>
     </div>
   </section>
   <section class="section" id="events" aria-labelledby="ev-title">
     <div class="wrap">
       {head_label('Events &amp; decorations', 'Celebrate between the sky and the sea.', 'Decoration is made to order. Tell us the occasion and we will prepare the yacht for you.')}
       <div class="included-grid" style="margin-bottom:80px">
-        <div class="media" data-reveal>{img('images/card-events.jpg', 'Yacht decorated with red and white balloons in Dubai Marina', 642, 428)}</div>
-        <div class="services" data-stagger>{services}</div>
+        <div class="media">{img('images/card-events.jpg', 'Yacht decorated with red and white balloons in Dubai Marina', 642, 428)}</div>
+        <div class="services">{services}</div>
       </div>
     </div>
   </section>
@@ -722,29 +695,29 @@ def build_about():
     body += f'''
   <section class="section" aria-label="Who we are">
     <div class="wrap">
-      <p class="label" data-fade>Our services</p>
-      <p class="statement" data-scrub-words>We plan events, charter yachts, run fishing trips and offer water sports, from jet skis and banana boats to donut rides and fly boards.</p>
+      <p class="label">Our services</p>
+      <p class="statement">We plan events, charter yachts, run fishing trips and offer water sports, from jet skis and banana boats to donut rides and fly boards.</p>
     </div>
   </section>
-  <hr class="rule" data-line>
+  <hr class="rule">
   <section class="section" aria-label="Mission and vision">
     <div class="wrap two-col">
       <div>
-        <p class="label" data-fade>Our mission</p>
-        <h2 data-split>New experiences by sea.</h2>
-        <p class="lead" data-fade style="margin-top:24px">To deliver highly professional service and real adventure, giving every guest a new way to experience Dubai by sea and special memories to take home.</p>
+        <p class="label">Our mission</p>
+        <h2>New experiences by sea.</h2>
+        <p class="lead" style="margin-top:24px">To deliver highly professional service and real adventure, giving every guest a new way to experience Dubai by sea and special memories to take home.</p>
       </div>
       <div>
-        <p class="label" data-fade>Our vision</p>
-        <h2 data-split>Happiness on the water.</h2>
-        <p class="lead" data-fade style="margin-top:24px">To be the leading provider of sea and water activities in Dubai and the United Arab Emirates, bringing happiness to everyone who visits.</p>
+        <p class="label">Our vision</p>
+        <h2>Happiness on the water.</h2>
+        <p class="lead" style="margin-top:24px">To be the leading provider of sea and water activities in Dubai and the United Arab Emirates, bringing happiness to everyone who visits.</p>
       </div>
     </div>
   </section>
   <section class="section on-dark" aria-labelledby="dest-title">
     <div class="wrap two-col">
-      <div><p class="label" data-fade>Destinations</p><h2 id="dest-title" data-split>The best of Dubai from the water.</h2></div>
-      <ul class="pill-list" data-stagger>{dest}</ul>
+      <div><p class="label">Destinations</p><h2 id="dest-title">The best of Dubai from the water.</h2></div>
+      <ul class="pill-list">{dest}</ul>
     </div>
   </section>
   {included_section()}
@@ -768,8 +741,8 @@ def build_faq():
     body += f'''
   <section class="section" aria-labelledby="faq-title">
     <div class="wrap faq-grid">
-      <div><p class="label" data-fade>Questions</p><h2 id="faq-title" data-split>Good to know.</h2></div>
-      <div class="faq" data-stagger>{items}</div>
+      <div><p class="label">Questions</p><h2 id="faq-title">Good to know.</h2></div>
+      <div class="faq">{items}</div>
     </div>
   </section>
   {cta_section()}'''
@@ -785,27 +758,27 @@ def build_contact():
     <div class="wrap contact-grid">
       <div>
         <h2 id="contact-title" class="sr-only">Contact details</h2>
-        <div class="line" data-fade>
+        <div class="line">
           <p class="label">Yacht rental</p>
           <a class="big" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>
           {wa_call('yacht', 'yacht rental', 'btn-sm', False, True)}
         </div>
-        <div class="line" data-fade>
+        <div class="line">
           <p class="label">Water sports</p>
           <a class="big" href="tel:{WS_TEL}">{WS_DISP}</a>
           {wa_call('ws', 'water sports', 'btn-sm', False, True)}
         </div>
-        <div class="line" data-fade>
+        <div class="line">
           <p class="label">Email</p>
           <a class="big sm" href="mailto:{EMAIL}">{EMAIL}</a>
         </div>
-        <div class="line" data-fade>
+        <div class="line">
           <p class="label">Address</p>
           <address class="big sm">Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</address>
         </div>
-        <div data-fade>{socials(' on-light')}</div>
+        <div>{socials(' on-light')}</div>
       </div>
-      <div class="map" data-reveal>
+      <div class="map">
         <iframe title="Map: Jumeirah 3, Fishing Harbour, Umm Suqeim 2, Dubai" src="https://www.google.com/maps?q=Jumeirah%203%2C%20Fishing%20Harbour%2C%20Umm%20Suqeim%202%2C%20Dubai%2C%20UAE&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
     </div>
@@ -819,10 +792,10 @@ def build_404():
     body = f'''
   <section class="notfound on-dark">
     <div class="wrap">
-      <p class="label" data-hero-fade>Page not found</p>
-      <h1 data-hero-split>Lost at sea.</h1>
-      <p class="lead" data-hero-fade style="margin:24px auto 40px">The page you are looking for does not exist.</p>
-      <div class="btn-row" data-hero-fade style="justify-content:center">{btn('index.html', 'Back to home', 'btn-light', None, False, None, True)}</div>
+      <p class="label">Page not found</p>
+      <h1>Lost at sea.</h1>
+      <p class="lead" style="margin:24px auto 40px">The page you are looking for does not exist.</p>
+      <div class="btn-row" style="justify-content:center">{btn('index.html', 'Back to home', 'btn-light', None, False, None, True)}</div>
     </div>
   </section>'''
     page('404.html', 'Page not found', 'This page does not exist.', body, base='\n  <base href="/">')
