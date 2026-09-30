@@ -1,9 +1,28 @@
-/* LXRY — interactions (no animations) */
+/* LXRY — interactions. The only animation is on buttons. */
 (function () {
   'use strict';
   var doc = document.documentElement;
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+  /* Button press + ripple. Purely visual: it never prevents or delays the click. */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.addEventListener('pointerdown', function (e) {
+    var el = e.target.closest('.btn, .social, .menu-btn, .lb-btn');
+    if (!el || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    el.classList.add('is-pressed');
+    window.setTimeout(function () { el.classList.remove('is-pressed'); }, 120);
+    if (reduce.matches) return;
+    var r = el.getBoundingClientRect();
+    var size = Math.max(r.width, r.height) * 2.2;
+    var dot = document.createElement('span');
+    dot.className = 'ripple';
+    dot.style.width = dot.style.height = size + 'px';
+    dot.style.left = (e.clientX - r.left - size / 2) + 'px';
+    dot.style.top = (e.clientY - r.top - size / 2) + 'px';
+    el.appendChild(dot);
+    dot.addEventListener('animationend', function () { dot.remove(); });
+  }, { passive: true });
 
   /* Navbar: transparent over the hero, solid once scrolled */
   var nav = $('.nav');

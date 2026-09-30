@@ -19,7 +19,7 @@ Vercel project `lxry-yachts` is linked to this repo. It has no framework and no 
 
 ## Motion
 
-The site has no animations. Hover states are instant colour changes, and JavaScript (`main.js`) only handles the mobile menu, the photo viewer and the navbar turning solid on scroll.
+Buttons are the only animated elements. On press they scale to 0.96 for about 120ms and spring back, with a soft ripple from the click point clipped inside the rounded corners. On desktop hover they lift 2px with a stronger shadow, and social icons also scale up slightly. This covers WhatsApp/Call, the floating WhatsApp button, social icons, the menu button and the photo viewer controls. Nothing else on the site moves. With `prefers-reduced-motion`, only colour changes remain.
 
 ## Design rules
 

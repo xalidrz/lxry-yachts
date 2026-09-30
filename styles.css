@@ -462,3 +462,46 @@ section { position: relative; }
 /* ---------- 404 ---------- */
 .notfound { min-height: 100svh; display: grid; place-items: center; text-align: center; }
 @media (max-width: 899px) { .photo-grid .g-item:last-child:nth-child(even) { grid-column: span 2; aspect-ratio: 16 / 10; } }
+
+/* ---------- Button animation (the only motion on the site) ---------- */
+.btn, .social, .menu-btn, .lb-btn { position: relative; overflow: hidden; isolation: isolate; -webkit-tap-highlight-color: transparent; }
+.lb-btn { position: absolute; }
+.fab { position: fixed; }
+.btn {
+  box-shadow: 0 1px 2px rgba(13, 17, 20, .08);
+  transition: transform 320ms cubic-bezier(.3, 1.45, .55, 1), box-shadow 260ms ease, background-color 220ms ease, color 220ms ease, border-color 220ms ease;
+}
+.social, .menu-btn, .lb-btn {
+  transition: transform 320ms cubic-bezier(.3, 1.45, .55, 1), box-shadow 260ms ease, color 220ms ease, border-color 220ms ease;
+}
+.btn:active, .btn.is-pressed,
+.social:active, .social.is-pressed,
+.menu-btn:active, .menu-btn.is-pressed,
+.lb-btn:active, .lb-btn.is-pressed { transform: scale(.96); transition-duration: 120ms; }
+@media (min-width: 900px) {
+  .lb-prev:active, .lb-prev.is-pressed, .lb-next:active, .lb-next.is-pressed { transform: translateY(-50%) scale(.96); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -12px rgba(13, 17, 20, .5); }
+  .btn:hover:active, .btn:hover.is-pressed { transform: translateY(-2px) scale(.96); }
+  .social:hover { transform: translateY(-2px) scale(1.1); }
+  .social:hover:active, .social:hover.is-pressed { transform: translateY(-2px) scale(.96); }
+  .fab:hover { box-shadow: 0 18px 36px -10px rgba(13, 17, 20, .65); }
+}
+.ripple {
+  position: absolute; z-index: -1; border-radius: 50%; pointer-events: none;
+  background: currentColor; opacity: .3; transform: scale(0);
+  animation: ripple 560ms ease-out forwards;
+}
+@keyframes ripple { to { transform: scale(1); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .social, .menu-btn, .lb-btn { transition-property: box-shadow, background-color, color, border-color; }
+  .btn:hover, .btn:active, .btn.is-pressed, .social:hover, .social:active, .social.is-pressed,
+  .menu-btn:active, .menu-btn.is-pressed, .lb-btn:active, .lb-btn.is-pressed { transform: none; }
+  .lb-prev, .lb-next { transform: none; }
+  .ripple { display: none; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 900px) {
+  .lb-prev, .lb-next, .lb-prev:active, .lb-next:active, .lb-prev.is-pressed, .lb-next.is-pressed { transform: translateY(-50%); }
+}
