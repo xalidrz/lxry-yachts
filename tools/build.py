@@ -14,6 +14,7 @@ SITE = 'https://lxry-yachts.vercel.app'
 YACHT_WA, YACHT_TEL, YACHT_DISP = 'https://wa.me/971552910101', '+971552910101', '+971 55 291 0101'
 WS_WA, WS_TEL, WS_DISP = 'https://wa.me/971581258311', '+971581258311', '+971 58 125 8311'
 EMAIL = 'lxryae@gmail.com'
+MAPS_URL = 'https://www.google.com/maps/search/?api=1&amp;query=Jumeirah+3+Fishing+Harbour%2C+Umm+Suqeim+2%2C+Dubai'
 
 SOCIALS = [
     ('instagram', 'Instagram', 'https://instagram.com/lxryae'),
@@ -100,16 +101,16 @@ SPORTS = [
          specs=[('Powered by', 'Jet ski'), ('Height', '10 m'), ('Capacity', '1')],
          text='The water jet can lift you up to 10 metres into the air, so you can fly, jump and dive over the water. Instructors guide you at your own pace; most guests are flying within 5 to 15 minutes.'),
     dict(key='wakeboard', name='Wake Board', alt=['Wakeboarder riding at sunset near Ain Dubai', 'Wakeboarder in silhouette at sunset', 'Wakeboarder carving through spray'],
-         specs=[('Towed by', 'Jet boat'), ('Speed', '50 km/h'), ('Capacity', '6')],
+         specs=[('Towed by', 'Jet boat'), ('Capacity', '6')],
          text='Wakeboarding for beginners and skilled riders, with professional instructors on board. All the equipment is provided, along with free water and towels.'),
     dict(key='waterski', name='Water Ski', alt=['Water skier on the Dubai coast', 'Water skier in the spray', 'Water skier on calm water'],
-         specs=[('Towed by', 'Jet boat'), ('Speed', '50 km/h'), ('Capacity', '6')],
+         specs=[('Towed by', 'Jet boat')],
          text='Water skiing behind our towing boats with professional instructors on board. We provide all the necessary equipment, free water and towels.'),
     dict(key='banana', name='Banana Boat', alt=['Group riding a banana boat', 'Friends waving from a banana boat', 'Banana boat ride in front of Dubai towers'],
-         specs=[('Towed by', 'Jet boat'), ('Speed', '50 km/h'), ('Capacity', '5')],
+         specs=[('Towed by', 'Jet boat'), ('Capacity', '5')],
          text='A 15-minute banana ride for family and friends, up to 5 persons. Life jackets and safety instructions from a professional instructor are included. Children must be over 6 years old.'),
     dict(key='donut', name='Donut Ride', alt=['Two riders on a towed donut ride', 'Guests laughing on a donut ride', 'Donut ride towed at speed'],
-         specs=[('Towed by', 'Speed boat'), ('Speed', '50 km/h'), ('Capacity', '4')],
+         specs=[('Towed by', 'Speed boat'), ('Capacity', '4')],
          text='A towed donut ride for up to 4 persons. Similar to the banana boat and easy for the whole family.'),
 ]
 
@@ -289,8 +290,8 @@ def cta_section():
       <hr class="rule">
       <div class="cta-grid" style="padding-top:48px">
         <p class="lead" style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
-        <div><p class="who">Yacht rental</p><a class="num" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>{wa_call('yacht', 'yacht rental', 'btn-sm', True)}</div>
-        <div><p class="who">Water sports</p><a class="num" href="tel:{WS_TEL}">{WS_DISP}</a>{wa_call('ws', 'water sports', 'btn-sm', True)}</div>
+        <div><p class="who">Yacht rental</p><a class="num nums" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>{wa_call('yacht', 'yacht rental', 'btn-sm', True)}</div>
+        <div><p class="who">Water sports</p><a class="num nums" href="tel:{WS_TEL}">{WS_DISP}</a>{wa_call('ws', 'water sports', 'btn-sm', True)}</div>
       </div>
     </div>
   </section>'''
@@ -422,7 +423,7 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
         fh.write(html_out)
 
 
-def hero(label, title, lead, image, alt, buttons='', short=False, foot=True):
+def hero(label, title, lead, image, alt, buttons='', short=False, foot=False):
     foot_html = f'''
       <div class="hero-foot">
         <span>Licensed by Dubai Maritime City Authority</span>
@@ -452,7 +453,7 @@ def build_home():
     panels = [
         ('yachts.html', 'images/gallery-01.jpg', 'Yacht cruising off Palm Jumeirah', '01', 'Yacht Rental', 'Private yachts from 38 to 82 feet, each with its own captain and crew.'),
         ('water-sports.html', 'images/sports/flyboard-1.jpg', 'Flyboard riders above the water in Dubai Marina', '02', 'Water Sports', 'Jet ski, parasailing, fly board, wake board, water ski, banana boat and donut rides.'),
-        ('fishing-events.html', 'images/card-events.jpg', 'Yacht decorated with balloons in Dubai Marina', '03', 'Fishing &amp; Events', 'Fishing trips on the Tarrad 40 ft, and birthdays, anniversaries and parties on board.'),
+        ('fishing-events.html', 'images/sports/fishing-2.jpg', 'Guest holding a large fish caught on a fishing trip', '03', 'Fishing &amp; Events', 'Fishing trips on the Tarrad 40 ft, and birthdays, anniversaries and parties on board.'),
     ]
     ph = ''.join(f'''
       <a class="panel-x" href="{h}">
@@ -462,7 +463,7 @@ def build_home():
     body = hero('Yacht rental · Water sports · Dubai', 'Explore Dubai by sea.',
                 'Private yachts from 38 to 82 feet, water sports, fishing trips and celebrations on board, arranged by Luxury Yachts L.L.C.',
                 'images/hero.jpg', 'A white yacht cruising past the Dubai Marina skyline',
-                btn(YACHT_WA, 'Book a Yacht', 'btn-primary', 'whatsapp', True, None, True) + btn('water-sports.html', 'Water Sports', 'btn-ghost', None, False, None, True))
+                btn(YACHT_WA, 'Book a Yacht', 'btn-primary', 'whatsapp', True, None, True) + btn('water-sports.html', 'Water Sports', 'btn-ghost', None, False, None, True), foot=True)
     body += f'''
   <section class="section" aria-label="Introduction">
     <div class="wrap">
@@ -624,7 +625,6 @@ def build_fishing_events():
     tarrad = FLEET[-1]
     fish = ''.join(f'<li>{E(x)}</li>' for x in FISH)
     services = ''.join(f'<div class="service"><h3>{n}</h3><p>{d}</p></div>' for n, d in EVENT_SERVICES)
-    deco = [('decoration/decoration01', 'Yacht decorated with red and white balloons', False)]
     body = hero('Fishing trips · Events', 'Fishing &amp; events.', 'Private fishing trips on the Tarrad 40 ft, and birthdays, anniversaries and parties on board, decorated to order.',
                 'images/sports/fishing-2.jpg', 'Guest holding a large fish caught on a fishing trip',
                 btn(YACHT_WA, 'WhatsApp', 'btn-primary', 'whatsapp', True, 'WhatsApp about fishing and events', True)
@@ -650,16 +650,13 @@ def build_fishing_events():
   <section class="section on-dark" aria-labelledby="cal-title">
     <div class="wrap two-col">
       <div><p class="label">Fishing calendar</p><h2 id="cal-title">What you might catch in Dubai.</h2></div>
-      <ul class="pill-list">{fish}</ul>
+      <ul class="tag-list">{fish}</ul>
     </div>
   </section>
   <section class="section" id="events" aria-labelledby="ev-title">
     <div class="wrap">
       {head_label('Events &amp; decorations', 'Celebrate between the sky and the sea.', 'Decoration is made to order. Tell us the occasion and we will prepare the yacht for you.')}
-      <div class="included-grid" style="margin-bottom:80px">
-        <div class="media">{img('images/card-events.jpg', 'Yacht decorated with red and white balloons in Dubai Marina', 642, 428)}</div>
-        <div class="services">{services}</div>
-      </div>
+      <div class="services">{services}</div>
     </div>
   </section>
   {reviews_section()}
@@ -679,7 +676,7 @@ def build_gallery():
     ]
     items = GALLERY + extra
     body = hero('Gallery', 'Moments at sea.', 'Every picture has a story, and every story has a moment we would love to share with you.',
-                'images/gallery-04.jpg', 'Yacht at sunset in front of Atlantis, The Palm', short=True, foot=True)
+                'images/gallery-04.jpg', 'Yacht at sunset in front of Atlantis, The Palm', short=True)
     body += f'''
   <section class="section" aria-label="Photos">
     <div class="wrap">{gallery_grid(items)}</div>
@@ -691,7 +688,7 @@ def build_gallery():
 def build_about():
     dest = ''.join(f'<li>{d}</li>' for d in DESTINATIONS)
     body = hero('About us', 'Luxury Yachts L.L.C.', 'A limited liability company registered with Dubai Economy and licensed by the Dubai Maritime City Authority.',
-                'images/fleet/y50-3.jpg', 'Yacht at sea in front of Dubai Marina towers', short=True)
+                'images/fleet/y50-3.jpg', 'Yacht at sea in front of Dubai Marina towers', short=True, foot=True)
     body += f'''
   <section class="section" aria-label="Who we are">
     <div class="wrap">
@@ -717,7 +714,7 @@ def build_about():
   <section class="section on-dark" aria-labelledby="dest-title">
     <div class="wrap two-col">
       <div><p class="label">Destinations</p><h2 id="dest-title">The best of Dubai from the water.</h2></div>
-      <ul class="pill-list">{dest}</ul>
+      <ul class="tag-list">{dest}</ul>
     </div>
   </section>
   {included_section()}
@@ -728,7 +725,7 @@ def build_about():
 
 def build_faq():
     qa = [
-        ('How long have you been in business?', '<p>The Luxury Yachts name is relatively new, but our team brings long experience in yacht events and conventional events, and we are ready to impress you with our service.</p>'),
+        ('How long have you been in business?', '<p>Since 2008. The Luxury Yachts name is relatively new, but our team brings long experience in yacht events and conventional events, and we are ready to impress you with our service.</p>'),
         ('What kind of events do you host on yachts?', '<p>We cater for private and social events of every size, from a solo cruise to a group party.</p>'),
         ('What does a yacht cruise include?', '<p>When you book a yacht on its own, it comes with water, ice, fresh towels and an electric griller. Some yachts also offer complimentary soft drinks. Every yacht has between one and three comfortable rooms below deck where you can relax or change.</p>'),
         ('Which route does the cruise follow?', '<dl class="route"><dt>In 2 hours</dt><dd>Marina Lagoon, JBR, Bluewaters, Dubai Eye, Kempinski Palace and Atlantis.</dd><dt>In 3 hours</dt><dd>Marina Lagoon, JBR, Bluewaters, Dubai Eye, Kempinski Palace, Atlantis and Burj Al Arab.</dd></dl>'),
@@ -760,12 +757,12 @@ def build_contact():
         <h2 id="contact-title" class="sr-only">Contact details</h2>
         <div class="line">
           <p class="label">Yacht rental</p>
-          <a class="big" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>
+          <a class="big nums" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>
           {wa_call('yacht', 'yacht rental', 'btn-sm', False, True)}
         </div>
         <div class="line">
           <p class="label">Water sports</p>
-          <a class="big" href="tel:{WS_TEL}">{WS_DISP}</a>
+          <a class="big nums" href="tel:{WS_TEL}">{WS_DISP}</a>
           {wa_call('ws', 'water sports', 'btn-sm', False, True)}
         </div>
         <div class="line">
@@ -778,8 +775,11 @@ def build_contact():
         </div>
         <div>{socials(' on-light')}</div>
       </div>
-      <div class="map">
-        <iframe title="Map: Jumeirah 3, Fishing Harbour, Umm Suqeim 2, Dubai" src="https://www.google.com/maps?q=Jumeirah%203%2C%20Fishing%20Harbour%2C%20Umm%20Suqeim%202%2C%20Dubai%2C%20UAE&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <div class="map-col">
+        <div class="map">
+          <iframe title="Map: Jumeirah 3 Fishing Harbour, Umm Suqeim 2, Dubai" src="https://maps.google.com/maps?q=Jumeirah%203%20Fishing%20Harbour%2C%20Umm%20Suqeim%202%2C%20Dubai&amp;t=m&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="600" height="460" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+        <div class="btn-row" style="margin-top:20px">{btn(MAPS_URL, 'Open in Google Maps', 'btn-outline', None, True, 'Open Jumeirah 3 Fishing Harbour in Google Maps')}</div>
       </div>
     </div>
   </section>
