@@ -92,25 +92,25 @@ YACHTS = [f for f in FLEET if f['key'] != 'tarrad']
 
 SPORTS = [
     dict(key='jetski', name='Jet Ski', alt=['Jet ski riding in front of Atlantis, The Palm', 'Two riders on a jet ski', 'Couple on a jet ski near Dubai Marina'],
-         specs=[('Model', 'Yamaha'), ('Engine', '1800cc'), ('Capacity', '2')],
-         text='A Yamaha supercharged 1800cc jet ski for beginners and experienced riders. Ride past Palm Jumeirah, JBR and the Burj Al Arab.'),
+         specs=[('Model', 'Yamaha'), ('Engine', '1800cc'), ('Capacity', '2')], age='Driver 16+', notes=[],
+         text='A Yamaha supercharged 1800cc jet ski for beginners and experienced riders. Each ride starts with a safety briefing. Ride past Palm Jumeirah, JBR and the Burj Al Arab.'),
     dict(key='parasailing', name='Parasailing', alt=['Parasail flying beside the Burj Al Arab', 'Tandem parasailing over turquoise water', 'View down from a parasail'],
-         specs=[('Height', '120 m'), ('Boat', 'Parasail'), ('Capacity', '8')],
+         specs=[('Height', '120 m'), ('Boat', 'Parasail'), ('Capacity', '8')], age='[MINIMUM AGE]', notes=[],
          text='Fly up to 120 metres above the water and take in the Dubai skyline, the Burj Al Arab and the Palm. The mate goes over the safety instructions before the captain calls up the first flyers.'),
     dict(key='flyboard', name='Fly Board', alt=['Two flyboard riders above the water in Dubai Marina', 'Flyboard rider rising above the sea', 'Flyboard riders beside a jet ski'],
-         specs=[('Powered by', 'Jet ski'), ('Height', '10 m'), ('Capacity', '1')],
-         text='The water jet can lift you up to 10 metres into the air, so you can fly, jump and dive over the water. Instructors guide you at your own pace; most guests are flying within 5 to 15 minutes.'),
+         specs=[('Powered by', 'Jet ski'), ('Height', '10 m'), ('Capacity', '1')], age='[MINIMUM AGE]', notes=[],
+         text='The water jet can lift you up to 10 metres into the air, so you can fly, jump and dive over the water. Instructors guide you at your own pace; on average it takes 5 to 15 minutes to get comfortable.'),
     dict(key='wakeboard', name='Wake Board', alt=['Wakeboarder riding at sunset near Ain Dubai', 'Wakeboarder in silhouette at sunset', 'Wakeboarder carving through spray'],
-         specs=[('Towed by', 'Jet boat'), ('Capacity', '6')],
+         specs=[('Towed by', 'Jet boat'), ('Capacity', '6')], age='[MINIMUM AGE]', notes=[],
          text='Wakeboarding for beginners and skilled riders, with professional instructors on board. All the equipment is provided, along with free water and towels.'),
     dict(key='waterski', name='Water Ski', alt=['Water skier on the Dubai coast', 'Water skier in the spray', 'Water skier on calm water'],
-         specs=[('Towed by', 'Jet boat')],
+         specs=[('Towed by', 'Jet boat')], age='[MINIMUM AGE]', notes=[],
          text='Water skiing behind our towing boats with professional instructors on board. We provide all the necessary equipment, free water and towels.'),
     dict(key='banana', name='Banana Boat', alt=['Group riding a banana boat', 'Friends waving from a banana boat', 'Banana boat ride in front of Dubai towers'],
-         specs=[('Towed by', 'Jet boat'), ('Capacity', '5')],
+         specs=[('Towed by', 'Jet boat'), ('Capacity', '5')], age='Over 6', notes=['Not suitable during pregnancy'],
          text='A 15-minute banana ride for family and friends, up to 5 persons. Life jackets and safety instructions from a professional instructor are included. Children must be over 6 years old.'),
     dict(key='donut', name='Donut Ride', alt=['Two riders on a towed donut ride', 'Guests laughing on a donut ride', 'Donut ride towed at speed'],
-         specs=[('Towed by', 'Speed boat'), ('Capacity', '4')],
+         specs=[('Towed by', 'Speed boat'), ('Capacity', '4')], age='Over 3', notes=['Not suitable during pregnancy'],
          text='A towed donut ride for up to 4 persons. Similar to the banana boat and easy for the whole family.'),
 ]
 
@@ -120,8 +120,8 @@ FISH = ['Orange Spotted Trevally (Jesh Um Al Hala)', 'Two Bar Seabream (Faskar)'
 
 EVENT_SERVICES = [
     ('Parties', 'Meetings, birthdays, wedding anniversaries and more on a yacht in Dubai.'),
-    ('Meals', 'Choose from luxurious menus and add a thoughtful touch for your guests.'),
-    ('Photography', 'Photographers can join your cruise to capture the best views and moments.'),
+    ('Meals', 'Choose from a selection of menus to serve your guests on board.'),
+    ('Photography', 'A photographer can join your cruise to capture the views and your moments.'),
     ('Roses', 'Add bouquets of roses to your trip to say what words cannot.'),
     ('Cake', 'A catalogue of cakes to suit every kind of occasion.'),
     ('Decoration', 'Decoration packages for every occasion, made to order.'),
@@ -136,7 +136,7 @@ REVIEWS = [
 ]
 
 GALLERY = [
-    ('gallery-01', 'Yacht cruising off Palm Jumeirah', True),
+    ('gallery-01', 'White yacht cruising past Atlantis The Royal on Palm Jumeirah', True),
     ('gallery-02', 'Yacht in front of Atlantis The Royal', False),
     ('gallery-03', 'Yacht beside Ain Dubai at Bluewaters', False),
     ('gallery-04', 'Yacht at sunset in front of Atlantis, The Palm', False),
@@ -149,6 +149,36 @@ GALLERY = [
     ('gallery-12', 'Saloon with lounge seating and screen', False),
     ('gallery-11', 'Bow of the yacht heading towards the Burj Al Arab', True),
 ]
+
+PHOTO_ALTS = {
+    'jetboat': ['White and blue Jet Boat 38 ft moored in the marina', 'Bow of the Jet Boat with blue cushioned seating', 'Jet Boat cockpit with blue and white seats',
+                'Jet Boat bow seating with blue cushions', 'Jet Boat rear seating and deck', 'Jet Boat helm and steering wheel'],
+    'tarrad': ['Tarrad 40 ft fishing boat moored among yachts', 'Bow of the Tarrad 40 ft at its berth', 'Open deck of the Tarrad 40 ft',
+               'Tarrad helm under the shade canopy', 'Tarrad deck and canopy in the marina', 'Tarrad helm console'],
+    'y44': ['Yacht 44 ft moored at a marina pontoon', 'Yacht 44 ft flybridge seating under the canopy', 'Yacht 44 ft rear deck seating',
+            'Yacht 44 ft saloon with cream L-shaped sofa', 'Yacht 44 ft saloon sofa and television', 'Yacht 44 ft bedroom with a double bed',
+            'Yacht 44 ft bow sun deck in the marina', 'Yacht 44 ft bow with Dubai Marina towers behind'],
+    'y45': ['Yacht 45 ft cruising at speed on open water', 'Yacht 45 ft upper deck seating', 'Yacht 45 ft white deck seating',
+            'Yacht 45 ft saloon with wood panelling and cream seats', 'Yacht 45 ft saloon dining table', 'Yacht 45 ft helm and steering wheel',
+            'Yacht 45 ft master bedroom', 'Yacht 45 ft bow on open water'],
+    'y50': ['White 50 ft yacht at sea in front of the Burj Al Arab', 'Yacht 50 ft cruising past Atlantis The Royal', 'White 50 ft yacht cruising past Dubai Marina towers',
+            'Yacht 50 ft saloon with cream sofas', 'Yacht 50 ft saloon with wooden bar', 'Yacht 50 ft rear deck seating with towers behind',
+            'Yacht 50 ft flybridge seating facing the Burj Al Arab', 'Yacht 50 ft bedroom'],
+    'y55': ['Yacht 55 ft cruising past Atlantis The Royal', 'Yacht 55 ft cruising along the Dubai coast', 'Yacht 55 ft beside Ain Dubai at Bluewaters',
+            'Yacht 55 ft bow heading towards the Burj Al Arab', 'Yacht 55 ft flybridge lounge with a view of the Burj Al Arab', 'Yacht 55 ft flybridge seating',
+            'Yacht 55 ft saloon with sofa and television', 'Yacht 55 ft cabin with a double bed'],
+    'y80': ['Yacht 80 ft on turquoise water', 'Yacht 80 ft moored in the harbour', 'Yacht 80 ft rear deck seating with a table',
+            'Yacht 80 ft shaded upper deck', 'Yacht 80 ft upper deck lounge', 'Yacht 80 ft saloon with red cushions',
+            'Yacht 80 ft saloon lounge seating', 'Yacht 80 ft bedroom'],
+    'y82': ['Yacht 82 ft in front of Atlantis The Royal', 'Yacht 82 ft cruising on calm water', 'Yacht 82 ft at speed on open water',
+            'Yacht 82 ft flybridge helm and seating', 'Yacht 82 ft bow heading towards the Burj Al Arab', 'Yacht 82 ft main saloon',
+            'Yacht 82 ft lower helm station', 'Yacht 82 ft bedroom'],
+}
+
+TRADE_LICENSE = '[TRADE LICENSE NO.]'
+MAP_EMBED = 'https://maps.google.com/maps?q=Jumeirah%203%20Fishing%20Harbour%2C%20Umm%20Suqeim%202%2C%20Dubai&amp;t=m&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed'
+VIDEO_EMBED = 'https://www.youtube-nocookie.com/embed/-a6D9CRf0Cg'
+LEGAL = [('privacy.html', 'Privacy Policy'), ('terms.html', 'Terms &amp; Conditions'), ('cookies.html', 'Cookie Policy'), ('booking-policy.html', 'Booking &amp; Cancellation')]
 
 # ---------------------------------------------------------------- helpers
 SPRITE = open(os.path.join(ROOT, 'tools', 'sprite.svg')).read()
@@ -249,6 +279,7 @@ def offer_section():
         <p class="label">Special offer</p>
         <h2 id="offer-title">20% off when you book water sports.</h2>
         <p class="small">Jet Ski · Parasailing · Fly Board · Wake Board · Banana &amp; Donut Ride</p>
+        <p class="terms">Offer terms: [OFFER TERMS]. See our <a href="booking-policy.html">Booking &amp; Cancellation Policy</a>.</p>
       </div>
       {wa_call('ws', 'the water sports offer', '', True, True)}
     </div>
@@ -276,7 +307,7 @@ def follow_section():
       <p class="lead">Yachts, water sports and celebrations from our days on the water.</p>
       <div class="btn-row">
         {btn('https://instagram.com/lxryae', 'Instagram', 'btn-light btn-lg', 'instagram', True, 'LXRY on Instagram', True)}
-        {btn('https://www.youtube.com/watch?v=-a6D9CRf0Cg', 'Watch a tour', 'btn-ghost btn-lg', 'youtube', True, None, True)}
+        {btn('gallery.html#tour', 'Watch a tour', 'btn-ghost btn-lg', 'youtube')}
       </div>
     </div>
   </section>'''
@@ -289,12 +320,24 @@ def cta_section():
       <div class="section-head"><p class="label">Book your day</p><h2 id="cta-title">Let’s plan your next trip.</h2></div>
       <hr class="rule">
       <div class="cta-grid" style="padding-top:48px">
-        <p class="lead" style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
+        <p class="lead" style="margin:0">Message us with your date, number of hours and guests, and we will get back to you.</p>
         <div><p class="who">Yacht rental</p><a class="num nums" href="tel:{YACHT_TEL}">{YACHT_DISP}</a>{wa_call('yacht', 'yacht rental', 'btn-sm', True)}</div>
         <div><p class="who">Water sports</p><a class="num nums" href="tel:{WS_TEL}">{WS_DISP}</a>{wa_call('ws', 'water sports', 'btn-sm', True)}</div>
       </div>
     </div>
   </section>'''
+
+
+def embed(kind, src, title, action, heading, note, poster=None):
+    """Third-party iframe that loads only after cookie consent or an explicit click."""
+    bg = f'<img class="embed-poster" src="{poster}" alt="" loading="lazy" decoding="async">' if poster else ''
+    return f'''<div class="embed embed-{kind}" data-embed data-src="{src}" data-title="{E(title)}">
+          {bg}<div class="embed-ph">
+            <p class="embed-h">{heading}</p>
+            <p class="embed-note">{note} <a href="cookies.html">Cookie Policy</a></p>
+            <button class="btn btn-primary btn-sm" type="button" data-embed-load>{action}</button>
+          </div>
+        </div>'''
 
 
 def gallery_grid(items, cls='gallery', base='images/'):
@@ -344,9 +387,8 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
   <meta name="twitter:image" content="{SITE}/{og_image}">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -384,7 +426,7 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <p style="margin:0">Luxury Yachts L.L.C<br>Licensed by Dubai Maritime City Authority</p>
+        <p style="margin:0"><strong class="f-name">Luxury Yachts L.L.C</strong><br>Licensed by Dubai Maritime City Authority<br>Trade licence no. {TRADE_LICENSE}</p>
         {socials()}
       </div>
       <div>
@@ -398,14 +440,17 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
       <div>
         <p class="label">Contact</p>
         <ul>
-          <li>Yachts: <a href="tel:{YACHT_TEL}">{YACHT_DISP}</a></li>
+          <li>Yacht rental: <a href="tel:{YACHT_TEL}">{YACHT_DISP}</a></li>
           <li>Water sports: <a href="tel:{WS_TEL}">{WS_DISP}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
-          <li>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</li>
+          <li><address>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</address></li>
         </ul>
       </div>
     </div>
     <div class="footer-word" aria-hidden="true"><span>L</span><span>X</span><span>R</span><span>Y</span></div>
+    <nav class="footer-legal" aria-label="Legal">
+      <ul>{''.join(f'<li><a href="{h}">{l}</a></li>' for h, l in LEGAL)}<li><button class="linkish" type="button" data-cookie-settings>Cookie settings</button></li></ul>
+    </nav>
     <div class="footer-base">
       <span>© <span id="year">2026</span> Luxury Yachts L.L.C. All rights reserved.</span>
       <a href="#main">Back to top ↑</a>
@@ -413,7 +458,17 @@ def page(filename, title, description, body, current=None, og_image='images/og.j
   </div>
 </footer>
 
-<a class="btn fab" href="{WS_WA}" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp">{icon('whatsapp')}</a>
+<div class="consent" id="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent-inner">
+    <p><strong>Cookies and third-party content.</strong> This site only stores your choice below. If you accept, we load Google Maps and a YouTube video, which may set cookies and send data to Google. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+    <div class="consent-btns">
+      <button class="btn btn-primary" type="button" data-consent="accepted">Accept</button>
+      <button class="btn btn-primary" type="button" data-consent="rejected">Reject</button>
+    </div>
+  </div>
+</div>
+
+<aside class="fab-wrap" aria-label="Quick contact"><a class="btn fab" href="{WS_WA}" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp (opens in a new tab)">{icon('whatsapp')}</a></aside>
 {LIGHTBOX if lightbox else ''}
 <script src="main.js" defer></script>
 </body>
@@ -534,7 +589,7 @@ def build_yachts():
 
 
 def build_detail(i, f):
-    photos = [(f"fleet/{f['key']}-{n}", f"{f['name']} photo {n}", False) for n in range(1, f['photos'] + 1)]
+    photos = [(f"fleet/{f['key']}-{n}", PHOTO_ALTS[f['key']][n - 1], False) for n in range(1, f['photos'] + 1)]
     nxt = FLEET[(i + 1) % len(FLEET)]
     third_k, third_v = f['third']
     rows = ''.join(f'<tr><th scope="row">{k}</th><td>{v}</td></tr>' for k, v in f['table'])
@@ -556,7 +611,7 @@ def build_detail(i, f):
           <div><dt>{third_k}</dt><dd>{third_v}</dd></div>
           <div><dt>Feet</dt><dd>{f['length']}</dd></div>
         </dl>
-        <table class="spec-table"><tbody>{rows}</tbody></table>
+        <table class="spec-table"><tbody>{rows}</tbody></table></div>
         <ul class="features" style="margin-top:28px">{fl}</ul>
       </div>
       <aside class="book-box" aria-label="Book the {E(f['name'])}">
@@ -566,7 +621,7 @@ def build_detail(i, f):
           {btn(YACHT_WA, 'WhatsApp', 'btn-light', 'whatsapp', True, f"WhatsApp about {f['name']}")}
           {btn(f'tel:{YACHT_TEL}', 'Call', 'btn-ghost', 'phone', False, f"Call about {f['name']}")}
         </div>
-        <p style="margin:22px 0 0;font-size:.9em;color:var(--ivory-75)"><a href="tel:{YACHT_TEL}" style="color:var(--ivory)">{YACHT_DISP}</a><br>Share your date, number of hours and guests and we will reply with availability.</p>
+        <p style="margin:22px 0 0;font-size:.9em;color:var(--ivory-75)"><a href="tel:{YACHT_TEL}" style="color:var(--ivory)">{YACHT_DISP}</a><br>Share your date, number of hours and guests and we will get back to you.</p>
       </aside>
     </div>
   </section>
@@ -588,6 +643,7 @@ def build_sports():
     acts = ''
     for i, s in enumerate(SPORTS, 1):
         dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in s['specs'])
+        notes = ''.join(f' · {n}' for n in s['notes'])
         acts += f'''
       <article class="activity" id="{s['key']}">
         <div class="act-media">
@@ -600,6 +656,7 @@ def build_sports():
           <h2>{s['name']}</h2>
           <dl class="specs">{dl}</dl>
           <p class="desc">{s['text']}</p>
+          <p class="age"><strong>Minimum age:</strong> {s['age']}{notes}</p>
           <div class="card-foot"><span class="price">Price on request</span>{wa_call('ws', s['name'])}</div>
         </div>
       </article>'''
@@ -611,7 +668,15 @@ def build_sports():
     body += f'''
   <section class="section" style="padding-bottom:0" aria-label="Activities">
     <div class="wrap">
-      <ul class="pill-list" style="margin-bottom:56px">{jump}</ul>
+      <ul class="pill-list" style="margin-bottom:40px">{jump}</ul>
+      <aside class="safety" aria-labelledby="safety-title">
+        <h2 id="safety-title">Safety</h2>
+        <ul>
+          <li>Life jackets are provided.</li>
+          <li>Our team gives safety instructions before each activity starts.</li>
+          <li>Minimum age: [MINIMUM AGE]. Where lxry.ae states an age, it is shown with the activity below.</li>
+        </ul>
+      </aside>
       {acts}
     </div>
   </section>
@@ -667,12 +732,12 @@ def build_fishing_events():
 
 def build_gallery():
     extra = [
-        ('fleet/y50-2', 'Yacht 50 ft cruising in front of Atlantis The Royal', False),
-        ('fleet/y55-3', 'Yacht 55 ft beside Ain Dubai', False),
-        ('fleet/y80-4', 'Yacht 80 ft sun deck', True),
-        ('fleet/y45-1', 'Yacht 45 ft at speed', True),
-        ('fleet/y82-5', 'Yacht 82 ft bow and the Burj Al Arab', False),
-        ('fleet/y50-4', 'Yacht 50 ft saloon', False),
+        ('fleet/y50-2', 'Yacht 50 ft cruising past Atlantis The Royal', False),
+        ('fleet/y55-3', 'Yacht 55 ft beside Ain Dubai at Bluewaters', False),
+        ('fleet/y80-4', 'Shaded upper deck of the Yacht 80 ft', True),
+        ('fleet/y45-1', 'Yacht 45 ft cruising at speed on open water', True),
+        ('fleet/y82-5', 'Bow of the Yacht 82 ft heading towards the Burj Al Arab', False),
+        ('fleet/y50-4', 'Yacht 50 ft saloon with cream sofas', False),
     ]
     items = GALLERY + extra
     body = hero('Gallery', 'Moments at sea.', 'Every picture has a story, and every story has a moment we would love to share with you.',
@@ -680,6 +745,13 @@ def build_gallery():
     body += f'''
   <section class="section" aria-label="Photos">
     <div class="wrap">{gallery_grid(items)}</div>
+  </section>
+  <section class="section on-dark" id="tour" aria-labelledby="tour-title">
+    <div class="wrap">
+      {head_label('Video', 'Watch a tour.', 'A short tour of a day with LXRY, hosted on YouTube.')}
+      {embed('video', VIDEO_EMBED, 'LXRY yacht tour video', 'Play video', 'LXRY tour video', 'Playing the video connects to YouTube (privacy-enhanced mode), which may set cookies.', 'images/gallery-11.jpg')}
+      <p style="margin-top:20px"><a class="link" href="https://www.youtube.com/watch?v=-a6D9CRf0Cg" target="_blank" rel="noopener">Watch on YouTube (opens in a new tab)</a></p>
+    </div>
   </section>
   {follow_section()}'''
     page('gallery.html', 'Gallery', 'Photos of LXRY yachts, water sports and days at sea in Dubai.', body, current='gallery.html', lightbox=True)
@@ -697,23 +769,15 @@ def build_about():
     </div>
   </section>
   <hr class="rule">
-  <section class="section" aria-label="Mission and vision">
+  <section class="section" aria-labelledby="mission-title">
     <div class="wrap two-col">
-      <div>
-        <p class="label">Our mission</p>
-        <h2>New experiences by sea.</h2>
-        <p class="lead" style="margin-top:24px">To deliver highly professional service and real adventure, giving every guest a new way to experience Dubai by sea and special memories to take home.</p>
-      </div>
-      <div>
-        <p class="label">Our vision</p>
-        <h2>Happiness on the water.</h2>
-        <p class="lead" style="margin-top:24px">To be the leading provider of sea and water activities in Dubai and the United Arab Emirates, bringing happiness to everyone who visits.</p>
-      </div>
+      <div><p class="label">Our mission</p><h2 id="mission-title">New experiences by sea.</h2></div>
+      <p class="lead" style="margin:0">To deliver highly professional service and real adventure, giving every guest a new way to experience Dubai by sea and special memories to take home.</p>
     </div>
   </section>
   <section class="section on-dark" aria-labelledby="dest-title">
     <div class="wrap two-col">
-      <div><p class="label">Destinations</p><h2 id="dest-title">The best of Dubai from the water.</h2></div>
+      <div><p class="label">Destinations</p><h2 id="dest-title">Dubai from the water.</h2></div>
       <ul class="tag-list">{dest}</ul>
     </div>
   </section>
@@ -748,7 +812,7 @@ def build_faq():
 
 
 def build_contact():
-    body = hero('Contact', 'Plan your trip.', 'Message us with your date, number of hours and guests. We will reply with availability and a price.',
+    body = hero('Contact', 'Plan your trip.', 'Message us with your date, number of hours and guests, and we will get back to you.',
                 'images/fleet/y80-1.jpg', 'Yacht 80 ft on turquoise water', short=True)
     body += f'''
   <section class="section contact" aria-labelledby="contact-title">
@@ -776,16 +840,90 @@ def build_contact():
         <div>{socials(' on-light')}</div>
       </div>
       <div class="map-col">
-        <div class="map">
-          <iframe title="Map: Jumeirah 3 Fishing Harbour, Umm Suqeim 2, Dubai" src="https://maps.google.com/maps?q=Jumeirah%203%20Fishing%20Harbour%2C%20Umm%20Suqeim%202%2C%20Dubai&amp;t=m&amp;z=15&amp;ie=UTF8&amp;iwloc=&amp;output=embed" width="600" height="460" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-        </div>
-        <div class="btn-row" style="margin-top:20px">{btn(MAPS_URL, 'Open in Google Maps', 'btn-outline', None, True, 'Open Jumeirah 3 Fishing Harbour in Google Maps')}</div>
+        {embed('map', MAP_EMBED, 'Map: Jumeirah 3 Fishing Harbour, Umm Suqeim 2, Dubai', 'Load map', 'Jumeirah 3, Fishing Harbour, Umm Suqeim 2, Dubai', 'Loading the map connects to Google, which may set cookies.')}
+        <div class="btn-row" style="margin-top:20px">{btn(MAPS_URL, 'Open in Google Maps', 'btn-outline', None, True, 'Open Jumeirah 3 Fishing Harbour in Google Maps (opens in a new tab)')}</div>
       </div>
     </div>
   </section>
   {follow_section()}'''
     page('contact.html', 'Contact', 'Contact LXRY Luxury Yachts in Dubai. Yacht rental +971 55 291 0101, water sports +971 58 125 8311, lxryae@gmail.com. Jumeirah Fishing Harbour, Umm Suqeim 2.',
          body, current='contact.html')
+
+
+def legal_page(filename, title, description, sections, updated='[EFFECTIVE DATE]'):
+    toc = ''.join(f'<li><a href="#s{i}">{h}</a></li>' for i, (h, _) in enumerate(sections, 1))
+    secs = ''.join(f'<section id="s{i}" aria-labelledby="s{i}-h"><h2 id="s{i}-h">{i}. {h}</h2>{b}</section>' for i, (h, b) in enumerate(sections, 1))
+    body = f'''
+  <article class="legal">
+    <div class="wrap">
+      <p class="draft" role="note"><strong>Draft — to be reviewed by LXRY before publishing.</strong> This page is a template. Text in [square brackets] must be completed or confirmed by Luxury Yachts L.L.C, and the page should be reviewed by a UAE-qualified legal adviser.</p>
+      <p class="label">Legal</p>
+      <h1>{title}</h1>
+      <p class="meta">Luxury Yachts L.L.C · Effective date: {updated}</p>
+      <nav class="legal-toc" aria-label="On this page"><ol>{toc}</ol></nav>
+      {secs}
+    </div>
+  </article>'''
+    page(filename, title, description, body)
+
+
+COMPANY_BLOCK = f'''<p>Luxury Yachts L.L.C<br>Jumeirah 3, Fishing Harbour, Umm Suqeim 2, Dubai, United Arab Emirates<br>
+Trade licence no. {TRADE_LICENSE}<br>Email: <a href="mailto:{EMAIL}">{EMAIL}</a><br>
+Yacht rental: <a href="tel:{YACHT_TEL}">{YACHT_DISP}</a> · Water sports: <a href="tel:{WS_TEL}">{WS_DISP}</a></p>'''
+
+
+def build_legal():
+    legal_page('privacy.html', 'Privacy Policy',
+               'How Luxury Yachts L.L.C (LXRY) handles personal data under the UAE Personal Data Protection Law.', [
+        ('Who we are', COMPANY_BLOCK + '<p>Luxury Yachts L.L.C is the controller of the personal data described in this policy. This policy is written with reference to Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data (the "PDPL") and its implementing regulations. Privacy contact: [PRIVACY CONTACT NAME / EMAIL].</p>'),
+        ('What this website collects', '<p>This website has no contact forms, accounts or newsletter sign-up, and it does not use analytics or advertising tools.</p><ul><li><strong>Your cookie choice.</strong> We store whether you accepted or rejected optional third-party content in your browser (local storage). See our <a href="cookies.html">Cookie Policy</a>.</li><li><strong>Technical data.</strong> Our hosting provider, Vercel Inc., processes technical data such as IP address, browser type and the pages requested in order to deliver the website and keep it secure. Retention period: [HOSTING LOG RETENTION PERIOD].</li><li><strong>Third-party content.</strong> Google Maps and the YouTube video load only if you accept or choose to load them. Google then receives data such as your IP address under its own privacy policy.</li></ul>'),
+        ('When you contact or book with us', '<p>Bookings are made by WhatsApp, phone or email. When you contact us we receive the details you choose to share, such as your name, phone number, the content of your messages and booking details (date, duration, number of guests, occasion). [LIST ANY OTHER DATA COLLECTED, E.G. ID FOR REGULATORY REQUIREMENTS, PAYMENT DETAILS].</p><p>WhatsApp is operated by WhatsApp LLC / Meta. Messages you send through WhatsApp are also processed under WhatsApp&rsquo;s own privacy policy.</p>'),
+        ('Why we use your data', '<ul><li>To reply to your enquiry and arrange your booking.</li><li>To carry out the booking you request and provide the service.</li><li>To meet legal and regulatory obligations that apply to us. [SPECIFY, E.G. MARITIME AUTHORITY REQUIREMENTS]</li><li>[ANY OTHER PURPOSE, E.G. MARKETING — ONLY WITH CONSENT]</li></ul><p>Where the PDPL requires your consent, we ask for it and you can withdraw it at any time. Otherwise we rely on the grounds the PDPL allows, such as taking steps at your request before a booking, performing a booking, or complying with the law. [CONFIRM LEGAL GROUNDS WITH ADVISER]</p>'),
+        ('Who we share it with', '<p>We do not sell personal data. We share it only as needed with: [BOAT OPERATORS / CREW PARTNERS, IF ANY]; [PAYMENT PROVIDER]; our hosting provider (Vercel Inc.); and authorities where the law requires it.</p>'),
+        ('International transfers', '<p>Some providers we use, such as Vercel, WhatsApp and Google, may process data outside the United Arab Emirates. Where this happens we rely on the safeguards permitted by the PDPL: [TRANSFER SAFEGUARDS].</p>'),
+        ('How long we keep it', '<p>Enquiries and booking records: [RETENTION PERIOD]. Records we must keep by law: [LEGAL RETENTION PERIOD].</p>'),
+        ('Your rights', '<p>Under the PDPL you may, subject to its conditions and exceptions, ask to: receive information about the personal data we hold about you; receive a copy of it or have it transferred; have it corrected or completed; have it erased; restrict or stop its processing; and object to decisions made solely by automated processing. You can also withdraw consent you have given.</p><p>To make a request, email <a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a>. We will respond within [RESPONSE TIME]. You may also complain to the UAE Data Office.</p>'),
+        ('Security', '<p>We take reasonable technical and organisational measures to protect personal data: [DESCRIBE MEASURES].</p>'),
+        ('Children', '<p>Our website is not directed at children. Bookings must be made by an adult. [CONFIRM AGE FOR MAKING A BOOKING]</p>'),
+        ('Changes to this policy', '<p>We may update this policy. The effective date at the top shows when it last changed.</p>'),
+    ])
+
+    legal_page('terms.html', 'Terms &amp; Conditions',
+               'Terms of use for the LXRY website and general booking terms of Luxury Yachts L.L.C, Dubai.', [
+        ('About these terms', COMPANY_BLOCK + '<p>These terms apply to your use of this website and, together with our <a href="booking-policy.html">Booking &amp; Cancellation Policy</a> and your booking confirmation, to bookings with Luxury Yachts L.L.C.</p>'),
+        ('Information on this website', '<p>We aim to keep yacht specifications, photos and activity details accurate, but availability and equipment may change. Details for your trip are those confirmed in your booking confirmation. Photos show boats and activities we offer; [CONFIRM WHETHER A SPECIFIC BOAT IS GUARANTEED].</p>'),
+        ('Prices and offers', '<p>Prices are given on request and confirmed in writing before booking. [STATE WHETHER PRICES INCLUDE VAT AND OTHER FEES]. Offers, including the water sports discount shown on this website, are subject to: [OFFER TERMS].</p>'),
+        ('Bookings', '<p>A booking is confirmed only when we confirm it in writing [AND THE DEPOSIT IS RECEIVED — SEE BOOKING &amp; CANCELLATION POLICY]. Deposits, payments, changes and cancellations are covered by our <a href="booking-policy.html">Booking &amp; Cancellation Policy</a>.</p>'),
+        ('Safety and conduct on board', '<p>Guests must follow the safety instructions of the captain and crew. The captain may change the route, shorten or end a trip for safety reasons. [ADD RULES ON ALCOHOL, SMOKING, GUEST NUMBERS, DAMAGE, LOST PROPERTY, ETC.]</p><p>Water sports have age and health restrictions; see the <a href="water-sports.html">Water Sports</a> page and [MINIMUM AGE].</p>'),
+        ('Liability', '<p>[LIABILITY TERMS — TO BE DRAFTED BY A UAE-QUALIFIED ADVISER. NOTHING IN THESE TERMS LIMITS RIGHTS YOU HAVE UNDER UAE CONSUMER PROTECTION LAW.]</p>'),
+        ('Intellectual property', '<p>The content and photos on this website belong to Luxury Yachts L.L.C or are used with permission. Do not copy them for commercial use without our written consent.</p>'),
+        ('Links to other websites', '<p>This website links to third-party services such as WhatsApp, Instagram, TikTok, Facebook, Snapchat, YouTube, LinkedIn and Google Maps. We are not responsible for their content or privacy practices.</p>'),
+        ('Governing law', '<p>These terms are governed by the laws of the United Arab Emirates as applied in the Emirate of Dubai. [CONFIRM COMPETENT COURTS].</p>'),
+        ('Contact', '<p>Questions about these terms: <a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a>.</p>'),
+    ])
+
+    legal_page('cookies.html', 'Cookie Policy',
+               'Which cookies and similar technologies the LXRY website uses, and how to change your choice.', [
+        ('Summary', '<p>This website does not use analytics, advertising or tracking cookies. Before you make a choice, it loads nothing from third parties. It stores only your consent choice. Fonts are hosted on our own server.</p>'),
+        ('Strictly necessary storage', '<div class="table-wrap" role="region" aria-label="Storage used by this site (scrollable table)" tabindex="0"><table class="legal-table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Purpose</th><th scope="col">Duration</th></tr></thead><tbody><tr><td>lxry-consent</td><td>Local storage (first party)</td><td>Remembers whether you accepted or rejected optional third-party content.</td><td>Until you clear your browser data or change your choice</td></tr></tbody></table></div>'),
+        ('Optional third-party content', '<p>These load only after you click Accept, or when you click the button on that item:</p><div class="table-wrap" role="region" aria-label="Optional third-party content (scrollable table)" tabindex="0"><table class="legal-table"><thead><tr><th scope="col">Service</th><th scope="col">Where</th><th scope="col">Provider</th><th scope="col">What happens</th></tr></thead><tbody><tr><td>Google Maps embed</td><td>Contact page</td><td>Google</td><td>Google may set cookies and receives your IP address and browser details.</td></tr><tr><td>YouTube video (privacy-enhanced mode, youtube-nocookie.com)</td><td>Gallery page</td><td>Google / YouTube</td><td>YouTube may store data in your browser once you play the video.</td></tr></tbody></table></div><p>See Google&rsquo;s privacy policy for details of these services.</p>'),
+        ('Links to social networks', '<p>Our social media icons are plain links. Nothing from those networks loads on our pages until you click a link and leave our site.</p>'),
+        ('Changing your choice', '<p>Use the <button class="linkish" type="button" data-cookie-settings>Cookie settings</button> link in the footer of any page to change your choice at any time. If you withdraw consent, the page reloads without the third-party content.</p>'),
+        ('Contact', '<p>Questions: <a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a>. See also our <a href="privacy.html">Privacy Policy</a>.</p>'),
+    ])
+
+    legal_page('booking-policy.html', 'Booking &amp; Cancellation Policy',
+               'Booking, deposit, cancellation, refund and weather policy for LXRY yacht rental and water sports in Dubai.', [
+        ('How to book', f'<p>Bookings are made by WhatsApp or phone: yacht rental <a href="tel:{YACHT_TEL}">{YACHT_DISP}</a>, water sports <a href="tel:{WS_TEL}">{WS_DISP}</a>, or by email at <a href="mailto:{EMAIL}">{EMAIL}</a>. A booking is confirmed when we confirm it in writing [AND THE DEPOSIT IS PAID].</p>'),
+        ('Deposit and payment', '<ul><li>Deposit: [DEPOSIT %] of the total price, due [DEPOSIT DUE DATE].</li><li>Balance: [BALANCE DUE DATE].</li><li>Accepted payment methods: [PAYMENT METHODS].</li><li>Prices include / exclude VAT: [VAT STATEMENT].</li></ul>'),
+        ('Cancellation by you', '<ul><li>Cancellation deadline for a full refund: [CANCELLATION DEADLINE].</li><li>Cancellations after the deadline: [LATE CANCELLATION CHARGE].</li><li>No-shows and late arrival: [NO-SHOW / LATE ARRIVAL POLICY].</li></ul>'),
+        ('Refunds', '<p>[REFUND RULES — AMOUNT, METHOD AND TIMING].</p>'),
+        ('Weather and safety cancellations', '<p>[WEATHER CANCELLATION POLICY — WHO DECIDES, AND WHETHER GUESTS ARE OFFERED A NEW DATE OR A REFUND].</p>'),
+        ('Changes to a booking', '<p>[RESCHEDULING POLICY — DEADLINE AND ANY FEES].</p>'),
+        ('Cancellation by us', '<p>[POLICY IF LXRY MUST CANCEL, E.G. BOAT UNAVAILABLE].</p>'),
+        ('Offers', '<p>The 20% water sports offer shown on this website is subject to: [OFFER TERMS].</p>'),
+        ('Questions', '<p>Contact us before booking if anything is unclear: <a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a>.</p>'),
+    ])
 
 
 def build_404():
@@ -812,5 +950,6 @@ if __name__ == '__main__':
     build_about()
     build_faq()
     build_contact()
+    build_legal()
     build_404()
     print('built', len([n for n in os.listdir(ROOT) if n.endswith('.html')]), 'pages')

@@ -21,9 +21,8 @@
   <meta name="twitter:image" content="https://lxry-yachts.vercel.app/images/og.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -163,6 +162,7 @@
         <p class="label">Special offer</p>
         <h2 id="offer-title">20% off when you book water sports.</h2>
         <p class="small">Jet Ski · Parasailing · Fly Board · Wake Board · Banana &amp; Donut Ride</p>
+        <p class="terms">Offer terms: [OFFER TERMS]. See our <a href="booking-policy.html">Booking &amp; Cancellation Policy</a>.</p>
       </div>
       <div class="btn-row"><a class="btn btn-light " href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about the water sports offer"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost " href="tel:+971581258311" aria-label="Call about the water sports offer"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div>
     </div>
@@ -199,7 +199,7 @@
         <div><p class="label">Gallery</p><h2>Moments at sea.</h2></div>
         <p class="lead">Every picture has a story, and every story has a moment we would love to share with you.</p>
       </div>
-      <div class="gallery"><button class="g-item media wide" type="button" data-full="images/gallery-01.jpg" aria-label="Open photo: Yacht cruising off Palm Jumeirah"><img src="images/gallery-01-sm.jpg" alt="Yacht cruising off Palm Jumeirah" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-02.jpg" aria-label="Open photo: Yacht in front of Atlantis The Royal"><img src="images/gallery-02-sm.jpg" alt="Yacht in front of Atlantis The Royal" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-03.jpg" aria-label="Open photo: Yacht beside Ain Dubai at Bluewaters"><img src="images/gallery-03-sm.jpg" alt="Yacht beside Ain Dubai at Bluewaters" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-04.jpg" aria-label="Open photo: Yacht at sunset in front of Atlantis, The Palm"><img src="images/gallery-04-sm.jpg" alt="Yacht at sunset in front of Atlantis, The Palm" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-05.jpg" aria-label="Open photo: Shaded upper deck with white seating"><img src="images/gallery-05-sm.jpg" alt="Shaded upper deck with white seating" loading="lazy" decoding="async"></button><button class="g-item media wide" type="button" data-full="images/gallery-06.jpg" aria-label="Open photo: Flybridge lounge with sea view"><img src="images/gallery-06-sm.jpg" alt="Flybridge lounge with sea view" loading="lazy" decoding="async"></button><button class="g-item media wide" type="button" data-full="images/gallery-07.jpg" aria-label="Open photo: Main saloon with cream leather seating"><img src="images/gallery-07-sm.jpg" alt="Main saloon with cream leather seating" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-08.jpg" aria-label="Open photo: Tandem parasailing over turquoise water"><img src="images/gallery-08-sm.jpg" alt="Tandem parasailing over turquoise water" loading="lazy" decoding="async"></button></div>
+      <div class="gallery"><button class="g-item media wide" type="button" data-full="images/gallery-01.jpg" aria-label="Open photo: White yacht cruising past Atlantis The Royal on Palm Jumeirah"><img src="images/gallery-01-sm.jpg" alt="White yacht cruising past Atlantis The Royal on Palm Jumeirah" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-02.jpg" aria-label="Open photo: Yacht in front of Atlantis The Royal"><img src="images/gallery-02-sm.jpg" alt="Yacht in front of Atlantis The Royal" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-03.jpg" aria-label="Open photo: Yacht beside Ain Dubai at Bluewaters"><img src="images/gallery-03-sm.jpg" alt="Yacht beside Ain Dubai at Bluewaters" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-04.jpg" aria-label="Open photo: Yacht at sunset in front of Atlantis, The Palm"><img src="images/gallery-04-sm.jpg" alt="Yacht at sunset in front of Atlantis, The Palm" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-05.jpg" aria-label="Open photo: Shaded upper deck with white seating"><img src="images/gallery-05-sm.jpg" alt="Shaded upper deck with white seating" loading="lazy" decoding="async"></button><button class="g-item media wide" type="button" data-full="images/gallery-06.jpg" aria-label="Open photo: Flybridge lounge with sea view"><img src="images/gallery-06-sm.jpg" alt="Flybridge lounge with sea view" loading="lazy" decoding="async"></button><button class="g-item media wide" type="button" data-full="images/gallery-07.jpg" aria-label="Open photo: Main saloon with cream leather seating"><img src="images/gallery-07-sm.jpg" alt="Main saloon with cream leather seating" loading="lazy" decoding="async"></button><button class="g-item media" type="button" data-full="images/gallery-08.jpg" aria-label="Open photo: Tandem parasailing over turquoise water"><img src="images/gallery-08-sm.jpg" alt="Tandem parasailing over turquoise water" loading="lazy" decoding="async"></button></div>
       <p style="margin-top:40px"><a class="link" href="gallery.html">Full gallery →</a></p>
     </div>
   </section>
@@ -212,7 +212,7 @@
       <p class="lead">Yachts, water sports and celebrations from our days on the water.</p>
       <div class="btn-row">
         <a class="btn btn-light btn-lg" href="https://instagram.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Instagram"><svg aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg>Instagram</a>
-        <a class="btn btn-ghost btn-lg" href="https://www.youtube.com/watch?v=-a6D9CRf0Cg" target="_blank" rel="noopener"><svg aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg>Watch a tour</a>
+        <a class="btn btn-ghost btn-lg" href="gallery.html#tour"><svg aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg>Watch a tour</a>
       </div>
     </div>
   </section>
@@ -222,7 +222,7 @@
       <div class="section-head"><p class="label">Book your day</p><h2 id="cta-title">Let’s plan your next trip.</h2></div>
       <hr class="rule">
       <div class="cta-grid" style="padding-top:48px">
-        <p class="lead" style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
+        <p class="lead" style="margin:0">Message us with your date, number of hours and guests, and we will get back to you.</p>
         <div><p class="who">Yacht rental</p><a class="num nums" href="tel:+971552910101">+971 55 291 0101</a><div class="btn-row"><a class="btn btn-light btn-sm" href="https://wa.me/971552910101" target="_blank" rel="noopener" aria-label="WhatsApp about yacht rental"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost btn-sm" href="tel:+971552910101" aria-label="Call about yacht rental"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         <div><p class="who">Water sports</p><a class="num nums" href="tel:+971581258311">+971 58 125 8311</a><div class="btn-row"><a class="btn btn-light btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about water sports"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost btn-sm" href="tel:+971581258311" aria-label="Call about water sports"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
       </div>
@@ -234,7 +234,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <p style="margin:0">Luxury Yachts L.L.C<br>Licensed by Dubai Maritime City Authority</p>
+        <p style="margin:0"><strong class="f-name">Luxury Yachts L.L.C</strong><br>Licensed by Dubai Maritime City Authority<br>Trade licence no. [TRADE LICENSE NO.]</p>
         <ul class="socials"><li><a class="social" href="https://instagram.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Instagram"><svg aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg></a></li><li><a class="social" href="https://tiktok.com/@lxryae" target="_blank" rel="noopener" aria-label="LXRY on TikTok"><svg aria-hidden="true" focusable="false"><use href="#i-tiktok"/></svg></a></li><li><a class="social" href="https://facebook.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Facebook"><svg aria-hidden="true" focusable="false"><use href="#i-facebook"/></svg></a></li><li><a class="social" href="https://snapchat.com/add/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Snapchat"><svg aria-hidden="true" focusable="false"><use href="#i-snapchat"/></svg></a></li><li><a class="social" href="https://youtube.com/@lxryae" target="_blank" rel="noopener" aria-label="LXRY on YouTube"><svg aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg></a></li><li><a class="social" href="https://www.linkedin.com/company/lxryae" target="_blank" rel="noopener" aria-label="LXRY on LinkedIn"><svg aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg></a></li><li><a class="social" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="LXRY on WhatsApp"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a></li></ul>
       </div>
       <div>
@@ -248,14 +248,17 @@
       <div>
         <p class="label">Contact</p>
         <ul>
-          <li>Yachts: <a href="tel:+971552910101">+971 55 291 0101</a></li>
+          <li>Yacht rental: <a href="tel:+971552910101">+971 55 291 0101</a></li>
           <li>Water sports: <a href="tel:+971581258311">+971 58 125 8311</a></li>
           <li><a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a></li>
-          <li>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</li>
+          <li><address>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</address></li>
         </ul>
       </div>
     </div>
     <div class="footer-word" aria-hidden="true"><span>L</span><span>X</span><span>R</span><span>Y</span></div>
+    <nav class="footer-legal" aria-label="Legal">
+      <ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="cookies.html">Cookie Policy</a></li><li><a href="booking-policy.html">Booking &amp; Cancellation</a></li><li><button class="linkish" type="button" data-cookie-settings>Cookie settings</button></li></ul>
+    </nav>
     <div class="footer-base">
       <span>© <span id="year">2026</span> Luxury Yachts L.L.C. All rights reserved.</span>
       <a href="#main">Back to top ↑</a>
@@ -263,7 +266,17 @@
   </div>
 </footer>
 
-<a class="btn fab" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a>
+<div class="consent" id="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent-inner">
+    <p><strong>Cookies and third-party content.</strong> This site only stores your choice below. If you accept, we load Google Maps and a YouTube video, which may set cookies and send data to Google. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+    <div class="consent-btns">
+      <button class="btn btn-primary" type="button" data-consent="accepted">Accept</button>
+      <button class="btn btn-primary" type="button" data-consent="rejected">Reject</button>
+    </div>
+  </div>
+</div>
+
+<aside class="fab-wrap" aria-label="Quick contact"><a class="btn fab" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp (opens in a new tab)"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a></aside>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
   <figure><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt=""></figure>

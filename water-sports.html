@@ -21,9 +21,8 @@
   <meta name="twitter:image" content="https://lxry-yachts.vercel.app/images/og.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -67,7 +66,15 @@
   </section>
   <section class="section" style="padding-bottom:0" aria-label="Activities">
     <div class="wrap">
-      <ul class="pill-list" style="margin-bottom:56px"><li><a class="link" href="#jetski">Jet Ski</a></li><li><a class="link" href="#parasailing">Parasailing</a></li><li><a class="link" href="#flyboard">Fly Board</a></li><li><a class="link" href="#wakeboard">Wake Board</a></li><li><a class="link" href="#waterski">Water Ski</a></li><li><a class="link" href="#banana">Banana Boat</a></li><li><a class="link" href="#donut">Donut Ride</a></li></ul>
+      <ul class="pill-list" style="margin-bottom:40px"><li><a class="link" href="#jetski">Jet Ski</a></li><li><a class="link" href="#parasailing">Parasailing</a></li><li><a class="link" href="#flyboard">Fly Board</a></li><li><a class="link" href="#wakeboard">Wake Board</a></li><li><a class="link" href="#waterski">Water Ski</a></li><li><a class="link" href="#banana">Banana Boat</a></li><li><a class="link" href="#donut">Donut Ride</a></li></ul>
+      <aside class="safety" aria-labelledby="safety-title">
+        <h2 id="safety-title">Safety</h2>
+        <ul>
+          <li>Life jackets are provided.</li>
+          <li>Our team gives safety instructions before each activity starts.</li>
+          <li>Minimum age: [MINIMUM AGE]. Where lxry.ae states an age, it is shown with the activity below.</li>
+        </ul>
+      </aside>
       
       <article class="activity" id="jetski">
         <div class="act-media">
@@ -79,7 +86,8 @@
           <span class="num">01 / 07</span>
           <h2>Jet Ski</h2>
           <dl class="specs"><div><dt>Model</dt><dd>Yamaha</dd></div><div><dt>Engine</dt><dd>1800cc</dd></div><div><dt>Capacity</dt><dd>2</dd></div></dl>
-          <p class="desc">A Yamaha supercharged 1800cc jet ski for beginners and experienced riders. Ride past Palm Jumeirah, JBR and the Burj Al Arab.</p>
+          <p class="desc">A Yamaha supercharged 1800cc jet ski for beginners and experienced riders. Each ride starts with a safety briefing. Ride past Palm Jumeirah, JBR and the Burj Al Arab.</p>
+          <p class="age"><strong>Minimum age:</strong> Driver 16+</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Jet Ski"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Jet Ski"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -94,6 +102,7 @@
           <h2>Parasailing</h2>
           <dl class="specs"><div><dt>Height</dt><dd>120 m</dd></div><div><dt>Boat</dt><dd>Parasail</dd></div><div><dt>Capacity</dt><dd>8</dd></div></dl>
           <p class="desc">Fly up to 120 metres above the water and take in the Dubai skyline, the Burj Al Arab and the Palm. The mate goes over the safety instructions before the captain calls up the first flyers.</p>
+          <p class="age"><strong>Minimum age:</strong> [MINIMUM AGE]</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Parasailing"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Parasailing"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -107,7 +116,8 @@
           <span class="num">03 / 07</span>
           <h2>Fly Board</h2>
           <dl class="specs"><div><dt>Powered by</dt><dd>Jet ski</dd></div><div><dt>Height</dt><dd>10 m</dd></div><div><dt>Capacity</dt><dd>1</dd></div></dl>
-          <p class="desc">The water jet can lift you up to 10 metres into the air, so you can fly, jump and dive over the water. Instructors guide you at your own pace; most guests are flying within 5 to 15 minutes.</p>
+          <p class="desc">The water jet can lift you up to 10 metres into the air, so you can fly, jump and dive over the water. Instructors guide you at your own pace; on average it takes 5 to 15 minutes to get comfortable.</p>
+          <p class="age"><strong>Minimum age:</strong> [MINIMUM AGE]</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Fly Board"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Fly Board"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -122,6 +132,7 @@
           <h2>Wake Board</h2>
           <dl class="specs"><div><dt>Towed by</dt><dd>Jet boat</dd></div><div><dt>Capacity</dt><dd>6</dd></div></dl>
           <p class="desc">Wakeboarding for beginners and skilled riders, with professional instructors on board. All the equipment is provided, along with free water and towels.</p>
+          <p class="age"><strong>Minimum age:</strong> [MINIMUM AGE]</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Wake Board"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Wake Board"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -136,6 +147,7 @@
           <h2>Water Ski</h2>
           <dl class="specs"><div><dt>Towed by</dt><dd>Jet boat</dd></div></dl>
           <p class="desc">Water skiing behind our towing boats with professional instructors on board. We provide all the necessary equipment, free water and towels.</p>
+          <p class="age"><strong>Minimum age:</strong> [MINIMUM AGE]</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Water Ski"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Water Ski"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -150,6 +162,7 @@
           <h2>Banana Boat</h2>
           <dl class="specs"><div><dt>Towed by</dt><dd>Jet boat</dd></div><div><dt>Capacity</dt><dd>5</dd></div></dl>
           <p class="desc">A 15-minute banana ride for family and friends, up to 5 persons. Life jackets and safety instructions from a professional instructor are included. Children must be over 6 years old.</p>
+          <p class="age"><strong>Minimum age:</strong> Over 6 · Not suitable during pregnancy</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Banana Boat"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Banana Boat"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -164,6 +177,7 @@
           <h2>Donut Ride</h2>
           <dl class="specs"><div><dt>Towed by</dt><dd>Speed boat</dd></div><div><dt>Capacity</dt><dd>4</dd></div></dl>
           <p class="desc">A towed donut ride for up to 4 persons. Similar to the banana boat and easy for the whole family.</p>
+          <p class="age"><strong>Minimum age:</strong> Over 3 · Not suitable during pregnancy</p>
           <div class="card-foot"><span class="price">Price on request</span><div class="btn-row"><a class="btn btn-primary btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about Donut Ride"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-outline btn-sm" href="tel:+971581258311" aria-label="Call about Donut Ride"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         </div>
       </article>
@@ -177,6 +191,7 @@
         <p class="label">Special offer</p>
         <h2 id="offer-title">20% off when you book water sports.</h2>
         <p class="small">Jet Ski · Parasailing · Fly Board · Wake Board · Banana &amp; Donut Ride</p>
+        <p class="terms">Offer terms: [OFFER TERMS]. See our <a href="booking-policy.html">Booking &amp; Cancellation Policy</a>.</p>
       </div>
       <div class="btn-row"><a class="btn btn-light " href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about the water sports offer"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost " href="tel:+971581258311" aria-label="Call about the water sports offer"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div>
     </div>
@@ -187,7 +202,7 @@
       <div class="section-head"><p class="label">Book your day</p><h2 id="cta-title">Let’s plan your next trip.</h2></div>
       <hr class="rule">
       <div class="cta-grid" style="padding-top:48px">
-        <p class="lead" style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
+        <p class="lead" style="margin:0">Message us with your date, number of hours and guests, and we will get back to you.</p>
         <div><p class="who">Yacht rental</p><a class="num nums" href="tel:+971552910101">+971 55 291 0101</a><div class="btn-row"><a class="btn btn-light btn-sm" href="https://wa.me/971552910101" target="_blank" rel="noopener" aria-label="WhatsApp about yacht rental"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost btn-sm" href="tel:+971552910101" aria-label="Call about yacht rental"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         <div><p class="who">Water sports</p><a class="num nums" href="tel:+971581258311">+971 58 125 8311</a><div class="btn-row"><a class="btn btn-light btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about water sports"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost btn-sm" href="tel:+971581258311" aria-label="Call about water sports"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
       </div>
@@ -199,7 +214,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <p style="margin:0">Luxury Yachts L.L.C<br>Licensed by Dubai Maritime City Authority</p>
+        <p style="margin:0"><strong class="f-name">Luxury Yachts L.L.C</strong><br>Licensed by Dubai Maritime City Authority<br>Trade licence no. [TRADE LICENSE NO.]</p>
         <ul class="socials"><li><a class="social" href="https://instagram.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Instagram"><svg aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg></a></li><li><a class="social" href="https://tiktok.com/@lxryae" target="_blank" rel="noopener" aria-label="LXRY on TikTok"><svg aria-hidden="true" focusable="false"><use href="#i-tiktok"/></svg></a></li><li><a class="social" href="https://facebook.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Facebook"><svg aria-hidden="true" focusable="false"><use href="#i-facebook"/></svg></a></li><li><a class="social" href="https://snapchat.com/add/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Snapchat"><svg aria-hidden="true" focusable="false"><use href="#i-snapchat"/></svg></a></li><li><a class="social" href="https://youtube.com/@lxryae" target="_blank" rel="noopener" aria-label="LXRY on YouTube"><svg aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg></a></li><li><a class="social" href="https://www.linkedin.com/company/lxryae" target="_blank" rel="noopener" aria-label="LXRY on LinkedIn"><svg aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg></a></li><li><a class="social" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="LXRY on WhatsApp"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a></li></ul>
       </div>
       <div>
@@ -213,14 +228,17 @@
       <div>
         <p class="label">Contact</p>
         <ul>
-          <li>Yachts: <a href="tel:+971552910101">+971 55 291 0101</a></li>
+          <li>Yacht rental: <a href="tel:+971552910101">+971 55 291 0101</a></li>
           <li>Water sports: <a href="tel:+971581258311">+971 58 125 8311</a></li>
           <li><a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a></li>
-          <li>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</li>
+          <li><address>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</address></li>
         </ul>
       </div>
     </div>
     <div class="footer-word" aria-hidden="true"><span>L</span><span>X</span><span>R</span><span>Y</span></div>
+    <nav class="footer-legal" aria-label="Legal">
+      <ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="cookies.html">Cookie Policy</a></li><li><a href="booking-policy.html">Booking &amp; Cancellation</a></li><li><button class="linkish" type="button" data-cookie-settings>Cookie settings</button></li></ul>
+    </nav>
     <div class="footer-base">
       <span>© <span id="year">2026</span> Luxury Yachts L.L.C. All rights reserved.</span>
       <a href="#main">Back to top ↑</a>
@@ -228,7 +246,17 @@
   </div>
 </footer>
 
-<a class="btn fab" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a>
+<div class="consent" id="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent-inner">
+    <p><strong>Cookies and third-party content.</strong> This site only stores your choice below. If you accept, we load Google Maps and a YouTube video, which may set cookies and send data to Google. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+    <div class="consent-btns">
+      <button class="btn btn-primary" type="button" data-consent="accepted">Accept</button>
+      <button class="btn btn-primary" type="button" data-consent="rejected">Reject</button>
+    </div>
+  </div>
+</div>
+
+<aside class="fab-wrap" aria-label="Quick contact"><a class="btn fab" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp (opens in a new tab)"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a></aside>
 
 <script src="main.js" defer></script>
 </body>

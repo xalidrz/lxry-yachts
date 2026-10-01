@@ -1,3 +1,10 @@
+/* Self-hosted fonts (SIL Open Font License, see fonts/). No request to Google before consent. */
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/cormorant-garamond-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/cormorant-garamond-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/cormorant-garamond-latin-500-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+
 /* LXRY — Luxury Yachts L.L.C
    Palette: near-black, ivory, platinum + deep sea teal. No warm metallics anywhere. */
 :root {
@@ -8,7 +15,7 @@
   --teal-deep: #0B3D44;
 
   --ink-70: rgba(13, 17, 20, .7);
-  --ink-55: rgba(13, 17, 20, .55);
+  --ink-55: rgba(13, 17, 20, .66);
   --ink-12: rgba(13, 17, 20, .12);
   --ivory-75: rgba(247, 245, 240, .75);
   --ivory-55: rgba(247, 245, 240, .55);
@@ -39,7 +46,10 @@ body {
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 1px solid var(--platinum); outline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+.on-dark :focus-visible, .hero :focus-visible, .nav :focus-visible, .mobile-menu :focus-visible, .footer :focus-visible,
+.follow :focus-visible, .offer :focus-visible, .lightbox :focus-visible, .book-box :focus-visible, .consent :focus-visible,
+.next-yacht:focus-visible, .hfleet :focus-visible, .embed :focus-visible, .fab:focus-visible { outline-color: var(--ivory); }
 ::selection { background: var(--teal); color: var(--ivory); }
 .skip { position: absolute; left: -9999px; top: 8px; z-index: 300; background: var(--ivory); color: var(--ink); padding: 10px 16px; }
 .skip:focus { left: 8px; }
@@ -175,14 +185,7 @@ section { position: relative; }
 .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
 .hero-media::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(13, 17, 20, .88) 0%, rgba(13, 17, 20, .55) 42%, rgba(13, 17, 20, .3) 72%, rgba(13, 17, 20, .55) 100%);
-}
-@media (min-width: 900px) {
-  .hero-media::after {
-    background:
-      linear-gradient(to right, rgba(13, 17, 20, .74) 0%, rgba(13, 17, 20, .36) 55%, rgba(13, 17, 20, .12) 100%),
-      linear-gradient(to top, rgba(13, 17, 20, .75) 0%, rgba(13, 17, 20, 0) 50%, rgba(13, 17, 20, .45) 100%);
-  }
+  background: linear-gradient(to top, rgba(13, 17, 20, .86) 0%, rgba(13, 17, 20, .72) 40%, rgba(13, 17, 20, .72) 100%);
 }
 .hero .wrap { position: relative; padding-top: calc(var(--nav-h) + clamp(64px, 12vh, 128px)); padding-bottom: clamp(56px, 9vh, 112px); }
 .hero .label { color: var(--platinum); }
@@ -354,7 +357,7 @@ section { position: relative; }
 .follow { color: var(--ivory); background: var(--ink); overflow: clip; }
 .follow .bg { position: absolute; inset: 0; overflow: clip; }
 .follow .bg img { width: 100%; height: 100%; object-fit: cover; }
-.follow .bg::after { content: ""; position: absolute; inset: 0; background: rgba(13, 17, 20, .62); }
+.follow .bg::after { content: ""; position: absolute; inset: 0; background: rgba(13, 17, 20, .72); }
 .follow .wrap { position: relative; text-align: center; padding-top: clamp(120px, 15vw, 220px); padding-bottom: clamp(120px, 15vw, 220px); }
 .follow .label { color: var(--platinum); }
 .follow h2 { max-width: 12em; margin: 0 auto 24px; font-size: clamp(3rem, 7vw, 6.4rem); }
@@ -377,8 +380,6 @@ section { position: relative; }
 .line .big.sm { font-size: clamp(1.35rem, 2.2vw, 1.6rem); margin-bottom: 0; word-break: break-word; font-style: normal; }
 .contact .socials { margin: 28px 0 0 -10px; }
 .map-col { display: flex; flex-direction: column; }
-.map { position: relative; min-height: 460px; flex: 1; background: #E4E7EB; border: 1px solid var(--platinum); overflow: clip; }
-.map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(1) contrast(1.05); }
 
 /* ---------- Detail page ---------- */
 .detail-top { display: grid; gap: 48px; }
@@ -397,7 +398,7 @@ section { position: relative; }
 .book-box .btn-row { flex-direction: column; }
 .book-box .btn { width: 100%; }
 .next-yacht { display: block; position: relative; overflow: clip; color: var(--ivory); text-decoration: none; background: var(--ink); }
-.next-yacht .media { position: absolute; inset: 0; opacity: .45; }
+.next-yacht .media { position: absolute; inset: 0; opacity: .28; }
 .next-yacht .wrap { position: relative; padding-top: clamp(96px, 12vw, 160px); padding-bottom: clamp(96px, 12vw, 160px); }
 .next-yacht h2 { font-size: clamp(3rem, 8vw, 7rem); }
 .next-yacht:hover h2 { text-decoration: underline; text-underline-offset: 10px; text-decoration-thickness: 1px; }
@@ -514,3 +515,65 @@ section { position: relative; }
   .lb-prev, .lb-next, .lb-prev:active, .lb-next:active, .lb-prev.is-pressed, .lb-next.is-pressed { transform: translateY(-50%); }
 }
 .footer a[href^="tel:"], .footer a[href^="mailto:"] { white-space: nowrap; }
+
+/* ---------- Compliance components ---------- */
+.linkish { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.footer .f-name { font-weight: 500; color: var(--ivory); }
+.footer address { font-style: normal; }
+.footer-legal { padding: 24px 0; border-top: 1px solid var(--line-dark); }
+.footer .footer-legal ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 14px; }
+.footer-legal a, .footer-legal .linkish { color: var(--ivory-75); }
+.footer-legal a:hover, .footer-legal .linkish:hover { color: var(--ivory); }
+.offer .terms { font-size: 13px; color: var(--ivory); margin: 14px 0 0; }
+.offer .terms a { color: var(--ivory); }
+
+/* Cookie consent banner */
+.consent { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; padding: 16px; }
+.consent[hidden] { display: none; }
+.consent-inner {
+  max-width: 980px; margin: 0 auto; padding: 22px 24px; background: var(--ink); color: var(--ivory);
+  border: 1px solid var(--line-dark); box-shadow: 0 20px 50px -20px rgba(0, 0, 0, .6);
+  display: grid; gap: 18px; align-items: center;
+}
+@media (min-width: 760px) { .consent-inner { grid-template-columns: 1fr auto; gap: 28px; } }
+.consent p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ivory); }
+.consent a { color: var(--ivory); }
+.consent-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.consent-btns .btn { min-width: 140px; }
+.consent-open .fab { display: none; }
+
+/* Consent-gated embeds */
+.embed { position: relative; background: var(--ink); color: var(--ivory); overflow: hidden; }
+.embed-map { min-height: 460px; flex: 1; border: 1px solid var(--platinum); }
+.embed-video { aspect-ratio: 16 / 9; }
+.embed-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .3; }
+.embed-ph { position: relative; height: 100%; min-height: inherit; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; padding: clamp(24px, 5vw, 56px); }
+.embed-video .embed-ph { position: absolute; inset: 0; }
+.embed-h { font-family: var(--serif); font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.2; margin: 0; }
+.embed-note { font-size: 14px; margin: 0; max-width: 34em; color: var(--ivory); }
+.embed-note a { color: var(--ivory); }
+.embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.embed-map iframe { filter: grayscale(1) contrast(1.05); }
+
+/* Water sports safety */
+.safety { border: 1px solid var(--platinum); padding: 24px 28px; margin-bottom: 24px; background: #fff; }
+.safety h2 { font-size: 1.8rem; margin-bottom: 10px; }
+.safety ul { margin: 0; padding-left: 1.1em; color: var(--ink-70); }
+.age { font-size: .94em; color: var(--ink-70); }
+
+/* Legal pages */
+.legal { padding: calc(var(--nav-h) + 64px) 0 clamp(80px, 10vw, 140px); }
+.legal .wrap { max-width: 860px; }
+.legal h1 { font-size: clamp(2.6rem, 6vw, 4.4rem); margin-bottom: 12px; }
+.legal h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); margin: 48px 0 14px; }
+.legal .meta { color: var(--ink-70); }
+.legal p, .legal li { color: var(--ink); }
+.legal ul { padding-left: 1.2em; }
+.legal a { color: var(--teal); }
+.draft { border-left: 3px solid var(--teal); background: #fff; padding: 16px 20px; margin: 0 0 40px; }
+.legal-toc { border-top: 1px solid var(--platinum); border-bottom: 1px solid var(--platinum); padding: 18px 0; margin: 28px 0 8px; }
+.legal-toc ol { margin: 0; padding-left: 1.3em; columns: 2 16em; }
+.table-wrap { overflow-x: auto; margin: 8px 0 16px; }
+.legal-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: .92em; }
+.legal-table th, .legal-table td { text-align: left; vertical-align: top; padding: 12px 14px 12px 0; border-bottom: 1px solid var(--platinum); }
+.legal-table th { font-weight: 500; }

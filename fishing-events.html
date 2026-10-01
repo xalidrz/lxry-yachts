@@ -21,9 +21,8 @@
   <meta name="twitter:image" content="https://lxry-yachts.vercel.app/images/og.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/cormorant-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -95,7 +94,7 @@
         <div><p class="label">Events &amp; decorations</p><h2>Celebrate between the sky and the sea.</h2></div>
         <p class="lead">Decoration is made to order. Tell us the occasion and we will prepare the yacht for you.</p>
       </div>
-      <div class="services"><div class="service"><h3>Parties</h3><p>Meetings, birthdays, wedding anniversaries and more on a yacht in Dubai.</p></div><div class="service"><h3>Meals</h3><p>Choose from luxurious menus and add a thoughtful touch for your guests.</p></div><div class="service"><h3>Photography</h3><p>Photographers can join your cruise to capture the best views and moments.</p></div><div class="service"><h3>Roses</h3><p>Add bouquets of roses to your trip to say what words cannot.</p></div><div class="service"><h3>Cake</h3><p>A catalogue of cakes to suit every kind of occasion.</p></div><div class="service"><h3>Decoration</h3><p>Decoration packages for every occasion, made to order.</p></div></div>
+      <div class="services"><div class="service"><h3>Parties</h3><p>Meetings, birthdays, wedding anniversaries and more on a yacht in Dubai.</p></div><div class="service"><h3>Meals</h3><p>Choose from a selection of menus to serve your guests on board.</p></div><div class="service"><h3>Photography</h3><p>A photographer can join your cruise to capture the views and your moments.</p></div><div class="service"><h3>Roses</h3><p>Add bouquets of roses to your trip to say what words cannot.</p></div><div class="service"><h3>Cake</h3><p>A catalogue of cakes to suit every kind of occasion.</p></div><div class="service"><h3>Decoration</h3><p>Decoration packages for every occasion, made to order.</p></div></div>
     </div>
   </section>
   
@@ -111,7 +110,7 @@
       <div class="section-head"><p class="label">Book your day</p><h2 id="cta-title">Let’s plan your next trip.</h2></div>
       <hr class="rule">
       <div class="cta-grid" style="padding-top:48px">
-        <p class="lead" style="margin:0">Message us with your date, number of hours and guests. We will reply with availability and a price.</p>
+        <p class="lead" style="margin:0">Message us with your date, number of hours and guests, and we will get back to you.</p>
         <div><p class="who">Yacht rental</p><a class="num nums" href="tel:+971552910101">+971 55 291 0101</a><div class="btn-row"><a class="btn btn-light btn-sm" href="https://wa.me/971552910101" target="_blank" rel="noopener" aria-label="WhatsApp about yacht rental"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost btn-sm" href="tel:+971552910101" aria-label="Call about yacht rental"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
         <div><p class="who">Water sports</p><a class="num nums" href="tel:+971581258311">+971 58 125 8311</a><div class="btn-row"><a class="btn btn-light btn-sm" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="WhatsApp about water sports"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg>WhatsApp</a><a class="btn btn-ghost btn-sm" href="tel:+971581258311" aria-label="Call about water sports"><svg aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>Call</a></div></div>
       </div>
@@ -123,7 +122,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <p style="margin:0">Luxury Yachts L.L.C<br>Licensed by Dubai Maritime City Authority</p>
+        <p style="margin:0"><strong class="f-name">Luxury Yachts L.L.C</strong><br>Licensed by Dubai Maritime City Authority<br>Trade licence no. [TRADE LICENSE NO.]</p>
         <ul class="socials"><li><a class="social" href="https://instagram.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Instagram"><svg aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg></a></li><li><a class="social" href="https://tiktok.com/@lxryae" target="_blank" rel="noopener" aria-label="LXRY on TikTok"><svg aria-hidden="true" focusable="false"><use href="#i-tiktok"/></svg></a></li><li><a class="social" href="https://facebook.com/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Facebook"><svg aria-hidden="true" focusable="false"><use href="#i-facebook"/></svg></a></li><li><a class="social" href="https://snapchat.com/add/lxryae" target="_blank" rel="noopener" aria-label="LXRY on Snapchat"><svg aria-hidden="true" focusable="false"><use href="#i-snapchat"/></svg></a></li><li><a class="social" href="https://youtube.com/@lxryae" target="_blank" rel="noopener" aria-label="LXRY on YouTube"><svg aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg></a></li><li><a class="social" href="https://www.linkedin.com/company/lxryae" target="_blank" rel="noopener" aria-label="LXRY on LinkedIn"><svg aria-hidden="true" focusable="false"><use href="#i-linkedin"/></svg></a></li><li><a class="social" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="LXRY on WhatsApp"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a></li></ul>
       </div>
       <div>
@@ -137,14 +136,17 @@
       <div>
         <p class="label">Contact</p>
         <ul>
-          <li>Yachts: <a href="tel:+971552910101">+971 55 291 0101</a></li>
+          <li>Yacht rental: <a href="tel:+971552910101">+971 55 291 0101</a></li>
           <li>Water sports: <a href="tel:+971581258311">+971 58 125 8311</a></li>
           <li><a href="mailto:lxryae@gmail.com">lxryae@gmail.com</a></li>
-          <li>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</li>
+          <li><address>Jumeirah 3, Fishing Harbour,<br>Umm Suqeim 2, Dubai, UAE</address></li>
         </ul>
       </div>
     </div>
     <div class="footer-word" aria-hidden="true"><span>L</span><span>X</span><span>R</span><span>Y</span></div>
+    <nav class="footer-legal" aria-label="Legal">
+      <ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li><li><a href="cookies.html">Cookie Policy</a></li><li><a href="booking-policy.html">Booking &amp; Cancellation</a></li><li><button class="linkish" type="button" data-cookie-settings>Cookie settings</button></li></ul>
+    </nav>
     <div class="footer-base">
       <span>© <span id="year">2026</span> Luxury Yachts L.L.C. All rights reserved.</span>
       <a href="#main">Back to top ↑</a>
@@ -152,7 +154,17 @@
   </div>
 </footer>
 
-<a class="btn fab" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a>
+<div class="consent" id="consent" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent-inner">
+    <p><strong>Cookies and third-party content.</strong> This site only stores your choice below. If you accept, we load Google Maps and a YouTube video, which may set cookies and send data to Google. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+    <div class="consent-btns">
+      <button class="btn btn-primary" type="button" data-consent="accepted">Accept</button>
+      <button class="btn btn-primary" type="button" data-consent="rejected">Reject</button>
+    </div>
+  </div>
+</div>
+
+<aside class="fab-wrap" aria-label="Quick contact"><a class="btn fab" href="https://wa.me/971581258311" target="_blank" rel="noopener" aria-label="Chat with LXRY on WhatsApp (opens in a new tab)"><svg aria-hidden="true" focusable="false"><use href="#i-whatsapp"/></svg></a></aside>
 
 <script src="main.js" defer></script>
 </body>
