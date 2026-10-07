@@ -22,7 +22,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
               {item.href ? (
                 <Link
                   href={item.href}
-                  className="transition-colors duration-150 hover:text-white"
+                  className="transition-colors duration-150 hover:text-on-dark"
                 >
                   {item.label}
                 </Link>
@@ -37,7 +37,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
   );
 }
 
-/** Dark steel title band that sits under the floating header on inner pages. */
+/** Dark charcoal title band that sits under the floating header on inner pages. */
 export function PageHero({
   title,
   children,
@@ -48,7 +48,7 @@ export function PageHero({
   crumbs?: Crumb[];
 }) {
   return (
-    <section className="on-dark bg-steel pt-32 pb-12 text-white sm:pt-36 sm:pb-14">
+    <section className="on-dark bg-charcoal pt-32 pb-12 text-on-dark sm:pt-36 sm:pb-14">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         {crumbs && (
           <div className="mb-5">
@@ -59,7 +59,7 @@ export function PageHero({
           {title}
         </h1>
         {children && (
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-[#C9D3D8]">
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-on-dark-muted">
             {children}
           </p>
         )}

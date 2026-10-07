@@ -10,10 +10,7 @@ export function LanguageToggle({ className }: { className?: string }) {
     <div
       role="group"
       aria-label="Language"
-      className={cn(
-        "flex items-center gap-1.5 text-sm text-[#C9D3D8]",
-        className,
-      )}
+      className={cn("flex items-center gap-1.5 text-sm", className)}
     >
       <button
         type="button"
@@ -21,15 +18,15 @@ export function LanguageToggle({ className }: { className?: string }) {
         dir="rtl"
         aria-disabled="true"
         title="Arabic version coming soon"
-        className="cursor-not-allowed rounded px-1 transition-colors duration-150 hover:text-white"
+        className="cursor-not-allowed rounded px-1 text-toggle-inactive"
       >
         عربي
         <span className="sr-only"> (coming soon)</span>
       </button>
-      <span aria-hidden="true" className="text-white/40">
+      <span aria-hidden="true" className="text-border">
         /
       </span>
-      <span lang="en" aria-current="true" className="px-1 font-bold text-white">
+      <span lang="en" aria-current="true" className="px-1 font-bold text-foreground">
         EN
       </span>
     </div>

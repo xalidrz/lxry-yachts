@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { defaultLocale, localeDir } from "@/lib/i18n";
+import { getLogo } from "@/lib/logo";
 import { ALLOW_INDEXING, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const archivo = Archivo({
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1B3747",
+  themeColor: "#2A2B2D",
   width: "device-width",
   initialScale: 1,
 };
@@ -49,6 +50,7 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const logo = getLogo();
   return (
     <html
       lang={defaultLocale}
@@ -58,15 +60,15 @@ export default function RootLayout({
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"
-          className="sr-only z-[60] rounded-full bg-copper px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:start-4 focus:top-4"
+          className="sr-only z-[60] rounded-full bg-brand px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:start-4 focus:top-4"
         >
           Skip to content
         </a>
-        <SiteHeader />
+        <SiteHeader logo={logo} />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <SiteFooter />
+        <SiteFooter logo={logo} />
         <WhatsAppFloat />
       </body>
     </html>

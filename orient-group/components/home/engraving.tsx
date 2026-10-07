@@ -44,11 +44,11 @@ export function Engraving() {
             key={title}
             className="rounded-2xl border border-white/15 bg-white/[0.06] p-6"
           >
-            <span className="flex size-12 items-center justify-center rounded-xl bg-copper text-white">
+            <span className="flex size-12 items-center justify-center rounded-xl bg-white/10 text-on-dark">
               <Icon className="size-6" aria-hidden="true" />
             </span>
             <h3 className="font-display mt-5 text-lg font-bold">{title}</h3>
-            <p className="mt-2 leading-relaxed text-[#C9D3D8]">{text}</p>
+            <p className="mt-2 leading-relaxed text-on-dark-muted">{text}</p>
           </li>
         ))}
       </ul>

@@ -18,9 +18,8 @@ const gases = [
 
 export function Gases() {
   return (
-    <Section tone="dark" id="refrigerant-gases">
+    <Section tone="white" id="refrigerant-gases">
       <SectionHeading
-        tone="dark"
         eyebrow="Refrigerant gases"
         title="Refrigerant gases"
       >
@@ -35,12 +34,12 @@ export function Gases() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Ask for price and cylinder sizes for ${label} on WhatsApp`}
-              className="group flex h-full min-h-32 flex-col items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-4 text-center transition-colors duration-150 hover:border-white/40 hover:bg-white/[0.12]"
+              className="group flex h-full min-h-32 flex-col items-center justify-center gap-3 rounded-2xl border bg-background p-4 text-center transition-colors duration-150 hover:border-brand-grey/60 hover:bg-white"
             >
               <span className="font-display text-balance text-2xl leading-tight font-extrabold">
                 {label}
               </span>
-              <span className="flex items-center gap-2 text-sm text-[#C9D3D8]">
+              <span className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span className="flex size-7 items-center justify-center rounded-full bg-whatsapp text-white">
                   <MessageCircle className="size-4" aria-hidden="true" />
                 </span>
@@ -50,7 +49,7 @@ export function Gases() {
           </li>
         ))}
       </ul>
-      <p className="mt-8 text-[0.9375rem] text-[#C9D3D8]">
+      <p className="mt-8 text-[0.9375rem] text-muted-foreground">
         More about each gas:{" "}
         {gases.map(({ label, slug }, i) => {
           const product = getProduct(slug);
@@ -60,7 +59,7 @@ export function Gases() {
               {product ? (
                 <Link
                   href={`/products/${product.slug}`}
-                  className="font-semibold text-white underline decoration-white/30 underline-offset-4 transition-colors duration-150 hover:decoration-white"
+                  className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand"
                 >
                   {label}
                 </Link>

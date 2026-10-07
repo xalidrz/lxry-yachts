@@ -39,7 +39,7 @@ export function ProductView({
         ])}
       />
 
-      <div className="on-dark bg-steel pt-28 pb-6 sm:pt-32">
+      <div className="on-dark bg-charcoal pt-28 pb-6 sm:pt-32">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <Breadcrumbs
             items={[
@@ -63,7 +63,7 @@ export function ProductView({
           />
           <div>
             <div className="flex flex-wrap gap-2">
-              <Badge variant="copper">{category.title}</Badge>
+              <Badge variant="muted">{category.title}</Badge>
               {product.brand !== ANY_BRAND && <Badge>{product.brand}</Badge>}
             </div>
             <h1 className="font-display mt-4 text-3xl leading-tight font-extrabold text-balance sm:text-4xl">

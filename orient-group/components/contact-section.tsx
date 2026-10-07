@@ -26,12 +26,12 @@ export function ContactSection({
         <div className="rounded-2xl border bg-card p-6 sm:p-8">
           <ContactDetails tone="light" />
         </div>
-        <div className="on-dark flex flex-col justify-between gap-8 rounded-2xl bg-steel p-6 text-white sm:p-8">
+        <div className="on-dark flex flex-col justify-between gap-8 rounded-2xl bg-charcoal p-6 text-on-dark sm:p-8">
           <div>
             <h2 className="font-display text-2xl leading-snug font-extrabold">
               Need a price?
             </h2>
-            <p className="mt-3 leading-relaxed text-[#C9D3D8]">
+            <p className="mt-3 leading-relaxed text-on-dark-muted">
               We do not sell online. Message us the products and quantities you
               need and we reply with a price and delivery time.
             </p>

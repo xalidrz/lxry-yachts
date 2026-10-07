@@ -7,7 +7,7 @@ type SectionProps = React.ComponentProps<"section"> & {
 const tones = {
   light: "bg-background text-foreground",
   white: "bg-white text-foreground",
-  dark: "on-dark bg-steel text-white",
+  dark: "on-dark bg-charcoal text-on-dark",
 } as const;
 
 export function Section({ tone = "light", className, children, ...props }: SectionProps) {
@@ -39,7 +39,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mb-3 text-sm font-bold tracking-[0.16em] uppercase",
-            tone === "dark" ? "text-[#E3A07F]" : "text-copper-hover",
+            tone === "dark" ? "text-on-dark-muted" : "text-brand-grey",
           )}
         >
           {eyebrow}
@@ -48,11 +48,13 @@ export function SectionHeading({
       <Heading className="font-display text-[1.75rem] leading-tight font-extrabold sm:text-4xl">
         {title}
       </Heading>
+      {/* Short red rule, echoing the underline in the logo. */}
+      <span aria-hidden="true" className="mt-4 block h-[3px] w-12 rounded-full bg-brand" />
       {children && (
         <p
           className={cn(
             "mt-4 text-lg leading-relaxed",
-            tone === "dark" ? "text-[#C9D3D8]" : "text-muted-foreground",
+            tone === "dark" ? "text-on-dark-muted" : "text-muted-foreground",
           )}
         >
           {children}

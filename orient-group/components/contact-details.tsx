@@ -14,8 +14,8 @@ type Tone = "light" | "dark";
 
 const linkClass = {
   light:
-    "text-foreground underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-copper hover:decoration-copper",
-  dark: "text-white underline decoration-white/30 underline-offset-4 transition-colors duration-150 hover:decoration-white",
+    "text-foreground underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand",
+  dark: "text-on-dark underline decoration-white/30 underline-offset-4 transition-colors duration-150 hover:decoration-white",
 } as const;
 
 function Row({
@@ -34,7 +34,7 @@ function Row({
       <span
         className={cn(
           "mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full",
-          tone === "dark" ? "bg-white/10 text-white" : "bg-copper/10 text-copper",
+          tone === "dark" ? "bg-white/10 text-on-dark" : "bg-muted text-brand-grey",
         )}
       >
         {icon}
@@ -43,7 +43,7 @@ function Row({
         <p
           className={cn(
             "text-xs font-semibold tracking-[0.12em] uppercase",
-            tone === "dark" ? "text-[#A9B8C0]" : "text-muted-foreground",
+            tone === "dark" ? "text-on-dark-muted" : "text-muted-foreground",
           )}
         >
           {label}
@@ -81,7 +81,7 @@ export function ContactDetails({ tone = "light" }: { tone?: Tone }) {
         <a href={`tel:${OFFICE_PHONE.tel}`} className={link}>
           {OFFICE_PHONE.display}
         </a>
-        <p className={tone === "dark" ? "text-[#C9D3D8]" : "text-muted-foreground"}>
+        <p className={tone === "dark" ? "text-on-dark-muted" : "text-muted-foreground"}>
           {FAX.label}: {FAX.display}
         </p>
       </Row>
@@ -99,7 +99,7 @@ export function ContactDetails({ tone = "light" }: { tone?: Tone }) {
       <Row tone={tone} label="Email" icon={<Mail className={icon} aria-hidden="true" />}>
         {EMAILS.map((e) => (
           <p key={e.address} className="break-words">
-            <span className={tone === "dark" ? "text-[#A9B8C0]" : "text-muted-foreground"}>
+            <span className={tone === "dark" ? "text-on-dark-muted" : "text-muted-foreground"}>
               {e.label}:{" "}
             </span>
             <a href={`mailto:${e.address}`} className={link}>

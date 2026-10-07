@@ -27,7 +27,7 @@ export function Testimonials() {
             key={t.name}
             className="flex flex-col rounded-2xl border bg-background p-6 sm:p-8"
           >
-            <Quote className="size-8 text-copper" aria-hidden="true" />
+            <Quote className="size-8 text-brand" aria-hidden="true" />
             <blockquote className="mt-4 flex-1 text-lg leading-relaxed">
               {t.quote}
             </blockquote>

@@ -39,7 +39,7 @@ export function CategoryView({ category }: { category: Category }) {
             <li>
               <Link
                 href="/products"
-                className="inline-flex min-h-11 items-center rounded-full border border-border bg-white px-5 text-[0.9375rem] font-semibold transition-colors duration-150 hover:border-steel"
+                className="inline-flex min-h-11 items-center rounded-full border border-border bg-white px-5 text-[0.9375rem] font-semibold transition-colors duration-150 hover:border-brand-grey"
               >
                 All
               </Link>
@@ -52,8 +52,8 @@ export function CategoryView({ category }: { category: Category }) {
                   className={cn(
                     "inline-flex min-h-11 items-center rounded-full border px-5 text-[0.9375rem] font-semibold transition-colors duration-150",
                     c.slug === category.slug
-                      ? "border-steel bg-steel text-white"
-                      : "border-border bg-white hover:border-steel",
+                      ? "border-brand bg-brand text-white"
+                      : "border-border bg-white hover:border-brand-grey",
                   )}
                 >
                   {c.title}

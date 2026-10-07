@@ -27,7 +27,7 @@ export function ProductCard({ product, headingLevel = "h2", priority }: Props) {
   const category = getCategory(product.category);
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-shadow duration-150 hover:shadow-[0_10px_30px_rgba(27,55,71,0.14)]">
+    <article className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-shadow duration-150 hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]">
       <ProductImage
         product={product}
         sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -35,7 +35,7 @@ export function ProductCard({ product, headingLevel = "h2", priority }: Props) {
       />
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex flex-wrap gap-2">
-          {category && <Badge variant="copper">{category.title}</Badge>}
+          {category && <Badge variant="muted">{category.title}</Badge>}
           {product.brand !== ANY_BRAND && <Badge>{product.brand}</Badge>}
         </div>
         <Heading className="font-display text-lg leading-snug font-bold text-foreground">

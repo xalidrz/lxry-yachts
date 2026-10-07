@@ -12,7 +12,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-1.5 text-sm text-[#C9D3D8] sm:gap-2",
+        "flex flex-wrap items-center gap-1.5 text-sm text-on-dark-muted sm:gap-2",
         className,
       )}
       {...props}
@@ -35,7 +35,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
     <span
       data-slot="breadcrumb-page"
       aria-current="page"
-      className={cn("font-semibold text-white", className)}
+      className={cn("font-semibold text-on-dark", className)}
       {...props}
     />
   );
@@ -50,7 +50,7 @@ function BreadcrumbSeparator({
       data-slot="breadcrumb-separator"
       role="presentation"
       aria-hidden="true"
-      className={cn("text-[#8FA1AB] [&>svg]:size-3.5 rtl:[&>svg]:-scale-x-100", className)}
+      className={cn("text-on-dark-muted [&>svg]:size-3.5 rtl:[&>svg]:-scale-x-100", className)}
       {...props}
     >
       <ChevronRight />

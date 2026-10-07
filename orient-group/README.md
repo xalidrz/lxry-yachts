@@ -33,7 +33,8 @@ Real photos: put the file in `public/products/` and set `image: "/products/<file
 | Phones, emails, address, WhatsApp number, **Google Maps link** | `lib/site.ts` (`GOOGLE_MAPS_URL` is one constant) |
 | Brand logos | `data/brands.ts` (add `logo: "/brands/name.svg"`) |
 | Categories | `data/categories.ts` |
-| Colours and fonts | `app/globals.css`, `app/layout.tsx` |
+| Colours (brand tokens, defined once) and fonts | `app/globals.css` (`:root`), `app/layout.tsx` |
+| Logo | `public/logo.png`. Read at build time; header and footer fall back to a text logo if the file is missing |
 | Arabic / RTL | `lib/i18n.ts` and `components/language-toggle.tsx` (toggle is in place, Arabic side inactive; components use logical start/end spacing) |
 
 Refrigerant gas pages have no specification table: they show "Contact us for specifications, cylinder sizes and availability." with a WhatsApp button (`specs: []` plus `specsPrompt`). The R600 entry reads "R600 / R600a" until the client confirms which he stocks.

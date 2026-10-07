@@ -58,12 +58,12 @@ export function ProductImage({
       role="img"
       aria-label={`Photo placeholder for ${productAlt(product)}`}
       className={cn(
-        "relative flex aspect-[4/3] flex-col items-center justify-center gap-3 overflow-hidden bg-steel text-center text-white",
+        "relative flex aspect-[4/3] flex-col items-center justify-center gap-3 overflow-hidden bg-charcoal text-center text-on-dark",
         className,
       )}
       style={{
         backgroundImage:
-          "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(145deg, #1B3747 0%, #234559 100%)",
+          "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(145deg, #2A2B2D 0%, #36373A 100%)",
         backgroundSize: "28px 28px, 28px 28px, 100% 100%",
       }}
     >
@@ -92,17 +92,13 @@ export function ProductImage({
         </span>
         <span
           className={cn(
-            "block text-[#A9B8C0]",
+            "block text-on-dark-muted",
             large ? "text-sm" : "text-xs",
           )}
         >
           Product photo coming soon
         </span>
       </span>
-      <span
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-1 bg-copper"
-      />
     </div>
   );
 }

@@ -14,10 +14,10 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#1B3747",
-          color: "#FFFFFF",
+          background: "#2A2B2D",
+          color: "#F2F2F3",
           padding: 72,
-          borderBottom: "14px solid #B4532A",
+          borderBottom: "14px solid #CD181F",
         }}
       >
         <div style={{ display: "flex", fontSize: 40, fontWeight: 700, letterSpacing: 1 }}>
@@ -27,7 +27,7 @@ export default function OpenGraphImage() {
           <div style={{ display: "flex", fontSize: 76, fontWeight: 800, lineHeight: 1.08 }}>
             HVAC, electrical and fixing materials for Kuwait
           </div>
-          <div style={{ display: "flex", fontSize: 32, color: "#C9D3D8" }}>
+          <div style={{ display: "flex", fontSize: 32, color: "#B5B6B8" }}>
             Shuwaikh Industrial Area · Since 2010
           </div>
         </div>

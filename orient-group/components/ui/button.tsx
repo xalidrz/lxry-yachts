@@ -6,21 +6,21 @@ import { cn } from "@/lib/utils";
 
 /**
  * Pill buttons, icon on the left, 44px minimum tap height.
- * primary = copper, whatsapp = green, secondary = transparent with a 1px border
- * (use secondary-dark on steel / dark surfaces).
+ * primary = brand red, whatsapp = green, secondary = transparent with a 1px border
+ * (use secondary-dark on charcoal / dark surfaces).
  */
 const buttonVariants = cva(
   "inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full border border-transparent px-6 py-2.5 text-base font-semibold leading-none transition-colors duration-150 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-[1.15em] [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        primary: "bg-copper text-white hover:bg-copper-hover",
+        primary: "bg-brand text-white hover:bg-brand-hover",
         whatsapp: "bg-whatsapp text-white hover:bg-whatsapp-hover",
         secondary:
-          "border-border bg-transparent text-foreground hover:border-steel hover:bg-steel/5",
+          "border-border bg-transparent text-foreground hover:border-brand-grey hover:bg-black/[0.04]",
         "secondary-dark":
           "border-white/35 bg-transparent text-white hover:border-white/70 hover:bg-white/10",
-        ghost: "text-foreground hover:bg-steel/10",
+        ghost: "text-foreground hover:bg-black/5",
       },
       size: {
         default: "",

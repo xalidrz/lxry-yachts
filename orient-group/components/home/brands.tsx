@@ -27,7 +27,7 @@ export function Brands() {
                 />
               </span>
             ) : (
-              <span className="font-display text-base font-bold text-steel sm:text-lg">
+              <span className="font-display text-base font-bold text-foreground sm:text-lg">
                 {brand.name}
               </span>
             )}

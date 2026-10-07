@@ -1,8 +1,10 @@
 import Link from "next/link";
 
 import { ContactDetails } from "@/components/contact-details";
+import { SiteLogo } from "@/components/site-logo";
 import { categories } from "@/data/categories";
-import { LEGAL_NAME, SITE_NAME } from "@/lib/site";
+import type { Logo } from "@/lib/logo";
+import { LEGAL_NAME } from "@/lib/site";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -13,15 +15,25 @@ const quickLinks = [
 ];
 
 const linkClass =
-  "inline-block py-1 text-[#C9D3D8] transition-colors duration-150 hover:text-white";
+  "inline-block py-1 text-on-dark-muted transition-colors duration-150 hover:text-white";
 
-export function SiteFooter() {
+export function SiteFooter({ logo }: { logo: Logo | null }) {
   return (
-    <footer className="on-dark bg-steel-deep text-white">
+    <footer className="on-dark bg-charcoal text-on-dark">
       <div className="mx-auto grid max-w-[1200px] gap-10 px-4 pt-14 pb-10 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.4fr]">
         <div>
-          <p className="font-display text-2xl font-bold">{SITE_NAME}</p>
-          <p className="mt-3 max-w-xs text-[0.9375rem] leading-relaxed text-[#C9D3D8]">
+          {/* White panel so the logo's grey lettering stays readable on charcoal. */}
+          <Link
+            href="/"
+            className="inline-flex rounded-xl bg-white px-4 py-3"
+          >
+            <SiteLogo
+              logo={logo}
+              className="max-w-[240px]"
+              textClassName="text-xl text-foreground"
+            />
+          </Link>
+          <p className="mt-5 max-w-xs text-[0.9375rem] leading-relaxed text-on-dark-muted">
             HVAC, electrical and fixing materials for MEP contractors, HVAC
             installers and maintenance companies in Kuwait. Supplying from
             Shuwaikh Industrial Area since 2010.
@@ -29,7 +41,7 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label="Footer quick links">
-          <h2 className="font-display mb-3 text-sm font-bold tracking-[0.14em] text-[#8FA1AB] uppercase">
+          <h2 className="font-display mb-3 text-sm font-bold tracking-[0.14em] text-on-dark-muted uppercase">
             Quick links
           </h2>
           <ul>
@@ -44,7 +56,7 @@ export function SiteFooter() {
         </nav>
 
         <nav aria-label="Footer product categories">
-          <h2 className="font-display mb-3 text-sm font-bold tracking-[0.14em] text-[#8FA1AB] uppercase">
+          <h2 className="font-display mb-3 text-sm font-bold tracking-[0.14em] text-on-dark-muted uppercase">
             Products
           </h2>
           <ul>
@@ -59,7 +71,7 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <h2 className="font-display mb-4 text-sm font-bold tracking-[0.14em] text-[#8FA1AB] uppercase">
+          <h2 className="font-display mb-4 text-sm font-bold tracking-[0.14em] text-on-dark-muted uppercase">
             Contact
           </h2>
           <ContactDetails tone="dark" />
@@ -67,7 +79,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-[1200px] px-4 py-6 pr-20 text-sm text-[#A9B8C0] sm:px-6">
+        <div className="mx-auto max-w-[1200px] px-4 py-6 pr-20 text-sm text-on-dark-muted sm:px-6">
           © 2026 {LEGAL_NAME}
         </div>
       </div>

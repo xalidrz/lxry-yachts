@@ -93,8 +93,8 @@ export function ProductBrowser({ products, categories }: Props) {
                 className={cn(
                   pillBase,
                   active
-                    ? "border-steel bg-steel text-white"
-                    : "border-border bg-white text-foreground hover:border-steel",
+                    ? "border-brand bg-brand text-white"
+                    : "border-border bg-white text-foreground hover:border-brand-grey",
                 )}
               >
                 {pill.title}
@@ -120,7 +120,7 @@ export function ProductBrowser({ products, categories }: Props) {
         </ul>
       ) : (
         <div className="mt-4 flex flex-col items-start gap-5 rounded-2xl border bg-card p-6 sm:p-8">
-          <SearchX className="size-9 text-copper" aria-hidden="true" />
+          <SearchX className="size-9 text-brand-grey" aria-hidden="true" />
           <p className="max-w-xl text-lg">
             We stock more than is listed here.
             {term && (
