@@ -102,7 +102,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/copper-coil-rings.jpg",
   },
   {
     slug: "straight-copper-pipe-type-k-l-m",
@@ -177,7 +177,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/thermal-insulation-pipes.jpg",
   },
   {
     slug: "flexible-ducts-and-duct-connectors",
@@ -233,7 +233,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/ductwork-supply.jpg",
   },
   {
     slug: "duct-sealants-and-adhesives",
@@ -259,7 +259,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/duct-sealant-soudal.jpg",
   },
   {
     slug: "capacitors-and-contactors",
@@ -343,7 +343,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/coil-cleaner-venture-bottle.jpg",
   },
   {
     slug: "installation-tools-and-accessories",
@@ -392,7 +392,7 @@ export const products: Product[] = [
         "R22 غاز تبريد يُستخدم في أنظمة التكييف والتبريد القديمة، ويجري التخلص منه تدريجياً بموجب بروتوكول مونتريال، لذلك يُستخدم أساساً لصيانة المعدات المصممة للعمل به.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r22-cylinder.jpg",
   },
   {
     slug: "r410a-refrigerant-gas",
@@ -413,7 +413,7 @@ export const products: Product[] = [
         "يُستخدم R410A في أنظمة التكييف الحديثة من نوع السبليت والمخفية وأنظمة VRF، ويعمل بضغط أعلى من R22، لذلك يحتاج إلى عدادات وخراطيم وأسطوانات مخصصة لـ R410A.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r410a-cylinder.jpg",
   },
   {
     slug: "r134a-refrigerant-gas",
@@ -434,7 +434,7 @@ export const products: Product[] = [
         "يُستخدم R134a في المبردات (التشيلر) والتبريد متوسط الحرارة والثلاجات المنزلية وتكييف السيارات.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r134a-cylinder.jpg",
   },
   {
     slug: "r404a-refrigerant-gas",
@@ -455,7 +455,7 @@ export const products: Product[] = [
         "يُستخدم R404A في التبريد التجاري منخفض ومتوسط الحرارة مثل غرف التبريد والفريزرات وثلاجات العرض.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r404a-cylinder.jpg",
   },
   {
     slug: "r407c-refrigerant-gas",
