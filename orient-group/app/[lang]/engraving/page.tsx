@@ -6,8 +6,10 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Section, SectionHeading } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
-import { getEngravingItems, getLabelListChecklist } from "@/data/engraving";
+import { EngravingGallery } from "@/components/engraving-gallery";
+import { getAllEngravingServices, getLabelListChecklist } from "@/data/engraving";
 import { getDictionary } from "@/lib/dictionaries";
+import { getEngravingGallery } from "@/lib/engraving-gallery";
 import { localePath } from "@/lib/i18n";
 import { getLocale, type LangParams } from "@/lib/page-params";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
@@ -26,6 +28,7 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 export default async function EngravingPage({ params }: LangParams) {
   const locale = await getLocale(params);
   const t = getDictionary(locale);
+  const gallery = getEngravingGallery();
   return (
     <>
       <JsonLd
@@ -44,7 +47,7 @@ export default async function EngravingPage({ params }: LangParams) {
 
       <Section className="pt-10 sm:pt-12">
         <ul className="grid gap-5 sm:grid-cols-2">
-          {getEngravingItems(locale).map(({ icon, title, text }) => (
+          {getAllEngravingServices(locale).map(({ icon, title, text }) => (
             <li key={title} className="flex gap-5 rounded-2xl border bg-card p-6">
               <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-charcoal text-on-dark">
                 <EngravingIcon icon={icon} className="size-6" />
@@ -58,7 +61,27 @@ export default async function EngravingPage({ params }: LangParams) {
         </ul>
       </Section>
 
-      <Section tone="white">
+      {/* Sample work: hidden until photos are added to public/engraving/. */}
+      {gallery.length > 0 && (
+        <Section tone="white" id="sample-work">
+          <SectionHeading title={t.engravingPage.galleryTitle}>
+            {t.engravingPage.galleryText}
+          </SectionHeading>
+          <EngravingGallery
+            images={gallery}
+            locale={locale}
+            labels={{
+              close: t.engravingPage.galleryClose,
+              prev: t.engravingPage.galleryPrev,
+              next: t.engravingPage.galleryNext,
+              open: t.engravingPage.galleryOpen,
+              viewer: t.engravingPage.galleryViewer,
+            }}
+          />
+        </Section>
+      )}
+
+      <Section tone={gallery.length > 0 ? "light" : "white"}>
         <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start">
           <div>
             <SectionHeading title={t.engravingPage.checklistTitle} className="mb-6">

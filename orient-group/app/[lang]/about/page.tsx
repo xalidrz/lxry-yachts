@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BadgeCheck, MessageCircle, Truck } from "lucide-react";
 
 import { BrandLogo } from "@/components/brand-logo";
@@ -7,6 +8,7 @@ import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Section, SectionHeading } from "@/components/section";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
+import { aboutImages } from "@/data/about-images";
 import { brands } from "@/data/brands";
 import { labelledProjects } from "@/data/projects";
 import { getDictionary } from "@/lib/dictionaries";
@@ -48,13 +50,24 @@ export default async function AboutPage({ params }: LangParams) {
       </PageHero>
 
       <Section>
-        <div className="max-w-3xl">
-          <SectionHeading title={t.about.storyTitle} />
-          <div className="space-y-5 text-lg leading-relaxed">
-            {t.about.story.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+          <div>
+            <SectionHeading title={t.about.storyTitle} />
+            <div className="space-y-5 text-lg leading-relaxed">
+              {t.about.story.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
           </div>
+          {/* Main About image: the office team. */}
+          <Image
+            src={aboutImages.team.src}
+            alt={aboutImages.team.alt[locale]}
+            width={aboutImages.team.width}
+            height={aboutImages.team.height}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            className="h-auto w-full rounded-2xl border object-cover"
+          />
         </div>
       </Section>
 
@@ -77,6 +90,36 @@ export default async function AboutPage({ params }: LangParams) {
       </Section>
 
       <Section>
+        <SectionHeading title={t.about.shopTitle}>{t.about.shopText}</SectionHeading>
+        <div className="grid gap-4 md:grid-cols-[1.4fr_1fr] md:grid-rows-2">
+          <Image
+            src={aboutImages.shopFront.src}
+            alt={aboutImages.shopFront.alt[locale]}
+            width={aboutImages.shopFront.width}
+            height={aboutImages.shopFront.height}
+            sizes="(min-width: 768px) 60vw, 100vw"
+            className="h-full w-full rounded-2xl border object-cover md:row-span-2"
+          />
+          <Image
+            src={aboutImages.counter.src}
+            alt={aboutImages.counter.alt[locale]}
+            width={aboutImages.counter.width}
+            height={aboutImages.counter.height}
+            sizes="(min-width: 768px) 40vw, 100vw"
+            className="h-full w-full rounded-2xl border object-cover"
+          />
+          <Image
+            src={aboutImages.display.src}
+            alt={aboutImages.display.alt[locale]}
+            width={aboutImages.display.width}
+            height={aboutImages.display.height}
+            sizes="(min-width: 768px) 40vw, 100vw"
+            className="h-full max-h-[420px] w-full rounded-2xl border object-cover object-top"
+          />
+        </div>
+      </Section>
+
+      <Section tone="white">
         <SectionHeading title={t.about.brandsTitle} />
         <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-8">
           {brands.map((brand) => (
@@ -106,7 +149,7 @@ export default async function AboutPage({ params }: LangParams) {
 
       {/* Hidden until names are added to data/projects.ts. */}
       {labelledProjects.length > 0 && (
-        <Section tone="white">
+        <Section>
           <SectionHeading title={t.about.projectsTitle} />
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {labelledProjects.map((name) => (

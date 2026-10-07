@@ -47,10 +47,38 @@ export const MOBILES: PhoneNumber[] = [
   { label: "Mobile", display: "9696 4571", tel: "+96596964571" },
 ];
 
+/** Shown in this order: general first, then sales and import. */
 export const EMAILS = [
+  { label: "General", address: "info@orientgroupkwt.com" },
   { label: "Sales", address: "mechorient@gmail.com" },
   { label: "Import", address: "orientgroup.kwt@gmail.com" },
-  { label: "General", address: "info@orientgroupkwt.com" },
+];
+
+/**
+ * PLACEHOLDER opening hours: edit these lines (one entry per line) before launch.
+ * They are shown on the Contact page.
+ */
+export const OPENING_HOURS = {
+  en: ["Saturday to Thursday: 8:00 AM – 5:00 PM", "Friday: Closed"],
+  ar: ["من السبت إلى الخميس: 8:00 صباحاً – 5:00 مساءً", "الجمعة: مغلق"],
+};
+
+/** Embedded Google Map on the Contact page (search by address; no API key needed). */
+export const GOOGLE_MAPS_EMBED_URL = (hl: "en" | "ar") =>
+  `https://www.google.com/maps?q=${encodeURIComponent(
+    "Homaizi Complex, Khalifa Al-Jassim Street, Shuwaikh Industrial Area, Kuwait",
+  )}&hl=${hl}&z=16&output=embed`;
+
+/**
+ * Social media links. Leave a url empty and that icon is not shown, so only
+ * fill in the accounts that are active.
+ */
+export const SOCIAL_LINKS: { platform: "facebook" | "instagram" | "linkedin" | "youtube" | "tiktok"; url: string }[] = [
+  { platform: "facebook", url: "" },
+  { platform: "instagram", url: "" },
+  { platform: "linkedin", url: "" },
+  { platform: "youtube", url: "" },
+  { platform: "tiktok", url: "" },
 ];
 
 /** WhatsApp number (international format, digits only) used by every "Ask for price" button. */

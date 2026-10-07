@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone, Smartphone } from "lucide-react";
 
 import { getDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
@@ -10,6 +10,7 @@ import {
   GOOGLE_MAPS_URL,
   MOBILES,
   OFFICE_PHONE,
+  OPENING_HOURS,
 } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -61,9 +62,12 @@ function Row({
 export function ContactDetails({
   tone = "light",
   locale = "en",
+  showHours = false,
 }: {
   tone?: Tone;
   locale?: Locale;
+  /** Opening hours row (Contact page only). */
+  showHours?: boolean;
 }) {
   const t = getDictionary(locale).contact;
   const addressLines = locale === "ar" ? ADDRESS_LINES_AR : ADDRESS_LINES;
@@ -107,6 +111,14 @@ export function ContactDetails({
           </p>
         ))}
       </Row>
+
+      {showHours && (
+        <Row tone={tone} label={t.hours} icon={<Clock className={icon} aria-hidden="true" />}>
+          {OPENING_HOURS[locale].map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+        </Row>
+      )}
 
       <Row tone={tone} label={t.email} icon={<Mail className={icon} aria-hidden="true" />}>
         {EMAILS.map((e) => (

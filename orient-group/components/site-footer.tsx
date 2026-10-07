@@ -1,7 +1,9 @@
 import Link from "next/link";
 
 import { ContactDetails } from "@/components/contact-details";
+import { LanguageToggle } from "@/components/language-toggle";
 import { SiteLogo } from "@/components/site-logo";
+import { SocialLinks } from "@/components/social-links";
 import { categories, localizeCategory } from "@/data/categories";
 import { getDictionary } from "@/lib/dictionaries";
 import { localePath, type Locale } from "@/lib/i18n";
@@ -39,6 +41,15 @@ export function SiteFooter({ locale, logo }: { locale: Locale; logo: Logo | null
           <p className="mt-5 max-w-xs text-[0.9375rem] leading-relaxed text-on-dark-muted">
             {t.footer.blurb}
           </p>
+          <div className="mt-6 space-y-6">
+            <SocialLinks locale={locale} />
+            <div>
+              <p className="font-display mb-1 text-sm font-bold tracking-[0.14em] text-on-dark-muted uppercase">
+                {t.nav.language}
+              </p>
+              <LanguageToggle locale={locale} tone="dark" />
+            </div>
+          </div>
         </div>
 
         <nav aria-label={t.footer.quickLinksAria}>

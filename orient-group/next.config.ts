@@ -16,7 +16,8 @@ const csp = [
   "img-src 'self' data: blob:",
   "font-src 'self'",
   `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
-  "frame-src 'none'",
+  // Only the Google Maps embed on the Contact page may be framed.
+  "frame-src https://www.google.com",
   "frame-ancestors 'none'",
   "object-src 'none'",
   "base-uri 'self'",

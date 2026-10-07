@@ -16,7 +16,16 @@ const options: { locale: Locale; label: string }[] = [
  * choice in a cookie for a year, so proxy.ts sends the visitor to that language
  * next time. Plain <a> links, because the page direction (RTL/LTR) changes.
  */
-export function LanguageToggle({ locale, className }: { locale: Locale; className?: string }) {
+export function LanguageToggle({
+  locale,
+  className,
+  tone = "light",
+}: {
+  locale: Locale;
+  className?: string;
+  /** "dark" for use on the charcoal footer. */
+  tone?: "light" | "dark";
+}) {
   const t = getDictionary(locale);
   const pathname = usePathname();
   const base = stripLocale(pathname);
@@ -28,7 +37,7 @@ export function LanguageToggle({ locale, className }: { locale: Locale; classNam
         return (
           <span key={option.locale} className="flex items-center gap-1.5">
             {i > 0 && (
-              <span aria-hidden="true" className="text-border">
+              <span aria-hidden="true" className={tone === "dark" ? "text-white/30" : "text-border"}>
                 /
               </span>
             )}
@@ -36,7 +45,7 @@ export function LanguageToggle({ locale, className }: { locale: Locale; classNam
               <span
                 lang={option.locale}
                 aria-current="true"
-                className="px-1 font-bold text-foreground"
+                className={cn("px-1 font-bold", tone === "dark" ? "text-on-dark" : "text-foreground")}
               >
                 {option.label}
               </span>
@@ -46,7 +55,12 @@ export function LanguageToggle({ locale, className }: { locale: Locale; classNam
                 lang={option.locale}
                 hrefLang={option.locale}
                 onClick={() => rememberLocale(option.locale)}
-                className="inline-flex min-h-11 items-center rounded px-1 text-toggle-inactive transition-colors duration-150 hover:text-brand"
+                className={cn(
+                  "inline-flex min-h-11 items-center rounded px-1 transition-colors duration-150",
+                  tone === "dark"
+                    ? "text-on-dark-muted hover:text-white"
+                    : "text-toggle-inactive hover:text-brand",
+                )}
               >
                 {option.label}
               </a>

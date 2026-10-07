@@ -1,8 +1,29 @@
-import { Cable, PanelTop, Signpost, Tag, type LucideProps } from "lucide-react";
+import {
+  Cable,
+  Frame,
+  Gift,
+  Layers,
+  PanelTop,
+  Scissors,
+  Signpost,
+  Tag,
+  TreePine,
+  type LucideProps,
+} from "lucide-react";
 
 import type { EngravingItem } from "@/data/engraving";
 
-const icons = { tag: Tag, cable: Cable, panel: PanelTop, signpost: Signpost } as const;
+const icons = {
+  tag: Tag,
+  cable: Cable,
+  panel: PanelTop,
+  signpost: Signpost,
+  scissors: Scissors,
+  gift: Gift,
+  layers: Layers,
+  tree: TreePine,
+  frame: Frame,
+} as const;
 
 export function EngravingIcon({
   icon,

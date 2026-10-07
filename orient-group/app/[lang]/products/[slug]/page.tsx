@@ -40,7 +40,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return pageMetadata({
       locale: lang,
       path: `/products/${slug}`,
-      title: t.seo.categoryTitle(localizeCategory(category, lang).name),
+      title:
+        category.slug === "hvac"
+          ? t.seo.hvacCategoryTitle
+          : t.seo.categoryTitle(localizeCategory(category, lang).name),
       description: categoryMetaDescription(category, lang),
     });
   }

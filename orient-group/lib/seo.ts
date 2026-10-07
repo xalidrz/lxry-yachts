@@ -85,7 +85,11 @@ export function pageMetadata({
 }
 
 export function productTitle(product: Product, locale: Locale) {
-  return productLabel(localizeProduct(product, locale).name, product.brand);
+  const label = productLabel(localizeProduct(product, locale).name, product.brand);
+  // Refrigerant gas pages target "refrigerant gas Kuwait".
+  return product.slug.endsWith("-refrigerant-gas")
+    ? `${label} ${getDictionary(locale).seo.gasTitleSuffix}`
+    : label;
 }
 
 export function productMetaDescription(product: Product, locale: Locale) {

@@ -93,6 +93,9 @@ const en = {
     import: "Import",
     general: "General",
     opensMaps: "(opens Google Maps in a new tab)",
+    hours: "Opening hours",
+    mapTitle: "Map: Orient Group Gulf, Shuwaikh Industrial Area, Kuwait",
+    findUs: "Find us",
   },
   footer: {
     blurb:
@@ -102,6 +105,8 @@ const en = {
     contact: "Contact",
     quickLinksAria: "Footer quick links",
     categoriesAria: "Footer product categories",
+    followUs: "Follow us",
+    social: { facebook: "Facebook", instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube", tiktok: "TikTok" },
   },
   products: {
     title: "Products",
@@ -131,9 +136,13 @@ const en = {
     title: "Brands we supply",
     intro: (n: number) =>
       `${n} brands across HVAC, fixing systems, electrical and bearings. Not every product is listed online, so ask us about any brand.`,
-    askWhich: (b: string) => `Ask us which ${b} products are available.`,
-    askAbout: (b: string) => `Ask about ${b}`,
-    askAboutAria: (b: string) => `Ask about ${b} products on WhatsApp`,
+    dontSee: "Don't see a brand?",
+    askUs: "Ask us on WhatsApp.",
+    openBrand: (b: string) => `${b}: see product lines`,
+    linesTitle: "Product lines",
+    noLines: (b: string) => `Ask us which ${b} products are in stock.`,
+    askBrand: "Ask about this brand on WhatsApp",
+    close: "Close",
     logoAlt: (b: string) => `${b} logo`,
   },
   engravingPage: {
@@ -145,6 +154,14 @@ const en = {
       "A complete list gets you an accurate price on the first reply. A spreadsheet, a photo of a schedule or a typed list all work.",
     readyTitle: "Ready to send it?",
     readyText: "Open WhatsApp, attach your list and send. We confirm the price and delivery time.",
+    servicesTitle: "What we make",
+    galleryTitle: "Sample work",
+    galleryText: "A selection of engraved and printed work for MEP projects. Tap a photo to enlarge it.",
+    galleryViewer: "Sample work photo viewer",
+    galleryOpen: "Enlarge photo: {alt}",
+    galleryClose: "Close photo",
+    galleryPrev: "Previous photo",
+    galleryNext: "Next photo",
   },
   about: {
     title: "About Orient Group Gulf",
@@ -170,6 +187,8 @@ const en = {
         text: "We agree a delivery time with you when we quote and plan around your site programme.",
       },
     ],
+    shopTitle: "Visit our shop",
+    shopText: "Our shop is in Homaizi Complex, Shuwaikh Industrial Area. Come and see the stock, or send your list first on WhatsApp.",
     brandsTitle: "Brands we supply",
     brandsLink: "See all brands",
     projectsTitle: "Projects we've labelled for",
@@ -193,15 +212,15 @@ const en = {
     brand: (b: string) => `Hello Orient Group, which ${b} products do you supply? Please send me prices.`,
   },
   seo: {
-    homeTitle: "HVAC, Electrical and Fixing Materials Supplier in Kuwait | Orient Group Gulf",
+    homeTitle: "HVAC Materials Supplier in Kuwait | Orient Group Gulf",
     homeDescription:
-      "Copper pipes, refrigerant gases, insulation, conduits, chemical anchors and engraved labels for Kuwait contractors. Orient Group Gulf, Shuwaikh Industrial Area, since 2010.",
+      "HVAC materials supplier in Kuwait: copper pipes, refrigerant gas, insulation, conduits, chemical anchors and engraving labels for contractors. Shuwaikh, since 2010.",
     titleSuffix: "Orient Group Gulf Kuwait",
     defaultDescription:
       "Orient Group Gulf supplies HVAC, electrical and fixing materials to MEP contractors in Kuwait from Shuwaikh Industrial Area since 2010.",
-    productsTitle: "HVAC, Electrical and Fixing Products",
+    productsTitle: "HVAC Materials, Refrigerant Gas and Electrical Products",
     productsDescription:
-      "Browse every product Orient Group Gulf supplies in Kuwait: copper pipes, refrigerant gases, chemical anchors, conduits, cables, switchgear and NSK bearings. Ask for price on WhatsApp.",
+      "HVAC materials supplier in Kuwait: copper pipes, refrigerant gas, chemical anchors, conduits, cables, switchgear and NSK bearings. Ask for price on WhatsApp.",
     categoryTitle: (c: string) => `${c} Products in Kuwait`,
     categoryDescription: (c: string, summary: string) =>
       `${c} products in Kuwait: ${summary} Ask for price on WhatsApp from Orient Group Gulf, Shuwaikh.`,
@@ -209,9 +228,11 @@ const en = {
     brandsTitle: "Brands We Supply in Kuwait",
     brandsDescription:
       "Venture, Bossong, NSK, Unistrut, Copeland and more: the HVAC, fixing, electrical and bearing brands Orient Group Gulf supplies from Shuwaikh, Kuwait.",
-    engravingTitle: "Engraving and Labelling for MEP Projects",
+    engravingTitle: "Engraving Labels Kuwait: Valve Tags, Signs, Stickers",
     engravingDescription:
-      "Engraved valve tags, cable markers, switchboard labels, signs and stickers for MEP projects in Kuwait. Send your label list to Orient Group Gulf on WhatsApp.",
+      "Engraving labels in Kuwait: valve tags, cable markers, switchboard labels, signs, stickers and acrylic cutting for MEP projects. Send your list on WhatsApp.",
+    hvacCategoryTitle: "HVAC Materials Supplier in Kuwait",
+    gasTitleSuffix: "Kuwait",
     contactTitle: "Contact",
     contactDescription:
       "Contact Orient Group Gulf in Shuwaikh Industrial Area, Kuwait: office 2492 1705, mobile 9095 0709, WhatsApp, email and map. HVAC, electrical and fixing materials.",
@@ -309,6 +330,9 @@ const ar: Dictionary = {
     import: "الاستيراد",
     general: "عام",
     opensMaps: "(يفتح خرائط Google في نافذة جديدة)",
+    hours: "ساعات العمل",
+    mapTitle: "الخريطة: أورينت جروب جلف، منطقة الشويخ الصناعية، الكويت",
+    findUs: "موقعنا",
   },
   footer: {
     blurb:
@@ -318,6 +342,8 @@ const ar: Dictionary = {
     contact: "اتصل بنا",
     quickLinksAria: "روابط سريعة في التذييل",
     categoriesAria: "فئات المنتجات في التذييل",
+    followUs: "تابعنا",
+    social: { facebook: "فيسبوك", instagram: "إنستغرام", linkedin: "لينكدإن", youtube: "يوتيوب", tiktok: "تيك توك" },
   },
   products: {
     title: "المنتجات",
@@ -347,9 +373,13 @@ const ar: Dictionary = {
     title: "العلامات التجارية التي نوردها",
     intro: (n: number) =>
       `${n} علامة تجارية في التكييف وأنظمة التثبيت والكهرباء والمحامل. لا تُعرض جميع المنتجات على الموقع، لذا اسألنا عن أي علامة تجارية.`,
-    askWhich: (b: string) => `اسألنا عن منتجات ${b} المتوفرة.`,
-    askAbout: (b: string) => `اسأل عن ${b}`,
-    askAboutAria: (b: string) => `اسأل عن منتجات ${b} عبر واتساب`,
+    dontSee: "لا ترى علامة تجارية؟",
+    askUs: "اسألنا عبر واتساب.",
+    openBrand: (b: string) => `${b}: عرض خطوط المنتجات`,
+    linesTitle: "خطوط المنتجات",
+    noLines: (b: string) => `اسألنا عن منتجات ${b} المتوفرة في المخزون.`,
+    askBrand: "اسأل عن هذه العلامة التجارية عبر واتساب",
+    close: "إغلاق",
     logoAlt: (b: string) => `شعار ${b}`,
   },
   engravingPage: {
@@ -361,6 +391,14 @@ const ar: Dictionary = {
       "القائمة الكاملة تمنحك سعراً دقيقاً من أول رد. يمكنك إرسالها كجدول بيانات أو صورة لجدول المشروع أو قائمة مكتوبة.",
     readyTitle: "جاهز لإرسالها؟",
     readyText: "افتح واتساب وأرفق قائمتك ثم أرسلها، وسنؤكد لك السعر وموعد التسليم.",
+    servicesTitle: "ما نقدمه",
+    galleryTitle: "نماذج من أعمالنا",
+    galleryText: "مجموعة من أعمال الحفر والطباعة لمشاريع الأعمال الكهروميكانيكية. اضغط على أي صورة لتكبيرها.",
+    galleryViewer: "عارض صور نماذج الأعمال",
+    galleryOpen: "تكبير الصورة: {alt}",
+    galleryClose: "إغلاق الصورة",
+    galleryPrev: "الصورة السابقة",
+    galleryNext: "الصورة التالية",
   },
   about: {
     title: "عن أورينت جروب جلف",
@@ -386,6 +424,8 @@ const ar: Dictionary = {
         text: "نتفق معك على موعد التسليم عند تقديم عرض السعر، ونخطط وفق جدول عمل موقعك.",
       },
     ],
+    shopTitle: "زُر محلنا",
+    shopText: "يقع محلنا في مجمع الحميضي بمنطقة الشويخ الصناعية. تفضل بزيارتنا لمعاينة المخزون، أو أرسل قائمتك أولاً عبر واتساب.",
     brandsTitle: "العلامات التجارية التي نوردها",
     brandsLink: "عرض جميع العلامات التجارية",
     projectsTitle: "مشاريع قمنا بتجهيز ملصقاتها",
@@ -405,15 +445,15 @@ const ar: Dictionary = {
     brand: (b: string) => `مرحباً أورينت جروب، ما منتجات ${b} التي تورّدونها؟ أرجو إرسال الأسعار.`,
   },
   seo: {
-    homeTitle: "مورد مواد التكييف والكهرباء والتثبيت في الكويت | أورينت جروب جلف",
+    homeTitle: "مورد مواد التكييف في الكويت | أورينت جروب جلف",
     homeDescription:
-      "أنابيب نحاسية، غازات تبريد، عزل، مواسير كوندويت، مثبتات كيميائية وملصقات محفورة لمقاولي الكويت. أورينت جروب جلف، منطقة الشويخ الصناعية، منذ 2010.",
+      "مورد مواد التكييف في الكويت: أنابيب نحاسية، غاز تبريد، عزل، مواسير كوندويت، مثبتات كيميائية وملصقات حفر للمقاولين. الشويخ، منذ 2010.",
     titleSuffix: "أورينت جروب جلف الكويت",
     defaultDescription:
       "تورّد أورينت جروب جلف مواد التكييف والكهرباء والتثبيت لمقاولي الأعمال الكهروميكانيكية في الكويت من منطقة الشويخ الصناعية منذ 2010.",
-    productsTitle: "منتجات التكييف والكهرباء والتثبيت",
+    productsTitle: "مواد التكييف وغاز التبريد والمنتجات الكهربائية",
     productsDescription:
-      "تصفح جميع منتجات أورينت جروب جلف في الكويت: أنابيب نحاسية، غازات تبريد، مثبتات كيميائية، مواسير كوندويت، كابلات، مفاتيح كهربائية ومحامل NSK. اطلب السعر عبر واتساب.",
+      "مورد مواد التكييف في الكويت: أنابيب نحاسية، غاز تبريد، مثبتات كيميائية، مواسير كوندويت، كابلات، مفاتيح كهربائية ومحامل NSK. اطلب السعر عبر واتساب.",
     categoryTitle: (c: string) => `${c} في الكويت`,
     categoryDescription: (c: string, summary: string) =>
       `${c} في الكويت: ${summary} اطلب السعر عبر واتساب من أورينت جروب جلف، الشويخ.`,
@@ -421,9 +461,11 @@ const ar: Dictionary = {
     brandsTitle: "العلامات التجارية التي نوردها في الكويت",
     brandsDescription:
       "Venture وBossong وNSK وUnistrut وCopeland وغيرها: علامات التكييف والتثبيت والكهرباء والمحامل التي توردها أورينت جروب جلف من الشويخ، الكويت.",
-    engravingTitle: "الحفر والملصقات لمشاريع الأعمال الكهروميكانيكية",
+    engravingTitle: "ملصقات حفر في الكويت: لوحات صمامات ولافتات",
     engravingDescription:
-      "لوحات تعريف صمامات محفورة، علامات كابلات، ملصقات لوحات توزيع، لافتات وملصقات لمشاريع الكويت. أرسل قائمة الملصقات إلى أورينت جروب جلف عبر واتساب.",
+      "ملصقات حفر في الكويت: لوحات تعريف صمامات، علامات كابلات، ملصقات لوحات توزيع، لافتات وملصقات وقص أكريليك لمشاريع الأعمال الكهروميكانيكية. أرسل قائمتك عبر واتساب.",
+    hvacCategoryTitle: "مورد مواد التكييف في الكويت",
+    gasTitleSuffix: "الكويت",
     contactTitle: "اتصل بنا",
     contactDescription:
       "تواصل مع أورينت جروب جلف في منطقة الشويخ الصناعية، الكويت: المكتب 2492 1705، الجوال 9095 0709، واتساب، البريد الإلكتروني والخريطة.",

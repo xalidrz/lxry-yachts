@@ -63,3 +63,11 @@ If an admin area, login or database is added later, it needs its own design: ser
 - Interface text is in `lib/dictionaries.ts` (one object per language, same shape, so a missing Arabic string fails the type check). Product, category and engraving text is next to its data: add `ar: { name, shortDescription, description, specs? }` inside a product entry in `data/products.ts`. Anything missing falls back to English.
 - Arabic uses the Cairo font (`app/[lang]/layout.tsx`). Customer testimonials are shown in their original English on both versions.
 - To add the About page project names, put them in `data/projects.ts`; the "Projects we've labelled for" section appears when the list is not empty.
+
+## Content you fill in later
+
+- **Engraving "Sample work" gallery:** drop photos into `public/engraving/`. They appear on the Engraving page (masonry grid with a lightbox) on the next build; with no photos the section is hidden. Describe each photo in `lib/engraving-gallery.ts` (`captions`) for accurate alt text.
+- **Social links:** put the account URLs in `SOCIAL_LINKS` in `lib/site.ts`. Empty ones are not shown. (Lucide has no brand logos, so neutral Lucide symbols with the network name as label are used.)
+- **Opening hours:** the hours on the Contact page are **placeholders**; edit `OPENING_HOURS` in `lib/site.ts` (English and Arabic).
+- **Map:** the Contact page embeds Google Maps by address (`GOOGLE_MAPS_EMBED_URL` in `lib/site.ts`); the Content-Security-Policy allows only `https://www.google.com` for frames.
+- **About page projects:** `data/projects.ts` (hidden while empty). **About photos:** `public/about/` and `data/about-images.ts`.
