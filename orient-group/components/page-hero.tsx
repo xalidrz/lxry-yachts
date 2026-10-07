@@ -8,12 +8,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getDictionary } from "@/lib/dictionaries";
+import type { Locale } from "@/lib/i18n";
 
 export type Crumb = { label: string; href?: string };
 
-export function Breadcrumbs({ items }: { items: Crumb[] }) {
+export function Breadcrumbs({ items, locale }: { items: Crumb[]; locale: Locale }) {
   return (
-    <Breadcrumb>
+    <Breadcrumb aria-label={getDictionary(locale).common.breadcrumb}>
       <BreadcrumbList>
         {items.map((item, i) => (
           <Fragment key={item.label}>
@@ -39,10 +41,12 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
 
 /** Dark charcoal title band that sits under the floating header on inner pages. */
 export function PageHero({
+  locale,
   title,
   children,
   crumbs,
 }: {
+  locale: Locale;
   title: string;
   children?: React.ReactNode;
   crumbs?: Crumb[];
@@ -52,7 +56,7 @@ export function PageHero({
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         {crumbs && (
           <div className="mb-5">
-            <Breadcrumbs items={crumbs} />
+            <Breadcrumbs items={crumbs} locale={locale} />
           </div>
         )}
         <h1 className="font-display text-3xl leading-tight font-extrabold sm:text-5xl">

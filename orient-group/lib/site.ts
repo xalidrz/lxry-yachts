@@ -26,6 +26,12 @@ export const ADDRESS_LINES = [
   "Khalifa Al-Jassim Street,",
   "Shuwaikh Industrial Area, Kuwait",
 ];
+/** Arabic address. Please confirm the spelling of the complex name with the client. */
+export const ADDRESS_LINES_AR = [
+  "محل رقم 12، مجمع الحميضي، مبنى رقم 99،",
+  "شارع خليفة الجاسم،",
+  "منطقة الشويخ الصناعية، الكويت",
+];
 export const ADDRESS_ONE_LINE = ADDRESS_LINES.join(" ").replace(/,\s+/g, ", ");
 
 export type PhoneNumber = { label: string; display: string; tel: string };
@@ -50,9 +56,11 @@ export const EMAILS = [
 /** WhatsApp number (international format, digits only) used by every "Ask for price" button. */
 export const WHATSAPP_NUMBER = "96590950709";
 
+/** Main navigation. Labels come from the dictionary (`nav`). */
 export const NAV_LINKS = [
-  { label: "Products", href: "/products" },
-  { label: "Brands", href: "/brands" },
-  { label: "Engraving", href: "/engraving" },
-  { label: "Contact", href: "/contact" },
+  { key: "products", href: "/products" },
+  { key: "about", href: "/about" },
+  { key: "brands", href: "/brands" },
+  { key: "engraving", href: "/engraving" },
+  { key: "contact", href: "/contact" },
 ] as const;

@@ -4,22 +4,23 @@ import { EngravingIcon } from "@/components/engraving-icon";
 import { Section, SectionHeading } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
-import { engravingItems } from "@/data/engraving";
-import { LABEL_LIST_MESSAGE } from "@/lib/whatsapp";
+import { getEngravingItems } from "@/data/engraving";
+import { getDictionary } from "@/lib/dictionaries";
+import { localePath, type Locale } from "@/lib/i18n";
 
-export function Engraving() {
+export function Engraving({ locale }: { locale: Locale }) {
+  const t = getDictionary(locale);
   return (
     <Section tone="dark" id="engraving">
       <SectionHeading
         tone="dark"
-        eyebrow="Engraving"
-        title="Engraving and labelling for MEP projects"
+        eyebrow={t.home.engravingEyebrow}
+        title={t.home.engravingTitle}
       >
-        Tags and labels for valves, cables and switchboards. Send us your list
-        with the text, sizes and quantities and we will quote on WhatsApp.
+        {t.home.engravingText}
       </SectionHeading>
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {engravingItems.map(({ icon, title, text }) => (
+        {getEngravingItems(locale).map(({ icon, title, text }) => (
           <li
             key={title}
             className="rounded-2xl border border-white/15 bg-white/[0.06] p-6"
@@ -33,11 +34,11 @@ export function Engraving() {
         ))}
       </ul>
       <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-        <WhatsAppButton message={LABEL_LIST_MESSAGE} size="lg">
-          Send your label list
+        <WhatsAppButton message={t.wa.labelList} size="lg">
+          {t.home.sendLabelList}
         </WhatsAppButton>
         <Button asChild variant="secondary-dark" size="lg">
-          <Link href="/engraving">How to order labels</Link>
+          <Link href={localePath(locale, "/engraving")}>{t.home.howToOrderLabels}</Link>
         </Button>
       </div>
     </Section>

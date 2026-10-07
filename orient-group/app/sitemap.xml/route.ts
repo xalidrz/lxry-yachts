@@ -1,5 +1,6 @@
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
+import { locales, localePath } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/seo";
 import { ALLOW_INDEXING } from "@/lib/site";
 
@@ -10,22 +11,16 @@ type Entry = { path: string; changefreq: string; priority: number };
 const escapeXml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+/** English paths. Every page is listed in both languages, with hreflang links between them. */
 function entries(): Entry[] {
   return [
     { path: "/", changefreq: "monthly", priority: 1 },
     { path: "/products", changefreq: "weekly", priority: 0.9 },
+    ...categories.map((c) => ({ path: `/products/${c.slug}`, changefreq: "weekly", priority: 0.8 })),
+    ...products.map((p) => ({ path: `/products/${p.slug}`, changefreq: "monthly", priority: 0.7 })),
+    { path: "/about", changefreq: "yearly", priority: 0.7 },
     { path: "/brands", changefreq: "monthly", priority: 0.7 },
     { path: "/engraving", changefreq: "monthly", priority: 0.7 },
-    ...categories.map((c) => ({
-      path: `/products/${c.slug}`,
-      changefreq: "weekly",
-      priority: 0.8,
-    })),
-    ...products.map((p) => ({
-      path: `/products/${p.slug}`,
-      changefreq: "monthly",
-      priority: 0.7,
-    })),
     { path: "/contact", changefreq: "yearly", priority: 0.6 },
   ];
 }
@@ -38,14 +33,22 @@ export function GET() {
 
   const lastmod = new Date().toISOString();
   const urls = entries()
-    .map(
-      (e) =>
-        `  <url>\n    <loc>${escapeXml(absoluteUrl(e.path))}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`,
+    .flatMap((e) =>
+      locales.map((locale) => {
+        const alternates = [
+          ...locales.map(
+            (l) =>
+              `    <xhtml:link rel="alternate" hreflang="${l}" href="${escapeXml(absoluteUrl(localePath(l, e.path)))}"/>`,
+          ),
+          `    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(absoluteUrl(localePath("en", e.path)))}"/>`,
+        ].join("\n");
+        return `  <url>\n    <loc>${escapeXml(absoluteUrl(localePath(locale, e.path)))}</loc>\n${alternates}\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${e.changefreq}</changefreq>\n    <priority>${e.priority}</priority>\n  </url>`;
+      }),
     )
     .join("\n");
 
   return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`,
     { headers: { "Content-Type": "application/xml; charset=utf-8" } },
   );
 }

@@ -4,6 +4,11 @@ export const alt = "Orient Group Gulf: HVAC, electrical and fixing materials in 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Prerender the share image for both languages at build time.
+export function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "ar" }];
+}
+
 export default function OpenGraphImage() {
   return new ImageResponse(
     (

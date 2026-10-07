@@ -3,8 +3,8 @@ import { ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-function Breadcrumb(props: React.ComponentProps<"nav">) {
-  return <nav aria-label="Breadcrumb" data-slot="breadcrumb" {...props} />;
+function Breadcrumb({ "aria-label": label = "Breadcrumb", ...props }: React.ComponentProps<"nav">) {
+  return <nav aria-label={label} data-slot="breadcrumb" {...props} />;
 }
 
 function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {

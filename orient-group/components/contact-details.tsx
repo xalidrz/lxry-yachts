@@ -1,7 +1,10 @@
 import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
 
+import { getDictionary } from "@/lib/dictionaries";
+import type { Locale } from "@/lib/i18n";
 import {
   ADDRESS_LINES,
+  ADDRESS_LINES_AR,
   EMAILS,
   FAX,
   GOOGLE_MAPS_URL,
@@ -55,54 +58,63 @@ function Row({
 }
 
 /** Address, phones, fax and emails. Every phone number and email is tappable. */
-export function ContactDetails({ tone = "light" }: { tone?: Tone }) {
+export function ContactDetails({
+  tone = "light",
+  locale = "en",
+}: {
+  tone?: Tone;
+  locale?: Locale;
+}) {
+  const t = getDictionary(locale).contact;
+  const addressLines = locale === "ar" ? ADDRESS_LINES_AR : ADDRESS_LINES;
+  const emailLabels: Record<string, string> = { Sales: t.sales, Import: t.import, General: t.general };
   const link = linkClass[tone];
   const icon = "size-[18px]";
 
   return (
     <ul className="space-y-5">
-      <Row tone={tone} label="Address" icon={<MapPin className={icon} aria-hidden="true" />}>
+      <Row tone={tone} label={t.address} icon={<MapPin className={icon} aria-hidden="true" />}>
         <a
           href={GOOGLE_MAPS_URL}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(link, "inline-block")}
         >
-          {ADDRESS_LINES.map((line) => (
+          {addressLines.map((line) => (
             <span key={line} className="block">
               {line}
             </span>
           ))}
-          <span className="sr-only">(opens Google Maps in a new tab)</span>
+          <span className="sr-only">{t.opensMaps}</span>
         </a>
       </Row>
 
-      <Row tone={tone} label="Office" icon={<Phone className={icon} aria-hidden="true" />}>
-        <a href={`tel:${OFFICE_PHONE.tel}`} className={link}>
+      <Row tone={tone} label={t.office} icon={<Phone className={icon} aria-hidden="true" />}>
+        <a href={`tel:${OFFICE_PHONE.tel}`} dir="ltr" className={cn(link, "inline-block")}>
           {OFFICE_PHONE.display}
         </a>
         <p className={tone === "dark" ? "text-on-dark-muted" : "text-muted-foreground"}>
-          {FAX.label}: {FAX.display}
+          {t.fax}: <span dir="ltr">{FAX.display}</span>
         </p>
       </Row>
 
-      <Row tone={tone} label="Mobile" icon={<Smartphone className={icon} aria-hidden="true" />}>
+      <Row tone={tone} label={t.mobile} icon={<Smartphone className={icon} aria-hidden="true" />}>
         {MOBILES.map((m) => (
           <p key={m.tel}>
-            <a href={`tel:${m.tel}`} className={link}>
+            <a href={`tel:${m.tel}`} dir="ltr" className={cn(link, "inline-block")}>
               {m.display}
             </a>
           </p>
         ))}
       </Row>
 
-      <Row tone={tone} label="Email" icon={<Mail className={icon} aria-hidden="true" />}>
+      <Row tone={tone} label={t.email} icon={<Mail className={icon} aria-hidden="true" />}>
         {EMAILS.map((e) => (
           <p key={e.address} className="break-words">
             <span className={tone === "dark" ? "text-on-dark-muted" : "text-muted-foreground"}>
-              {e.label}:{" "}
+              {emailLabels[e.label] ?? e.label}:{" "}
             </span>
-            <a href={`mailto:${e.address}`} className={link}>
+            <a href={`mailto:${e.address}`} dir="ltr" className={cn(link, "inline-block")}>
               {e.address}
             </a>
           </p>

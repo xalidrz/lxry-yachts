@@ -7,11 +7,14 @@ import { cn } from "@/lib/utils";
 /** Logo image when public/logo.png exists, otherwise the text logo. */
 export function SiteLogo({
   logo,
+  alt,
   className,
   textClassName,
   priority,
 }: {
   logo: Logo | null;
+  /** Overrides the default alt text (used for the Arabic version). */
+  alt?: string;
   className?: string;
   textClassName?: string;
   priority?: boolean;
@@ -20,12 +23,12 @@ export function SiteLogo({
     return (
       <Image
         src={logo.src}
-        alt={logo.alt}
+        alt={alt ?? logo.alt}
         width={logo.width}
         height={logo.height}
         priority={priority}
         sizes="280px"
-        className={cn("h-10 w-auto object-contain object-left", className)}
+        className={cn("h-10 w-auto object-contain object-left rtl:object-right", className)}
       />
     );
   }
@@ -36,7 +39,7 @@ export function SiteLogo({
         textClassName,
       )}
     >
-      {SITE_NAME}
+      {alt ?? SITE_NAME}
     </span>
   );
 }

@@ -1,15 +1,19 @@
 import Image from "next/image";
 
 import type { Brand } from "@/data/brands";
+import { getDictionary } from "@/lib/dictionaries";
+import type { Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 /** Square brand tile: the logo image, or the brand name when there is no logo. */
 export function BrandLogo({
   brand,
+  locale,
   sizes,
   className,
 }: {
   brand: Brand;
+  locale: Locale;
   sizes: string;
   className?: string;
 }) {
@@ -23,7 +27,7 @@ export function BrandLogo({
       {brand.logo ? (
         <Image
           src={brand.logo}
-          alt={`${brand.name} logo`}
+          alt={getDictionary(locale).brandsPage.logoAlt(brand.name)}
           fill
           sizes={sizes}
           className="object-contain"

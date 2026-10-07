@@ -14,13 +14,25 @@
  *  description       Full description shown on the product page.
  *  specs             Rows of { label, value } for the specifications table (can be []).
  *  specsPrompt       Optional. Shown with a WhatsApp button instead of the table when `specs` is empty.
- *  image             Real photo path, e.g. "/products/pancake-copper-coils.jpg" (file in /public/products).
- *                    Leave "" to show the branded placeholder.
+ *  image             Photo path, e.g. "/products/pancake-copper-coils.jpg" (file in /public/products).
+ *                    Leave "" for no photo: the card then shows a compact layout.
+ *  ar                Optional Arabic text: { name, shortDescription, description, specs?, specsPrompt? }.
+ *                    Anything missing falls back to the English.
  */
+import type { Locale } from "@/lib/i18n";
 import type { CategorySlug } from "./categories";
 import { ANY_BRAND } from "@/lib/whatsapp";
 
 export type Spec = { label: string; value: string };
+
+/** Arabic text for a product. Anything left out falls back to the English. */
+export type ProductText = {
+  name: string;
+  shortDescription: string;
+  description: string;
+  specs?: Spec[];
+  specsPrompt?: string;
+};
 
 export type Product = {
   slug: string;
@@ -33,12 +45,21 @@ export type Product = {
   /** Shown with a WhatsApp button in place of the specifications table when `specs` is empty. */
   specsPrompt?: string;
   image: string;
+  /** Arabic version (Modern Standard Arabic). Optional: English is used if missing. */
+  ar?: ProductText;
 };
 
 export const DEFAULT_SPECS_PROMPT =
   "Contact us for specifications, sizes and availability.";
 const GAS_SPECS_PROMPT =
   "Contact us for specifications, cylinder sizes and availability.";
+
+const GAS_SPECS_PROMPT_AR =
+  "تواصل معنا لمعرفة المواصفات وأحجام الأسطوانات والتوفر.";
+const ASK_SIZES_AR: Spec = {
+  label: "المقاسات والتوفر",
+  value: "اسألنا عبر واتساب عن المقاسات والمخزون الحالي",
+};
 
 const ASK_SIZES: Spec = {
   label: "Sizes and availability",
@@ -65,6 +86,22 @@ export const products: Product[] = [
       { label: "Bending", value: "With or without bending tools" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "لفائف نحاسية مسطحة (Pancake)",
+      shortDescription:
+        "لفائف نحاس ملدّن طري لخطوط وسيط التبريد في أنظمة التكييف.",
+      description:
+        "لفائف Venture النحاسية المسطحة مصنوعة من أنابيب نحاس ملدّنة طرية ملفوفة بشكل مسطح، وتُستخدم لخطوط وسيط التبريد في أنظمة التكييف، سواء لتوصيل وحدات التكييف أو إصلاحها أو التعديل عليها. تسمح الليونة بثني الأنبوب باستخدام أدوات الثني أو بدونها، وتتم الوصلات بالفلير أو بوصلات الضغط أو باللحام. تتوفر بطبقة واحدة أو طبقتين أو عدة طبقات. اسألنا عن الأقطار والأطوال المتوفرة حالياً.",
+      specs: [
+        { label: "المادة", value: "نحاس ملدّن طري" },
+        { label: "الاستخدام", value: "خطوط وسيط التبريد في أنظمة التكييف" },
+        { label: "الاستخدام المعتاد", value: "توصيل وحدات التكييف وإصلاحها والتعديل عليها" },
+        { label: "طرق الوصل", value: "فلير أو وصلات ضغط أو لحام" },
+        { label: "بنية اللفة", value: "طبقة واحدة أو طبقتان أو عدة طبقات" },
+        { label: "الثني", value: "باستخدام أدوات الثني أو بدونها" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -94,6 +131,21 @@ export const products: Product[] = [
       { label: "Form", value: "Straight lengths" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "أنابيب نحاس مستقيمة نوع K وL وM",
+      shortDescription:
+        "أنابيب Venture النحاسية المستقيمة بأنواع K وL وM لأنظمة التكييف والسباكة والتبريد.",
+      description:
+        "تتوفر أنابيب Venture النحاسية المستقيمة بثلاث سماكات للجدار. النوع K هو الأسمك، ويُستخدم لخدمات المياه والحماية من الحريق والتكييف والغازات الطبية والبخار. النوع L هو القياسي للسباكة الداخلية والتكييف وغاز البترول المسال. أما النوع M فيُستخدم لأنظمة التكييف والتبريد والثلاجات والمبردات وأنابيب المياه في المباني. أرسل لنا النوع والقطر والكمية لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "النوع K", value: "جدار سميك. خدمات المياه، الحماية من الحريق، التكييف، الغازات الطبية، البخار" },
+        { label: "النوع L", value: "قياسي. السباكة الداخلية، التكييف، غاز البترول المسال" },
+        { label: "النوع M", value: "أنظمة التكييف والتبريد، الثلاجات، المبردات، أنابيب المياه في المباني" },
+        { label: "المادة", value: "نحاس" },
+        { label: "الشكل", value: "أطوال مستقيمة" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "/products/copper-straight-pipe-venture.jpg",
   },
   {
@@ -113,6 +165,18 @@ export const products: Product[] = [
       { label: "Purpose", value: "Limits heat gain and condensation" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "عزل حراري",
+      shortDescription:
+        "عزل حراري لأنابيب وسيط التبريد وخطوط المياه المبردة ومجاري الهواء.",
+      description:
+        "عزل حراري لأنابيب وسيط التبريد والمياه المبردة ولمجاري الهواء، يحدّ من اكتساب الحرارة ويقلل التكثف على الأسطح الباردة. أخبرنا بقطر الأنبوب وسماكة العزل والاستخدام لنؤكد ما يمكننا توريده والسعر.",
+      specs: [
+        { label: "الاستخدام", value: "أنابيب وسيط التبريد وأنابيب المياه المبردة ومجاري الهواء" },
+        { label: "الغرض", value: "يحدّ من اكتساب الحرارة والتكثف" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -129,6 +193,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Connecting ductwork to diffusers, grilles and equipment" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "مجاري هواء مرنة ووصلات مجاري",
+      shortDescription:
+        "مجاري هواء مرنة ووصلات لتوزيع الهواء في تركيبات التكييف.",
+      description:
+        "مجاري هواء مرنة ووصلات لتوزيع هواء الإمداد والراجع في تركيبات التكييف، تُستخدم لربط مجاري الهواء الصلبة بالناشرات والفتحات ووحدات مناولة الهواء. أرسل لنا القطر والطول المطلوبين لنؤكد السعر والتوفر.",
+      specs: [
+        { label: "الاستخدام", value: "توزيع الهواء في أنظمة التكييف" },
+        { label: "الاستخدام المعتاد", value: "ربط المجاري بالناشرات والفتحات والمعدات" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "/products/flexible-duct-connector-aeroduct.jpg",
   },
   {
@@ -145,6 +221,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Joint between ductwork and fans or air-handling units" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "قماش كانفاس لمجاري الهواء",
+      shortDescription:
+        "قماش كانفاس للوصلات المرنة بين مجاري الهواء والمعدات.",
+      description:
+        "قماش كانفاس لعمل وصلات مرنة في مجاري الهواء، مثل الوصلة بين المجرى والمروحة أو وحدة مناولة الهواء. تساعد الوصلة المرنة على عزل الاهتزاز والضوضاء القادمة من المعدات. اسألنا عن العرض وطول اللفة والسعر.",
+      specs: [
+        { label: "الاستخدام", value: "الوصلات المرنة لمجاري الهواء" },
+        { label: "الاستخدام المعتاد", value: "الوصلة بين المجاري والمراوح أو وحدات مناولة الهواء" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -160,6 +248,17 @@ export const products: Product[] = [
       { label: "Application", value: "Duct joints, seams and insulation bonding" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "مواد إحكام ولواصق لمجاري الهواء",
+      shortDescription:
+        "مواد إحكام ولواصق لسد وصلات مجاري الهواء ولصق عزلها.",
+      description:
+        "مواد إحكام ولواصق لسد درزات ووصلات مجاري الهواء ولصق العزل عليها. أخبرنا بنوع السطح والاستخدام لنرشح لك المنتج المناسب من تشكيلتنا.",
+      specs: [
+        { label: "الاستخدام", value: "وصلات ودرزات مجاري الهواء ولصق العزل" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -176,6 +275,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Replacement and maintenance of AC and refrigeration units" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "مكثفات وكونتاكتورات",
+      shortDescription:
+        "مكثفات وكونتاكتورات لضواغط ومحركات مراوح أجهزة التكييف.",
+      description:
+        "مكثفات وكونتاكتورات للجزء الكهربائي من معدات التكييف والتبريد، تُستخدم مع الضواغط ومحركات المراوح. أرسل لنا القيمة المطلوبة أو صورة القطعة القديمة لنؤكد البديل المناسب.",
+      specs: [
+        { label: "الاستخدام", value: "دوائر الضاغط ومحرك المروحة" },
+        { label: "الاستخدام المعتاد", value: "استبدال القطع وصيانة وحدات التكييف والتبريد" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "/products/capacitors-amber.jpg",
   },
   {
@@ -192,6 +303,18 @@ export const products: Product[] = [
       { label: "Includes", value: "Condenser motors and general AC spares" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "محركات المكثف وقطع غيار التكييف",
+      shortDescription:
+        "محركات مراوح المكثف وقطع غيار لصيانة أجهزة التكييف.",
+      description:
+        "محركات مراوح المكثف وقطع غيار عامة لأعمال صيانة وإصلاح أجهزة التكييف. أرسل لنا موديل الوحدة أو لوحة بيانات المحرك أو صورة القطعة لنتحقق مما يمكننا توريده.",
+      specs: [
+        { label: "الاستخدام", value: "صيانة وإصلاح أجهزة التكييف" },
+        { label: "يشمل", value: "محركات المكثف وقطع غيار التكييف العامة" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -208,6 +331,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Routine AC maintenance and servicing" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "منظفات الملفات ومواد الصيانة الكيميائية",
+      shortDescription:
+        "منظفات ملفات ومواد كيميائية للصيانة الدورية لأجهزة التكييف.",
+      description:
+        "منظفات ومواد كيميائية لملفات المبخر والمكثف وللصيانة الدورية لوحدات التكييف، مناسبة لشركات الصيانة العاملة بعقود خدمة دورية. اسألنا عن أحجام العبوات والأسعار.",
+      specs: [
+        { label: "الاستخدام", value: "تنظيف ملفات المبخر والمكثف" },
+        { label: "الاستخدام المعتاد", value: "الصيانة والخدمة الدورية لأجهزة التكييف" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -223,6 +358,17 @@ export const products: Product[] = [
       { label: "Application", value: "HVAC and refrigeration installation" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "أدوات وملحقات التركيب",
+      shortDescription:
+        "أدوات وملحقات لتركيب أنظمة التكييف والتبريد.",
+      description:
+        "أدوات وملحقات لفنيي تركيب أنظمة التكييف والتبريد. أخبرنا بما تقوم بتركيبه والأدوات أو الملحقات التي تحتاجها لنتحقق من التوفر والسعر.",
+      specs: [
+        { label: "الاستخدام", value: "تركيب أنظمة التكييف والتبريد" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
 
@@ -238,6 +384,14 @@ export const products: Product[] = [
       "R22 is a refrigerant used in older air-conditioning and refrigeration systems. It is being phased out under the Montreal Protocol, so it is mainly used to service equipment that was built for R22.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R22",
+      shortDescription:
+        "غاز التبريد R22 (HCFC-22) لصيانة معدات التكييف والتبريد القائمة.",
+      description:
+        "R22 غاز تبريد يُستخدم في أنظمة التكييف والتبريد القديمة، ويجري التخلص منه تدريجياً بموجب بروتوكول مونتريال، لذلك يُستخدم أساساً لصيانة المعدات المصممة للعمل به.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
   {
@@ -251,6 +405,14 @@ export const products: Product[] = [
       "R410A is used in modern split, ducted and VRF air-conditioning systems. It works at a higher pressure than R22, so it needs R410A-rated gauges, hoses and cylinders.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R410A",
+      shortDescription:
+        "غاز التبريد R410A من نوع HFC المخلوط لأجهزة التكييف الحديثة: السبليت والمخفية وأنظمة VRF.",
+      description:
+        "يُستخدم R410A في أنظمة التكييف الحديثة من نوع السبليت والمخفية وأنظمة VRF، ويعمل بضغط أعلى من R22، لذلك يحتاج إلى عدادات وخراطيم وأسطوانات مخصصة لـ R410A.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
   {
@@ -264,6 +426,14 @@ export const products: Product[] = [
       "R134a is used in chillers, medium-temperature refrigeration, domestic refrigerators and vehicle air conditioning.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R134a",
+      shortDescription:
+        "غاز التبريد R134a من نوع HFC للمبردات (التشيلر) والتبريد متوسط الحرارة وتكييف السيارات.",
+      description:
+        "يُستخدم R134a في المبردات (التشيلر) والتبريد متوسط الحرارة والثلاجات المنزلية وتكييف السيارات.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
   {
@@ -277,6 +447,14 @@ export const products: Product[] = [
       "R404A is used in low and medium-temperature commercial refrigeration such as cold rooms, freezers and display cabinets.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R404A",
+      shortDescription:
+        "غاز التبريد R404A من نوع HFC المخلوط للتبريد التجاري منخفض ومتوسط الحرارة.",
+      description:
+        "يُستخدم R404A في التبريد التجاري منخفض ومتوسط الحرارة مثل غرف التبريد والفريزرات وثلاجات العرض.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
   {
@@ -290,6 +468,14 @@ export const products: Product[] = [
       "R407C is used in air-conditioning systems and as an alternative to R22 in retrofit work. Check compressor oil compatibility before converting an R22 system.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R407C",
+      shortDescription:
+        "غاز التبريد R407C من نوع HFC المخلوط للتكييف ولأعمال استبدال R22.",
+      description:
+        "يُستخدم R407C في أنظمة التكييف وكبديل لـ R22 في أعمال التحويل. تحقّق من توافق زيت الضاغط قبل تحويل نظام يعمل بـ R22.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
   {
@@ -303,6 +489,14 @@ export const products: Product[] = [
       "R32 is used in newer split air conditioners and has a lower global warming potential than R410A.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R32",
+      shortDescription:
+        "غاز التبريد R32 لأجهزة السبليت الحديثة، بقدرة أقل على الاحترار العالمي من R410A.",
+      description:
+        "يُستخدم R32 في أجهزة التكييف السبليت الحديثة، ويتميز بقدرة أقل على الاحترار العالمي مقارنة بـ R410A.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
   {
@@ -316,6 +510,14 @@ export const products: Product[] = [
       "R600 / R600a is used in small domestic and commercial refrigeration equipment. Tell us which one you need and we will confirm what is available.",
     specs: [],
     specsPrompt: GAS_SPECS_PROMPT,
+    ar: {
+      name: "غاز التبريد R600 / R600a",
+      shortDescription:
+        "غاز التبريد R600 / R600a لمعدات التبريد الصغيرة المنزلية والتجارية.",
+      description:
+        "يُستخدم R600 / R600a في معدات التبريد الصغيرة المنزلية والتجارية. أخبرنا أيهما تحتاج لنؤكد المتوفر.",
+      specsPrompt: GAS_SPECS_PROMPT_AR,
+    },
     image: "",
   },
 
@@ -335,6 +537,19 @@ export const products: Product[] = [
       { label: "Base materials", value: "Concrete, solid brick, hollow brick masonry" },
       { label: "Available formats", value: "BCR-400, BCR-300" },
     ],
+    ar: {
+      name: "مثبت كيميائي POLY EC",
+      shortDescription:
+        "مثبت كيميائي من راتنج البوليستر الخالي من الستايرين للأحمال المتوسطة والخفيفة في الخرسانة والطوب.",
+      description:
+        "Bossong POLY EC راتنج بوليستر ثنائي المكون وخالٍ من الستايرين للتثبيت الكيميائي بأحمال متوسطة إلى خفيفة، يُستخدم في الخرسانة والطوب المصمت والطوب المفرغ. متوفر في خراطيش BCR-400 وBCR-300.",
+      specs: [
+        { label: "الراتنج", value: "بوليستر، خالٍ من الستايرين، ثنائي المكون" },
+        { label: "الحمل", value: "متوسط / خفيف" },
+        { label: "المواد الأساسية", value: "خرسانة، طوب مصمت، طوب مفرغ" },
+        { label: "العبوات المتوفرة", value: "BCR-400، BCR-300" },
+      ],
+    },
     image: "",
   },
   {
@@ -354,6 +569,18 @@ export const products: Product[] = [
         value: "BCR-400, BCR-300, BCR-165, Termo, Kit, OSR bucket",
       },
     ],
+    ar: {
+      name: "مثبت كيميائي POLY SF",
+      shortDescription:
+        "مثبت كيميائي من راتنج البوليستر الخالي من الستايرين للأحمال المتوسطة والثقيلة.",
+      description:
+        "Bossong POLY SF راتنج بوليستر خالٍ من الستايرين للتثبيت الكيميائي بأحمال متوسطة إلى ثقيلة. يتوفر بعدة عبوات، من خراطيش BCR إلى عبوة Termo والطقم (Kit) ودلو OSR، لتختار العبوة المناسبة لحجم العمل.",
+      specs: [
+        { label: "الراتنج", value: "بوليستر، خالٍ من الستايرين" },
+        { label: "الحمل", value: "متوسط / ثقيل" },
+        { label: "العبوات المتوفرة", value: "BCR-400، BCR-300، BCR-165، Termo، Kit، دلو OSR" },
+      ],
+    },
     image: "",
   },
   {
@@ -374,6 +601,19 @@ export const products: Product[] = [
         value: "BCR-400, BCR-300, BCR-165, Termo, Kit",
       },
     ],
+    ar: {
+      name: "مثبت كيميائي VINIL",
+      shortDescription:
+        "مثبت كيميائي للأحمال الثقيلة من راتنج الإيبوكسي أكريلات الخالي من الستايرين للخرسانة والطوب والخشب.",
+      description:
+        "Bossong VINIL راتنج إيبوكسي أكريلات خالٍ من الستايرين للتثبيت الكيميائي بأحمال ثقيلة في الخرسانة والطوب والخشب. متوفر في خراطيش BCR-400 وBCR-300 وBCR-165 وعبوة Termo والطقم (Kit).",
+      specs: [
+        { label: "الراتنج", value: "إيبوكسي أكريلات، خالٍ من الستايرين" },
+        { label: "الحمل", value: "ثقيل" },
+        { label: "المواد الأساسية", value: "خرسانة، طوب، خشب" },
+        { label: "العبوات المتوفرة", value: "BCR-400، BCR-300، BCR-165، Termo، Kit" },
+      ],
+    },
     image: "",
   },
   {
@@ -393,6 +633,18 @@ export const products: Product[] = [
         value: "BCR-825, BCR-400, BCR-345, BCR-300, BCR-165",
       },
     ],
+    ar: {
+      name: "مثبت كيميائي V-PLUS",
+      shortDescription:
+        "مثبت كيميائي للأحمال الثقيلة من راتنج الفينيل إستر الخالي من الستايرين بخمسة أحجام خراطيش.",
+      description:
+        "Bossong V-PLUS راتنج فينيل إستر خالٍ من الستايرين للتثبيت الكيميائي بأحمال ثقيلة. متوفر بخمسة أحجام خراطيش: BCR-825 وBCR-400 وBCR-345 وBCR-300 وBCR-165.",
+      specs: [
+        { label: "الراتنج", value: "فينيل إستر، خالٍ من الستايرين" },
+        { label: "الحمل", value: "ثقيل" },
+        { label: "العبوات المتوفرة", value: "BCR-825، BCR-400، BCR-345، BCR-300، BCR-165" },
+      ],
+    },
     image: "",
   },
   {
@@ -412,6 +664,18 @@ export const products: Product[] = [
       },
       ASK_SIZES,
     ],
+    ar: {
+      name: "قنوات مثقبة وملحقاتها",
+      shortDescription:
+        "نظام قنوات Unistrut المثقبة وملحقاتها لتعليق الأنابيب وحوامل الكابلات والخدمات.",
+      description:
+        "تشكل قنوات Unistrut المثقبة وملحقاتها نظام تعليق معيارياً للأنابيب وحوامل الكابلات ومجاري الهواء وخدمات المبنى الأخرى. تُقص القنوات حسب الطول وتُركّب بالقطع والصواميل المطابقة، فيمكن بناء الحوامل في الموقع. أخبرنا بنوع القناة والطول والملحقات المطلوبة.",
+      specs: [
+        { label: "النظام", value: "قناة مثقبة مع ملحقات مطابقة" },
+        { label: "الاستخدام المعتاد", value: "حوامل للأنابيب وحوامل الكابلات ومجاري الهواء والخدمات" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "/products/unistrut-channels.jpg",
   },
 
@@ -428,6 +692,17 @@ export const products: Product[] = [
       { label: "Typical use", value: "Hanging and fixing pipework" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "علّاقات ومشابك الأنابيب",
+      shortDescription:
+        "علّاقات ومشابك وحوامل Tembo لتعليق الأنابيب وتثبيتها.",
+      description:
+        "علّاقات ومشابك وحوامل Tembo Seven Star لتعليق وتثبيت الأنابيب في تركيبات الأعمال الكهروميكانيكية. أخبرنا بقطر الأنبوب والكمية وطريقة التعليق لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "الاستخدام المعتاد", value: "تعليق وتثبيت الأنابيب" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "/products/pipe-hangers-clamps-tembo.jpg",
   },
   {
@@ -444,6 +719,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Supports, hangers and general fixings" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "قضبان ملولبة وصواميل وورد ومسامير",
+      shortDescription:
+        "قضبان Tembo الملولبة مع الصواميل والورد والمسامير المطابقة للحوامل والتثبيت.",
+      description:
+        "قضبان ملولبة وصواميل وورد ومسامير من Tembo Seven Star لحوامل المباني والعلّاقات وأعمال التثبيت العامة. أرسل لنا القطر والطول والكمية لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "يشمل", value: "قضبان ملولبة، صواميل، ورد، مسامير" },
+        { label: "الاستخدام المعتاد", value: "الحوامل والعلّاقات والتثبيت العام" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "/products/threaded-rods-nuts-washers-bolts-tembo.jpg",
   },
 
@@ -462,6 +749,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Motors and devices that need vibration isolation" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "ماسورة كوندويت مرنة من الحديد المجلفن مغلفة بـ PVC",
+      shortDescription:
+        "ماسورة كوندويت مرنة من الحديد المجلفن مغلفة بـ PVC للمحركات والأجهزة التي تحتاج إلى عزل الاهتزاز.",
+      description:
+        "تحمي ماسورة الكوندويت المرنة من الحديد المجلفن المغلفة بـ PVC الكابلات الواصلة إلى المحركات والأجهزة الأخرى التي تحتاج إلى عزل الاهتزاز، إذ تسمح للوصلة النهائية بالحركة دون إجهاد الكابل. اسألنا عن المقاسات والأطوال.",
+      specs: [
+        { label: "التركيب", value: "حديد مجلفن مرن مغلف بـ PVC" },
+        { label: "الاستخدام المعتاد", value: "المحركات والأجهزة التي تحتاج إلى عزل الاهتزاز" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -478,6 +777,18 @@ export const products: Product[] = [
       { label: "Material", value: "Galvanised iron (GI)" },
       { label: "Sizes", value: '3/4" x 10 ft, 1" x 10 ft, 1-1/2" x 10 ft, 2" x 10 ft' },
     ],
+    ar: {
+      name: "ماسورة كوندويت حديد مجلفن BS31 الفئة 3",
+      shortDescription:
+        "ماسورة كوندويت من الحديد المجلفن وفق BS31 الفئة 3 بطول 10 أقدام ومقاسات من 3/4 إنش إلى 2 إنش.",
+      description:
+        "ماسورة كوندويت من الحديد المجلفن وفق المواصفة BS31 الفئة 3 للتمديدات الكهربائية، بطول 10 أقدام وبأربعة مقاسات. اسألنا عن السعر وعن القطع المطابقة مثل المحولات النحاسية والصواميل والجلب.",
+      specs: [
+        { label: "المواصفة", value: "BS31، الفئة 3" },
+        { label: "المادة", value: "حديد مجلفن" },
+        { label: "المقاسات", value: "3/4\" x 10 ft, 1\" x 10 ft, 1-1/2\" x 10 ft, 2\" x 10 ft" },
+      ],
+    },
     image: "",
   },
   {
@@ -494,6 +805,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Terminating conduit at boxes and enclosures" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "محول نحاسي مع صامولة قفل حديد مجلفن",
+      shortDescription:
+        "محول نحاسي للكوندويت مع صامولة قفل من الحديد المجلفن لإنهاء الماسورة عند العلب واللوحات.",
+      description:
+        "محول نحاسي مع صامولة قفل من الحديد المجلفن، يُستخدم لإنهاء ماسورة الكوندويت عند علب التوزيع واللوحات وغيرها من الصناديق. اسألنا عن المقاسات المتوفرة المناسبة لماسورتك.",
+      specs: [
+        { label: "المادة", value: "محول نحاسي مع صامولة قفل حديد مجلفن" },
+        { label: "الاستخدام المعتاد", value: "إنهاء الكوندويت عند العلب والصناديق" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -510,6 +833,18 @@ export const products: Product[] = [
       { label: "Typical use", value: "Conduit termination and cable entry protection" },
       ASK_SIZES,
     ],
+    ar: {
+      name: "جلبة نحاسية ذكر",
+      shortDescription:
+        "جلبة نحاسية ذكر لإنهاء أطراف الكوندويت وحماية الكابلات عند نقاط الدخول.",
+      description:
+        "جلبة نحاسية ذكر لتمديدات الكوندويت، تُستخدم لإنهاء طرف الماسورة وحماية الكابل عند نقطة الدخول. اسألنا عن المقاسات المتوفرة.",
+      specs: [
+        { label: "المادة", value: "نحاس" },
+        { label: "الاستخدام المعتاد", value: "إنهاء الكوندويت وحماية مدخل الكابل" },
+        ASK_SIZES_AR,
+      ],
+    },
     image: "",
   },
   {
@@ -528,6 +863,20 @@ export const products: Product[] = [
       { label: "Wires", value: "Single core wires" },
       { label: "Data and communications", value: "Coaxial, CAT 5/6 data cables, fibre optic cables" },
     ],
+    ar: {
+      name: "كابلات وأسلاك",
+      shortDescription:
+        "كابلات قدرة ومرنة وكابلات بيانات وألياف ضوئية وأسلاك لمشاريع المباني والمصانع.",
+      description:
+        "تشكيلة كاملة من الكابلات والأسلاك لخدمات المباني والمشاريع الصناعية، من كابلات القدرة المسلحة للجهد العالي إلى الكابلات المرنة والأسلاك أحادية القلب وكابلات البيانات. أرسل لنا النوع ومقطع القلب والطول المطلوب لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "قدرة جهد عالٍ / متوسط", value: "كابلات مسلحة معزولة بـ PVC / XLPE" },
+        { label: "قدرة جهد منخفض", value: "كابلات معزولة بـ PVC وكابلات مرنة" },
+        { label: "مرنة", value: "كابلات مرنة مطاطية" },
+        { label: "أسلاك", value: "أسلاك أحادية القلب" },
+        { label: "البيانات والاتصالات", value: "كابلات محورية، كابلات بيانات CAT 5/6، كابلات ألياف ضوئية" },
+      ],
+    },
     image: "",
   },
   {
@@ -548,6 +897,22 @@ export const products: Product[] = [
       { label: "Connection", value: "Industrial plugs and sockets" },
       { label: "Earthing", value: "Earth rod sets, copper tapes" },
     ],
+    ar: {
+      name: "مفاتيح كهربائية ومعدات التأريض",
+      shortDescription:
+        "قواطع وعوازل وأجهزة حماية وقوابس صناعية ومعدات تأريض.",
+      description:
+        "مفاتيح كهربائية وأجهزة حماية ومعدات تأريض للوحات التوزيع ومشاريع الأعمال الكهروميكانيكية. أرسل لنا القيم والعلامات التجارية المطلوبة لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "القواطع", value: "ACB، MCCB، MCB" },
+        { label: "الفصل", value: "مفاتيح رئيسية، عوازل" },
+        { label: "الحماية", value: "RCCB، RCBO، مرحلات فقد الطور" },
+        { label: "التحكم", value: "كونتاكتورات، مرحلات" },
+        { label: "القدرة", value: "محولات" },
+        { label: "التوصيل", value: "قوابس ومقابس صناعية" },
+        { label: "التأريض", value: "أطقم أعمدة تأريض، أشرطة نحاسية" },
+      ],
+    },
     image: "",
   },
 
@@ -567,6 +932,19 @@ export const products: Product[] = [
       { label: "Typical use", value: "Motors, pumps, fans, general machinery" },
       { label: "Bearing numbers", value: "Send us the number on WhatsApp" },
     ],
+    ar: {
+      name: "محامل كروية ذات أخدود عميق",
+      shortDescription:
+        "محامل NSK الكروية ذات الأخدود العميق للمحركات والمضخات والمراوح والآلات العامة.",
+      description:
+        "محامل NSK الكروية ذات الأخدود العميق هي أكثر أنواع المحامل استخداماً، إذ تتحمل الأحمال الشعاعية وأحمالاً محورية متوسطة في الاتجاهين وتعمل بسرعات عالية، لذا تنتشر في المحركات الكهربائية والمضخات والمراوح والآلات العامة. أرسل لنا رقم المحمل لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "النوع", value: "محمل كروي ذو أخدود عميق" },
+        { label: "الحمل", value: "شعاعي ومحوري متوسط في الاتجاهين" },
+        { label: "الاستخدام المعتاد", value: "المحركات، المضخات، المراوح، الآلات العامة" },
+        { label: "أرقام المحامل", value: "أرسل لنا الرقم عبر واتساب" },
+      ],
+    },
     image: "",
   },
   {
@@ -584,6 +962,19 @@ export const products: Product[] = [
       { label: "Typical use", value: "Pumps, gearboxes, machine spindles" },
       { label: "Bearing numbers", value: "Send us the number on WhatsApp" },
     ],
+    ar: {
+      name: "محامل كروية ذات تلامس زاوي",
+      shortDescription:
+        "محامل NSK الكروية ذات التلامس الزاوي للأحمال الشعاعية والمحورية المشتركة.",
+      description:
+        "تتحمل محامل NSK الكروية ذات التلامس الزاوي الأحمال الشعاعية والمحورية معاً، مع حمل محوري في اتجاه واحد، وغالباً ما تُركّب أزواجاً لتحمّل الحمل المحوري في الاتجاهين، وتُستخدم في المضخات وصناديق التروس ومحاور الآلات. أرسل لنا رقم المحمل لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "النوع", value: "محمل كروي ذو تلامس زاوي" },
+        { label: "الحمل", value: "شعاعي ومحوري معاً (اتجاه واحد)" },
+        { label: "الاستخدام المعتاد", value: "المضخات، صناديق التروس، محاور الآلات" },
+        { label: "أرقام المحامل", value: "أرسل لنا الرقم عبر واتساب" },
+      ],
+    },
     image: "",
   },
   {
@@ -601,6 +992,19 @@ export const products: Product[] = [
       { label: "Typical use", value: "Long shafts and housings that are hard to align" },
       { label: "Bearing numbers", value: "Send us the number on WhatsApp" },
     ],
+    ar: {
+      name: "محامل كروية ذاتية المحاذاة",
+      shortDescription:
+        "محامل NSK الكروية ذاتية المحاذاة التي تتحمل عدم استقامة العمود.",
+      description:
+        "تحتوي محامل NSK الكروية ذاتية المحاذاة على صفين من الكرات تدوران على حلقة خارجية كروية، فتتحمل عدم استقامة العمود وانحراف الحاضن، وتناسب التطبيقات التي يصعب فيها تحقيق محاذاة دقيقة. أرسل لنا رقم المحمل لنؤكد التوفر والسعر.",
+      specs: [
+        { label: "النوع", value: "محمل كروي ذاتي المحاذاة" },
+        { label: "الميزة", value: "يتحمل عدم استقامة العمود" },
+        { label: "الاستخدام المعتاد", value: "الأعمدة الطويلة والحواضن التي يصعب محاذاتها" },
+        { label: "أرقام المحامل", value: "أرسل لنا الرقم عبر واتساب" },
+      ],
+    },
     image: "",
   },
 ];
@@ -636,15 +1040,33 @@ export function getRelatedProducts(product: Product, count = 3) {
   return ordered.slice(0, count);
 }
 
-/** Plain text used by the on-site search (name, brand, descriptions and specs). */
-export function productSearchText(product: Product) {
-  return [
+/** Product text in the requested language (Arabic falls back to English per field). */
+export function localizeProduct(product: Product, locale: Locale) {
+  const ar = locale === "ar" ? product.ar : undefined;
+  return {
+    name: ar?.name ?? product.name,
+    shortDescription: ar?.shortDescription ?? product.shortDescription,
+    description: ar?.description ?? product.description,
+    specs: ar?.specs ?? product.specs,
+    specsPrompt: ar ? ar.specsPrompt : product.specsPrompt,
+  };
+}
+
+/**
+ * Plain text used by the on-site search. Always includes the English text, so
+ * Arabic visitors can still search "R410A" or "copper"; adds the Arabic on /ar.
+ */
+export function productSearchText(product: Product, locale: Locale = "en") {
+  const parts = [
     product.name,
     product.brand,
     product.shortDescription,
     product.description,
     ...product.specs.map((s) => `${s.label} ${s.value}`),
-  ]
-    .join(" ")
-    .toLowerCase();
+  ];
+  if (locale === "ar" && product.ar) {
+    const t = product.ar;
+    parts.push(t.name, t.shortDescription, t.description, ...(t.specs ?? []).map((s) => `${s.label} ${s.value}`));
+  }
+  return parts.join(" ").toLowerCase();
 }

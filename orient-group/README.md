@@ -8,7 +8,7 @@ Next.js (App Router) · Tailwind CSS 4 · shadcn/ui-style components · Lucide i
 ```sh
 npm install
 npm run dev        # http://localhost:3000
-npm run build      # static build, all 44 pages prerendered
+npm run build      # static build, every page prerendered in English and Arabic
 npm run lint && npm run typecheck
 ```
 
@@ -55,3 +55,11 @@ The site is a static catalogue: no login, database, forms, uploads or webhooks, 
 - `npm audit --omit=dev`: 0 vulnerabilities. The 5 "high" findings in full `npm audit` are one advisory in `braces`, used only by the ESLint tooling during development; no patched release exists yet.
 
 If an admin area, login or database is added later, it needs its own design: server-side sessions in httpOnly cookies, hashed passwords, email verification, rate limiting, parameterised queries or row-level security, and secrets kept server-side.
+
+## Languages (English and Arabic)
+
+- English lives at the plain URLs (`/products`), Arabic under `/ar` (`/ar/products`). Each language has its own static pages, `lang`/`dir` attributes (Arabic is right-to-left), canonical and hreflang links, and sitemap entries.
+- `proxy.ts` rewrites plain URLs to `/en` internally and redirects visitors who chose Arabic (cookie `ogg-lang`, kept for a year) to the `/ar` version. The `عربي / EN` toggle sets the cookie. Search engines send no cookie, so they always see English at the plain URLs.
+- Interface text is in `lib/dictionaries.ts` (one object per language, same shape, so a missing Arabic string fails the type check). Product, category and engraving text is next to its data: add `ar: { name, shortDescription, description, specs? }` inside a product entry in `data/products.ts`. Anything missing falls back to English.
+- Arabic uses the Cairo font (`app/[lang]/layout.tsx`). Customer testimonials are shown in their original English on both versions.
+- To add the About page project names, put them in `data/projects.ts`; the "Projects we've labelled for" section appears when the list is not empty.
