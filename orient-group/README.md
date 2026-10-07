@@ -40,3 +40,15 @@ Real photos: put the file in `public/products/` and set `image: "/products/<file
 Refrigerant gas pages have no specification table: they show "Contact us for specifications, cylinder sizes and availability." with a WhatsApp button (`specs: []` plus `specsPrompt`). The R600 entry reads "R600 / R600a" until the client confirms which he stocks.
 
 Products supplied in several brands use `brand: ANY_BRAND`. Set a real brand name on an entry once it is confirmed.
+
+## Security
+
+The site is a static catalogue: no login, database, forms, uploads or webhooks, and no secrets (the only environment variables are public `NEXT_PUBLIC_*` settings). What is in place:
+
+- Security headers on every response (`next.config.ts`): Content-Security-Policy (same-origin only, no frames, no plugins), `X-Frame-Options: DENY`, `nosniff`, HSTS, Referrer-Policy, Permissions-Policy, COOP. No CORS headers are sent, so the browser blocks cross-origin reads.
+- XSS: React escapes all text; the only raw HTML is JSON-LD built from our own data with `<` escaped. Search input is capped at 100 characters and never leaves the browser except URL-encoded into a WhatsApp link.
+- Production: no browser source maps, `X-Powered-By` removed, no logging.
+- `.env*` files are git-ignored (only `.env.example` is tracked).
+- `npm audit --omit=dev`: 0 vulnerabilities. The 5 "high" findings in full `npm audit` are one advisory in `braces`, used only by the ESLint tooling during development; no patched release exists yet.
+
+If an admin area, login or database is added later, it needs its own design: server-side sessions in httpOnly cookies, hashed passwords, email verification, rate limiting, parameterised queries or row-level security, and secrets kept server-side.

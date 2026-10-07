@@ -14,6 +14,8 @@ function entries(): Entry[] {
   return [
     { path: "/", changefreq: "monthly", priority: 1 },
     { path: "/products", changefreq: "weekly", priority: 0.9 },
+    { path: "/brands", changefreq: "monthly", priority: 0.7 },
+    { path: "/engraving", changefreq: "monthly", priority: 0.7 },
     ...categories.map((c) => ({
       path: `/products/${c.slug}`,
       changefreq: "weekly",

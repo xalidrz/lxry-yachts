@@ -9,8 +9,8 @@ import { LEGAL_NAME } from "@/lib/site";
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "All products", href: "/products" },
-  { label: "Brands", href: "/#brands" },
-  { label: "Engraving", href: "/#engraving" },
+  { label: "Brands", href: "/brands" },
+  { label: "Engraving", href: "/engraving" },
   { label: "Contact", href: "/contact" },
 ];
 

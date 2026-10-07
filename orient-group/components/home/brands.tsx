@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { Section, SectionHeading } from "@/components/section";
 import { brands } from "@/data/brands";
@@ -34,6 +36,13 @@ export function Brands() {
           </li>
         ))}
       </ul>
+      <Link
+        href="/brands"
+        className="mt-8 inline-flex min-h-11 items-center gap-2 font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand"
+      >
+        See each brand and its products
+        <ArrowRight className="size-4 rtl:-scale-x-100" aria-hidden="true" />
+      </Link>
     </Section>
   );
 }

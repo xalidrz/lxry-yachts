@@ -64,9 +64,11 @@ export function ProductBrowser({ products, categories }: Props) {
             id="product-search"
             type="search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => setQuery(e.target.value.slice(0, 100))}
             placeholder="Search products, brands, e.g. R410A or Bossong"
             autoComplete="off"
+            maxLength={100}
+            spellCheck={false}
             className="ps-12 pe-12 [&::-webkit-search-cancel-button]:hidden"
           />
           {query && (
