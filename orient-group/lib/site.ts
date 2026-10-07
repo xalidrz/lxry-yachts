@@ -74,7 +74,7 @@ export const GOOGLE_MAPS_EMBED_URL = (hl: "en" | "ar") =>
  * fill in the accounts that are active.
  */
 export const SOCIAL_LINKS: { platform: "facebook" | "instagram" | "linkedin" | "youtube" | "tiktok"; url: string }[] = [
-  { platform: "facebook", url: "" },
+  { platform: "facebook", url: "https://www.facebook.com/orientgroupkwt" },
   { platform: "instagram", url: "" },
   { platform: "linkedin", url: "" },
   { platform: "youtube", url: "" },
