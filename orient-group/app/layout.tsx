@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { defaultLocale, localeDir } from "@/lib/i18n";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { ALLOW_INDEXING, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     locale: "en_KW",
   },
   twitter: { card: "summary_large_image" },
-  robots: { index: true, follow: true },
+  robots: { index: ALLOW_INDEXING, follow: ALLOW_INDEXING },
 };
 
 export const viewport: Viewport = {

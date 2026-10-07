@@ -5,11 +5,12 @@ import { PageHero } from "@/components/page-hero";
 import { Section } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
+import { ALLOW_INDEXING } from "@/lib/site";
 import { GENERAL_MESSAGE } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Page not found",
-  robots: { index: false, follow: true },
+  robots: { index: false, follow: ALLOW_INDEXING },
 };
 
 export default function NotFound() {

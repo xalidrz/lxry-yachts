@@ -9,10 +9,14 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { Category } from "@/data/categories";
-import { getRelatedProducts, type Product } from "@/data/products";
+import {
+  DEFAULT_SPECS_PROMPT,
+  getRelatedProducts,
+  type Product,
+} from "@/data/products";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo";
 import { OFFICE_PHONE } from "@/lib/site";
-import { ANY_BRAND, priceMessage } from "@/lib/whatsapp";
+import { ANY_BRAND, priceMessage, specsMessage } from "@/lib/whatsapp";
 
 export function ProductView({
   product,
@@ -109,11 +113,11 @@ export function ProductView({
             <h2 className="font-display text-2xl font-extrabold">Description</h2>
             <p className="mt-4 text-lg leading-relaxed">{product.description}</p>
           </div>
-          {product.specs.length > 0 && (
-            <div>
-              <h2 className="font-display text-2xl font-extrabold">
-                Specifications
-              </h2>
+          <div>
+            <h2 className="font-display text-2xl font-extrabold">
+              Specifications
+            </h2>
+            {product.specs.length > 0 ? (
               <table className="mt-4 w-full border-collapse text-[0.9375rem]">
                 <tbody>
                   {product.specs.map((spec) => (
@@ -129,8 +133,20 @@ export function ProductView({
                   ))}
                 </tbody>
               </table>
-            </div>
-          )}
+            ) : (
+              <>
+                <p className="mt-4 text-lg leading-relaxed">
+                  {product.specsPrompt ?? DEFAULT_SPECS_PROMPT}
+                </p>
+                <WhatsAppButton
+                  className="mt-5"
+                  message={specsMessage(product.name, product.brand)}
+                >
+                  Ask on WhatsApp
+                </WhatsAppButton>
+              </>
+            )}
+          </div>
         </div>
       </Section>
 

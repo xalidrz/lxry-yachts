@@ -15,7 +15,10 @@ npm run lint && npm run typecheck
 ## Deploy on Vercel
 
 This folder lives inside a repo that also holds another site, so in Vercel set **Root Directory = `orient-group`** (framework preset: Next.js, no other settings).
-Set the environment variable `NEXT_PUBLIC_SITE_URL` to the live domain (see `.env.example`). It drives canonical URLs, `sitemap.xml`, `robots.txt` and Open Graph tags. The default is `https://orientgroupkwt.com`.
+Environment variables (see `.env.example`):
+
+- `NEXT_PUBLIC_SITE_URL`: the live domain. Drives canonical URLs, `sitemap.xml`, `robots.txt` and Open Graph tags. Default `https://orientgroupkwt.com`.
+- `NEXT_PUBLIC_ALLOW_INDEXING`: **the site is NOT indexable by default.** Unless this is exactly `true`, every page gets `<meta name="robots" content="noindex, nofollow">` and `robots.txt` returns `Disallow: /`. Set it to `true` when the site goes live. Both variables are read at build time, so redeploy after changing them.
 
 ## Adding or editing a product
 
@@ -32,5 +35,7 @@ Real photos: put the file in `public/products/` and set `image: "/products/<file
 | Categories | `data/categories.ts` |
 | Colours and fonts | `app/globals.css`, `app/layout.tsx` |
 | Arabic / RTL | `lib/i18n.ts` and `components/language-toggle.tsx` (toggle is in place, Arabic side inactive; components use logical start/end spacing) |
+
+Refrigerant gas pages have no specification table: they show "Contact us for specifications, cylinder sizes and availability." with a WhatsApp button (`specs: []` plus `specsPrompt`). The R600 entry reads "R600 / R600a" until the client confirms which he stocks.
 
 Products supplied in several brands use `brand: ANY_BRAND`. Set a real brand name on an entry once it is confirmed.

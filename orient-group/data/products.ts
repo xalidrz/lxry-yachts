@@ -13,6 +13,7 @@
  *  shortDescription  One sentence for cards, search results and the meta description.
  *  description       Full description shown on the product page.
  *  specs             Rows of { label, value } for the specifications table (can be []).
+ *  specsPrompt       Optional. Shown with a WhatsApp button instead of the table when `specs` is empty.
  *  image             Real photo path, e.g. "/products/pancake-copper-coils.jpg" (file in /public/products).
  *                    Leave "" to show the branded placeholder.
  */
@@ -29,8 +30,15 @@ export type Product = {
   shortDescription: string;
   description: string;
   specs: Spec[];
+  /** Shown with a WhatsApp button in place of the specifications table when `specs` is empty. */
+  specsPrompt?: string;
   image: string;
 };
+
+export const DEFAULT_SPECS_PROMPT =
+  "Contact us for specifications, sizes and availability.";
+const GAS_SPECS_PROMPT =
+  "Contact us for specifications, cylinder sizes and availability.";
 
 const ASK_SIZES: Spec = {
   label: "Sizes and availability",
@@ -218,7 +226,7 @@ export const products: Product[] = [
     image: "",
   },
 
-  // Refrigerant gases
+  // Refrigerant gases (no composition or safety details: customers are sent to WhatsApp)
   {
     slug: "r22-refrigerant-gas",
     name: "R22 Refrigerant Gas",
@@ -227,13 +235,9 @@ export const products: Product[] = [
     shortDescription:
       "R22 (HCFC-22) refrigerant for servicing existing air-conditioning and refrigeration equipment.",
     description:
-      "R22 is a single-component HCFC refrigerant used in older air-conditioning and refrigeration systems. It is being phased out under the Montreal Protocol, so it is mainly used to service equipment that was built for R22. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "HCFC, single component" },
-      { label: "Typical use", value: "Servicing existing R22 AC and refrigeration equipment" },
-      { label: "Safety class (ASHRAE 34)", value: "A1" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R22 is a refrigerant used in older air-conditioning and refrigeration systems. It is being phased out under the Montreal Protocol, so it is mainly used to service equipment that was built for R22.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
   {
@@ -244,13 +248,9 @@ export const products: Product[] = [
     shortDescription:
       "R410A HFC blend refrigerant for modern split, ducted and VRF air conditioners.",
     description:
-      "R410A is an HFC blend of R32 and R125 used in modern split, ducted and VRF air-conditioning systems. It works at higher pressure than R22, so it needs R410A-rated gauges, hoses and cylinders and the correct compressor oil. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "HFC blend (R32 / R125)" },
-      { label: "Typical use", value: "Split, ducted and VRF air conditioning" },
-      { label: "Safety class (ASHRAE 34)", value: "A1" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R410A is used in modern split, ducted and VRF air-conditioning systems. It works at a higher pressure than R22, so it needs R410A-rated gauges, hoses and cylinders.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
   {
@@ -261,13 +261,9 @@ export const products: Product[] = [
     shortDescription:
       "R134a HFC refrigerant for chillers, medium-temperature refrigeration and vehicle air conditioning.",
     description:
-      "R134a is a single-component HFC refrigerant used in chillers, medium-temperature refrigeration, domestic refrigerators and vehicle air conditioning. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "HFC, single component" },
-      { label: "Typical use", value: "Chillers, medium-temperature refrigeration, vehicle AC" },
-      { label: "Safety class (ASHRAE 34)", value: "A1" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R134a is used in chillers, medium-temperature refrigeration, domestic refrigerators and vehicle air conditioning.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
   {
@@ -278,13 +274,9 @@ export const products: Product[] = [
     shortDescription:
       "R404A HFC blend refrigerant for low and medium-temperature commercial refrigeration.",
     description:
-      "R404A is an HFC blend of R125, R143a and R134a used in low and medium-temperature commercial refrigeration such as cold rooms, freezers and display cabinets. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "HFC blend (R125 / R143a / R134a)" },
-      { label: "Typical use", value: "Cold rooms, freezers and display cabinets" },
-      { label: "Safety class (ASHRAE 34)", value: "A1" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R404A is used in low and medium-temperature commercial refrigeration such as cold rooms, freezers and display cabinets.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
   {
@@ -295,13 +287,9 @@ export const products: Product[] = [
     shortDescription:
       "R407C HFC blend refrigerant for air conditioning and R22 replacement work.",
     description:
-      "R407C is an HFC blend of R32, R125 and R134a used in air-conditioning systems and as an alternative to R22 in retrofit work. Check compressor oil compatibility before converting an R22 system. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "HFC blend (R32 / R125 / R134a)" },
-      { label: "Typical use", value: "Air conditioning and R22 replacement" },
-      { label: "Safety class (ASHRAE 34)", value: "A1" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R407C is used in air-conditioning systems and as an alternative to R22 in retrofit work. Check compressor oil compatibility before converting an R22 system.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
   {
@@ -312,30 +300,22 @@ export const products: Product[] = [
     shortDescription:
       "R32 refrigerant for newer split air conditioners, with a lower GWP than R410A.",
     description:
-      "R32 is a single-component HFC refrigerant used in newer split air conditioners. It has a lower global warming potential than R410A but is mildly flammable (class A2L), so follow the equipment maker's installation and handling rules. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "HFC, single component" },
-      { label: "Typical use", value: "Newer split air conditioners" },
-      { label: "Safety class (ASHRAE 34)", value: "A2L (mildly flammable)" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R32 is used in newer split air conditioners and has a lower global warming potential than R410A.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
   {
     slug: "r600-refrigerant-gas",
-    name: "R600 Refrigerant Gas",
+    name: "R600 / R600a Refrigerant Gas",
     brand: ANY_BRAND,
     category: "hvac",
     shortDescription:
-      "R600 hydrocarbon (butane) refrigerant for small refrigeration equipment.",
+      "R600 / R600a refrigerant gas for small domestic and commercial refrigeration equipment.",
     description:
-      "R600 is a hydrocarbon (butane) refrigerant used in small domestic and commercial refrigeration equipment. It is flammable (class A3), so it must be handled and charged according to safety rules. Ask us for the price and the cylinder sizes available.",
-    specs: [
-      { label: "Refrigerant type", value: "Hydrocarbon (butane)" },
-      { label: "Typical use", value: "Small domestic and commercial refrigeration" },
-      { label: "Safety class (ASHRAE 34)", value: "A3 (flammable)" },
-      { label: "Cylinder sizes", value: "Ask us on WhatsApp" },
-    ],
+      "R600 / R600a is used in small domestic and commercial refrigeration equipment. Tell us which one you need and we will confirm what is available.",
+    specs: [],
+    specsPrompt: GAS_SPECS_PROMPT,
     image: "",
   },
 

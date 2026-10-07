@@ -8,6 +8,13 @@ export const SITE_URL = (
 export const FOUNDED_YEAR = 2010;
 
 /**
+ * Search engines may index the site only when NEXT_PUBLIC_ALLOW_INDEXING is exactly "true".
+ * Any other value (or none) keeps every page noindex/nofollow and robots.txt on "Disallow: /".
+ * The value is read at build time, so redeploy after changing it.
+ */
+export const ALLOW_INDEXING = process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true";
+
+/**
  * Google Maps link for the address. Replace this one constant with the exact
  * pin link (Share > Copy link in Google Maps) when it is available.
  */

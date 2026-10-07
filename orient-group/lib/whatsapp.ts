@@ -15,6 +15,10 @@ export function priceMessage(name: string, brand: string) {
   return `Hello Orient Group, please send me a price for: ${productLabel(name, brand)}`;
 }
 
+export function specsMessage(name: string, brand: string) {
+  return `Hello Orient Group, please send me the specifications and availability for: ${productLabel(name, brand)}`;
+}
+
 export function productWhatsappUrl(name: string, brand: string) {
   return whatsappUrl(priceMessage(name, brand));
 }
