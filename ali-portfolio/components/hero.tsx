@@ -7,7 +7,7 @@ import { WHATSAPP_URL, projects } from "@/lib/site";
 const sizes = "(min-width: 1024px) 420px, 80vw";
 
 export function Hero() {
-  const [orient, dacha, dhil] = projects;
+  const [orient, , rbc, , dacha] = projects;
 
   return (
     <section id="top" className="relative overflow-x-clip">
@@ -61,7 +61,7 @@ export function Hero() {
             </div>
             <div className="float-b absolute right-0 top-[22%] w-[70%]">
               <div className="rotate-[5deg]">
-                <BrowserFrame src={dhil.image} alt="" url="dhil-al-shams.vercel.app" sizes={sizes} />
+                <BrowserFrame src={rbc.image} alt="" url="rbc-yachts.vercel.app" sizes={sizes} />
               </div>
             </div>
             <div className="float-a absolute bottom-0 left-[10%] w-[76%] [animation-delay:-3s]">

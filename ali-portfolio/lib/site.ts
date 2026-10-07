@@ -4,7 +4,7 @@
 // You can also set them as NEXT_PUBLIC_WHATSAPP_NUMBER / NEXT_PUBLIC_EMAIL in Vercel.
 export const WHATSAPP_NUMBER =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923361710242";
-export const EMAIL = process.env.NEXT_PUBLIC_EMAIL ?? "4aminkarachi333@gmail.com";
+export const EMAIL = process.env.NEXT_PUBLIC_EMAIL ?? "aliwebstudio11@gmail.com";
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 
@@ -15,26 +15,42 @@ export const MAILTO_URL = `mailto:${EMAIL}`;
 export const projects = [
   {
     name: "Orient Group Gulf",
-    description: "HVAC & refrigeration materials supplier in Kuwait, with a B2B catalog and WhatsApp quotes.",
+    description: "HVAC & refrigeration materials supplier, Kuwait.",
     tags: ["B2B catalog", "WhatsApp quotes", "EN/AR"],
     badge: "Preview",
     href: "https://orient-group-gulf.vercel.app",
-    image: "/projects/orient-group-gulf.png",
+    image: "/projects/orient.png",
+  },
+  {
+    name: "Royal Wedding Events",
+    description: "Wedding event organiser, Hawally, Kuwait.",
+    tags: ["Events", "Arabic-first", "WhatsApp booking"],
+    badge: "Concept",
+    href: "https://royal-wedding-kuwait.vercel.app",
+    image: "/projects/royal-wedding.png",
+  },
+  {
+    name: "Royal Blue Coast Yachts",
+    description: "Luxury yacht charters, Dubai Marina.",
+    tags: ["Luxury", "Booking", "Redesign"],
+    badge: "Redesign",
+    href: "https://rbc-yachts.vercel.app",
+    image: "/projects/rbc-yachts.png",
+  },
+  {
+    name: "Global Clearinghouse Systems",
+    description: "Customs & ports operations, Kuwait Free Trade Zone.",
+    tags: ["Logistics", "Interactive", "EN/AR"],
+    badge: "Concept",
+    href: "https://gcs-website-blue.vercel.app",
+    image: "/projects/gcs.png",
   },
   {
     name: "Dacha",
-    description: "Real estate agency redesign concept, Dubai.",
+    description: "Real estate agency, Dubai.",
     tags: ["Real estate", "Redesign"],
     badge: "Concept",
     href: "https://dacha-psi-one.vercel.app",
     image: "/projects/dacha.png",
-  },
-  {
-    name: "Dhil Al Shams",
-    description: "Car parking shades and tents, Sharjah.",
-    tags: ["Local business", "Lead generation"],
-    badge: "Preview",
-    href: "https://dhil-al-shams.vercel.app",
-    image: "/projects/dhil-al-shams.png",
   },
 ] as const;
