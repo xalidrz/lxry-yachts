@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { Section, SectionHeading } from "@/components/section";
 import { brands } from "@/data/brands";
 
@@ -12,27 +12,13 @@ export function Brands() {
         Trusted names in HVAC, fixing systems, electrical and bearings, all
         available from one supplier in Shuwaikh.
       </SectionHeading>
-      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+      <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4 sm:gap-4 lg:grid-cols-8">
         {brands.map((brand) => (
-          <li
-            key={brand.name}
-            className="flex min-h-20 items-center justify-center rounded-xl border bg-card px-4 py-4 text-center"
-          >
-            {brand.logo ? (
-              <span className="relative block h-10 w-32">
-                <Image
-                  src={brand.logo}
-                  alt={`${brand.name} logo`}
-                  fill
-                  sizes="128px"
-                  className="object-contain"
-                />
-              </span>
-            ) : (
-              <span className="font-display text-base font-bold text-foreground sm:text-lg">
-                {brand.name}
-              </span>
-            )}
+          <li key={brand.name}>
+            <BrandLogo
+              brand={brand}
+              sizes="(min-width: 1024px) 140px, (min-width: 640px) 25vw, 33vw"
+            />
           </li>
         ))}
       </ul>

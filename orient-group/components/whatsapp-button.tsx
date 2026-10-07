@@ -9,20 +9,26 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   size?: "default" | "sm" | "lg";
+  /** "solid" for main CTAs, "outline" for buttons inside cards. */
+  variant?: "solid" | "outline";
   /** Extra accessible name when the visible text is not enough on its own. */
   ariaLabel?: string;
 };
 
-/** Green WhatsApp pill that opens a chat with the message pre-filled. */
+/** WhatsApp pill that opens a chat with the message pre-filled. */
 export function WhatsAppButton({
   message,
   children,
   className,
   size,
   ariaLabel,
+  variant = "solid",
 }: Props) {
   return (
-    <Button asChild variant="whatsapp" size={size} className={cn(className)}>
+    <Button
+      asChild
+      variant={variant === "outline" ? "whatsapp-outline" : "whatsapp"}
+      size={size} className={cn(className)}>
       <a
         href={whatsappUrl(message)}
         target="_blank"

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2A2B2D",
+  themeColor: "#1F1F1F",
   width: "device-width",
   initialScale: 1,
 };
@@ -50,7 +50,8 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const logo = getLogo();
+  const logo = getLogo("logo.png");
+  const logoWhite = getLogo("logo-white.png");
   return (
     <html
       lang={defaultLocale}
@@ -68,7 +69,7 @@ export default function RootLayout({
         <main id="main" className="flex-1">
           {children}
         </main>
-        <SiteFooter logo={logo} />
+        <SiteFooter logo={logoWhite} />
         <WhatsAppFloat />
       </body>
     </html>

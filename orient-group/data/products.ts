@@ -94,7 +94,7 @@ export const products: Product[] = [
       { label: "Form", value: "Straight lengths" },
       ASK_SIZES,
     ],
-    image: "",
+    image: "/products/copper-straight-pipe-venture.jpg",
   },
   {
     slug: "thermal-insulation",
@@ -129,7 +129,7 @@ export const products: Product[] = [
       { label: "Typical use", value: "Connecting ductwork to diffusers, grilles and equipment" },
       ASK_SIZES,
     ],
-    image: "",
+    image: "/products/flexible-duct-connector-aeroduct.jpg",
   },
   {
     slug: "canvas-cloth-for-ducting",
@@ -176,7 +176,7 @@ export const products: Product[] = [
       { label: "Typical use", value: "Replacement and maintenance of AC and refrigeration units" },
       ASK_SIZES,
     ],
-    image: "",
+    image: "/products/capacitors-amber.jpg",
   },
   {
     slug: "condenser-motors-and-ac-spare-parts",
@@ -412,7 +412,39 @@ export const products: Product[] = [
       },
       ASK_SIZES,
     ],
-    image: "",
+    image: "/products/unistrut-channels.jpg",
+  },
+
+  {
+    slug: "pipe-hangers-and-clamps",
+    name: "Pipe Hangers and Clamps",
+    brand: "Tembo Seven Star",
+    category: "fixing-systems",
+    shortDescription:
+      "Tembo pipe hangers, clamps and supports for hanging and fixing pipework.",
+    description:
+      "Tembo Seven Star pipe hangers, clamps and supports for hanging and fixing pipework on MEP installations. Tell us the pipe size, quantity and how the pipe will be supported, and we will confirm availability and price.",
+    specs: [
+      { label: "Typical use", value: "Hanging and fixing pipework" },
+      ASK_SIZES,
+    ],
+    image: "/products/pipe-hangers-clamps-tembo.jpg",
+  },
+  {
+    slug: "threaded-rods-nuts-washers-and-bolts",
+    name: "Threaded Rods, Nuts, Washers and Bolts",
+    brand: "Tembo Seven Star",
+    category: "fixing-systems",
+    shortDescription:
+      "Tembo threaded rods with matching nuts, washers and bolts for supports and fixings.",
+    description:
+      "Tembo Seven Star threaded rods, nuts, washers and bolts for building supports, hangers and general fixings. Send us the diameter, length and quantity you need and we will confirm availability and price.",
+    specs: [
+      { label: "Includes", value: "Threaded rods, nuts, washers, bolts" },
+      { label: "Typical use", value: "Supports, hangers and general fixings" },
+      ASK_SIZES,
+    ],
+    image: "/products/threaded-rods-nuts-washers-bolts-tembo.jpg",
   },
 
   // ───────────────────────────── ELECTRICAL ─────────────────────────────

@@ -3,6 +3,7 @@ import { Phone } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
 import { Breadcrumbs } from "@/components/page-hero";
 import { ProductCard } from "@/components/product-card";
+import { CategoryBadgeIcon } from "@/components/category-badge-icon";
 import { ProductImage } from "@/components/product-image";
 import { Section } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
@@ -53,15 +54,27 @@ export function ProductView({
       </div>
 
       <Section className="py-10 sm:py-14">
-        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-          <ProductImage
-            product={product}
-            sizes="(min-width: 1024px) 560px, 100vw"
-            priority
-            large
-            className="rounded-2xl border"
-          />
+        <div
+          className={
+            product.image
+              ? "grid items-start gap-8 lg:grid-cols-2 lg:gap-12"
+              : "max-w-3xl"
+          }
+        >
+          {product.image && (
+            <ProductImage
+              product={product}
+              sizes="(min-width: 1024px) 560px, 100vw"
+              priority
+              className="rounded-2xl border"
+            />
+          )}
           <div>
+            {!product.image && (
+              <div className="mb-5">
+                <CategoryBadgeIcon category={product.category} size="lg" />
+              </div>
+            )}
             <div className="flex flex-wrap gap-2">
               <Badge variant="muted">{category.title}</Badge>
               {product.brand !== ANY_BRAND && <Badge>{product.brand}</Badge>}
@@ -140,6 +153,7 @@ export function ProductView({
                 </p>
                 <WhatsAppButton
                   className="mt-5"
+                  variant="outline"
                   message={specsMessage(product.name, product.brand)}
                 >
                   Ask on WhatsApp

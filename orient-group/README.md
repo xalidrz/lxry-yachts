@@ -24,7 +24,7 @@ Environment variables (see `.env.example`):
 
 Everything is in **`data/products.ts`**. Add one entry to the `products` array (fields are documented at the top of the file). The product page, category listing, search, related products, sitemap and SEO tags all update on the next build.
 
-Real photos: put the file in `public/products/` and set `image: "/products/<file>.jpg"`. Until then a branded placeholder shows.
+Photos: put the file in `public/products/` and set `image: "/products/<file>.jpg"`. It is shown at 4:3 on light grey, scaled to fit.
 
 ## Other things you may want to change
 
@@ -34,7 +34,10 @@ Real photos: put the file in `public/products/` and set `image: "/products/<file
 | Brand logos | `data/brands.ts` (add `logo: "/brands/name.svg"`) |
 | Categories | `data/categories.ts` |
 | Colours (brand tokens, defined once) and fonts | `app/globals.css` (`:root`), `app/layout.tsx` |
-| Logo | `public/logo.png`. Read at build time; header and footer fall back to a text logo if the file is missing |
+| Logo | `public/logo.png` (header) and `public/logo-white.png` (footer, dark background). Read at build time; a text logo shows if a file is missing |
+| Favicon | `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` (OGG monogram) |
+| Brand logos | `public/brands/*.png`, wired up in `data/brands.ts` |
+| Product photos | `public/products/*.jpg`, set per product with `image` in `data/products.ts`. Products without a photo show a compact card, never an empty image box |
 | Arabic / RTL | `lib/i18n.ts` and `components/language-toggle.tsx` (toggle is in place, Arabic side inactive; components use logical start/end spacing) |
 
 Refrigerant gas pages have no specification table: they show "Contact us for specifications, cylinder sizes and availability." with a WhatsApp button (`specs: []` plus `specsPrompt`). The R600 entry reads "R600 / R600a" until the client confirms which he stocks.

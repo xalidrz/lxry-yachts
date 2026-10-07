@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { CategoryBadgeIcon } from "@/components/category-badge-icon";
 import { ProductImage } from "@/components/product-image";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Badge } from "@/components/ui/badge";
@@ -22,18 +23,26 @@ type Props = {
   priority?: boolean;
 };
 
+/**
+ * With a photo: photo on top, then details. Without one: a compact card with
+ * the category icon in a red-tinted circle (no empty image box).
+ */
 export function ProductCard({ product, headingLevel = "h2", priority }: Props) {
   const Heading = headingLevel;
   const category = getCategory(product.category);
+  const hasPhoto = Boolean(product.image);
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border bg-card transition-shadow duration-150 hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]">
-      <ProductImage
-        product={product}
-        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-        priority={priority}
-      />
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-shadow duration-150 hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]">
+      {hasPhoto && (
+        <ProductImage
+          product={product}
+          sizes="(min-width: 1280px) 280px, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          priority={priority}
+        />
+      )}
       <div className="flex flex-1 flex-col gap-3 p-5">
+        {!hasPhoto && <CategoryBadgeIcon category={product.category} />}
         <div className="flex flex-wrap gap-2">
           {category && <Badge variant="muted">{category.title}</Badge>}
           {product.brand !== ANY_BRAND && <Badge>{product.brand}</Badge>}
@@ -55,6 +64,7 @@ export function ProductCard({ product, headingLevel = "h2", priority }: Props) {
         <WhatsAppButton
           message={priceMessage(product.name, product.brand)}
           size="sm"
+          variant="outline"
           className="w-full"
           ariaLabel={`Ask for price: ${productLabel(product.name, product.brand)} on WhatsApp`}
         >

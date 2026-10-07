@@ -22,15 +22,12 @@ export function SiteFooter({ logo }: { logo: Logo | null }) {
     <footer className="on-dark bg-charcoal text-on-dark">
       <div className="mx-auto grid max-w-[1200px] gap-10 px-4 pt-14 pb-10 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.4fr]">
         <div>
-          {/* White panel so the logo's grey lettering stays readable on charcoal. */}
-          <Link
-            href="/"
-            className="inline-flex rounded-xl bg-white px-4 py-3"
-          >
+          {/* Inverted (white) logo for the dark footer. */}
+          <Link href="/" className="inline-flex max-w-full">
             <SiteLogo
               logo={logo}
-              className="max-w-[240px]"
-              textClassName="text-xl text-foreground"
+              className="h-10 max-w-full"
+              textClassName="text-xl text-on-dark"
             />
           </Link>
           <p className="mt-5 max-w-xs text-[0.9375rem] leading-relaxed text-on-dark-muted">

@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * Pill buttons, icon on the left, 44px minimum tap height.
- * primary = brand red, whatsapp = green, secondary = transparent with a 1px border
+ * primary = brand red, whatsapp = green (main CTAs), whatsapp-outline = green
+ * outline for card buttons (solid on hover), secondary = transparent with a 1px border
  * (use secondary-dark on charcoal / dark surfaces).
  */
 const buttonVariants = cva(
@@ -16,6 +17,8 @@ const buttonVariants = cva(
       variant: {
         primary: "bg-brand text-white hover:bg-brand-hover",
         whatsapp: "bg-whatsapp text-white hover:bg-whatsapp-hover",
+        "whatsapp-outline":
+          "border-whatsapp bg-white text-whatsapp hover:bg-whatsapp hover:text-white",
         secondary:
           "border-border bg-transparent text-foreground hover:border-brand-grey hover:bg-black/[0.04]",
         "secondary-dark":

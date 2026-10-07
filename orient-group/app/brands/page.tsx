@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { BrandLogo } from "@/components/brand-logo";
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
 import { Section } from "@/components/section";
@@ -51,7 +52,10 @@ export default function BrandsPage() {
                 key={brand.name}
                 className="flex flex-col rounded-2xl border bg-card p-6"
               >
-                <h2 className="font-display text-xl font-bold">{brand.name}</h2>
+                <div className="flex items-center gap-4">
+                  <BrandLogo brand={brand} sizes="64px" className="size-16 shrink-0 p-1" />
+                  <h2 className="font-display text-xl font-bold">{brand.name}</h2>
+                </div>
                 {items.length > 0 ? (
                   <ul className="mt-4 flex-1 space-y-1.5">
                     {items.map((p) => (
@@ -73,6 +77,7 @@ export default function BrandsPage() {
                 <WhatsAppButton
                   message={brandMessage(brand.name)}
                   size="sm"
+                  variant="outline"
                   className="mt-6 self-start"
                   ariaLabel={`Ask about ${brand.name} products on WhatsApp`}
                 >

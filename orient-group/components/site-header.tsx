@@ -48,11 +48,11 @@ export function SiteHeader({ logo }: { logo: Logo | null }) {
     >
       <div className="relative mx-auto max-w-[1200px]">
         <div className="flex h-16 items-center justify-between gap-3 rounded-[22px] border border-black/[0.06] bg-white/85 ps-4 pe-3 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-[16px] min-[900px]:ps-5 min-[900px]:pe-4">
-          <Link href="/" className="flex min-w-0 shrink items-center">
+          <Link href="/" className="flex min-w-0 shrink items-center min-[900px]:shrink-0">
             <SiteLogo
               logo={logo}
               priority
-              className="max-w-[min(100%,190px)] min-[420px]:max-w-[240px] min-[900px]:max-w-[280px]"
+              className="h-8 max-w-full min-[900px]:h-10"
               textClassName="text-[17px] text-foreground min-[420px]:text-xl min-[900px]:text-[22px]"
             />
           </Link>
@@ -76,7 +76,7 @@ export function SiteHeader({ logo }: { logo: Logo | null }) {
             </ul>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2 min-[900px]:gap-5">
+          <div className="flex shrink-0 items-center gap-1.5 min-[420px]:gap-2 min-[900px]:gap-5">
             <LanguageToggle className="hidden min-[900px]:flex" />
             <a
               href={`tel:${OFFICE_PHONE.tel}`}

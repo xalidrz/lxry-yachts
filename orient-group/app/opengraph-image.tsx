@@ -14,10 +14,10 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#2A2B2D",
+          background: "#1F1F1F",
           color: "#F2F2F3",
           padding: 72,
-          borderBottom: "14px solid #CD181F",
+          borderBottom: "14px solid #D7262E",
         }}
       >
         <div style={{ display: "flex", fontSize: 40, fontWeight: 700, letterSpacing: 1 }}>
