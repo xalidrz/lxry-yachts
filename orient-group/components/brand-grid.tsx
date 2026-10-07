@@ -13,14 +13,17 @@ import { cn } from "@/lib/utils";
 export type BrandEntry = {
   name: string;
   logo?: string;
+  /** Logo has its own coloured background: shown centred at about 80% of the tile. */
+  ownBackground?: boolean;
   /** Product lines we list for this brand, already in the page language. */
   lines: { slug: string; name: string }[];
 };
 
 /**
- * Logo grid, 2 columns on phones and 4 on desktop. Logos are greyscale until
- * hovered or focused. Clicking a logo opens a dialog with the brand's product
- * lines and a WhatsApp button.
+ * Logo grid, 2 columns on phones and 4 on desktop. Every logo is shown in full
+ * colour on a white tile (1px border, 12px corners, 16px padding). Hover lifts
+ * the tile slightly with a soft shadow. Clicking a logo opens a dialog with the
+ * brand's product lines and a WhatsApp button.
  */
 export function BrandGrid({ brands, locale }: { brands: BrandEntry[]; locale: Locale }) {
   const t = getDictionary(locale);
@@ -36,21 +39,25 @@ export function BrandGrid({ brands, locale }: { brands: BrandEntry[]; locale: Lo
               onClick={() => setOpen(brand)}
               aria-haspopup="dialog"
               aria-label={t.brandsPage.openBrand(brand.name)}
-              className="group relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border bg-white p-3 transition-shadow duration-150 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] focus-visible:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
+              className="relative flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-[12px] border border-border bg-white p-4 transition-[transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12)] focus-visible:-translate-y-0.5 focus-visible:shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
             >
               {brand.logo ? (
-                <Image
-                  src={brand.logo}
-                  alt={t.brandsPage.logoAlt(brand.name)}
-                  fill
-                  sizes="(min-width: 768px) 25vw, 50vw"
-                  className="object-contain grayscale transition-[filter] duration-200 group-hover:grayscale-0 group-focus-visible:grayscale-0"
-                />
-              ) : (
+                // Logos with their own coloured background sit centred at ~80% of the tile.
                 <span
-                  dir="ltr"
-                  className="font-display text-lg leading-tight font-bold text-brand-grey transition-colors duration-200 group-hover:text-foreground group-focus-visible:text-foreground"
+                  className={cn(
+                    brand.ownBackground ? "absolute inset-[10%]" : "relative block h-full w-full",
+                  )}
                 >
+                  <Image
+                    src={brand.logo}
+                    alt={t.brandsPage.logoAlt(brand.name)}
+                    fill
+                    sizes="(min-width: 768px) 25vw, 50vw"
+                    className="object-contain"
+                  />
+                </span>
+              ) : (
+                <span dir="ltr" className="font-display text-lg leading-tight font-bold text-foreground">
                   {brand.name}
                 </span>
               )}

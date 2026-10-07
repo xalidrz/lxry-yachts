@@ -30,6 +30,7 @@ export default async function BrandsPage({ params }: LangParams) {
   const entries = brands.map((brand) => ({
     name: brand.name,
     logo: brand.logo,
+    ownBackground: brand.ownBackground,
     lines: products
       .filter((p) => p.brand === brand.name)
       .map((p) => ({ slug: p.slug, name: localizeProduct(p, locale).name })),
