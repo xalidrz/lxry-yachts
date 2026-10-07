@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/* ───────── Brand tokens ───────── */
+:root {
+  --steel: #1b3747;
+  --steel-deep: #14232d;
+  --copper: #b4532a;
+  --copper-hover: #9c4522;
+  --whatsapp: #1e8a4a;
+  --whatsapp-hover: #187039;
+
+  /* shadcn/ui semantic tokens mapped onto the brand palette */
+  --background: #eef2f4;
+  --foreground: #18252e;
+  --card: #ffffff;
+  --card-foreground: #18252e;
+  --popover: #ffffff;
+  --popover-foreground: #18252e;
+  --primary: var(--copper);
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #18252e;
+  --muted: #e3e9ec;
+  --muted-foreground: #56656f;
+  --accent: #e3e9ec;
+  --accent-foreground: #18252e;
+  --destructive: #b42318;
+  --border: #cbd5db;
+  --input: #cbd5db;
+  --ring: var(--copper);
+  --radius: 0.75rem;
+}
+
+@theme inline {
+  --color-steel: var(--steel);
+  --color-steel-deep: var(--steel-deep);
+  --color-copper: var(--copper);
+  --color-copper-hover: var(--copper-hover);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-hover: var(--whatsapp-hover);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Anchored sections must clear the floating header. */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+
+  /* Keyboard focus is always visible; light ring on dark surfaces. */
+  :focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  ::selection {
+    background: var(--copper);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  /* Archivo, expanded width axis, for headings and the logo. */
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 118;
+    font-stretch: 118%;
+    letter-spacing: -0.005em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
