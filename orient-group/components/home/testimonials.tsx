@@ -23,13 +23,13 @@ const testimonials = [
 export function Testimonials({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
   return (
-    <Section tone="white" id="testimonials">
+    <Section id="testimonials">
       <SectionHeading eyebrow={t.home.testimonialsEyebrow} title={t.home.testimonialsTitle} />
       <div className="grid gap-5 md:grid-cols-2">
         {testimonials.map((item) => (
           <figure
             key={item.name}
-            className="flex flex-col rounded-2xl border bg-background p-6 sm:p-8"
+            className="flex flex-col rounded-2xl border bg-card p-6 sm:p-8"
           >
             <Quote className="size-8 text-brand" aria-hidden="true" />
             <blockquote lang="en" dir="ltr" className="mt-4 flex-1 text-start text-lg leading-relaxed">

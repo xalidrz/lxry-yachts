@@ -34,10 +34,10 @@ Photos: put the file in `public/products/` and set `image: "/products/<file>.jpg
 | Brand logos | `data/brands.ts` (add `logo: "/brands/name.svg"`) |
 | Categories | `data/categories.ts` |
 | Colours (brand tokens, defined once) and fonts | `app/globals.css` (`:root`), `app/layout.tsx` |
-| Logo | `public/logo.png` (header) and `public/logo-white.png` (footer, dark background). Read at build time; a text logo shows if a file is missing |
-| Favicon | `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` (OGG monogram) |
+| Logo | `public/logo-mark.png` (header) and `public/logo-mark-white.png` (footer, dark background). Read at build time; a text logo shows if a file is missing |
+| Favicon | `public/icon.png`, `public/apple-icon.png`, `public/favicon.ico` (OGG monogram) |
 | Brand logos | `public/brands/*.png`, wired up in `data/brands.ts` |
-| Product photos | `public/products/*.jpg`, set per product with `image` in `data/products.ts`. Products without a photo show a compact card, never an empty image box |
+| Product photos | `public/products/*.jpg`, set per product with `image` in `data/products.ts`. Products without a photo show a light grey box with the category icon in red and the brand name. Extra photos go in `moreImages` and appear as thumbnails on the product page |
 | Arabic / RTL | `lib/i18n.ts` and `components/language-toggle.tsx` (toggle is in place, Arabic side inactive; components use logical start/end spacing) |
 
 Refrigerant gas pages have no specification table: they show "Contact us for specifications, cylinder sizes and availability." with a WhatsApp button (`specs: []` plus `specsPrompt`). The R600 entry reads "R600 / R600a" until the client confirms which he stocks.
@@ -67,7 +67,12 @@ If an admin area, login or database is added later, it needs its own design: ser
 ## Content you fill in later
 
 - **Engraving "Sample work" gallery:** drop photos into `public/engraving/`. They appear on the Engraving page (masonry grid with a lightbox) on the next build; with no photos the section is hidden. Describe each photo in `lib/engraving-gallery.ts` (`captions`) for accurate alt text.
-- **Social links:** put the account URLs in `SOCIAL_LINKS` in `lib/site.ts`. Empty ones are not shown. (Lucide has no brand logos, so neutral Lucide symbols with the network name as label are used.)
 - **Opening hours:** the hours on the Contact page are **placeholders**; edit `OPENING_HOURS` in `lib/site.ts` (English and Arabic).
 - **Map:** the Contact page embeds Google Maps by address (`GOOGLE_MAPS_EMBED_URL` in `lib/site.ts`); the Content-Security-Policy allows only `https://www.google.com` for frames.
 - **About page projects:** `data/projects.ts` (hidden while empty). **About photos:** `public/about/` and `data/about-images.ts`.
+
+## Home page content to confirm
+
+- **Hero stats** ("15+ years", "500+ products"): `STATS` in `lib/site.ts`. Both numbers still need the client's confirmation. The brand count comes from `data/brands.ts`.
+- **Shop by category tiles:** `data/shop-groups.ts` (photo and which products each tile covers). Tiles link to `/products?group=<key>`. The product list also reads `?category=` and `?q=` from the URL.
+- Clicking a product card opens a dialog (photo, brand, short description, WhatsApp button). The card title is still a real link to the product page.

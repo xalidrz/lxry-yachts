@@ -69,17 +69,8 @@ export const GOOGLE_MAPS_EMBED_URL = (hl: "en" | "ar") =>
     "Homaizi Complex, Khalifa Al-Jassim Street, Shuwaikh Industrial Area, Kuwait",
   )}&hl=${hl}&z=16&output=embed`;
 
-/**
- * Social media links. Leave a url empty and that icon is not shown, so only
- * fill in the accounts that are active.
- */
-export const SOCIAL_LINKS: { platform: "facebook" | "instagram" | "linkedin" | "youtube" | "tiktok"; url: string }[] = [
-  { platform: "facebook", url: "https://www.facebook.com/orientgroupkwt" },
-  { platform: "instagram", url: "" },
-  { platform: "linkedin", url: "" },
-  { platform: "youtube", url: "" },
-  { platform: "tiktok", url: "" },
-];
+/** Numbers shown in the home page hero. TO BE CONFIRMED with the client. */
+export const STATS = { years: "15+", products: "500+" };
 
 /** WhatsApp number (international format, digits only) used by every "Ask for price" button. */
 export const WHATSAPP_NUMBER = "96590950709";

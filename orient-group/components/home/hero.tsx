@@ -4,43 +4,33 @@ import { Phone } from "lucide-react";
 
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
+import { aboutImages } from "@/data/about-images";
 import { brands } from "@/data/brands";
 import { getDictionary } from "@/lib/dictionaries";
 import { localePath, type Locale } from "@/lib/i18n";
-import { FOUNDED_YEAR, OFFICE_PHONE } from "@/lib/site";
+import { OFFICE_PHONE, STATS } from "@/lib/site";
 
-import heroImage from "@/public/products/refrigerant-gases.jpg";
-
+/** White split hero: text on one side, the real shop photo on the other. */
 export function Hero({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
-  const trust = t.hero.trust(FOUNDED_YEAR, brands.length);
-  return (
-    <section className="on-dark relative overflow-hidden bg-charcoal text-on-dark">
-      {/* Product photo: right side on desktop, cropped to the cylinders, with a
-          dark gradient on its left edge so the headline stays readable. */}
-      <div className="absolute inset-y-0 end-0 hidden w-[58%] lg:block" aria-hidden="true">
-        <Image
-          src={heroImage}
-          alt=""
-          fill
-          priority
-          sizes="58vw"
-          placeholder="blur"
-          className="object-cover object-[78%_center]"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,#1F1F1F_0%,rgba(31,31,31,0.82)_22%,rgba(31,31,31,0.35)_55%,rgba(31,31,31,0.15)_100%)] rtl:bg-[linear-gradient(270deg,#1F1F1F_0%,rgba(31,31,31,0.82)_22%,rgba(31,31,31,0.35)_55%,rgba(31,31,31,0.15)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(31,31,31,0.55)_0%,transparent_35%)]" />
-      </div>
+  const stats = [
+    { value: STATS.years, label: t.hero.stats.years },
+    { value: String(brands.length), label: t.hero.stats.brands },
+    { value: STATS.products, label: t.hero.stats.products },
+  ];
+  const photo = aboutImages.shopFront;
 
-      <div className="relative mx-auto max-w-[1200px] px-4 pt-32 pb-14 sm:px-6 sm:pt-40 sm:pb-20 lg:pt-44 lg:pb-28">
-        <div className="max-w-2xl lg:max-w-[560px]">
-          <p className="mb-5 text-sm font-bold tracking-[0.16em] text-on-dark-muted uppercase">
+  return (
+    <section className="bg-white">
+      <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-2 lg:gap-14 lg:py-20">
+        <div>
+          <p className="mb-5 text-sm font-bold tracking-[0.16em] text-brand uppercase">
             {t.hero.eyebrow}
           </p>
-          <h1 className="font-display text-[2.125rem] leading-[1.12] font-extrabold sm:text-5xl lg:text-[3.25rem]">
+          <h1 className="font-display text-[2.125rem] leading-[1.12] font-extrabold text-foreground sm:text-5xl lg:text-[3.25rem]">
             {t.hero.title}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-on-dark-muted sm:text-xl">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
             {t.hero.text}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -50,42 +40,43 @@ export function Hero({ locale }: { locale: Locale }) {
             <Button asChild variant="primary" size="lg">
               <Link href={localePath(locale, "/products")}>{t.common.browseProducts}</Link>
             </Button>
-            <Button asChild variant="secondary-dark" size="lg">
+            <Button asChild variant="secondary" size="lg">
               <a href={`tel:${OFFICE_PHONE.tel}`}>
                 <Phone aria-hidden="true" />
                 {t.common.call} <span dir="ltr">{OFFICE_PHONE.display}</span>
               </a>
             </Button>
           </div>
-          <p className="mt-7 text-sm font-semibold text-on-dark-muted">
-            {trust.map((item, i) => (
-              <span key={item}>
-                {i > 0 && (
-                  <span aria-hidden="true" className="mx-2 text-white/40">
-                    ·
+          <dl className="mt-10 grid grid-cols-3 gap-4 border-t pt-8">
+            {stats.map((stat) => (
+              <div key={stat.label}>
+                <dt className="sr-only">{stat.label}</dt>
+                <dd>
+                  <span
+                    dir="ltr"
+                    className="font-display block text-3xl leading-none font-extrabold text-foreground sm:text-4xl"
+                  >
+                    {stat.value}
                   </span>
-                )}
-                {item}
-              </span>
+                  <span className="mt-2 block text-sm font-semibold text-muted-foreground">
+                    {stat.label}
+                  </span>
+                </dd>
+              </div>
             ))}
-          </p>
+          </dl>
         </div>
 
-        {/* Mobile and tablet: the same photo as a cropped band under the text. */}
-        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-2xl lg:hidden">
-          <Image
-            src={heroImage}
-            alt={t.hero.imageAlt}
-            fill
-            sizes="(min-width: 640px) 90vw, 100vw"
-            placeholder="blur"
-            className="object-cover object-[75%_35%]"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(31,31,31,0.35)_0%,transparent_45%)]" />
-        </div>
+        <Image
+          src={photo.src}
+          alt={photo.alt[locale]}
+          width={photo.width}
+          height={photo.height}
+          priority
+          sizes="(min-width: 1024px) 560px, 100vw"
+          className="aspect-[4/3] w-full rounded-[24px] object-cover shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
+        />
       </div>
-      {/* Red edge, echoing the underline in the logo. */}
-      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[3px] bg-brand" />
     </section>
   );
 }

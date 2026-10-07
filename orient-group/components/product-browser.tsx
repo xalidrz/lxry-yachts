@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Search, SearchX, X } from "lucide-react";
 
 import { ProductCard, type ProductCardData } from "@/components/product-card";
@@ -13,11 +14,20 @@ import { cn } from "@/lib/utils";
 
 export type BrowserProduct = ProductCardData & { searchText: string };
 
+export type BrowserGroups = {
+  /** Product slugs in each home-page "shop by category" group. */
+  slugs: Record<string, string[]>;
+  labels: Record<string, string>;
+};
+
 type Props = {
   locale: Locale;
   products: BrowserProduct[];
   categories: { slug: CategorySlug; title: string }[];
+  groups: BrowserGroups;
 };
+
+type InitialFilters = { query?: string; category?: CategorySlug | "all"; group?: string | null };
 
 /** Lowercase and drop everything except letters and digits (any script). */
 const compact = (s: string) => s.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
@@ -32,10 +42,18 @@ function matches(searchText: string, squashed: string, query: string) {
 const pillBase =
   "inline-flex min-h-11 cursor-pointer items-center rounded-full border px-5 text-[0.9375rem] font-semibold transition-colors duration-150";
 
-export function ProductBrowser({ locale, products, categories }: Props) {
+function ProductBrowser({
+  locale,
+  products,
+  categories,
+  groups,
+  initial = {},
+}: Props & { initial?: InitialFilters }) {
   const t = getDictionary(locale);
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<CategorySlug | "all">("all");
+  const [query, setQuery] = useState(initial.query ?? "");
+  const [category, setCategory] = useState<CategorySlug | "all">(initial.category ?? "all");
+  const [group, setGroup] = useState<string | null>(initial.group ?? null);
+  const groupSlugs = group ? groups.slugs[group] : undefined;
 
   const indexed = useMemo(
     () => products.map((p) => ({ ...p, squashed: compact(p.searchText) })),
@@ -48,9 +66,10 @@ export function ProductBrowser({ locale, products, categories }: Props) {
       indexed.filter(
         (p) =>
           (category === "all" || p.category === category) &&
+          (!groupSlugs || groupSlugs.includes(p.slug)) &&
           matches(p.searchText, p.squashed, term),
       ),
-    [indexed, category, term],
+    [indexed, category, groupSlugs, term],
   );
 
   const pills = [{ slug: "all" as const, title: t.products.all }, ...categories];
@@ -112,6 +131,21 @@ export function ProductBrowser({ locale, products, categories }: Props) {
         </div>
       </div>
 
+      {group && groups.labels[group] && (
+        <p className="mt-5 flex flex-wrap items-center gap-2 text-sm">
+          <span className="text-muted-foreground">{t.shop.activeFilter}</span>
+          <span className="font-semibold">{groups.labels[group]}</span>
+          <button
+            type="button"
+            onClick={() => setGroup(null)}
+            className="inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-full border px-3 font-semibold transition-colors duration-150 hover:border-brand-grey"
+          >
+            <X className="size-4" aria-hidden="true" />
+            {t.shop.clearFilter}
+          </button>
+        </p>
+      )}
+
       <p role="status" aria-live="polite" className="mt-6 text-sm text-muted-foreground">
         {results.length === 0 ? t.products.noneFound : t.products.showing(results.length, products.length)}
       </p>
@@ -142,5 +176,31 @@ export function ProductBrowser({ locale, products, categories }: Props) {
         </div>
       )}
     </div>
+  );
+}
+
+function BrowserWithUrlFilters(props: Props) {
+  const params = useSearchParams();
+  const category = params.get("category");
+  const initial: InitialFilters = {
+    query: (params.get("q") ?? "").slice(0, 100),
+    category: props.categories.some((c) => c.slug === category) ? (category as CategorySlug) : "all",
+    group: params.get("group") && props.groups.slugs[params.get("group")!] ? params.get("group") : null,
+  };
+  // key: opening another filtered link while on /products starts from that link's filters.
+  return <ProductBrowser {...props} initial={initial} key={params.toString()} />;
+}
+
+/**
+ * The product list with search and filters. It starts from the URL
+ * (?group=gases, ?category=hvac, ?q=r410a), so category tiles can link here.
+ * The fallback is the full unfiltered list, so the static HTML always contains
+ * every product for search engines.
+ */
+export function ProductExplorer(props: Props) {
+  return (
+    <Suspense fallback={<ProductBrowser {...props} />}>
+      <BrowserWithUrlFilters {...props} />
+    </Suspense>
   );
 }

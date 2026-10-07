@@ -43,12 +43,57 @@ const en = {
     product: (n: number) => (n === 1 ? "1 product" : `${n} products`),
   },
   hero: {
-    eyebrow: "Shuwaikh Industrial Area, Kuwait",
+    eyebrow: "Since 2010 · Shuwaikh Industrial Area",
     title: "HVAC, electrical and fixing materials for Kuwait's contractors",
     text: "Copper pipes, refrigerant gases, insulation, conduits, chemical anchors and engraved labels, supplied from Shuwaikh Industrial Area since 2010.",
     quote: "Request a quote on WhatsApp",
-    trust: (year: number, brands: number) => [`Since ${year}`, `${brands} brands`, "Shuwaikh Industrial Area"],
+    stats: { years: "years", brands: "brands", products: "products" },
     imageAlt: "Refrigerant gas cylinders supplied by Orient Group Gulf in Kuwait",
+  },
+  shop: {
+    eyebrow: "Shop by category",
+    title: "Find what you need",
+    text: "Pick a range to see the products in it, then ask for a price on WhatsApp.",
+    groups: {
+      gases: "Refrigerant Gases",
+      copper: "Copper Pipes & Coils",
+      ducts: "Flexible Ducts",
+      electrical: "Electrical & Controls",
+      fixing: "Fixing Systems",
+      engraving: "Engraving & Labels",
+    },
+    products: (n: number) => (n === 1 ? "1 product" : `${n} products`),
+    services: (n: number) => (n === 1 ? "1 service" : `${n} services`),
+    ranges: "Browse by range:",
+    activeFilter: "Showing:",
+    clearFilter: "Clear filter",
+  },
+  why: {
+    eyebrow: "Why choose us",
+    title: "Why Orient Group Gulf",
+    items: [
+      {
+        title: "Genuine branded stock",
+        text: "Venture, Bossong, Unistrut, NSK and more, so you get the product your specification asks for.",
+      },
+      {
+        title: "Fast price reply on WhatsApp",
+        text: "Send your list as a message, photo or spreadsheet and we reply with prices.",
+      },
+      {
+        title: "Large stock in Shuwaikh",
+        text: "Copper pipe, refrigerant gases, ducting, fixings and electrical items at our shop.",
+      },
+      {
+        title: "Delivery to site on schedule",
+        text: "We agree a delivery time when we quote and plan around your site programme.",
+      },
+    ],
+  },
+  productDialog: {
+    askWhatsApp: "Ask for price on WhatsApp",
+    viewDetails: "View full details",
+    close: "Close",
   },
   home: {
     categoriesEyebrow: "Products",
@@ -105,8 +150,6 @@ const en = {
     contact: "Contact",
     quickLinksAria: "Footer quick links",
     categoriesAria: "Footer product categories",
-    followUs: "Follow us",
-    social: { facebook: "Facebook", instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube", tiktok: "TikTok" },
   },
   products: {
     title: "Products",
@@ -131,6 +174,7 @@ const en = {
     specifications: "Specifications",
     defaultSpecsPrompt: "Contact us for specifications, sizes and availability.",
     related: "Related products",
+    photoOf: (n: number, total: number) => `Photo ${n} of ${total}`,
   },
   brandsPage: {
     title: "Brands we supply",
@@ -283,12 +327,57 @@ const ar: Dictionary = {
     product: (n: number) => (n === 1 ? "منتج واحد" : n === 2 ? "منتجان" : n <= 10 ? `${n} منتجات` : `${n} منتجًا`),
   },
   hero: {
-    eyebrow: "منطقة الشويخ الصناعية، الكويت",
+    eyebrow: "منذ 2010 · منطقة الشويخ الصناعية",
     title: "مواد التكييف والكهرباء والتثبيت لمقاولي الكويت",
     text: "أنابيب نحاسية، غازات تبريد، عزل، مواسير كوندويت، مثبتات كيميائية وملصقات محفورة، نوردها من منطقة الشويخ الصناعية منذ عام 2010.",
     quote: "اطلب عرض سعر عبر واتساب",
-    trust: (year: number, brands: number) => [`منذ ${year}`, `${brands} علامة تجارية`, "منطقة الشويخ الصناعية"],
+    stats: { years: "سنة خبرة", brands: "علامة تجارية", products: "منتج" },
     imageAlt: "أسطوانات غاز التبريد التي توردها أورينت جروب جلف في الكويت",
+  },
+  shop: {
+    eyebrow: "تسوق حسب الفئة",
+    title: "اعثر على ما تحتاجه",
+    text: "اختر فئة لعرض منتجاتها، ثم اطلب السعر عبر واتساب.",
+    groups: {
+      gases: "غازات التبريد",
+      copper: "أنابيب ولفائف نحاسية",
+      ducts: "مجاري هواء مرنة",
+      electrical: "الكهرباء والتحكم",
+      fixing: "أنظمة التثبيت",
+      engraving: "الحفر والملصقات",
+    },
+    products: (n: number) => (n === 1 ? "منتج واحد" : n === 2 ? "منتجان" : n <= 10 ? `${n} منتجات` : `${n} منتجًا`),
+    services: (n: number) => (n === 1 ? "خدمة واحدة" : n === 2 ? "خدمتان" : n <= 10 ? `${n} خدمات` : `${n} خدمة`),
+    ranges: "تصفح حسب الفئة:",
+    activeFilter: "العرض:",
+    clearFilter: "إزالة التصفية",
+  },
+  why: {
+    eyebrow: "لماذا نحن",
+    title: "لماذا أورينت جروب جلف",
+    items: [
+      {
+        title: "منتجات أصلية من علامات معروفة",
+        text: "Venture وBossong وUnistrut وNSK وغيرها، لتحصل على المنتج الذي تطلبه مواصفاتك.",
+      },
+      {
+        title: "رد سريع بالأسعار عبر واتساب",
+        text: "أرسل قائمتك كرسالة أو صورة أو جدول بيانات وسنرد عليك بالأسعار.",
+      },
+      {
+        title: "مخزون كبير في الشويخ",
+        text: "أنابيب نحاسية، غازات تبريد، مجاري هواء، مثبتات ومواد كهربائية في محلنا.",
+      },
+      {
+        title: "التوصيل إلى الموقع في الموعد",
+        text: "نتفق معك على موعد التسليم عند تقديم عرض السعر، ونخطط وفق جدول عمل موقعك.",
+      },
+    ],
+  },
+  productDialog: {
+    askWhatsApp: "اطلب السعر عبر واتساب",
+    viewDetails: "عرض التفاصيل الكاملة",
+    close: "إغلاق",
   },
   home: {
     categoriesEyebrow: "المنتجات",
@@ -342,8 +431,6 @@ const ar: Dictionary = {
     contact: "اتصل بنا",
     quickLinksAria: "روابط سريعة في التذييل",
     categoriesAria: "فئات المنتجات في التذييل",
-    followUs: "تابعنا",
-    social: { facebook: "فيسبوك", instagram: "إنستغرام", linkedin: "لينكدإن", youtube: "يوتيوب", tiktok: "تيك توك" },
   },
   products: {
     title: "المنتجات",
@@ -368,6 +455,7 @@ const ar: Dictionary = {
     specifications: "المواصفات",
     defaultSpecsPrompt: "تواصل معنا لمعرفة المواصفات والمقاسات والتوفر.",
     related: "منتجات ذات صلة",
+    photoOf: (n: number, total: number) => `الصورة ${n} من ${total}`,
   },
   brandsPage: {
     title: "العلامات التجارية التي نوردها",

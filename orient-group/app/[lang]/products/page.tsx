@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 
 import { JsonLd } from "@/components/json-ld";
 import { PageHero } from "@/components/page-hero";
-import { ProductBrowser } from "@/components/product-browser";
+import { ProductExplorer } from "@/components/product-browser";
 import { Section } from "@/components/section";
 import { categories, localizeCategory } from "@/data/categories";
 import { localizeProduct, productSearchText, products } from "@/data/products";
+import { getGroupSlugs, shopGroups } from "@/data/shop-groups";
 import { getDictionary } from "@/lib/dictionaries";
 import { localePath } from "@/lib/i18n";
 import { getLocale, type LangParams } from "@/lib/page-params";
@@ -58,8 +59,12 @@ export default async function ProductsPage({ params }: LangParams) {
         {t.products.intro}
       </PageHero>
       <Section className="pt-10 sm:pt-12">
-        <ProductBrowser
+        <ProductExplorer
           locale={locale}
+          groups={{
+            slugs: Object.fromEntries(shopGroups.map((g) => [g.key, getGroupSlugs(g.key)])),
+            labels: t.shop.groups,
+          }}
           products={browserProducts}
           categories={categories.map((c) => ({
             slug: c.slug,

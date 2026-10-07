@@ -14,7 +14,6 @@ import {
   MOBILES,
   OFFICE_PHONE,
   SITE_NAME,
-  SOCIAL_LINKS,
   SITE_URL,
 } from "./site";
 import { ANY_BRAND, productLabel } from "./whatsapp";
@@ -120,7 +119,6 @@ export function localBusinessJsonLd(locale: Locale) {
     faxNumber: `+965${FAX.display.replace(/\s/g, "")}`,
     email: EMAILS.find((e) => e.label === "General")?.address,
     hasMap: GOOGLE_MAPS_URL,
-    sameAs: SOCIAL_LINKS.filter((s) => s.url).map((s) => s.url),
     address: {
       "@type": "PostalAddress",
       streetAddress: ADDRESS_LINES.slice(0, 2).join(" ").replace(/,$/, ""),

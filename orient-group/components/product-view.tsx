@@ -1,10 +1,9 @@
 import { Phone } from "lucide-react";
 
 import { JsonLd } from "@/components/json-ld";
-import { CategoryBadgeIcon } from "@/components/category-badge-icon";
 import { Breadcrumbs } from "@/components/page-hero";
 import { ProductCard } from "@/components/product-card";
-import { ProductImage } from "@/components/product-image";
+import { ProductGallery } from "@/components/product-gallery";
 import { Section } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Badge } from "@/components/ui/badge";
@@ -45,7 +44,7 @@ export function ProductView({
         ])}
       />
 
-      <div className="on-dark bg-charcoal pt-28 pb-6 sm:pt-32">
+      <div className="on-dark bg-charcoal pt-6 pb-6">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <Breadcrumbs
             locale={locale}
@@ -60,27 +59,14 @@ export function ProductView({
       </div>
 
       <Section className="py-10 sm:py-14">
-        <div
-          className={
-            product.image ? "grid items-start gap-8 lg:grid-cols-2 lg:gap-12" : "max-w-3xl"
-          }
-        >
-          {product.image && (
-            <ProductImage
-              product={product}
-              locale={locale}
-              name={p.name}
-              sizes="(min-width: 1024px) 560px, 100vw"
-              priority
-              className="rounded-2xl border"
-            />
-          )}
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+          <ProductGallery
+            product={product}
+            name={p.name}
+            photos={product.image ? [product.image, ...(product.moreImages ?? [])] : []}
+            locale={locale}
+          />
           <div>
-            {!product.image && (
-              <div className="mb-5">
-                <CategoryBadgeIcon category={product.category} size="lg" />
-              </div>
-            )}
             <div className="flex flex-wrap gap-2">
               <Badge variant="muted">{cat.title}</Badge>
               {product.brand !== ANY_BRAND && <Badge>{product.brand}</Badge>}

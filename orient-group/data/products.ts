@@ -15,7 +15,8 @@
  *  specs             Rows of { label, value } for the specifications table (can be []).
  *  specsPrompt       Optional. Shown with a WhatsApp button instead of the table when `specs` is empty.
  *  image             Photo path, e.g. "/products/pancake-copper-coils.jpg" (file in /public/products).
- *                    Leave "" for no photo: the card then shows a compact layout.
+ *                    Leave "" for no photo: the card then shows a grey box with the category icon.
+ *  moreImages        Optional extra photo paths, shown as thumbnails on the product page.
  *  ar                Optional Arabic text: { name, shortDescription, description, specs?, specsPrompt? }.
  *                    Anything missing falls back to the English.
  */
@@ -45,6 +46,8 @@ export type Product = {
   /** Shown with a WhatsApp button in place of the specifications table when `specs` is empty. */
   specsPrompt?: string;
   image: string;
+  /** Extra photos shown under the main one on the product page (optional). */
+  moreImages?: string[];
   /** Arabic version (Modern Standard Arabic). Optional: English is used if missing. */
   ar?: ProductText;
 };
@@ -102,7 +105,8 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "/products/copper-coil-rings.jpg",
+    image: "/products/copper-coil-refrigeration-tube-venture.jpg",
+    moreImages: ["/products/copper-coil-rings.jpg"],
   },
   {
     slug: "straight-copper-pipe-type-k-l-m",
@@ -205,7 +209,8 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "/products/flexible-duct-connector-aeroduct.jpg",
+    image: "/products/flexible-duct-insulated-duraflex.jpg",
+    moreImages: ["/products/flexible-duct-pvc-flexiva.jpg", "/products/flexible-duct-connector-aeroduct.jpg"],
   },
   {
     slug: "canvas-cloth-for-ducting",
@@ -287,7 +292,8 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "/products/capacitors-amber.jpg",
+    image: "/products/capacitors-amber-range.jpg",
+    moreImages: ["/products/capacitors-amber.jpg", "/products/contactors.jpg"],
   },
   {
     slug: "condenser-motors-and-ac-spare-parts",
@@ -315,7 +321,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/compressors-copeland.jpg",
   },
   {
     slug: "coil-cleaners-and-maintenance-chemicals",
@@ -343,7 +349,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "/products/coil-cleaner-venture-bottle.jpg",
+    image: "/products/coil-cleaner-venture.jpg",
   },
   {
     slug: "installation-tools-and-accessories",
@@ -392,7 +398,7 @@ export const products: Product[] = [
         "R22 غاز تبريد يُستخدم في أنظمة التكييف والتبريد القديمة، ويجري التخلص منه تدريجياً بموجب بروتوكول مونتريال، لذلك يُستخدم أساساً لصيانة المعدات المصممة للعمل به.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "/products/refrigerant-r22-cylinder.jpg",
+    image: "/products/refrigerant-r22.jpg",
   },
   {
     slug: "r410a-refrigerant-gas",
@@ -414,6 +420,7 @@ export const products: Product[] = [
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
     image: "/products/refrigerant-r410a-cylinder.jpg",
+    moreImages: ["/products/refrigerant-cans-ecool.jpg"],
   },
   {
     slug: "r134a-refrigerant-gas",
@@ -435,6 +442,7 @@ export const products: Product[] = [
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
     image: "/products/refrigerant-r134a-cylinder.jpg",
+    moreImages: ["/products/refrigerant-cans-ecool.jpg"],
   },
   {
     slug: "r404a-refrigerant-gas",
@@ -456,6 +464,7 @@ export const products: Product[] = [
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
     image: "/products/refrigerant-r404a-can.jpg",
+    moreImages: ["/products/refrigerant-cans-ecool.jpg"],
   },
   {
     slug: "r407c-refrigerant-gas",
@@ -477,6 +486,7 @@ export const products: Product[] = [
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
     image: "/products/refrigerant-r407c-can.jpg",
+    moreImages: ["/products/refrigerant-cans-ecool.jpg"],
   },
   {
     slug: "r32-refrigerant-gas",
@@ -497,7 +507,7 @@ export const products: Product[] = [
         "يُستخدم R32 في أجهزة التكييف السبليت الحديثة، ويتميز بقدرة أقل على الاحترار العالمي مقارنة بـ R410A.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r32-ecool.jpg",
   },
   {
     slug: "r600-refrigerant-gas",
@@ -518,7 +528,7 @@ export const products: Product[] = [
         "يُستخدم R600 / R600a في معدات التبريد الصغيرة المنزلية والتجارية. أخبرنا أيهما تحتاج لنؤكد المتوفر.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "/products/refrigerant-r600a-can-box.jpg",
+    image: "/products/refrigerant-r600a-ecool.jpg",
   },
 
   // ───────────────────────── FIXING SYSTEMS ─────────────────────────

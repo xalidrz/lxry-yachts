@@ -78,8 +78,8 @@ export default async function RootLayout({
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const t = getDictionary(lang);
-  const logo = getLogo("logo.png");
-  const logoWhite = getLogo("logo-white.png");
+  const logo = getLogo("logo-mark.png");
+  const logoWhite = getLogo("logo-mark-white.png");
 
   return (
     <html
