@@ -581,7 +581,7 @@ export const products: Product[] = [
         { label: "العبوات المتوفرة", value: "BCR-400، BCR-300، BCR-165، Termo، Kit، دلو OSR" },
       ],
     },
-    image: "",
+    image: "/products/chemical-anchor-bossong-poly-sf.jpg",
   },
   {
     slug: "chemical-anchor-vinil",
@@ -761,7 +761,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/pvc-coated-flexible-conduit.jpg",
   },
   {
     slug: "gi-conduit-pipe-bs31-class-3",
@@ -789,7 +789,7 @@ export const products: Product[] = [
         { label: "المقاسات", value: "3/4\" x 10 ft, 1\" x 10 ft, 1-1/2\" x 10 ft, 2\" x 10 ft" },
       ],
     },
-    image: "",
+    image: "/products/gi-conduit-pipes.jpg",
   },
   {
     slug: "brass-adapter-with-gi-lock-nut",
@@ -817,7 +817,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/brass-adapter-fittings.jpg",
   },
   {
     slug: "brass-male-bush",
@@ -845,7 +845,7 @@ export const products: Product[] = [
         ASK_SIZES_AR,
       ],
     },
-    image: "",
+    image: "/products/brass-male-bush.jpg",
   },
   {
     slug: "cables-and-wires",
@@ -877,7 +877,7 @@ export const products: Product[] = [
         { label: "البيانات والاتصالات", value: "كابلات محورية، كابلات بيانات CAT 5/6، كابلات ألياف ضوئية" },
       ],
     },
-    image: "",
+    image: "/products/electrical-wires-coils.jpg",
   },
   {
     slug: "switchgear-and-earthing-equipment",
@@ -913,7 +913,7 @@ export const products: Product[] = [
         { label: "التأريض", value: "أطقم أعمدة تأريض، أشرطة نحاسية" },
       ],
     },
-    image: "",
+    image: "/products/switchgear-isolator.jpg",
   },
 
   // ───────────────────────────── BEARINGS ─────────────────────────────
@@ -945,7 +945,7 @@ export const products: Product[] = [
         { label: "أرقام المحامل", value: "أرسل لنا الرقم عبر واتساب" },
       ],
     },
-    image: "",
+    image: "/products/deep-groove-ball-bearing.jpg",
   },
   {
     slug: "angular-contact-ball-bearings",
@@ -975,7 +975,7 @@ export const products: Product[] = [
         { label: "أرقام المحامل", value: "أرسل لنا الرقم عبر واتساب" },
       ],
     },
-    image: "",
+    image: "/products/angular-contact-ball-bearing.jpg",
   },
   {
     slug: "self-aligning-ball-bearings",
@@ -1005,7 +1005,7 @@ export const products: Product[] = [
         { label: "أرقام المحامل", value: "أرسل لنا الرقم عبر واتساب" },
       ],
     },
-    image: "",
+    image: "/products/self-aligning-ball-bearing.jpg",
   },
 ];
 
