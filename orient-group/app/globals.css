@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+/* ───────── Brand tokens (from the Orient Group Gulf logo) ─────────
+   Red #D7262E and near-black #1F1F1F on white / light grey. No yellow or gold. */
+:root {
+  --brand: #d7262e; /* brand red: primary buttons, phone pill, active pills, small accents */
+  --brand-hover: #b41d24;
+  --brand-grey: #636466; /* secondary text, icons, nav links, stronger lines */
+  --charcoal: #1f1f1f; /* near-black: dark sections: hero, engraving, footer */
+  --on-dark: #f2f2f3;
+  --on-dark-muted: #b5b6b8;
+  --toggle-inactive: #57534e;
+  --whatsapp: #1b8045;
+  --whatsapp-hover: #166637;
+
+  /* shadcn/ui semantic tokens mapped onto the brand palette */
+  --background: #f5f5f4;
+  --foreground: #1f1f1f;
+  --card: #ffffff;
+  --card-foreground: #1f1f1f;
+  --popover: #ffffff;
+  --popover-foreground: #1f1f1f;
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #1f1f1f;
+  --muted: #ececea;
+  --muted-foreground: var(--brand-grey);
+  --accent: #ececea;
+  --accent-foreground: #1f1f1f;
+  --destructive: var(--brand);
+  --border: #e7e5e4;
+  --input: #d6d3d1;
+  --ring: var(--brand);
+  --radius: 0.75rem; /* cards use rounded-2xl = 16px */
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-grey: var(--brand-grey);
+  --color-charcoal: var(--charcoal);
+  --color-on-dark: var(--on-dark);
+  --color-on-dark-muted: var(--on-dark-muted);
+  --color-toggle-inactive: var(--toggle-inactive);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-hover: var(--whatsapp-hover);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Anchored sections must clear the floating header. */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+
+  /* Keyboard focus is always visible; light ring on dark surfaces. */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  ::selection {
+    background: var(--brand);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  /* Archivo, expanded width axis, for headings and the logo. */
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 118;
+    font-stretch: 118%;
+    letter-spacing: -0.005em;
+  }
+}
+
+/* Arabic: Cairo for everything. Letter-spacing is removed because it breaks
+   the joining of Arabic letters, and the expanded Archivo width does not apply. */
+html[lang="ar"] body,
+html[lang="ar"] .font-display {
+  font-family: var(--font-cairo), var(--font-source-sans), ui-sans-serif, system-ui, sans-serif;
+  font-variation-settings: normal;
+  font-stretch: normal;
+}
+html[lang="ar"] * {
+  letter-spacing: 0 !important;
+}
+html[lang="ar"] body {
+  line-height: 1.75;
+}
+html[lang="ar"] .font-display {
+  line-height: 1.4;
+}
+
+/* Brand logo marquee on the home page. Two copies of the logos sit side by side
+   and the track slides by exactly one copy, so the loop is seamless. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.marquee-track {
+  animation: marquee 45s linear infinite;
+}
+[dir="rtl"] .marquee-track {
+  animation-name: marquee-rtl;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Mobile menu (Sheet) slides in from the inline-end edge. */
+@keyframes sheet-in-ltr { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes sheet-out-ltr { from { transform: none; } to { transform: translateX(100%); } }
+@keyframes sheet-in-rtl { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes sheet-out-rtl { from { transform: none; } to { transform: translateX(-100%); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+.sheet-content[data-state="open"] { animation: sheet-in-ltr 0.28s ease-out; }
+.sheet-content[data-state="closed"] { animation: sheet-out-ltr 0.2s ease-in; }
+[dir="rtl"] .sheet-content[data-state="open"] { animation-name: sheet-in-rtl; }
+[dir="rtl"] .sheet-content[data-state="closed"] { animation-name: sheet-out-rtl; }
+.sheet-overlay[data-state="open"] { animation: fade-in 0.2s ease-out; }
+.sheet-overlay[data-state="closed"] { animation: fade-out 0.2s ease-in; }
+
+/* Accordion open/close (FAQ and the mobile menu). */
+@keyframes accordion-down { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
+@keyframes accordion-up { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
+.accordion-content[data-state="open"] { animation: accordion-down 0.22s ease-out; }
+.accordion-content[data-state="closed"] { animation: accordion-up 0.2s ease-out; }
+
+/* Sections fade up once when they scroll into view (see components/reveal.tsx). */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reveal-shown {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+  }
+  .reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
