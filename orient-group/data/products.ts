@@ -455,7 +455,7 @@ export const products: Product[] = [
         "يُستخدم R404A في التبريد التجاري منخفض ومتوسط الحرارة مثل غرف التبريد والفريزرات وثلاجات العرض.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "/products/refrigerant-r404a-cylinder.jpg",
+    image: "/products/refrigerant-r404a-can.jpg",
   },
   {
     slug: "r407c-refrigerant-gas",
@@ -476,7 +476,7 @@ export const products: Product[] = [
         "يُستخدم R407C في أنظمة التكييف وكبديل لـ R22 في أعمال التحويل. تحقّق من توافق زيت الضاغط قبل تحويل نظام يعمل بـ R22.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r407c-can.jpg",
   },
   {
     slug: "r32-refrigerant-gas",
@@ -518,7 +518,7 @@ export const products: Product[] = [
         "يُستخدم R600 / R600a في معدات التبريد الصغيرة المنزلية والتجارية. أخبرنا أيهما تحتاج لنؤكد المتوفر.",
       specsPrompt: GAS_SPECS_PROMPT_AR,
     },
-    image: "",
+    image: "/products/refrigerant-r600a-can-box.jpg",
   },
 
   // ───────────────────────── FIXING SYSTEMS ─────────────────────────
