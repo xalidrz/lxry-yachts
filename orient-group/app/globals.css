@@ -9,7 +9,7 @@
   --charcoal: #1f1f1f; /* near-black: dark sections: hero, engraving, footer */
   --on-dark: #f2f2f3;
   --on-dark-muted: #b5b6b8;
-  --toggle-inactive: #9a9b9d;
+  --toggle-inactive: #57534e;
   --whatsapp: #1b8045;
   --whatsapp-hover: #166637;
 
@@ -96,7 +96,7 @@
 
   /* Anchored sections must clear the floating header. */
   [id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 7rem;
   }
 
   /* Keyboard focus is always visible; light ring on dark surfaces. */
@@ -163,6 +163,20 @@ html[lang="ar"] .font-display {
 .marquee:focus-within .marquee-track {
   animation-play-state: paused;
 }
+
+/* Mobile menu (Sheet) slides in from the inline-end edge. */
+@keyframes sheet-in-ltr { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes sheet-out-ltr { from { transform: none; } to { transform: translateX(100%); } }
+@keyframes sheet-in-rtl { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes sheet-out-rtl { from { transform: none; } to { transform: translateX(-100%); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+.sheet-content[data-state="open"] { animation: sheet-in-ltr 0.28s ease-out; }
+.sheet-content[data-state="closed"] { animation: sheet-out-ltr 0.2s ease-in; }
+[dir="rtl"] .sheet-content[data-state="open"] { animation-name: sheet-in-rtl; }
+[dir="rtl"] .sheet-content[data-state="closed"] { animation-name: sheet-out-rtl; }
+.sheet-overlay[data-state="open"] { animation: fade-in 0.2s ease-out; }
+.sheet-overlay[data-state="closed"] { animation: fade-out 0.2s ease-in; }
 
 /* Sections fade up once when they scroll into view (see components/reveal.tsx). */
 .reveal-hidden {

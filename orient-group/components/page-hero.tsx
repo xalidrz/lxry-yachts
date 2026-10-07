@@ -52,7 +52,7 @@ export function PageHero({
   crumbs?: Crumb[];
 }) {
   return (
-    <section className="on-dark bg-charcoal pt-10 pb-12 text-on-dark sm:pt-14 sm:pb-14">
+    <section className="on-dark bg-charcoal pt-32 pb-12 text-on-dark sm:pt-36 sm:pb-14">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
         {crumbs && (
           <div className="mb-5">

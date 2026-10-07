@@ -22,7 +22,7 @@ export function Hero({ locale }: { locale: Locale }) {
 
   return (
     <section className="bg-white">
-      <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-2 lg:gap-14 lg:py-20">
+      <div className="mx-auto grid max-w-[1200px] items-center gap-10 px-4 pt-28 pb-10 sm:px-6 sm:pt-32 sm:pb-14 lg:grid-cols-2 lg:gap-14 lg:pt-36 lg:pb-20">
         <div>
           <p className="mb-5 text-sm font-bold tracking-[0.16em] text-brand uppercase">
             {t.hero.eyebrow}

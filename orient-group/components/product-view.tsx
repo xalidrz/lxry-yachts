@@ -44,7 +44,7 @@ export function ProductView({
         ])}
       />
 
-      <div className="on-dark bg-charcoal pt-6 pb-6">
+      <div className="on-dark bg-charcoal pt-28 pb-6 sm:pt-32">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <Breadcrumbs
             locale={locale}
