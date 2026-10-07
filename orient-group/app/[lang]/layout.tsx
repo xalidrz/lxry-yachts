@@ -4,6 +4,8 @@ import { Archivo, Cairo, Source_Sans_3 } from "next/font/google";
 import "../globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { QuoteFloat } from "@/components/quote/quote-float";
+import { QuoteProvider } from "@/components/quote/quote-provider";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { getDictionary } from "@/lib/dictionaries";
 import { isLocale, localeDir, locales } from "@/lib/i18n";
@@ -31,6 +33,8 @@ const cairo = Cairo({
   weight: "variable",
   variable: "--font-cairo",
   display: "swap",
+  // Arabic only: English pages should not download it up front.
+  preload: false,
 });
 
 // Only /en (served at the plain URLs) and /ar exist; both are prerendered.
@@ -94,12 +98,15 @@ export default async function RootLayout({
         >
           {t.skipToContent}
         </a>
-        <SiteHeader locale={lang} logo={logo} />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter locale={lang} logo={logoWhite} />
-        <WhatsAppFloat locale={lang} />
+        <QuoteProvider locale={lang}>
+          <SiteHeader locale={lang} logo={logo} />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter locale={lang} logo={logoWhite} />
+          <WhatsAppFloat locale={lang} />
+          <QuoteFloat locale={lang} />
+        </QuoteProvider>
       </body>
     </html>
   );

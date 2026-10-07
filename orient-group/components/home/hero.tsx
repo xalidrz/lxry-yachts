@@ -5,19 +5,13 @@ import { Phone } from "lucide-react";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
 import { aboutImages } from "@/data/about-images";
-import { brands } from "@/data/brands";
 import { getDictionary } from "@/lib/dictionaries";
 import { localePath, type Locale } from "@/lib/i18n";
-import { OFFICE_PHONE, STATS } from "@/lib/site";
+import { OFFICE_PHONE } from "@/lib/site";
 
 /** White split hero: text on one side, the real shop photo on the other. */
 export function Hero({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
-  const stats = [
-    { value: STATS.years, label: t.hero.stats.years },
-    { value: String(brands.length), label: t.hero.stats.brands },
-    { value: STATS.products, label: t.hero.stats.products },
-  ];
   const photo = aboutImages.shopFront;
 
   return (
@@ -47,24 +41,6 @@ export function Hero({ locale }: { locale: Locale }) {
               </a>
             </Button>
           </div>
-          <dl className="mt-10 grid grid-cols-3 gap-4 border-t pt-8">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="sr-only">{stat.label}</dt>
-                <dd>
-                  <span
-                    dir="ltr"
-                    className="font-display block text-3xl leading-none font-extrabold text-foreground sm:text-4xl"
-                  >
-                    {stat.value}
-                  </span>
-                  <span className="mt-2 block text-sm font-semibold text-muted-foreground">
-                    {stat.label}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
         <Image

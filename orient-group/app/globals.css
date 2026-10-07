@@ -178,6 +178,12 @@ html[lang="ar"] .font-display {
 .sheet-overlay[data-state="open"] { animation: fade-in 0.2s ease-out; }
 .sheet-overlay[data-state="closed"] { animation: fade-out 0.2s ease-in; }
 
+/* Accordion open/close (FAQ and the mobile menu). */
+@keyframes accordion-down { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
+@keyframes accordion-up { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
+.accordion-content[data-state="open"] { animation: accordion-down 0.22s ease-out; }
+.accordion-content[data-state="closed"] { animation: accordion-up 0.2s ease-out; }
+
 /* Sections fade up once when they scroll into view (see components/reveal.tsx). */
 .reveal-hidden {
   opacity: 0;

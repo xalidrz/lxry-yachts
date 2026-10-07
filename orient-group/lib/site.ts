@@ -63,6 +63,19 @@ export const OPENING_HOURS = {
   ar: ["من السبت إلى الخميس: 8:00 صباحاً – 5:00 مساءً", "الجمعة: مغلق"],
 };
 
+/** Machine-readable version of the placeholder hours above (Saturday to Thursday). Keep the two in sync. */
+export const OPENING_HOURS_SPEC = [
+  {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+    opens: "08:00",
+    closes: "17:00",
+  },
+];
+
+/** Refrigerant gas types stocked (R22, R32, R410A, R404A, R407C, R134a, R600/R600a). */
+export const GAS_TYPE_COUNT = 7;
+
 /** Embedded Google Map on the Contact page (search by address; no API key needed). */
 export const GOOGLE_MAPS_EMBED_URL = (hl: "en" | "ar") =>
   `https://www.google.com/maps?q=${encodeURIComponent(

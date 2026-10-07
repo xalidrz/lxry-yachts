@@ -1,11 +1,12 @@
 import Link from "next/link";
 
+import { CatalogueLink } from "@/components/catalogue-link";
 import { ContactDetails } from "@/components/contact-details";
 import { LanguageToggle } from "@/components/language-toggle";
 import { SiteLogo } from "@/components/site-logo";
 import { categories, localizeCategory } from "@/data/categories";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { categoryPath, localePath, type Locale } from "@/lib/i18n";
 import type { Logo } from "@/lib/logo";
 
 const linkClass =
@@ -21,6 +22,7 @@ export function SiteFooter({ locale, logo }: { locale: Locale; logo: Logo | null
     { label: t.nav.about, href: "/about" },
     { label: t.nav.brands, href: "/brands" },
     { label: t.nav.engraving, href: "/engraving" },
+    { label: t.nav.faq, href: "/faq" },
     { label: t.nav.contact, href: "/contact" },
   ];
 
@@ -61,6 +63,7 @@ export function SiteFooter({ locale, logo }: { locale: Locale; logo: Logo | null
               </li>
             ))}
           </ul>
+          <CatalogueLink locale={locale} className="mt-2 text-on-dark-muted hover:text-white" />
         </nav>
 
         <nav aria-label={t.footer.categoriesAria}>
@@ -68,7 +71,7 @@ export function SiteFooter({ locale, logo }: { locale: Locale; logo: Logo | null
           <ul>
             {categories.map((c) => (
               <li key={c.slug}>
-                <Link href={localePath(locale, `/products/${c.slug}`)} className={linkClass}>
+                <Link href={localePath(locale, categoryPath(c.slug))} className={linkClass}>
                   {localizeCategory(c, locale).name}
                 </Link>
               </li>

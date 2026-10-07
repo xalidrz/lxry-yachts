@@ -7,7 +7,7 @@ import { useState } from "react";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { localePath, productPath, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export type BrandEntry = {
@@ -102,7 +102,7 @@ export function BrandGrid({ brands, locale }: { brands: BrandEntry[]; locale: Lo
                   {open.lines.map((line) => (
                     <li key={line.slug}>
                       <Link
-                        href={localePath(locale, `/products/${line.slug}`)}
+                        href={localePath(locale, productPath(line.slug))}
                         className="inline-flex min-h-11 items-center underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand"
                       >
                         {line.name}

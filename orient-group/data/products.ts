@@ -1050,6 +1050,20 @@ export function getRelatedProducts(product: Product, count = 3) {
   return ordered.slice(0, count);
 }
 
+/** What a product card needs, in the page language, plus both names for the quote list. */
+export function productCardData(product: Product, locale: Locale) {
+  const text = localizeProduct(product, locale);
+  return {
+    slug: product.slug,
+    name: text.name,
+    names: { en: product.name, ar: product.ar?.name ?? product.name },
+    brand: product.brand,
+    category: product.category,
+    shortDescription: text.shortDescription,
+    image: product.image,
+  };
+}
+
 /** Product text in the requested language (Arabic falls back to English per field). */
 export function localizeProduct(product: Product, locale: Locale) {
   const ar = locale === "ar" ? product.ar : undefined;

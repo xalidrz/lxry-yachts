@@ -6,9 +6,9 @@ import { ProductCard } from "@/components/product-card";
 import { Section } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { categories, localizeCategory, type Category } from "@/data/categories";
-import { getProductsByCategory, localizeProduct } from "@/data/products";
+import { getProductsByCategory, productCardData } from "@/data/products";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { categoryPath, localePath, type Locale } from "@/lib/i18n";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -23,7 +23,7 @@ export function CategoryView({ category, locale }: { category: Category; locale:
         data={breadcrumbJsonLd(locale, [
           { name: t.nav.home, path: "/" },
           { name: t.nav.products, path: "/products" },
-          { name: cat.name, path: `/products/${category.slug}` },
+          { name: cat.name, path: categoryPath(category.slug) },
         ])}
       />
       <PageHero
@@ -51,7 +51,7 @@ export function CategoryView({ category, locale }: { category: Category; locale:
             {categories.map((c) => (
               <li key={c.slug}>
                 <Link
-                  href={localePath(locale, `/products/${c.slug}`)}
+                  href={localePath(locale, categoryPath(c.slug))}
                   aria-current={c.slug === category.slug ? "page" : undefined}
                   className={cn(
                     "inline-flex min-h-11 items-center rounded-full border px-5 text-[0.9375rem] font-semibold transition-colors duration-150",
@@ -71,7 +71,7 @@ export function CategoryView({ category, locale }: { category: Category; locale:
           {items.map((p, i) => (
             <li key={p.slug}>
               <ProductCard
-                product={{ ...p, ...localizeProduct(p, locale) }}
+                product={productCardData(p, locale)}
                 locale={locale}
                 priority={i < 4}
               />

@@ -26,8 +26,7 @@ export function BrandMarquee({ locale }: { locale: Locale }) {
           alt={hidden ? "" : t.brandsPage.logoAlt(brand.name)}
           fill
           sizes="96px"
-          // Eager: the logos sit off-screen to the side, where lazy loading would never fetch them.
-          loading="eager"
+          loading="lazy"
           className="object-contain p-3"
         />
       </li>

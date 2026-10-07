@@ -1,7 +1,6 @@
 /**
- * Two languages. English lives at the plain URLs (/products), Arabic under /ar
- * (/ar/products). Internally every page sits in app/[lang]; proxy.ts rewrites
- * plain URLs to /en so English URLs never show a prefix.
+ * Two languages, both with a URL prefix: /en/products and /ar/products. The
+ * proxy sends unprefixed URLs (/, /products) to the visitor's language.
  */
 export const locales = ["en", "ar"] as const;
 export type Locale = (typeof locales)[number];
@@ -23,11 +22,10 @@ export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }
 
-/** Public URL path for a page in a language: ("/products", "ar") -> "/ar/products". */
+/** Public URL path for a page in a language: ("ar", "/products") -> "/ar/products". */
 export function localePath(locale: Locale, path: string) {
   const clean = path.startsWith("/") ? path : `/${path}`;
-  if (locale === "en") return clean;
-  return clean === "/" ? "/ar" : `/ar${clean}`;
+  return clean === "/" ? `/${locale}` : `/${locale}${clean}`;
 }
 
 /**
@@ -46,3 +44,7 @@ export function stripLocale(pathname: string) {
 export function localeFromPathname(pathname: string): Locale {
   return pathname === "/ar" || pathname.startsWith("/ar/") ? "ar" : "en";
 }
+
+/** Page paths (English form, without the language prefix). */
+export const productPath = (slug: string) => `/products/${slug}`;
+export const categoryPath = (slug: string) => `/categories/${slug}`;

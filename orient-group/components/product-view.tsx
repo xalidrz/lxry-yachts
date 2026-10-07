@@ -4,14 +4,15 @@ import { JsonLd } from "@/components/json-ld";
 import { Breadcrumbs } from "@/components/page-hero";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
+import { AddToQuote } from "@/components/quote/add-to-quote";
 import { Section } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { localizeCategory, type Category } from "@/data/categories";
-import { getRelatedProducts, localizeProduct, type Product } from "@/data/products";
+import { getRelatedProducts, localizeProduct, productCardData, type Product } from "@/data/products";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { categoryPath, localePath, productPath, type Locale } from "@/lib/i18n";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo";
 import { OFFICE_PHONE } from "@/lib/site";
 import { ANY_BRAND, productLabel } from "@/lib/whatsapp";
@@ -39,8 +40,8 @@ export function ProductView({
         data={breadcrumbJsonLd(locale, [
           { name: t.nav.home, path: "/" },
           { name: t.nav.products, path: "/products" },
-          { name: cat.name, path: `/products/${category.slug}` },
-          { name: p.name, path: `/products/${product.slug}` },
+          { name: cat.name, path: categoryPath(category.slug) },
+          { name: p.name, path: productPath(product.slug) },
         ])}
       />
 
@@ -51,7 +52,7 @@ export function ProductView({
             items={[
               { label: t.nav.home, href: localePath(locale, "/") },
               { label: t.nav.products, href: localePath(locale, "/products") },
-              { label: cat.name, href: localePath(locale, `/products/${category.slug}`) },
+              { label: cat.name, href: localePath(locale, categoryPath(category.slug)) },
               { label: p.name },
             ]}
           />
@@ -87,7 +88,15 @@ export function ProductView({
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
               {p.shortDescription}
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <AddToQuote
+              slug={product.slug}
+              name={{ en: product.name, ar: product.ar?.name ?? product.name }}
+              brand={product.brand}
+              locale={locale}
+              size="lg"
+              className="mt-8 max-w-md"
+            />
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row">
               <WhatsAppButton message={t.wa.price(label)} size="lg">
                 {t.common.askForPrice}
               </WhatsAppButton>
@@ -155,7 +164,7 @@ export function ProductView({
             {related.map((r) => (
               <li key={r.slug}>
                 <ProductCard
-                  product={{ ...r, ...localizeProduct(r, locale) }}
+                  product={productCardData(r, locale)}
                   locale={locale}
                   headingLevel="h3"
                 />

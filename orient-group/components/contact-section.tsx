@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { CatalogueLink } from "@/components/catalogue-link";
 import { ContactDetails } from "@/components/contact-details";
 import { Section, SectionHeading } from "@/components/section";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
@@ -31,6 +32,7 @@ export function ContactSection({
         </div>
         <WhatsAppCta locale={locale} />
       </div>
+      {asPage && <CatalogueLink locale={locale} className="mt-6 text-brand hover:underline" />}
 
       {asPage && (
         <div className="mt-6 grid gap-6 lg:grid-cols-[1.6fr_1fr]">

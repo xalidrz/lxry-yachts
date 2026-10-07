@@ -58,8 +58,8 @@ If an admin area, login or database is added later, it needs its own design: ser
 
 ## Languages (English and Arabic)
 
-- English lives at the plain URLs (`/products`), Arabic under `/ar` (`/ar/products`). Each language has its own static pages, `lang`/`dir` attributes (Arabic is right-to-left), canonical and hreflang links, and sitemap entries.
-- `proxy.ts` rewrites plain URLs to `/en` internally and redirects visitors who chose Arabic (cookie `ogg-lang`, kept for a year) to the `/ar` version. The `عربي / EN` toggle sets the cookie. Search engines send no cookie, so they always see English at the plain URLs.
+- Every page lives under `/en` or `/ar` (`/en/products`, `/ar/products`). Each language has its own static pages, `lang`/`dir` attributes (Arabic is right-to-left), canonical and hreflang links, and sitemap entries.
+- `proxy.ts` redirects a bare URL such as `/` or `/products` to `/en/...`, or to `/ar/...` for visitors who chose Arabic (cookie `ogg-lang`, kept for a year). The `عربي / EN` toggle sets the cookie. Old category URLs (`/products/hvac`) redirect permanently to `/en/categories/hvac` (`next.config.ts`).
 - Interface text is in `lib/dictionaries.ts` (one object per language, same shape, so a missing Arabic string fails the type check). Product, category and engraving text is next to its data: add `ar: { name, shortDescription, description, specs? }` inside a product entry in `data/products.ts`. Anything missing falls back to English.
 - Arabic uses the Cairo font (`app/[lang]/layout.tsx`). Customer testimonials are shown in their original English on both versions.
 - To add the About page project names, put them in `data/projects.ts`; the "Projects we've labelled for" section appears when the list is not empty.
@@ -73,6 +73,14 @@ If an admin area, login or database is added later, it needs its own design: ser
 
 ## Home page content to confirm
 
-- **Hero stats** ("15+ years", "500+ products"): `STATS` in `lib/site.ts`. Both numbers still need the client's confirmation. The brand count comes from `data/brands.ts`.
+- **Counters** (years in Kuwait, products, brands, gases): `STATS` and `GAS_TYPE_COUNT` in `lib/site.ts`. "15+" and "500+" are placeholders to confirm with the client. The brand count comes from `data/brands.ts`. The final numbers are in the HTML; they count up when scrolled into view.
 - **Shop by category tiles:** `data/shop-groups.ts` (photo and which products each tile covers). Tiles link to `/products?group=<key>`. The product list also reads `?category=` and `?q=` from the URL.
 - Clicking a product card opens a dialog (photo, brand, short description, WhatsApp button). The card title is still a real link to the product page.
+
+## B2B features
+
+- **Quote basket:** "Add to quote" with a quantity stepper on every product card and product page; the "Quote (n)" button in the navbar (and a floating one on mobile) opens a side drawer. The list is stored in the visitor's browser (`localStorage`, key `ogg-quote-v1`) and sent as a WhatsApp message to the main WhatsApp number (`WHATSAPP_NUMBER` in `lib/site.ts`). There is no payment or checkout. Message format: `lib/quote-message.ts`; intro text: `quote.intro` in `lib/dictionaries.ts`.
+- **Mega menu:** "Products" in the navbar lists every group from `data/shop-groups.ts` with its products. On mobile the same groups are an accordion in the menu.
+- **FAQ:** questions and answers are in `data/faq.ts` (English and Arabic). `/faq` shows all eight with FAQPage structured data; the home page shows the first three. Opening hours and address in the answers come from `lib/site.ts`.
+- **Catalogue PDF:** put the file at `public/catalogue/orient-group-gulf-catalogue.pdf`. The "Download product catalogue (PDF)" links in the footer and on the Contact page appear automatically on the next build; without the file they are hidden.
+- **Structured data:** LocalBusiness (with `OPENING_HOURS_SPEC` in `lib/site.ts`, a placeholder like the visible hours), Product (no price), BreadcrumbList and FAQPage.

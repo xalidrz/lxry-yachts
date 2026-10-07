@@ -4,9 +4,9 @@ import { ArrowRight, Tag } from "lucide-react";
 
 import { Section, SectionHeading } from "@/components/section";
 import { categories, localizeCategory } from "@/data/categories";
-import { getGroupCount, shopGroups } from "@/data/shop-groups";
+import { getGroupCount, getGroupItems, shopGroups } from "@/data/shop-groups";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { categoryPath, localePath, type Locale } from "@/lib/i18n";
 
 /** Large photo tiles. Each links to the products page filtered to that range. */
 export function ShopByCategory({ locale }: { locale: Locale }) {
@@ -18,10 +18,11 @@ export function ShopByCategory({ locale }: { locale: Locale }) {
         {t.shop.text}
       </SectionHeading>
 
-      <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+      <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
         {shopGroups.map((group) => {
           const name = t.shop.groups[group.key];
           const count = getGroupCount(group, locale);
+          const sample = getGroupItems(group, locale).slice(0, 3);
           const href = group.href
             ? localePath(locale, group.href)
             : `${localePath(locale, "/products")}?group=${group.key}`;
@@ -29,14 +30,14 @@ export function ShopByCategory({ locale }: { locale: Locale }) {
             <li key={group.key}>
               <Link
                 href={href}
-                className="group relative block aspect-[4/3] overflow-hidden rounded-2xl border bg-charcoal"
+                className="group relative block aspect-[4/3] overflow-hidden sm:aspect-[5/4] rounded-2xl border bg-charcoal"
               >
                 {group.image ? (
                   <Image
                     src={group.image}
                     alt=""
                     fill
-                    sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 285px, (min-width: 640px) 50vw, 100vw"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
                 ) : (
@@ -50,10 +51,15 @@ export function ShopByCategory({ locale }: { locale: Locale }) {
                 />
                 <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 text-white">
                   <span>
-                    <span className="font-display block text-xl leading-tight font-bold">{name}</span>
+                    <span className="font-display block text-lg leading-tight font-bold">{name}</span>
                     <span className="mt-1 block text-sm text-white/80">
                       {group.match ? t.shop.products(count) : t.shop.services(count)}
                     </span>
+                    {sample.length > 0 && (
+                      <span className="mt-2 block text-[0.8125rem] leading-snug text-white/70">
+                        {sample.map((item) => item.label).join(" · ")}
+                      </span>
+                    )}
                   </span>
                   <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
                     <ArrowRight className="size-5 rtl:-scale-x-100" aria-hidden="true" />
@@ -71,7 +77,7 @@ export function ShopByCategory({ locale }: { locale: Locale }) {
           <span key={c.slug}>
             {i > 0 && <span aria-hidden="true"> · </span>}
             <Link
-              href={localePath(locale, `/products/${c.slug}`)}
+              href={localePath(locale, categoryPath(c.slug))}
               className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand"
             >
               {localizeCategory(c, locale).name}

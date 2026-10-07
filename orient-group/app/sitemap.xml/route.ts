@@ -1,6 +1,6 @@
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
-import { locales, localePath } from "@/lib/i18n";
+import { categoryPath, localePath, locales, productPath } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/seo";
 import { ALLOW_INDEXING } from "@/lib/site";
 
@@ -16,8 +16,9 @@ function entries(): Entry[] {
   return [
     { path: "/", changefreq: "monthly", priority: 1 },
     { path: "/products", changefreq: "weekly", priority: 0.9 },
-    ...categories.map((c) => ({ path: `/products/${c.slug}`, changefreq: "weekly", priority: 0.8 })),
-    ...products.map((p) => ({ path: `/products/${p.slug}`, changefreq: "monthly", priority: 0.7 })),
+    ...categories.map((c) => ({ path: categoryPath(c.slug), changefreq: "weekly", priority: 0.8 })),
+    ...products.map((p) => ({ path: productPath(p.slug), changefreq: "monthly", priority: 0.7 })),
+    { path: "/faq", changefreq: "monthly", priority: 0.6 },
     { path: "/about", changefreq: "yearly", priority: 0.7 },
     { path: "/brands", changefreq: "monthly", priority: 0.7 },
     { path: "/engraving", changefreq: "monthly", priority: 0.7 },

@@ -1,76 +1,45 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CategoryView } from "@/components/category-view";
 import { ProductView } from "@/components/product-view";
-import { categories, getCategory, localizeCategory } from "@/data/categories";
+import { getCategory } from "@/data/categories";
 import { getProduct, products } from "@/data/products";
 import { getDictionary } from "@/lib/dictionaries";
-import { isLocale } from "@/lib/i18n";
-import {
-  categoryMetaDescription,
-  pageMetadata,
-  productMetaDescription,
-  productTitle,
-} from "@/lib/seo";
+import { isLocale, productPath } from "@/lib/i18n";
+import { pageMetadata, productMetaDescription, productTitle } from "@/lib/seo";
 
-/**
- * One dynamic segment serves both category pages (/products/hvac) and product
- * pages (/products/pancake-copper-coils), in both languages. Everything is
- * generated at build time.
- */
+/** One page per product, e.g. /en/products/r32-refrigerant-gas. Built at build time. */
 export const dynamicParams = false;
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
 
 export function generateStaticParams() {
-  return [
-    ...categories.map((c) => ({ slug: c.slug })),
-    ...products.map((p) => ({ slug: p.slug })),
-  ];
+  return products.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   if (!isLocale(lang)) return {};
-  const t = getDictionary(lang);
-
-  const category = getCategory(slug);
-  if (category) {
-    return pageMetadata({
-      locale: lang,
-      path: `/products/${slug}`,
-      title:
-        category.slug === "hvac"
-          ? t.seo.hvacCategoryTitle
-          : t.seo.categoryTitle(localizeCategory(category, lang).name),
-      description: categoryMetaDescription(category, lang),
-    });
-  }
-
   const product = getProduct(slug);
   if (!product) return {};
-  const title = productTitle(product, lang);
+  // "R32 Refrigerant Gas Supplier in Kuwait | Orient Group Gulf"
+  const title = `${productTitle(product, lang)} ${getDictionary(lang).seo.supplierInKuwait}`;
   return pageMetadata({
     locale: lang,
-    path: `/products/${slug}`,
+    path: productPath(slug),
     title,
     description: productMetaDescription(product, lang),
+    absoluteTitle: true,
     image: product.image ? { url: product.image, alt: title } : undefined,
   });
 }
 
-export default async function Page({ params }: Props) {
+export default async function ProductPage({ params }: Props) {
   const { lang, slug } = await params;
   if (!isLocale(lang)) notFound();
-
-  const category = getCategory(slug);
-  if (category) return <CategoryView category={category} locale={lang} />;
-
   const product = getProduct(slug);
   if (!product) notFound();
-  const productCategory = getCategory(product.category);
-  if (!productCategory) notFound();
-
-  return <ProductView product={product} category={productCategory} locale={lang} />;
+  const category = getCategory(product.category);
+  if (!category) notFound();
+  return <ProductView product={product} category={category} locale={lang} />;
 }

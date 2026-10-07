@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 
 import { BrandMarquee } from "@/components/home/brand-marquee";
+import { Counters } from "@/components/home/counters";
 import { Engraving } from "@/components/home/engraving";
 import { Gases } from "@/components/home/gases";
 import { Hero } from "@/components/home/hero";
+import { HomeFaq } from "@/components/home/home-faq";
+import { ProductChips } from "@/components/home/product-chips";
 import { ShopByCategory } from "@/components/home/shop-by-category";
 import { Testimonials } from "@/components/home/testimonials";
+import { TrustStrip } from "@/components/home/trust-strip";
 import { VisitShop } from "@/components/home/visit-shop";
 import { WhyUs } from "@/components/home/why-us";
 import { ContactSection } from "@/components/contact-section";
@@ -32,12 +36,16 @@ export default async function HomePage({ params }: LangParams) {
     <>
       <JsonLd data={localBusinessJsonLd(locale)} />
       <Hero locale={locale} />
-      <BrandMarquee locale={locale} />
+      <ProductChips locale={locale} />
+      <TrustStrip locale={locale} />
+      <Counters locale={locale} />
       <ShopByCategory locale={locale} />
       <WhyUs locale={locale} />
       <Gases locale={locale} />
+      <BrandMarquee locale={locale} />
       <Engraving locale={locale} />
       <Testimonials locale={locale} />
+      <HomeFaq locale={locale} />
       <VisitShop locale={locale} />
       <ContactSection locale={locale} />
     </>

@@ -5,7 +5,7 @@ import { PageHero } from "@/components/page-hero";
 import { ProductExplorer } from "@/components/product-browser";
 import { Section } from "@/components/section";
 import { categories, localizeCategory } from "@/data/categories";
-import { localizeProduct, productSearchText, products } from "@/data/products";
+import { productCardData, productSearchText, products } from "@/data/products";
 import { getGroupSlugs, shopGroups } from "@/data/shop-groups";
 import { getDictionary } from "@/lib/dictionaries";
 import { localePath } from "@/lib/i18n";
@@ -28,16 +28,7 @@ export default async function ProductsPage({ params }: LangParams) {
   const t = getDictionary(locale);
 
   const browserProducts = products.map((p) => {
-    const text = localizeProduct(p, locale);
-    return {
-      slug: p.slug,
-      name: text.name,
-      brand: p.brand,
-      category: p.category,
-      shortDescription: text.shortDescription,
-      image: p.image,
-      searchText: productSearchText(p, locale),
-    };
+    return { ...productCardData(p, locale), searchText: productSearchText(p, locale) };
   });
 
   return (

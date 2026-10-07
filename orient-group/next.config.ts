@@ -46,6 +46,22 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    // Category pages moved from /products/<category> to /categories/<category>.
+    const categories = "hvac|fixing-systems|electrical|bearings";
+    return [
+      {
+        source: `/:lang(en|ar)/products/:slug(${categories})`,
+        destination: "/:lang/categories/:slug",
+        permanent: true,
+      },
+      {
+        source: `/products/:slug(${categories})`,
+        destination: "/en/categories/:slug",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

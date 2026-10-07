@@ -5,7 +5,7 @@ import { Section, SectionHeading } from "@/components/section";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getProduct } from "@/data/products";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { localePath, productPath, type Locale } from "@/lib/i18n";
 
 /** Standard cylinder colours. A red band marks the flammable refrigerants. */
 const gases = [
@@ -58,7 +58,7 @@ export function Gases({ locale }: { locale: Locale }) {
               {i > 0 && <span aria-hidden="true"> · </span>}
               {product ? (
                 <Link
-                  href={localePath(locale, `/products/${product.slug}`)}
+                  href={localePath(locale, productPath(product.slug))}
                   className="font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-brand hover:decoration-brand"
                 >
                   <bdi dir="ltr">{label}</bdi>

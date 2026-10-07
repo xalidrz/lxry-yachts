@@ -4,18 +4,21 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { ProductImage } from "@/components/product-image";
+import { AddToQuote } from "@/components/quote/add-to-quote";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { getCategory, localizeCategory, type CategorySlug } from "@/data/categories";
 import { getDictionary } from "@/lib/dictionaries";
-import { localePath, type Locale } from "@/lib/i18n";
+import { localePath, productPath, type Locale } from "@/lib/i18n";
 import { ANY_BRAND, productLabel } from "@/lib/whatsapp";
 
 /** Product data already in the page language (see localizeProduct). */
 export type ProductCardData = {
   slug: string;
   name: string;
+  /** Name in each language, for the quote list. */
+  names: { en: string; ar: string };
   brand: string;
   category: CategorySlug;
   shortDescription: string;
@@ -41,7 +44,7 @@ export function ProductCard({ product, locale, headingLevel = "h2", priority }: 
   const [open, setOpen] = useState(false);
   const category = getCategory(product.category);
   const label = productLabel(product.name, product.brand);
-  const href = localePath(locale, `/products/${product.slug}`);
+  const href = localePath(locale, productPath(product.slug));
   const categoryTitle = category ? localizeCategory(category, locale).title : "";
 
   return (
@@ -77,7 +80,13 @@ export function ProductCard({ product, locale, headingLevel = "h2", priority }: 
           {product.shortDescription}
         </p>
       </div>
-      <div className="relative z-10 p-5 pt-0">
+      <div className="relative z-10 space-y-2 p-5 pt-0">
+        <AddToQuote
+          slug={product.slug}
+          name={product.names}
+          brand={product.brand}
+          locale={locale}
+        />
         <WhatsAppButton
           message={t.wa.price(label)}
           size="sm"
@@ -110,7 +119,15 @@ export function ProductCard({ product, locale, headingLevel = "h2", priority }: 
             <DialogDescription className="mt-2 leading-relaxed text-muted-foreground">
               {product.shortDescription}
             </DialogDescription>
-            <WhatsAppButton message={t.wa.price(label)} size="lg" className="mt-6 w-full">
+            <AddToQuote
+              slug={product.slug}
+              name={product.names}
+              brand={product.brand}
+              locale={locale}
+              size="lg"
+              className="mt-6"
+            />
+            <WhatsAppButton message={t.wa.price(label)} size="lg" className="mt-3 w-full">
               {t.productDialog.askWhatsApp}
             </WhatsAppButton>
             <Link
