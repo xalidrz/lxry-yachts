@@ -4,8 +4,7 @@ One-page portfolio built with Next.js (App Router), Tailwind CSS v4 and shadcn/u
 
 ## Before you publish
 
-1. **Your contact details** — edit `lib/site.ts` (or set `NEXT_PUBLIC_WHATSAPP_NUMBER` and `NEXT_PUBLIC_EMAIL` in Vercel).
-   The WhatsApp number is digits only with country code, e.g. `923001234567`.
+1. **Contact details** — set in `lib/site.ts` (WhatsApp +92 336 1710242 and email). To change them, edit that file or set `NEXT_PUBLIC_WHATSAPP_NUMBER` / `NEXT_PUBLIC_EMAIL` in Vercel.
 2. **Real screenshots** — replace the three placeholder files in `public/projects/` with screenshots of the live sites,
    keeping the same names (`orient-group-gulf.png`, `dacha.png`, `dhil-al-shams.png`). Use 1440×900.
 3. **Open Graph image** — after step 2, run `npm run build && npm start`, then in another terminal `npm run og`

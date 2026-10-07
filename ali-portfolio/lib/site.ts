@@ -1,10 +1,10 @@
-// Edit these two values, then everything on the page updates.
+// Contact details used across the page.
 // WhatsApp number: country code + number, digits only (no +, spaces or dashes).
-// Example for a Pakistan number: "923001234567"
+// Pakistan example: "923361710242"
 // You can also set them as NEXT_PUBLIC_WHATSAPP_NUMBER / NEXT_PUBLIC_EMAIL in Vercel.
 export const WHATSAPP_NUMBER =
-  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "REPLACE_WITH_YOUR_NUMBER";
-export const EMAIL = process.env.NEXT_PUBLIC_EMAIL ?? "your-email@example.com";
+  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "923361710242";
+export const EMAIL = process.env.NEXT_PUBLIC_EMAIL ?? "4aminkarachi333@gmail.com";
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 
