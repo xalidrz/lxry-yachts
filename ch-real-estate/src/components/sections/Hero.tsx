@@ -1,9 +1,9 @@
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { SearchBar, type BuildQuery } from "@/components/SearchBar";
+import { SearchBar } from "@/components/SearchBar";
 import { cn } from "@/lib/utils";
-import type { Criteria } from "@/lib/filters";
 
 const line1 = ["Buy.", "Sell.", "Build."];
 const line2 = ["One", "trusted", "name."];
@@ -23,7 +23,7 @@ function Word({ children, index, gold }: { children: string; index: number; gold
   );
 }
 
-export function Hero({ onSearch, onBuild }: { onSearch: (c: Criteria) => void; onBuild: (q: BuildQuery) => void }) {
+export function Hero() {
   return (
     <section id="top" className="relative flex min-h-[calc(100svh-3rem)] flex-col lg:min-h-[calc(100svh-4.5rem)]" aria-label="Welcome">
       {/* Photo layer + dark overlay */}
@@ -88,12 +88,12 @@ export function Hero({ onSearch, onBuild }: { onSearch: (c: Criteria) => void; o
           className="mt-8 flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row"
         >
           <Button asChild size="lg" className="w-full sm:w-auto">
-            <a href="#properties">
+            <Link to="/buy">
               Explore Properties <ArrowRight />
-            </a>
+            </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="w-full bg-ink/30 backdrop-blur sm:w-auto">
-            <a href="#construction">Start Construction</a>
+            <Link to="/construction">Start Construction</Link>
           </Button>
         </motion.div>
 
@@ -106,7 +106,7 @@ export function Hero({ onSearch, onBuild }: { onSearch: (c: Criteria) => void; o
         transition={{ delay: 1.7, duration: 1, ease: [0.22, 1, 0.36, 1] }}
         className="container relative z-20 -mb-14 lg:-mb-10"
       >
-        <SearchBar onSearch={onSearch} onBuild={onBuild} />
+        <SearchBar />
       </motion.div>
     </section>
   );

@@ -30,7 +30,7 @@ const fields: { unit: Unit; label: string; hint: string }[] = [
   { unit: "sqft", label: "Square Feet", hint: "1 Kanal = 4,500 sq ft" },
 ];
 
-export function Converter() {
+export function Converter({ showHeading = true }: { showHeading?: boolean }) {
   const [vals, setVals] = useState<Record<Unit, string>>({ marla: "5", kanal: "0.25", sqft: "1125" });
 
   const update = (unit: Unit, raw: string) => {
@@ -55,8 +55,9 @@ export function Converter() {
   const current = parseFloat(vals.marla);
 
   return (
-    <section id="converter" aria-labelledby="converter-title" className="scroll-mt-20 border-t border-gold/15 bg-surface py-28">
+    <section id="converter" aria-label="Marla converter" className="scroll-mt-20 border-t border-gold/15 bg-surface py-24">
       <div className="container">
+        {showHeading && (
         <SectionHeading
           id="converter-title"
           eyebrow="Handy Tool"
@@ -67,6 +68,7 @@ export function Converter() {
           }
           description="Compare plot sizes instantly. Type in any box and the others update."
         />
+        )}
 
         <Reveal className="mx-auto max-w-4xl" delay={0.1}>
           <div className="border border-gold/25 bg-ink p-7 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] sm:p-10">

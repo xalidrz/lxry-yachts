@@ -30,3 +30,12 @@ export const whatsappLink = (text?: string) =>
 
 export const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(site.addressOneLine)}&output=embed`;
 export const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.addressOneLine)}`;
+
+/** Link to the contact page with the form pre-filled (read back by the Contact section). */
+export const contactLink = (opts: { interest?: string; message?: string } = {}) => {
+  const q = new URLSearchParams();
+  if (opts.interest) q.set("interest", opts.interest);
+  if (opts.message) q.set("message", opts.message);
+  const s = q.toString();
+  return `/contact${s ? `?${s}` : ""}`;
+};

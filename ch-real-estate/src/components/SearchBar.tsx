@@ -1,8 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SelectItem } from "@/components/ui/select";
+import { ANY, FilterField } from "@/components/FilterField";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   areas,
@@ -11,52 +12,15 @@ import {
   budgetRent,
   buildTypes,
   propertyTypes,
+  criteriaToParams,
   sizeRanges,
-  type Criteria,
   type Mode,
 } from "@/lib/filters";
 import type { Category } from "@/data/properties";
+import { contactLink } from "@/lib/site";
 
-export interface BuildQuery {
-  area?: string;
-  service?: string;
-  size?: string;
-  budget?: string;
-}
-
-const ANY = "any";
-
-function Field({
-  label,
-  value,
-  onChange,
-  placeholder,
-  children,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  placeholder: string;
-  children: React.ReactNode;
-}) {
-  const id = `sb-${label.replace(/\s+/g, "-").toLowerCase()}`;
-  return (
-    <div className="min-w-0 space-y-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger id={id} aria-label={label}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={ANY}>{placeholder}</SelectItem>
-          {children}
-        </SelectContent>
-      </Select>
-    </div>
-  );
-}
-
-export function SearchBar({ onSearch, onBuild }: { onSearch: (c: Criteria) => void; onBuild: (q: BuildQuery) => void }) {
+export function SearchBar() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("buy");
   const [area, setArea] = useState(ANY);
   const [type, setType] = useState(ANY);
@@ -75,14 +39,21 @@ export function SearchBar({ onSearch, onBuild }: { onSearch: (c: Criteria) => vo
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (mode === "build") {
-      onBuild({
-        area: pick(area),
-        service: pick(type),
-        size: sizeRanges.find((s) => s.value === size)?.label,
-        budget: budgetBuild.find((b) => b.value === budget)?.label,
-      });
+      const parts = [
+        pick(type) && `Service: ${type}`,
+        pick(area) && `Area: ${area}`,
+        sizeRanges.find((s) => s.value === size) && `Plot size: ${sizeRanges.find((s) => s.value === size)!.label}`,
+        budgetBuild.find((b) => b.value === budget) && `Budget: ${budgetBuild.find((b) => b.value === budget)!.label}`,
+      ].filter(Boolean);
+      navigate(
+        contactLink({
+          interest: "Construction",
+          message: parts.length ? `I'd like a construction quote.\n${parts.join("\n")}` : "I'd like a construction quote.",
+        }),
+      );
     } else {
-      onSearch({ mode, area: pick(area), type: pick(type) as Category | undefined, size: pick(size), budget: pick(budget) });
+      const q = criteriaToParams({ area: pick(area), type: pick(type) as Category | undefined, size: pick(size), budget: pick(budget) });
+      navigate(`/${mode}${q.toString() ? `?${q}` : ""}`);
     }
   };
 
@@ -101,15 +72,16 @@ export function SearchBar({ onSearch, onBuild }: { onSearch: (c: Criteria) => vo
       </Tabs>
 
       <div className="grid items-end gap-4 sm:grid-cols-2 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto]">
-        <Field label="Area" value={area} onChange={setArea} placeholder="Any area">
+        <FilterField id="sb-area" label="Area" value={area} onChange={setArea} placeholder="Any area">
           {areas.map((a) => (
             <SelectItem key={a} value={a}>
               {a}
             </SelectItem>
           ))}
-        </Field>
+        </FilterField>
 
-        <Field
+        <FilterField
+          id="sb-type"
           label={mode === "build" ? "Service" : "Property Type"}
           value={type}
           onChange={setType}
@@ -126,23 +98,23 @@ export function SearchBar({ onSearch, onBuild }: { onSearch: (c: Criteria) => vo
                   {t.label}
                 </SelectItem>
               ))}
-        </Field>
+        </FilterField>
 
-        <Field label="Size (Marla / Kanal)" value={size} onChange={setSize} placeholder="Any size">
+        <FilterField id="sb-size" label="Size (Marla / Kanal)" value={size} onChange={setSize} placeholder="Any size">
           {sizeRanges.map((s) => (
             <SelectItem key={s.value} value={s.value}>
               {s.label}
             </SelectItem>
           ))}
-        </Field>
+        </FilterField>
 
-        <Field label="Budget (PKR)" value={budget} onChange={setBudget} placeholder="Any budget">
+        <FilterField id="sb-budget" label="Budget (PKR)" value={budget} onChange={setBudget} placeholder="Any budget">
           {budgets.map((b) => (
             <SelectItem key={b.value} value={b.value}>
               {b.label}
             </SelectItem>
           ))}
-        </Field>
+        </FilterField>
 
         <Button type="submit" size="lg" className="w-full sm:col-span-2 lg:col-span-1 lg:w-auto">
           <Search /> {mode === "build" ? "Get a Quote" : "Search"}

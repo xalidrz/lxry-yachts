@@ -1,35 +1,13 @@
-import { ArrowRight, BrickWall, House, PencilRuler, Hammer } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Gold, SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
+import { services } from "@/data/services";
+import { contactLink } from "@/lib/site";
 
-const services = [
-  {
-    icon: BrickWall,
-    title: "Grey Structure",
-    text: "Foundation, columns, slabs and brickwork built to engineered drawings, with tested materials and site supervision at every pour.",
-    points: ["Excavation & foundation", "RCC columns, beams & slabs", "Brickwork & plaster"],
-  },
-  {
-    icon: House,
-    title: "Turnkey Construction",
-    text: "Complete, end-to-end construction. We take your plot to a finished home — you receive the keys, not a to-do list.",
-    points: ["Structure + full finishing", "Electrical, plumbing & fixtures", "Fixed-scope agreement"],
-  },
-  {
-    icon: Hammer,
-    title: "Renovation & Remodeling",
-    text: "Give an existing house, shop or office a fresh layout and a premium finish without rebuilding from scratch.",
-    points: ["Layout changes & extensions", "Kitchens, baths & facades", "Flooring, ceilings & lighting"],
-  },
-  {
-    icon: PencilRuler,
-    title: "Architectural Design & Map Approval",
-    text: "Considered plans, 3D visuals and complete documentation, with approval handled through the relevant authority.",
-    points: ["Architectural & structural design", "3D elevations", "Map approval support"],
-  },
-];
-
-export function Construction({ onQuote }: { onQuote: (service: string) => void }) {
+/** Four-card services overview (home page). Full detail lives on /construction. */
+export function Construction() {
   return (
     <section id="construction" aria-labelledby="construction-title" className="scroll-mt-20 border-y border-gold/15 bg-surface py-28">
       <div className="container">
@@ -64,17 +42,24 @@ export function Construction({ onQuote }: { onQuote: (service: string) => void }
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="#contact"
-                  onClick={() => onQuote(s.title)}
+                <Link
+                  to={contactLink({ interest: "Construction", message: `I'd like a quote for: ${s.title}.` })}
                   className="label mt-auto inline-flex items-center gap-2 pt-8 text-[0.9rem] text-gold transition-colors hover:text-gold-light"
                 >
                   Request a quote <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                </a>
+                </Link>
               </article>
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-14 text-center">
+          <Button asChild size="lg" variant="outline">
+            <Link to="/construction">
+              Explore construction services <ArrowRight />
+            </Link>
+          </Button>
+        </Reveal>
       </div>
     </section>
   );

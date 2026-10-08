@@ -1,4 +1,4 @@
-import { properties, type Category, type Property } from "@/data/properties";
+import { type Category, type Property } from "@/data/properties";
 
 export type Chip = "all" | "sale" | "rent" | "plots" | "commercial";
 export type Mode = "buy" | "rent" | "build";
@@ -92,5 +92,44 @@ export function matches(p: Property, c: Criteria): boolean {
   return true;
 }
 
-export const visibleProperties = (chip: Chip, criteria: Criteria | null) =>
-  properties.filter((p) => (criteria ? matches(p, criteria) : chipFilter[chip](p)));
+/** Home-page featured chips. */
+export const filterByChip = (list: Property[], chip: Chip) => list.filter(chipFilter[chip]);
+
+// ----- URL <-> criteria (so /buy?type=plot&budget=b2 is shareable) -----
+export type Sort = "newest" | "price-asc" | "price-desc";
+export const sortOptions: { value: Sort; label: string }[] = [
+  { value: "newest", label: "Featured first" },
+  { value: "price-asc", label: "Price: low to high" },
+  { value: "price-desc", label: "Price: high to low" },
+];
+
+export const criteriaToParams = (c: Omit<Criteria, "mode">, sort?: Sort) => {
+  const q = new URLSearchParams();
+  if (c.area) q.set("area", c.area);
+  if (c.type) q.set("type", c.type);
+  if (c.size) q.set("size", c.size);
+  if (c.budget) q.set("budget", c.budget);
+  if (sort && sort !== "newest") q.set("sort", sort);
+  return q;
+};
+
+export const paramsToCriteria = (mode: "buy" | "rent", q: URLSearchParams): Criteria => {
+  const type = q.get("type");
+  return {
+    mode,
+    area: areas.includes(q.get("area") ?? "") ? q.get("area")! : undefined,
+    type: propertyTypes.some((t) => t.value === type) ? (type as Category) : undefined,
+    size: sizeRanges.some((r) => r.value === q.get("size")) ? q.get("size")! : undefined,
+    budget: [...budgetBuy, ...budgetRent].some((r) => r.value === q.get("budget")) ? q.get("budget")! : undefined,
+  };
+};
+
+export const paramsToSort = (q: URLSearchParams): Sort => {
+  const v = q.get("sort");
+  return sortOptions.some((o) => o.value === v) ? (v as Sort) : "newest";
+};
+
+export const sortProperties = (list: Property[], sort: Sort) =>
+  sort === "newest"
+    ? [...list].sort((a, b) => Number(!!b.featured) - Number(!!a.featured))
+    : [...list].sort((a, b) => (sort === "price-asc" ? a.price - b.price : b.price - a.price));

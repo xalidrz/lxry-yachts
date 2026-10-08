@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { CheckCircle2, Clock, ExternalLink, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
@@ -7,13 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Gold, SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { mapEmbedSrc, mapLink, site, whatsappLink } from "@/lib/site";
-
-export interface Prefill {
-  interest?: string;
-  message?: string;
-  /** Changes on every request so repeated clicks re-apply the same values. */
-  nonce: number;
-}
 
 const interests = ["Buy", "Rent", "Sell", "Construction"];
 
@@ -26,7 +20,8 @@ const details = [
 
 type Errors = Partial<Record<"name" | "phone" | "interest", string>>;
 
-export function Contact({ prefill }: { prefill: Prefill }) {
+export function Contact({ showHeading = true }: { showHeading?: boolean }) {
+  const [params] = useSearchParams();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState("");
@@ -34,12 +29,16 @@ export function Contact({ prefill }: { prefill: Prefill }) {
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
 
+  // /contact?interest=Construction&message=... pre-fills the form (used by CTAs across the site)
+  const query = params.toString();
   useEffect(() => {
-    if (!prefill.nonce) return;
-    if (prefill.interest) setInterest(prefill.interest);
-    if (prefill.message !== undefined) setMessage(prefill.message);
-    setSent(false);
-  }, [prefill]);
+    const i = params.get("interest");
+    const m = params.get("message");
+    if (i && interests.includes(i)) setInterest(i);
+    if (m) setMessage(m);
+    if (i || m) setSent(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
   const validate = (): Errors => {
     const e: Errors = {};
@@ -80,8 +79,9 @@ export function Contact({ prefill }: { prefill: Prefill }) {
   const errId = (k: string) => `err-${k}`;
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-20 bg-ink py-28">
+    <section id="contact" aria-label="Contact" className="scroll-mt-20 bg-ink py-24">
       <div className="container">
+        {showHeading && (
         <SectionHeading
           id="contact-title"
           eyebrow="Contact"
@@ -92,6 +92,7 @@ export function Contact({ prefill }: { prefill: Prefill }) {
           }
           description="Tell us what you need and we will come back to you the same day. Prefer to talk? Call or message us directly."
         />
+        )}
 
         <div className="grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
           <Reveal>
