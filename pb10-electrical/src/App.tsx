@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { CallButton } from "@/components/CallButton";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ContactPage } from "@/pages/ContactPage";
 import { ElectricalPage } from "@/pages/ElectricalPage";
@@ -34,6 +35,7 @@ export default function App() {
         </main>
         <Footer />
         <CallButton />
+        <WhatsAppButton />
       </MotionConfig>
     </LazyMotion>
   );
