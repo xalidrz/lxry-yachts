@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState, type KeyboardEvent, type TouchEvent } from "react";
 import { m } from "framer-motion";
-import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 import { Accent, SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -15,12 +16,25 @@ const filters: { id: Filter; label: string }[] = [
   { id: "wedding", label: "Wedding Lighting" },
 ];
 
-export function Gallery() {
+interface GalleryProps {
+  /** Show only one kind of work and hide the filter chips. */
+  category?: GalleryCategory;
+  /** Show at most this many photos, with a link to the full gallery. */
+  limit?: number;
+  /** Replace the section heading with a custom one (inner pages that already have an h1). */
+  heading?: { eyebrow: string; title: React.ReactNode; intro?: string } | "none";
+}
+
+export function Gallery({ category, limit, heading }: GalleryProps = {}) {
   const [filter, setFilter] = useState<Filter>("all");
   const [open, setOpen] = useState<number | null>(null);
   const touchX = useRef<number | null>(null);
 
-  const items = useMemo(() => (filter === "all" ? gallery : gallery.filter((g) => g.category === filter)), [filter]);
+  const items = useMemo(() => {
+    const kind = category ?? filter;
+    const list = kind === "all" ? gallery : gallery.filter((g) => g.category === kind);
+    return limit ? list.slice(0, limit) : list;
+  }, [filter, category, limit]);
   const current = open !== null ? items[open] : null;
 
   const step = useCallback((dir: 1 | -1) => setOpen((i) => (i === null ? i : (i + dir + items.length) % items.length)), [items.length]);
@@ -37,19 +51,26 @@ export function Gallery() {
   };
 
   return (
-    <section id="gallery" aria-labelledby="gallery-title" className="relative bg-ink py-24 md:py-32">
+    <section id="gallery" aria-labelledby={heading === "none" ? undefined : "gallery-title"} aria-label={heading === "none" ? "Project photos" : undefined} className={cn("relative bg-ink", heading === "none" ? "pb-24 pt-4 md:pb-32" : "py-24 md:py-32")}>
       <div className="container">
-        <SectionHeading
-          eyebrow="Recent projects"
-          title={
-            <span id="gallery-title">
-              Our work, <Accent>lit up</Accent>
-            </span>
-          }
-          intro="Real jobs across Edmonton. Tap any photo to see it full size."
-        />
+        {heading === "none" ? null : (
+          <SectionHeading
+            eyebrow={heading?.eyebrow ?? "Recent projects"}
+            title={
+              <span id="gallery-title">
+                {heading?.title ?? (
+                  <>
+                    Our work, <Accent>lit up</Accent>
+                  </>
+                )}
+              </span>
+            }
+            intro={heading?.intro ?? "Real jobs across Edmonton. Tap any photo to see it full size."}
+          />
+        )}
 
-        <Reveal delay={0.1} className="mt-10">
+        {!category && !limit && (
+        <Reveal delay={0.1} className={cn(heading !== "none" && "mt-10")}>
           <div role="group" aria-label="Filter gallery" className="flex flex-wrap items-center justify-center gap-2">
             {filters.map((f) => (
               <Button key={f.id} variant="chip" size="sm" className="px-4" data-active={filter === f.id} aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>
@@ -58,8 +79,9 @@ export function Gallery() {
             ))}
           </div>
         </Reveal>
+        )}
 
-        <m.ul key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="mt-10 columns-1 gap-4 sm:columns-2 lg:columns-3">
+        <m.ul key={category ?? filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className={cn("columns-1 gap-4 sm:columns-2 lg:columns-3", (heading !== "none" || (!category && !limit)) && "mt-10")}>
           {items.map((g, i) => (
             <li key={g.id} className="mb-4 break-inside-avoid">
               <button
@@ -91,6 +113,16 @@ export function Gallery() {
             </li>
           ))}
         </m.ul>
+
+        {limit && (
+          <div className="mt-6 text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/gallery">
+                View the full gallery <ArrowRight />
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
 
       <Dialog open={open !== null} onOpenChange={(o) => !o && setOpen(null)}>

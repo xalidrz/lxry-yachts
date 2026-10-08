@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { Menu, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -6,33 +7,8 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/s
 import { navLinks, site, telHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-/** Highlights the nav link of the section currently in the middle of the viewport. */
-function useScrollSpy(ids: string[]) {
-  const [active, setActive] = useState<string>("");
-  useEffect(() => {
-    const els = ids.map((id) => document.getElementById(id)).filter((e): e is HTMLElement => !!e);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    els.forEach((el) => io.observe(el));
-    const top = () => window.scrollY < 200 && setActive("");
-    window.addEventListener("scroll", top, { passive: true });
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", top);
-    };
-  }, [ids]);
-  return active;
-}
-
-const ids = navLinks.map((l) => l.href.slice(1));
-
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const active = useScrollSpy(ids);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -49,32 +25,30 @@ export function Navbar() {
       )}
     >
       <div className="container flex h-16 items-center justify-between gap-5 md:h-20">
-        <a href="#top" aria-label={`${site.shortName} — home`} className="shrink-0 rounded-sm">
+        <Link to="/" aria-label={`${site.shortName} — home`} className="shrink-0 rounded-sm">
           <Logo variant="wordmark" className="h-6 w-auto sm:h-7 xl:h-8" />
-        </a>
+        </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-5 xl:gap-7 lg:flex">
-          {navLinks.map((l) => {
-            const on = active === l.href.slice(1);
-            return (
-              <a
-                key={l.href}
-                href={l.href}
-                aria-current={on ? "true" : undefined}
-                className={cn(
+          {navLinks.map((l) => (
+            <NavLink
+              key={l.to}
+              to={l.to}
+              className={({ isActive }) =>
+                cn(
                   "label relative py-2 text-[0.92rem] transition-colors hover:text-volt-light after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-brandred after:transition-transform after:duration-300 hover:after:scale-x-100",
-                  on ? "text-volt-light after:scale-x-100" : "text-white/90",
-                )}
-              >
-                {l.label}
-              </a>
-            );
-          })}
+                  isActive ? "text-volt-light after:scale-x-100" : "text-white/90",
+                )
+              }
+            >
+              {l.label}
+            </NavLink>
+          ))}
         </nav>
 
         <div className="flex items-center gap-2">
           <Button asChild size="sm" className="hidden lg:inline-flex">
-            <a href="#contact">Get a Free Quote</a>
+            <Link to="/contact">Get a Free Quote</Link>
           </Button>
 
           <Sheet>
@@ -93,17 +67,17 @@ export function Navbar() {
               </div>
               <nav aria-label="Mobile" className="mt-10 flex flex-col">
                 {navLinks.map((l) => (
-                  <SheetClose asChild key={l.href}>
-                    <a href={l.href} className="label border-b border-white/10 py-4 text-xl text-white transition-colors hover:text-volt-light">
+                  <SheetClose asChild key={l.to}>
+                    <NavLink to={l.to} className={({ isActive }) => cn("label border-b border-white/10 py-4 text-xl transition-colors hover:text-volt-light", isActive ? "text-volt-light" : "text-white")}>
                       {l.label}
-                    </a>
+                    </NavLink>
                   </SheetClose>
                 ))}
               </nav>
               <div className="mt-auto space-y-3 pt-8">
                 <SheetClose asChild>
                   <Button asChild size="lg" className="w-full">
-                    <a href="#contact">Get a Free Quote</a>
+                    <Link to="/contact">Get a Free Quote</Link>
                   </Button>
                 </SheetClose>
                 <Button asChild variant="outline" size="lg" className="w-full">

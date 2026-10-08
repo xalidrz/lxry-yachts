@@ -1,8 +1,6 @@
-import { BadgeDollarSign, Clock, MapPin, ShieldCheck, Phone } from "lucide-react";
+import { BadgeDollarSign, Clock, MapPin, ShieldCheck } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { Accent, SectionHeading } from "@/components/SectionHeading";
-import { Button } from "@/components/ui/button";
-import { site, telHref } from "@/lib/site";
 
 const reasons = [
   { icon: BadgeDollarSign, title: "Fair Pricing", text: "Clear quotes with no surprises. Genuine prices for honest work." },
@@ -39,26 +37,6 @@ export function WhyChoose() {
             </li>
           ))}
         </ul>
-
-        <Reveal className="mt-16">
-          <div className="relative overflow-hidden rounded-2xl border border-volt/40 bg-gradient-to-br from-surface-2 to-ink px-6 py-12 text-center md:px-12">
-            <div aria-hidden className="absolute -top-24 left-1/2 size-80 -translate-x-1/2 rounded-full bg-volt/20 blur-[90px]" />
-            <h3 className="relative text-[clamp(1.6rem,3.6vw,2.4rem)]">
-              Ready for a <Accent>free quote</Accent>?
-            </h3>
-            <p className="relative mx-auto mt-3 max-w-xl text-muted-foreground">Electrical job or wedding date — tell us what you have planned and we'll take it from there.</p>
-            <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild size="lg">
-                <a href="#contact">Get a Free Quote</a>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <a href={telHref}>
-                  <Phone /> {site.phoneDisplay}
-                </a>
-              </Button>
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

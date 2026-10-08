@@ -1,4 +1,5 @@
 import { Facebook, Instagram, MapPin, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 import { electrical, wedding } from "@/data/services";
 import { mapLink, navLinks, site, telHref } from "@/lib/site";
@@ -43,27 +44,27 @@ export function Footer() {
             <h2 className={h}>Quick links</h2>
             <ul className="mt-5 space-y-3 text-[0.95rem] text-muted-foreground">
               {navLinks.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href} className="transition-colors hover:text-volt-light">
+                <li key={l.to}>
+                  <Link to={l.to} className="transition-colors hover:text-volt-light">
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
           {[
-            { title: "Electrical", href: "#electrical", list: electrical },
-            { title: "Wedding & event lighting", href: "#wedding", list: wedding },
-          ].map(({ title, href, list }) => (
+            { title: "Electrical", to: "/electrical", list: electrical },
+            { title: "Wedding & event lighting", to: "/wedding-lighting", list: wedding },
+          ].map(({ title, to, list }) => (
             <div key={title}>
               <h2 className={h}>{title}</h2>
               <ul className="mt-5 space-y-3 text-[0.95rem] text-muted-foreground">
                 {list.map((s) => (
                   <li key={s.title}>
-                    <a href={href} className="transition-colors hover:text-volt-light">
+                    <Link to={to} className="transition-colors hover:text-volt-light">
                       {s.title}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

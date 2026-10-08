@@ -1,17 +1,26 @@
 import { ArrowRight, CalendarHeart } from "lucide-react";
+import { Link } from "react-router-dom";
 import { FairyLights } from "@/components/FairyLights";
 import { GlowCard } from "@/components/GlowCard";
 import { Reveal } from "@/components/Reveal";
 import { Accent, SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { wedding } from "@/data/services";
+import { cn } from "@/lib/utils";
 
-export function Wedding() {
+/** `bare` drops the heading (inner pages already have an h1); `more` adds a link to the full page. */
+export function Wedding({ bare = false, more = false }: { bare?: boolean; more?: boolean }) {
   return (
-    <section id="wedding" aria-labelledby="wedding-title" className="relative overflow-hidden bg-surface-2 py-24 md:py-32">
+    <section
+      id="wedding"
+      aria-labelledby={bare ? undefined : "wedding-title"}
+      aria-label={bare ? "Wedding and event lighting services" : undefined}
+      className={cn("relative overflow-hidden bg-surface-2", bare ? "pb-24 pt-4 md:pb-32" : "py-24 md:py-32")}
+    >
       <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(255,182,39,0.16),transparent_70%),linear-gradient(to_bottom,#121212,#222222_22%,#222222_78%,#121212)]" />
       <FairyLights count={90} />
       <div className="container relative">
+        {!bare && (
         <SectionHeading
           eyebrow="Wedding lighting Edmonton"
           title={
@@ -21,8 +30,9 @@ export function Wedding() {
           }
           intro="Weddings, mehndi, sangeet, receptions and festivals — we design and install the lighting, then take it all down and clean up after."
         />
+        )}
 
-        <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-6">
+        <ul className={cn("grid gap-5 sm:grid-cols-2 lg:grid-cols-6", !bare && "mt-14")}>
           {wedding.map(({ title, blurb, icon: Icon, image, imagePosition }, i) => (
             <li key={title} className={i < 3 ? "lg:col-span-2" : "lg:col-span-3"}>
               <Reveal delay={(i % 3) * 0.1} className="h-full">
@@ -59,12 +69,22 @@ export function Wedding() {
             </span>
             <p className="flex-1 text-[1.02rem] text-white/85">Got a date in mind? Tell us the event date and we'll come to see the space for free and send a quote.</p>
             <Button asChild>
-              <a href="#contact">
+              <Link to="/contact?service=Wedding%20Lighting">
                 Check my date <ArrowRight />
-              </a>
+              </Link>
             </Button>
           </div>
         </Reveal>
+
+        {more && (
+          <Reveal className="mt-10 text-center">
+            <Button asChild variant="outline" size="lg">
+              <Link to="/wedding-lighting">
+                Explore wedding lighting <ArrowRight />
+              </Link>
+            </Button>
+          </Reveal>
+        )}
       </div>
     </section>
   );

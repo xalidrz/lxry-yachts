@@ -34,9 +34,11 @@ export const mapEmbedSrc = `https://www.google.com/maps?q=${encode(site.addressO
 export const mapLink = `https://www.google.com/maps/search/?api=1&query=${encode(site.addressOneLine)}`;
 
 export const navLinks = [
-  { label: "Electrical", href: "#electrical" },
-  { label: "Wedding Lighting", href: "#wedding" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Contact", href: "#contact" },
+  { label: "Electrical", to: "/electrical" },
+  { label: "Wedding Lighting", to: "/wedding-lighting" },
+  { label: "Gallery", to: "/gallery" },
+  { label: "Reviews", to: "/reviews" },
+  { label: "Contact", to: "/contact" },
 ] as const;
+
+export const siteUrl = ((import.meta.env.VITE_SITE_URL as string | undefined) ?? "").replace(/\/$/, "");

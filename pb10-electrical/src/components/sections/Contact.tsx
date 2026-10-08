@@ -1,5 +1,6 @@
 import { useId, useState, type FormEvent } from "react";
 import { CheckCircle2, Loader2, MapPin, Navigation, Phone, TriangleAlert } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { Reveal } from "@/components/Reveal";
 import { Accent, SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { Input, Textarea } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { mapEmbedSrc, mapLink, site, telHref } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 const services = ["Electrical", "Wedding Lighting", "Both"] as const;
 type Status = "idle" | "sending" | "sent" | "mailto" | "error" | "unconfigured";
@@ -28,9 +30,11 @@ function Field({ id, label, error, children }: { id: string; label: string; erro
   );
 }
 
-export function Contact() {
+export function Contact({ bare = false }: { bare?: boolean }) {
   const uid = useId();
-  const [service, setService] = useState<string>("");
+  const [params] = useSearchParams();
+  const preset = services.find((s) => s.toLowerCase() === (params.get("service") ?? "").toLowerCase());
+  const [service, setService] = useState<string>(preset ?? "");
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
   const id = (n: string) => `${uid}-${n}`;
@@ -89,9 +93,10 @@ export function Contact() {
   const describe = (n: keyof Errors) => (errors[n] ? `${id(n)}-err` : undefined);
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="relative overflow-hidden bg-ink py-24 md:py-32">
+    <section id="contact" aria-labelledby={bare ? undefined : "contact-title"} aria-label={bare ? "Request a quote" : undefined} className={cn("relative overflow-hidden bg-ink", bare ? "pb-24 pt-4 md:pb-32" : "py-24 md:py-32")}>
       <div aria-hidden className="absolute -right-40 top-20 size-[520px] rounded-full bg-volt/[0.08] blur-[120px]" />
       <div className="container relative">
+        {!bare && (
         <SectionHeading
           eyebrow="Contact"
           title={
@@ -101,8 +106,9 @@ export function Contact() {
           }
           intro="Tell us about your electrical job or your event. We'll call you back to arrange a free site visit."
         />
+        )}
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12">
+        <div className={cn("grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12", !bare && "mt-14")}>
           <Reveal>
             <form onSubmit={onSubmit} noValidate className="rounded-2xl border border-white/10 bg-surface p-6 md:p-9">
               <div className="grid gap-5 sm:grid-cols-2">

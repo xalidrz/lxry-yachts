@@ -1,6 +1,7 @@
 import { useCallback, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { m, useReducedMotion } from "framer-motion";
 import { ArrowRight, Star, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 import { BoltIntro } from "@/components/BoltIntro";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
@@ -140,9 +141,9 @@ function Panel({ id, active, lit, setActive, reduce }: PanelProps) {
               : "Full house lighting, entrance decor and fairy-light canopies that make the night unforgettable."}
           </p>
           <Button asChild variant={electrical ? "outline" : "volt"} className={cn("mt-6", electrical && "md:ml-auto")}>
-            <a href={electrical ? "#electrical" : "#wedding"}>
+            <Link to={electrical ? "/electrical" : "/wedding-lighting"}>
               {electrical ? "Explore Electrical" : "Explore Lighting Decor"} <ArrowRight />
-            </a>
+            </Link>
           </Button>
         </div>
       </div>
@@ -172,7 +173,7 @@ export function Hero() {
   const done = useCallback(() => setIntro(false), []);
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-ink md:h-[100svh] md:min-h-[720px]">
+    <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-ink md:h-[100svh] md:min-h-[720px]">
       {intro && <BoltIntro onStrike={strike} onDone={done} />}
 
       <div className="pointer-events-none relative z-20 px-5 pb-8 pt-24 text-center md:absolute md:inset-x-0 md:top-0 md:bg-gradient-to-b md:from-ink/85 md:via-ink/45 md:to-transparent md:pb-24 md:pt-28">
