@@ -1,0 +1,89 @@
+@import "@fontsource/marcellus/400.css";
+@import "@fontsource/barlow-condensed/500.css";
+@import "@fontsource/barlow-condensed/600.css";
+@import "@fontsource/barlow/400.css";
+@import "@fontsource/barlow/500.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* HSL triplets of the brand palette, consumed by the shadcn/ui tokens */
+    --background: 240 6% 6%;          /* #0E0E10 */
+    --foreground: 40 38% 92%;         /* #F2EDE3 */
+    --card: 240 8% 9%;                /* #16161A */
+    --card-foreground: 40 38% 92%;
+    --popover: 240 8% 9%;
+    --popover-foreground: 40 38% 92%;
+    --primary: 41 52% 54%;            /* #C9A04A */
+    --primary-foreground: 240 6% 6%;
+    --secondary: 240 7% 13%;          /* #1E1E23 */
+    --secondary-foreground: 40 38% 92%;
+    --accent: 240 7% 13%;
+    --accent-foreground: 40 38% 92%;
+    --border: 41 52% 54% / 0.25;      /* gold @ 25% */
+    --input: 41 52% 54% / 0.28;
+    --ring: 41 52% 54%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    background: #0e0e10;
+    color-scheme: dark;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    @apply bg-ink font-body text-cream antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { @apply font-heading font-normal; line-height: 1.12; text-wrap: balance; }
+
+  ::selection { background: #C9A04A; color: #0E0E10; }
+
+  :focus-visible { outline: 2px solid #E8C878; outline-offset: 3px; }
+}
+
+@layer components {
+  /* Page width + fluid side gutters (shared by the projects gallery so it lines up with the grid) */
+  .container {
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    box-sizing: border-box;
+  }
+  .gutter-x {
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+    padding-inline: max(var(--gutter), calc((100% - 1320px) / 2 + var(--gutter)));
+    scroll-padding-inline: max(var(--gutter), calc((100% - 1320px) / 2 + var(--gutter)));
+  }
+
+  /* Uppercase condensed label style (nav, buttons, chips, eyebrows) */
+  .label {
+    @apply font-label font-medium uppercase tracking-label;
+  }
+  .text-gold-gradient {
+    background-image: linear-gradient(135deg, #B8893A 0%, #E8C878 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .hairline { border-color: rgba(201, 160, 74, 0.25); }
+  .scrollbar-gold { scrollbar-width: thin; scrollbar-color: #C9A04A transparent; }
+  .scrollbar-gold::-webkit-scrollbar { height: 6px; }
+  .scrollbar-gold::-webkit-scrollbar-track { background: rgba(201,160,74,0.12); border-radius: 99px; }
+  .scrollbar-gold::-webkit-scrollbar-thumb { background: #C9A04A; border-radius: 99px; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
