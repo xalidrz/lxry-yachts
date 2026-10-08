@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Bath, BedDouble, MapPin, Maximize, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Bath, BedDouble, MapPin, Maximize } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { Badge } from "@/components/ui/badge";
 import { formatPKR, type Property } from "@/data/properties";
 import { whatsappLink } from "@/lib/site";
@@ -81,7 +82,7 @@ export function PropertyCard({ p, index = 0 }: { p: Property; index?: number }) 
             aria-label={`Enquire about ${p.title} on WhatsApp`}
             className="relative z-10 flex size-10 items-center justify-center border border-gold/30 text-gold transition-colors hover:border-gold hover:bg-gold hover:text-ink"
           >
-            <MessageCircle className="size-[18px]" />
+            <WhatsAppIcon className="size-[18px]" />
           </a>
         </div>
       </div>

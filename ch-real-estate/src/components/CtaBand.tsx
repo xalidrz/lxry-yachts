@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { Gold } from "@/components/SectionHeading";
@@ -42,7 +43,7 @@ export function CtaBand({
               </Button>
               <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
                 <a href={whatsappLink("Hello CH Real Estate & Builder's, I'd like to know more.")} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle /> WhatsApp us
+                  <WhatsAppIcon /> WhatsApp us
                 </a>
               </Button>
             </div>

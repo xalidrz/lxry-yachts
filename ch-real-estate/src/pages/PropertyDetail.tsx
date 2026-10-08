@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Bath, BedDouble, Check, MapPin, MessageCircle, Phone, Maximize } from "lucide-react";
+import { ArrowLeft, Bath, BedDouble, Check, MapPin, Phone, Maximize } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/PageHeader";
@@ -102,7 +103,7 @@ export default function PropertyDetail() {
                 <div className="mt-7 space-y-3">
                   <Button asChild size="lg" className="w-full">
                     <a href={whatsappLink(enquiry)} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle /> Enquire on WhatsApp
+                      <WhatsAppIcon /> Enquire on WhatsApp
                     </a>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="w-full">

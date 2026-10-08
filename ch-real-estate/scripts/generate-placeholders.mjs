@@ -317,6 +317,13 @@ const files = {
 };
 for (const [name, svg] of Object.entries(files)) writeFileSync(resolve(out, name), svg);
 
+// ---------- hero photo (supplied; 678×452 source) → optimised, gently upscaled JPEG ----------
+await sharp(resolve(root, "scripts/hero-source.png"))
+  .resize({ width: 1600, kernel: "lanczos3" })
+  .sharpen({ sigma: 0.7 })
+  .jpeg({ quality: 78, mozjpeg: true })
+  .toFile(resolve(root, "public/images/hero.jpg"));
+
 // ---------- favicon + social card from the real logo ----------
 const logo = resolve(root, "scripts/logo-source.png"); // full-size transparent gold logo extracted from the supplied artwork
 await sharp(logo).resize(420, 420).png({ palette: true, quality: 90, effort: 10 }).toFile(resolve(root, "public/logo.png"));

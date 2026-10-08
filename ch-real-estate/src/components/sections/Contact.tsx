@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CheckCircle2, Clock, ExternalLink, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import { CheckCircle2, Clock, ExternalLink, Mail, MapPin, Phone, Send } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +14,7 @@ const interests = ["Buy", "Rent", "Sell", "Construction"];
 
 const details = [
   { icon: Phone, label: "Call us", value: site.phoneDisplay, href: `tel:${site.phoneTel}` },
-  { icon: MessageCircle, label: "WhatsApp", value: site.phoneDisplay, href: whatsappLink(), external: true },
+  { icon: WhatsAppIcon, label: "WhatsApp", value: site.phoneDisplay, href: whatsappLink(), external: true },
   { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
   { icon: Clock, label: "Office hours", value: site.hours },
 ];

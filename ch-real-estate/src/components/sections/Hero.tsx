@@ -29,17 +29,20 @@ export function Hero() {
       {/* Photo layer + dark overlay */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden>
         <motion.img
-          src="/images/hero.svg"
+          src="/images/hero.jpg"
           alt=""
-          width={1920}
-          height={1080}
+          width={1600}
+          height={1067}
           fetchPriority="high"
           initial={{ scale: 1.12 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2.6, ease: [0.22, 1, 0.36, 1] }}
-          className="size-full object-cover"
+          // photo is graded toward the brand: the blue sky is pulled back to warm charcoal
+          className="size-full object-cover object-[50%_35%] [filter:saturate(0.65)_sepia(0.25)_brightness(1.08)]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/55 to-ink" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/40 to-ink" />
+        {/* soft scrim behind the headline + copy so the bright facade never fights the text */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_62%_46%_at_50%_44%,rgba(14,14,16,0.62),transparent_78%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(14,14,16,0.7)_100%)]" />
       </div>
 

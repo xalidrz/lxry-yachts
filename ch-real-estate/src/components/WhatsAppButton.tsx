@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
 import { whatsappLink } from "@/lib/site";
 
 /** Floating contact button, bottom-right. Gold (not WhatsApp green) to keep the palette strict. */
@@ -20,7 +20,7 @@ export function WhatsAppButton() {
       </span>
       <span className="relative flex size-14 items-center justify-center rounded-full bg-gold-gradient text-ink shadow-[0_12px_32px_-6px_rgba(201,160,74,0.7)] transition-transform duration-300 group-hover:scale-110">
         <span className="absolute inset-0 animate-ping rounded-full bg-gold/40 [animation-duration:2.8s]" aria-hidden />
-        <MessageCircle className="relative size-6" strokeWidth={2} />
+        <WhatsAppIcon className="relative size-7" />
       </span>
     </motion.a>
   );
