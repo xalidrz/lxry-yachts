@@ -30,6 +30,13 @@ export const site = {
 } as const;
 
 export const telHref = `tel:${site.phoneTel}`;
+
+/**
+ * WhatsApp chat link (wa.me wants the number in international format, digits only). This assumes the business
+ * phone number is also on WhatsApp — change `whatsappNumber` if they use a different one.
+ */
+export const whatsappNumber = site.phoneTel.replace(/\D/g, "");
+export const whatsappLink = (text = "Hi PB10 Electrical, I'd like a free quote.") => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 export const mapEmbedSrc = `https://www.google.com/maps?q=${encode(site.addressOneLine)}&output=embed`;
 export const mapLink = `https://www.google.com/maps/search/?api=1&query=${encode(site.addressOneLine)}`;
 
