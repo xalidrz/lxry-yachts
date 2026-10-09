@@ -29,7 +29,7 @@ export function Hero() {
           <span className="block text-signal">Hayward&rsquo;s 4.7<span className="font-sans text-[0.72em] font-black">★</span> Shop.</span>
         </h1>
         <p className="animate-rise mt-6 max-w-xl text-lg leading-relaxed text-ink/85 [animation-delay:160ms] sm:text-xl">
-          Diagnostics, electrical, maintenance and inspections — done right, priced fair.
+          Honest repairs, fair prices, and an owner who explains the work.
         </p>
         <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:240ms]">
           <Button asChild className="h-14 px-8 text-lg">

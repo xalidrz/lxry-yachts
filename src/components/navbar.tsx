@@ -22,7 +22,7 @@ export function Navbar() {
         aria-label="Main"
         className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-nav/95 py-2 pl-5 pr-2 shadow-[0_10px_30px_rgba(0,0,0,0.45)] lg:grid lg:grid-cols-[1fr_auto_1fr] lg:pl-7 lg:pr-2.5"
       >
-        <Link href="/" aria-label="Elite Motorsports home" className="justify-self-start">
+        <Link href="/" className="justify-self-start">
           <Wordmark className="h-6 lg:h-7" />
         </Link>
 

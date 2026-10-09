@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="border-t border-white/10 bg-carbon pb-28 pt-14 md:pb-14">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr_1fr_1fr] lg:px-8">
         <div>
-          <Link href="/" aria-label="Elite Motorsports home" className="inline-block">
+          <Link href="/" className="inline-block">
             <Wordmark className="h-8" />
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">

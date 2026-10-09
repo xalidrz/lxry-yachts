@@ -1,7 +1,7 @@
 # Elite Motorsports: photo selection
 
 Source: 54 photos supplied as four merged PDFs (`pdf24_merged_1`–`4`), plus one extra shop photo supplied later for the hero. `p<n>-<i>` below = PDF *n*, page *i*+1.
-Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothing else is edited, blurred or cropped.
+Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothing else is edited.
 
 ## Used (24)
 
@@ -39,7 +39,7 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 | Source | Why |
 |---|---|
 | p3-000 (AMG caliper) | Too dark, very low sharpness |
-| p2-008 (hand and wire on carburetor) | Hand and wire out of focus (motion blur) |
+| p2-008 (hand and wire on carburetor) | Hand and wire out of focus |
 | p4-010 (grey Mercedes coupe) | 800×600, too small for the gallery |
 | p2-000 (hybrid transmission) | Dark, awkward crop |
 | p1-003 (intake hose) | Flat and soft, no context |

@@ -8,6 +8,7 @@ import { links, site } from "@/config/site";
 
 /** preview = home-page version: address card only (no map), with a link to /location. */
 export function Location({ preview = false }: { preview?: boolean }) {
+  const Heading = preview ? "h3" : "h2";
   return (
     <section id="location" className={preview ? "bg-carbon py-20 sm:py-28" : "bg-carbon py-16 sm:py-24"}>
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
@@ -32,7 +33,7 @@ export function Location({ preview = false }: { preview?: boolean }) {
           )}
 
           <Reveal index={1} className="flex flex-col rounded-2xl border border-white/10 bg-surface p-7 sm:p-9">
-            <h3 className="font-display text-3xl font-extrabold uppercase tracking-tight text-ink">{site.shortName}</h3>
+            <Heading className="font-display text-3xl font-extrabold uppercase tracking-tight text-ink">{site.shortName}</Heading>
             <ul className={preview ? "mt-6 grid gap-6 sm:grid-cols-2" : "mt-6 space-y-6"}>
               <li className="flex gap-4">
                 <MapPin className="mt-1 size-5 shrink-0 text-signal" aria-hidden />

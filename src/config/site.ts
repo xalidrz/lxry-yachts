@@ -13,7 +13,7 @@ export const site = {
   owner: "Goldy",
   tagline: "Honest Repairs. Hayward's 4.7★ Shop.",
   description:
-    "Elite Motorsports is an owner-run auto repair shop at 70 W Jackson St in Hayward, CA. Diagnostics, electrical, maintenance and inspections, rated 4.7★ from 51 Google reviews.",
+    "Owner-run auto repair at 70 W Jackson St, Hayward, CA. Uber inspections, oil changes, diagnostics, electrical, clutch and mirror repair. 4.7★ from 51 Google reviews.",
   address: {
     street: "70 W Jackson St",
     city: "Hayward",
