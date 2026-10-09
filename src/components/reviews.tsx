@@ -2,6 +2,7 @@ import { ExternalLink, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
+import { SectionLink } from "@/components/section-link";
 import { filledReviews as filled } from "@/data/reviews";
 import { links, site } from "@/config/site";
 
@@ -23,15 +24,18 @@ function Stars({ value, className = "size-6" }: { value: number; className?: str
   );
 }
 
-export function Reviews() {
+/** preview = home-page version: heading, rating block and tags only, with a link to /reviews. */
+export function Reviews({ preview = false }: { preview?: boolean }) {
   return (
-    <section id="reviews" className="scroll-mt-20 bg-graphite py-20 sm:py-28">
+    <section id="reviews" className={preview ? "bg-graphite py-20 sm:py-28" : "bg-graphite py-16 sm:py-24"}>
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <Reveal>
-          <SectionHeading eyebrow="Reviews" title="What Hayward says" />
-        </Reveal>
+        {preview ? (
+          <Reveal>
+            <SectionHeading eyebrow="Reviews" title="What Hayward says" />
+          </Reveal>
+        ) : null}
 
-        <div className="mt-12 grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
+        <div className={preview ? "mt-12 grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16" : "grid items-center gap-10 lg:grid-cols-[auto_1fr] lg:gap-16"}>
           <Reveal className="rounded-2xl border border-white/10 bg-surface p-8 sm:p-10">
             <p className="font-display text-[7rem] font-extrabold leading-none tracking-tight text-ink sm:text-[9rem]">
               {site.rating.value}
@@ -71,7 +75,13 @@ export function Reviews() {
           </Reveal>
         </div>
 
-        {filled.length > 0 ? (
+        {preview ? (
+          <Reveal className="mt-10">
+            <SectionLink href="/reviews">More on reviews</SectionLink>
+          </Reveal>
+        ) : null}
+
+        {!preview && filled.length > 0 ? (
           <ul className="mt-12 grid gap-4 md:grid-cols-3">
             {filled.map((r, i) => (
               <Reveal as="li" index={i} key={`${r.author}-${i}`} className="rounded-2xl border border-white/10 bg-surface p-6">

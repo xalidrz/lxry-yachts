@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion";
-import { categoryCounts, photosIn, type PhotoCategory } from "@/data/photos";
+import { SectionLink } from "@/components/section-link";
+import { categoryCounts, photos, photosIn, previewPhotos, type PhotoCategory } from "@/data/photos";
 import { cn } from "@/lib/utils";
 
 type Tab = "all" | PhotoCategory;
@@ -18,11 +19,12 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "shop", label: "Shop" },
 ];
 
-export function Gallery() {
+/** preview = home-page version: six curated photos, no tabs, link to /work. */
+export function Gallery({ preview = false }: { preview?: boolean }) {
   const [tab, setTab] = useState<Tab>("all");
   const [active, setActive] = useState<number | null>(null);
 
-  const visible = useMemo(() => photosIn(tab), [tab]);
+  const visible = useMemo(() => (preview ? previewPhotos : photosIn(tab)), [preview, tab]);
 
   const step = useCallback(
     (d: number) => setActive((i) => (i === null ? i : (i + d + visible.length) % visible.length)),
@@ -42,17 +44,18 @@ export function Gallery() {
   const current = active === null ? null : visible[active];
 
   return (
-    <section id="work" className="scroll-mt-20 bg-graphite py-20 sm:py-28">
+    <section id="work" className={preview ? "bg-graphite py-20 sm:py-28" : "bg-graphite py-16 sm:py-24"}>
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Our work"
-            title="Straight from the shop floor"
-            intro="Real jobs in our Hayward bays: engines, wiring, under-car work and the cars that come through. Every photo is untouched."
-          />
-        </Reveal>
-
-        <div role="tablist" aria-label="Photo categories" className="mt-10 flex flex-wrap gap-2">
+        {preview ? (
+          <Reveal>
+            <SectionHeading
+              eyebrow="Our work"
+              title="Straight from the shop floor"
+              intro="Real jobs in our Hayward bays: engines, wiring, under-car work and the cars that come through. Every photo is untouched."
+            />
+          </Reveal>
+        ) : (
+          <div role="tablist" aria-label="Photo categories" className="flex flex-wrap gap-2">
           {tabs.map((f) => (
             <Button
               key={f.id}
@@ -66,9 +69,10 @@ export function Gallery() {
               <span className={cn("text-xs", tab === f.id ? "text-white" : "text-ink/80")}>{categoryCounts[f.id]}</span>
             </Button>
           ))}
-        </div>
+          </div>
+        )}
 
-        <ul className="mt-8 columns-2 gap-3 md:columns-3 md:gap-4">
+        <ul className={cn("columns-2 gap-3 md:columns-3 md:gap-4", preview ? "mt-12" : "mt-8")}>
           {visible.map((p, i) => (
             <li key={p.file} className="mb-3 break-inside-avoid md:mb-4">
               <button
@@ -94,6 +98,11 @@ export function Gallery() {
             </li>
           ))}
         </ul>
+        {preview ? (
+          <Reveal className="mt-10">
+            <SectionLink href="/work">See all {photos.length} photos</SectionLink>
+          </Reveal>
+        ) : null}
       </div>
 
       <Dialog open={active !== null} onOpenChange={(o) => !o && setActive(null)}>

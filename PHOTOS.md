@@ -5,6 +5,8 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 
 ## Used (23)
 
+"Gallery" below is the `/work` page. Six of those photos (wiring repair, Charger, V8 build, S-Class at the shop front, Bentley, titanium exhaust) also appear in the Home page preview.
+
 | File in `public/photos/` | Source | Where |
 |---|---|---|
 | `hero-shop-bays-two-post-lifts.webp` (1920w) | p1-006 | Hero, Open Graph image (cropped 1200×630) |

@@ -4,6 +4,11 @@ import "./globals.css";
 import { site } from "@/config/site";
 import { siteUrl } from "@/lib/url";
 import { heroPhoto } from "@/data/photos";
+import { MotionProvider } from "@/components/motion";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { CallFab } from "@/components/call-fab";
+import { JsonLd } from "@/components/json-ld";
 
 const barlow = Barlow_Condensed({
   subsets: ["latin"],
@@ -14,10 +19,11 @@ const barlow = Barlow_Condensed({
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 const title = "Elite Motorsports | Auto Repair in Hayward, CA";
+const template = "%s | Elite Motorsports";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title,
+  title: { default: title, template },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: {
@@ -41,7 +47,15 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${barlow.variable} ${inter.variable}`}>
-      <body>{children}</body>
+      <body>
+        <MotionProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <CallFab />
+        </MotionProvider>
+        <JsonLd />
+      </body>
     </html>
   );
 }

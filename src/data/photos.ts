@@ -60,3 +60,16 @@ export const categoryCounts = {
 
 export const photosIn = (category: PhotoCategory | "all") =>
   category === "all" ? photos : photos.filter((p) => p.category === category);
+
+/** Six photos for the home-page preview (a spread of engine, electrical, shop and storefront). */
+const previewFiles = [
+  "engine-bay-wiring-repair",
+  "charger-hellcat-in-bay",
+  "carbureted-v8-engine-build",
+  "s-class-at-shop-front",
+  "bentley-coupe-in-shop-bay",
+  "titanium-exhaust-under-car",
+];
+export const previewPhotos: Photo[] = previewFiles.map(
+  (f) => photos.find((p) => p.file === `/photos/${f}.webp`) as Photo,
+);

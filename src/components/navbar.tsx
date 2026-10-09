@@ -1,21 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import { Wordmark } from "@/components/wordmark";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { links, site } from "@/config/site";
-
-const nav = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Location", href: "#location" },
-];
+import { nav } from "@/config/nav";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="fixed inset-x-3 top-3 z-50 mx-auto max-w-6xl lg:inset-x-6 lg:top-5">
@@ -23,16 +22,16 @@ export function Navbar() {
         aria-label="Main"
         className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-nav/95 py-2 pl-5 pr-2 shadow-[0_10px_30px_rgba(0,0,0,0.45)] lg:grid lg:grid-cols-[1fr_auto_1fr] lg:pl-7 lg:pr-2.5"
       >
-        <a href="#top" className="justify-self-start">
+        <Link href="/" aria-label="Elite Motorsports home" className="justify-self-start">
           <Wordmark className="h-6 lg:h-7" />
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-9 font-display text-[0.95rem] font-semibold uppercase tracking-[0.22em] text-ink lg:flex">
           {nav.map((n) => (
             <li key={n.href}>
-              <a href={n.href} className="nav-link">
+              <Link href={n.href} className={cn("nav-link", isActive(n.href) && "text-signal")} aria-current={isActive(n.href) ? "page" : undefined}>
                 {n.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -73,12 +72,16 @@ export function Navbar() {
                 {nav.map((n) => (
                   <li key={n.href} className="border-b border-white/10">
                     <DialogClose asChild>
-                      <a
+                      <Link
                         href={n.href}
-                        className="block py-5 font-display text-5xl font-extrabold uppercase tracking-tight text-ink hover:text-signal"
+                        aria-current={isActive(n.href) ? "page" : undefined}
+                        className={cn(
+                          "block py-5 font-display text-5xl font-extrabold uppercase tracking-tight hover:text-signal",
+                          isActive(n.href) ? "text-signal" : "text-ink",
+                        )}
                       >
                         {n.label}
-                      </a>
+                      </Link>
                     </DialogClose>
                   </li>
                 ))}

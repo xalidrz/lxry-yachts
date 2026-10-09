@@ -1,6 +1,7 @@
 import { Activity, CarFront, Disc3, Droplets, Gauge, MoveVertical, Wrench, Zap, type LucideIcon } from "lucide-react";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
+import { SectionLink } from "@/components/section-link";
 
 type Service = {
   title: string;
@@ -21,20 +22,27 @@ const services: Service[] = [
   { title: "General Maintenance", blurb: "Routine upkeep to keep your car on the road.", icon: Wrench, confirmed: false },
 ];
 
-export function Services() {
+/**
+ * preview = home-page version (the four confirmed services plus a link to /services).
+ * Otherwise the full grid, used under the /services page header.
+ */
+export function Services({ preview = false }: { preview?: boolean }) {
+  const list = preview ? services.flatMap((s) => (s.confirmed ? [s] : [])) : services;
   return (
-    <section id="services" className="bg-carbon scroll-mt-20 py-20 sm:py-28">
+    <section id="services" className={preview ? "bg-carbon py-20 sm:py-28" : "bg-carbon py-16 sm:py-24"}>
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Services"
-            title="What we work on"
-            intro="Mechanical and electrical work, handled by the owner. Call for a quote on your car."
-          />
-        </Reveal>
+        {preview ? (
+          <Reveal>
+            <SectionHeading
+              eyebrow="Services"
+              title="What we work on"
+              intro="Mechanical and electrical work, handled by the owner. Call for a quote on your car."
+            />
+          </Reveal>
+        ) : null}
 
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s, i) => (
+        <ul className={preview ? "mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-4"}>
+          {list.map((s, i) => (
             <Reveal as="li" index={i % 4} key={s.title} className="h-full">
               <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface p-6 transition-[transform,border-color] duration-300 hover:-translate-y-1.5 hover:border-white/20">
                 <span aria-hidden className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-signal transition-transform duration-300 group-hover:scale-x-100" />
@@ -52,6 +60,11 @@ export function Services() {
             </Reveal>
           ))}
         </ul>
+        {preview ? (
+          <Reveal className="mt-10">
+            <SectionLink href="/services">All services</SectionLink>
+          </Reveal>
+        ) : null}
       </div>
     </section>
   );

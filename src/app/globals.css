@@ -93,6 +93,7 @@ body {
   transition: transform 0.25s ease;
 }
 .nav-link:hover { color: var(--color-signal); }
+.nav-link[aria-current="page"]::after { transform: scaleX(1); }
 .nav-link:hover::after { transform: scaleX(1); }
 
 .phone-icon { display: inline-block; }
