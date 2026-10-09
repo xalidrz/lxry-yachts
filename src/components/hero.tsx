@@ -16,7 +16,7 @@ export function Hero() {
         fetchPriority="high"
         sizes="100vw"
         quality={75}
-        className="hero-zoom -z-20 animate-hero-zoom object-cover object-[26%_50%] lg:object-center"
+        className="hero-zoom -z-20 animate-hero-zoom object-cover object-[64%_50%] lg:object-center"
       />
       <div className="hero-shade absolute inset-0 -z-10" aria-hidden />
 

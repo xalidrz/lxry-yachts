@@ -70,7 +70,7 @@ body {
 }
 @media (min-width: 1024px) {
   .hero-shade {
-    background: linear-gradient(90deg, rgba(14, 15, 17, 0.94) 0%, rgba(14, 15, 17, 0.82) 32%, rgba(14, 15, 17, 0.3) 62%, rgba(14, 15, 17, 0.05) 100%);
+    background: linear-gradient(90deg, rgba(14, 15, 17, 0.94) 0%, rgba(14, 15, 17, 0.84) 38%, rgba(14, 15, 17, 0.42) 66%, rgba(14, 15, 17, 0.06) 100%);
   }
 }
 

@@ -1,15 +1,16 @@
 # Elite Motorsports: photo selection
 
-Source: 54 photos supplied as four merged PDFs (`pdf24_merged_1`–`4`). `p<n>-<i>` below = PDF *n*, page *i*+1.
+Source: 54 photos supplied as four merged PDFs (`pdf24_merged_1`–`4`), plus one extra shop photo supplied later for the hero. `p<n>-<i>` below = PDF *n*, page *i*+1.
 Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothing else is edited, blurred or cropped.
 
-## Used (23)
+## Used (24)
 
 "Gallery" below is the `/work` page. Six of those photos (wiring repair, Charger, V8 build, S-Class at the shop front, Bentley, titanium exhaust) also appear in the Home page preview.
 
 | File in `public/photos/` | Source | Where |
 |---|---|---|
-| `hero-shop-bays-two-post-lifts.webp` (1920w) | p1-006 | Hero, Open Graph image (cropped 1200×630) |
+| `hero-shop-bay-red-green-purple-cars.webp` (1920w) | supplied separately (red coupe, green Maserati, matte purple Mercedes) | Home hero, Open Graph image (cropped 1200×630) |
+| `hero-shop-bays-two-post-lifts.webp` (1920w) | p1-006 | Gallery (Shop); was the first hero |
 | `hero-shop-wide-porsche-s-class.webp` (1920w) | p2-011 | Gallery (Shop) |
 | `engine-bay-wiring-repair.webp` | p1-000 | Gallery (Electrical) |
 | `classic-engine-bay-wiring-terminals.webp` | p4-000 | Gallery (Electrical) |

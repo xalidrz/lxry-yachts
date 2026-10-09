@@ -17,11 +17,11 @@ const p = (
 ): Photo => ({ file: `/photos/${file}.webp`, width, height, category, alt });
 
 export const heroPhoto = p(
-  "hero-shop-bays-two-post-lifts",
+  "hero-shop-bay-red-green-purple-cars",
   1920,
   1440,
   "shop",
-  "Inside the Elite Motorsports shop: a black muscle car with white stripes and a grey Subaru in front of two blue two-post lifts, with a red car raised on the far lift.",
+  "Inside the Elite Motorsports shop: a red sports coupe, a green Maserati and a matte purple Mercedes sedan parked in the bay, with tool carts and wall racks behind them.",
 );
 
 export const photos: Photo[] = [
@@ -41,6 +41,7 @@ export const photos: Photo[] = [
   p("gold-350z-hood-open-in-bay", 1200, 900, "shop", "A bronze-gold Nissan 350Z with its hood open in a shop bay, engine exposed."),
   p("silverado-on-two-post-lift", 1200, 1600, "shop", "The rear of a grey Chevrolet Silverado pickup raised on a blue two-post lift."),
   p("mustangs-in-shop-evening", 1200, 900, "shop", "Two black Ford Mustangs with white stripes parked in the shop under work lights, with another car on a lift behind."),
+  p("hero-shop-bays-two-post-lifts", 1920, 1440, "shop", "Inside the Elite Motorsports shop: a black muscle car with white stripes and a grey Subaru in front of two blue two-post lifts, with a red car raised on the far lift."),
   p("hero-shop-wide-porsche-s-class", 1920, 1440, "shop", "Wide view of the shop floor under a steel-truss roof: a black Mercedes sedan and a white Porsche parked between blue two-post lifts."),
   p("s-class-at-shop-front", 1200, 900, "shop", "A white Mercedes S-Class parked in front of the Elite Motorsports building, under the red ELITE MOTORSPORTS Auto Repair sign."),
   p("4runner-by-shop-sign", 1200, 900, "shop", "A white Toyota 4Runner parked beside the Elite Motorsports building on an overcast day."),
