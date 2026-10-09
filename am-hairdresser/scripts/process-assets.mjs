@@ -1,4 +1,4 @@
-// Resizes the salon photos into public/gallery and renders the logo PNGs.
+// Resizes the salon photos into public/gallery and renders favicon / Apple icon / OG image from public/logo.png.
 // Usage: node scripts/process-assets.mjs <folder-with-original-photos>
 // The originals are not committed (they are 3-4 MB each); this script documents how the web copies were made.
 import sharp from "sharp";
@@ -34,10 +34,9 @@ if (src) {
   console.log("No photo folder given — only rendering logo assets.");
 }
 
-// logo → PNGs
-const logo = await readFile(path.join(pub, "logo.svg"));
-const render = (size) => sharp(logo, { density: 300 }).resize(size, size).png({ compressionLevel: 9 });
-await render(512).toFile(path.join(pub, "logo-512.png"));
+// logo.png (made by scripts/make-logo.mjs) → favicon, Apple icon, OG image
+const logo = await readFile(path.join(pub, "logo.png"));
+const render = (size) => sharp(logo).resize(size, size, { kernel: "lanczos3" }).png({ compressionLevel: 9 });
 await render(180).toFile(path.join("src", "app", "apple-icon.png"));
 await render(64).toFile(path.join("src", "app", "icon.png"));
 

@@ -20,12 +20,12 @@ npm run build && npm start
 | Real Google reviews (3 empty slots; empty ones are hidden) | `src/data/reviews.ts` |
 | **All text, English + Arabic** (incl. photo captions) | `src/data/translations.ts` |
 | Colours / fonts / animations | `tailwind.config.ts`, `src/app/globals.css` |
-| Logo | `public/logo.svg` (then `npm run assets` regenerates the PNG logo, favicon, Apple icon and OG image) |
+| Logo | `public/logo.png` (512×512, transparent). `npm run logo -- <image>` cuts it from a badge-on-background picture; `npm run assets` then regenerates favicon, Apple icon and OG image |
 
 ### Things to set before launch
 1. **Opening time** — `hours.opensAt` in `src/data/site.ts` is a placeholder (`09:00`). It is only used for the "Open now" badge and the JSON-LD hours; it is never printed on the page.
 2. **Google links** — `googleReviewsUrl` and `mapsPlaceUrl` search by name / plus code. Replace them with the salon's own Google Maps "share" link (and the reviews link) when you have it.
-3. **Real logo** — `public/logo.svg` is a redraw of the badge (black disc, gold rim, crossed scissors and comb). Drop in the original file under the same name.
+3. **Logo** — `public/logo.png` was cut from the 227×220 picture supplied, so it is a little soft on large screens. If you have the original high-resolution file, replace `public/logo.png` (512×512 or larger, transparent) and run `npm run assets`.
 4. **Prices and 3 real Google reviews** — see the table above.
 5. Set `NEXT_PUBLIC_SITE_URL` in Vercel to the final domain (canonical URL, Open Graph, sitemap, JSON-LD). Without it the Vercel production domain is used.
 

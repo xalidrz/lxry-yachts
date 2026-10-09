@@ -9,7 +9,7 @@ export function hairSalonJsonLd(baseUrl: string) {
     alternateName: site.nameAr,
     url: baseUrl,
     image: `${baseUrl}/og.png`,
-    logo: `${baseUrl}/logo-512.png`,
+    logo: `${baseUrl}/logo.png`,
     telephone: site.phoneTel,
     address: {
       "@type": "PostalAddress",
