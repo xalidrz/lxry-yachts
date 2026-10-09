@@ -1,0 +1,108 @@
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components";
+
+@theme inline {
+  --color-graphite: #0e0f11;
+  --color-surface: #17191c;
+  --color-nav: #131518;
+  --color-steel: #2a2e33;
+  --color-ink: #ededed;
+  --color-muted: #a4a9af;
+  --color-signal: #e3262e;
+  --color-signal-bright: #f4434a;
+  --font-display: var(--font-barlow), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --animate-phone-shake: phone-shake 0.6s ease-in-out;
+  --animate-hero-zoom: hero-zoom 24s ease-out forwards;
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes phone-shake {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-16deg); }
+  30% { transform: rotate(14deg); }
+  45% { transform: rotate(-12deg); }
+  60% { transform: rotate(10deg); }
+  75% { transform: rotate(-6deg); }
+}
+@keyframes hero-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+@keyframes rise {
+  from { transform: translateY(18px); }
+  to { transform: translateY(0); }
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-graphite);
+}
+body {
+  background: var(--color-graphite);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible {
+  outline: 2px solid var(--color-signal-bright);
+  outline-offset: 3px;
+}
+::selection { background: var(--color-signal); color: #fff; }
+
+/* Diagonal-line carbon texture: pure CSS gradients only. */
+.bg-carbon {
+  background-color: var(--color-graphite);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 7px);
+}
+.bg-carbon-surface {
+  background-color: var(--color-surface);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 7px);
+}
+
+/* Hero: solid-colour linear gradient, darker on the left for text readability. */
+.hero-shade {
+  background: linear-gradient(90deg, rgba(14, 15, 17, 0.9) 0%, rgba(14, 15, 17, 0.72) 50%, rgba(14, 15, 17, 0.3) 100%);
+}
+@media (min-width: 1024px) {
+  .hero-shade {
+    background: linear-gradient(90deg, rgba(14, 15, 17, 0.94) 0%, rgba(14, 15, 17, 0.82) 32%, rgba(14, 15, 17, 0.3) 62%, rgba(14, 15, 17, 0.05) 100%);
+  }
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 1px;
+  background: var(--color-signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.nav-link:hover { color: var(--color-signal); }
+.nav-link:hover::after { transform: scaleX(1); }
+
+.phone-icon { display: inline-block; }
+.group:hover .phone-icon,
+.group:focus-visible .phone-icon { animation: var(--animate-phone-shake); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-zoom, .animate-rise { animation: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .group:hover .phone-icon { animation: none; }
+  .nav-link::after { transition: none; }
+}
