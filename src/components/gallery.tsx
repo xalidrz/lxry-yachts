@@ -19,8 +19,11 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "shop", label: "Shop" },
 ];
 
-/** `first` = top of a column in the All view: loaded up front, since it is on screen when the page opens. */
-function Tile({ photo, onOpen, first = false }: { photo: Photo; onOpen: () => void; first?: boolean }) {
+/**
+ * `first` = top of a column in the All view: loaded up front, since it is on screen when the page opens.
+ * `lead` = the largest of those (the first Engine photo): fetched at high priority and preloaded.
+ */
+function Tile({ photo, onOpen, first = false, lead = false }: { photo: Photo; onOpen: () => void; first?: boolean; lead?: boolean }) {
   return (
     <button
       type="button"
@@ -35,8 +38,9 @@ function Tile({ photo, onOpen, first = false }: { photo: Photo; onOpen: () => vo
         height={photo.height}
         sizes="(min-width: 1152px) 368px, (min-width: 768px) 33vw, 50vw"
         quality={75}
-        priority={first}
-        loading={first ? undefined : "lazy"}
+        priority={lead}
+        fetchPriority={lead ? "high" : undefined}
+        loading={first || lead ? "eager" : "lazy"}
         className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
       />
       <span className="absolute bottom-2 right-2 flex size-9 items-center justify-center rounded-full bg-graphite text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
@@ -115,7 +119,7 @@ export function Gallery({ preview = false }: { preview?: boolean }) {
               <ul className="flex flex-col gap-3 md:gap-4">
                 {photoColumns.engine.map((p, n) => (
                   <li key={p.file}>
-                    <Tile photo={p} first={n === 0} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                    <Tile photo={p} first={n === 0} lead={n === 0} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
                   </li>
                 ))}
               </ul>

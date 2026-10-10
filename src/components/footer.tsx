@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/wordmark";
+import { StatusBadge } from "@/components/status-badge";
 import { nav } from "@/config/nav";
 import { hoursSummary } from "@/lib/hours";
 import { links, site } from "@/config/site";
@@ -24,7 +25,7 @@ export function Footer() {
                 Home
               </Link>
             </li>
-            {nav.map((n) => (
+            {[...nav, { label: "Book", href: "/book" }].map((n) => (
               <li key={n.href}>
                 <Link href={n.href} className="text-ink/90 hover:text-signal">
                   {n.label}
@@ -60,6 +61,7 @@ export function Footer() {
         <div>
           <h2 className="font-display text-sm font-bold uppercase tracking-[0.24em] text-signal">Hours</h2>
           <p className="mt-3 text-sm text-ink/90">{hoursSummary()}</p>
+          <StatusBadge variant="inline" className="mt-2" />
         </div>
       </div>
       <div className="mx-auto mt-12 max-w-6xl px-5 lg:px-8">

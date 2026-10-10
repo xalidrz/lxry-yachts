@@ -3,7 +3,7 @@
 Source: 54 photos supplied as four merged PDFs (`pdf24_merged_1`–`4`), plus one extra shop photo supplied later for the hero, plus a second set of seven photos (`pdf24_merged_5`, shown as `r-<i>` below) and three Google Maps videos. `p<n>-<i>` below = PDF *n*, page *i*+1.
 Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothing else is edited.
 
-## Used (29)
+## Used (30)
 
 "Gallery" below is the `/work` page. Six of those photos (wiring repair, Charger, V8 build, S-Class at the shop front, Bentley, titanium exhaust) also appear in the Home page preview.
 
@@ -38,6 +38,7 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 | `four-cylinder-engine-on-pallet.webp` | r-4 | Gallery (Engine) |
 | `dual-exhaust-under-car-on-lift.webp` | r-5 | Gallery (Engine) |
 | `rear-axle-brake-rotor-and-shock-on-lift.webp` | r-6 | Gallery (Engine) |
+| `bmw-sedan-glossy-hood-in-shop.webp` | p3-002 | Gallery (Shop), Home preview. Brought back as the second BMW photo (it was dropped earlier as a near-duplicate of `bmw-m3-at-bay-door`) |
 
 ## Dropped
 
@@ -51,7 +52,6 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 | p1-014 | Near-duplicate of p3-004 (kept the fuller, sharper shot) |
 | p4-001 | Near-duplicate of p1-007, softer |
 | p2-004 | Near-duplicate of p1-010 |
-| p3-002 | Near-duplicate of p1-012 (same M3) |
 | p3-001 | Near-duplicate of p1-008 (same Jeep), and not at the shop |
 | p3-003 | Near-duplicate of p1-013 (same GLS), and not at the shop |
 | p3-008 | Soft, and the same Cybertruck as p3-005 |
@@ -66,3 +66,7 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 ## Good quality, not selected (surplus beyond the best 24)
 
 p1-005, p1-008, p1-013, p2-001, p2-006, p2-010, p3-007, p3-010, p3-011, p3-012, p4-003, p4-009, p4-011, p4-012. These are sharp enough to swap in.
+
+## Order
+
+Inside each gallery category the strongest photos come first (the `bestFirst` list in `src/data/photos.ts`), so the top of every column makes the first impression. The Home page preview shows six: the BMW at the bay door, the carbureted V8, the Charger, the blue Audi R8, the Bentley and the second BMW. The wiring photos stay in the gallery under Electrical.

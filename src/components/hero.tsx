@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import { PearlButton } from "@/components/ui/pearl-button";
-import { OpenBadge } from "@/components/open-badge";
+import { StatusBadge } from "@/components/status-badge";
 import { heroPhoto } from "@/data/photos";
 import { links, site } from "@/config/site";
 
@@ -22,7 +22,7 @@ export function Hero() {
 
       <div className="mx-auto w-full max-w-6xl px-5 pb-16 pt-32 sm:pb-20 lg:px-8 lg:pb-24">
         <div className="animate-rise">
-          <OpenBadge />
+          <StatusBadge />
         </div>
         <h1 className="animate-rise mt-6 max-w-5xl font-display text-[3.4rem] font-extrabold uppercase leading-[0.9] tracking-tight text-ink [animation-delay:80ms] sm:text-7xl lg:text-[6.25rem]">
           Honest Repairs.
