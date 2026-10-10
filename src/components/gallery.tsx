@@ -8,7 +8,7 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } fr
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion";
 import { SectionLink } from "@/components/section-link";
-import { categoryCounts, photos, photosIn, previewPhotos, type PhotoCategory } from "@/data/photos";
+import { categoryCounts, photoColumns, photos, photosIn, previewPhotos, type Photo, type PhotoCategory } from "@/data/photos";
 import { cn } from "@/lib/utils";
 
 type Tab = "all" | PhotoCategory;
@@ -19,12 +19,38 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "shop", label: "Shop" },
 ];
 
+function Tile({ photo, onOpen }: { photo: Photo; onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`Open photo: ${photo.alt}`}
+      className="group relative block w-full overflow-hidden rounded-xl border border-white/10 bg-surface text-left transition-[border-color,box-shadow] duration-200 hover:border-signal hover:ring-2 hover:ring-signal"
+    >
+      <Image
+        src={photo.file}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="(min-width: 1152px) 368px, (min-width: 768px) 33vw, 50vw"
+        quality={75}
+        loading="lazy"
+        className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+      />
+      <span className="absolute bottom-2 right-2 flex size-9 items-center justify-center rounded-full bg-graphite text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+        <Expand className="size-4" aria-hidden />
+      </span>
+    </button>
+  );
+}
+
 /** preview = home-page version: six curated photos, no tabs, link to /work. */
 export function Gallery({ preview = false }: { preview?: boolean }) {
   const [tab, setTab] = useState<Tab>("all");
   const [active, setActive] = useState<number | null>(null);
 
   const visible = useMemo(() => (preview ? previewPhotos : photosIn(tab)), [preview, tab]);
+  const indexOf = useMemo(() => new Map(visible.map((p, i) => [p.file, i])), [visible]);
 
   const step = useCallback(
     (d: number) => setActive((i) => (i === null ? i : (i + d + visible.length) % visible.length)),
@@ -72,32 +98,43 @@ export function Gallery({ preview = false }: { preview?: boolean }) {
           </div>
         )}
 
-        <ul className={cn("columns-2 gap-3 md:columns-3 md:gap-4", preview ? "mt-12" : "mt-8")}>
-          {visible.map((p, i) => (
-            <li key={p.file} className="mb-3 break-inside-avoid md:mb-4">
-              <button
-                type="button"
-                onClick={() => setActive(i)}
-                aria-label={`Open photo: ${p.alt}`}
-                className="group relative block w-full overflow-hidden rounded-xl border border-white/10 bg-surface text-left transition-[border-color,box-shadow] duration-200 hover:border-signal hover:ring-2 hover:ring-signal"
-              >
-                <Image
-                  src={p.file}
-                  alt={p.alt}
-                  width={p.width}
-                  height={p.height}
-                  sizes="(min-width: 1152px) 368px, (min-width: 768px) 33vw, 50vw"
-                  quality={75}
-                  loading="lazy"
-                  className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-                <span className="absolute bottom-2 right-2 flex size-9 items-center justify-center rounded-full bg-graphite text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <Expand className="size-4" aria-hidden />
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+        {!preview && tab === "all" ? (
+          /* All: one column per category. Shop | Engine | Electrical from tablet up.
+             On phones (2 columns) Shop is left and Engine then Electrical stack on the right. */
+          <div className="mt-8 grid grid-cols-2 items-start gap-3 md:grid-cols-3 md:gap-4">
+            <ul className="flex flex-col gap-3 md:gap-4">
+              {photoColumns.shop.map((p) => (
+                <li key={p.file}>
+                  <Tile photo={p} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                </li>
+              ))}
+            </ul>
+            <div className="flex flex-col gap-3 md:contents">
+              <ul className="flex flex-col gap-3 md:gap-4">
+                {photoColumns.engine.map((p) => (
+                  <li key={p.file}>
+                    <Tile photo={p} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                  </li>
+                ))}
+              </ul>
+              <ul className="flex flex-col gap-3 md:gap-4">
+                {photoColumns.electrical.map((p) => (
+                  <li key={p.file}>
+                    <Tile photo={p} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <ul className={cn("columns-2 gap-3 md:columns-3 md:gap-4", preview ? "mt-12" : "mt-8")}>
+            {visible.map((p, i) => (
+              <li key={p.file} className="mb-3 break-inside-avoid md:mb-4">
+                <Tile photo={p} onOpen={() => setActive(i)} />
+              </li>
+            ))}
+          </ul>
+        )}
         {preview ? (
           <Reveal className="mt-10">
             <SectionLink href="/work">See all {photos.length} photos</SectionLink>

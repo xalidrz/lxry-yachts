@@ -59,8 +59,18 @@ export const categoryCounts = {
   shop: photos.filter((p) => p.category === "shop").length,
 };
 
+const inCategory = (category: PhotoCategory) => photos.filter((p) => p.category === category);
+
+/** "All" view columns, left to right on desktop: Shop, Engine, Electrical. */
+export const photoColumns = {
+  shop: inCategory("shop"),
+  engine: inCategory("engine"),
+  electrical: inCategory("electrical"),
+};
+
+/** Lightbox order matches the columns (all Shop, then Engine, then Electrical). */
 export const photosIn = (category: PhotoCategory | "all") =>
-  category === "all" ? photos : photos.filter((p) => p.category === category);
+  category === "all" ? [...photoColumns.shop, ...photoColumns.engine, ...photoColumns.electrical] : inCategory(category);
 
 /** Six photos for the home-page preview (a spread of engine, electrical, shop and storefront). */
 const previewFiles = [
