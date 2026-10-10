@@ -54,6 +54,7 @@ export const photos: Photo[] = [
   p("blue-audi-r8-gold-wheels", 1200, 900, "shop", "A blue Audi R8 with gold wheels and a carbon rear wing in a clean shop bay."),
   p("charger-hellcat-in-bay", 1200, 900, "shop", "A dark grey Dodge Charger with a red graphic on its hood, parked at an open bay door."),
   p("classic-chevrolet-pickup", 1200, 1600, "shop", "A cream-coloured vintage Chevrolet pickup with a chrome grille parked in the shop."),
+  p("bmw-sedan-glossy-hood-in-shop", 1200, 900, "shop", "A dark blue BMW sedan in the shop, its glossy hood reflecting the overhead lights, with tools and equipment behind it."),
   p("bmw-m3-at-bay-door", 1200, 900, "shop", "A dark blue BMW M3 with bronze wheels parked at the shop's bay door, with a parts rack behind it."),
 ];
 
@@ -64,7 +65,36 @@ export const categoryCounts = {
   shop: photos.filter((p) => p.category === "shop").length,
 };
 
-const inCategory = (category: PhotoCategory) => photos.filter((p) => p.category === category);
+/**
+ * Strongest photos first, so the top of every column (and the lightbox order) makes the best
+ * first impression. Photos not listed keep their order in the list above, after these.
+ */
+const bestFirst = [
+  "bmw-m3-at-bay-door",
+  "blue-audi-r8-gold-wheels",
+  "charger-hellcat-in-bay",
+  "bentley-coupe-in-shop-bay",
+  "bmw-sedan-glossy-hood-in-shop",
+  "s-class-at-shop-front",
+  "gold-350z-hood-open-in-bay",
+  "black-sedan-hood-open-sunlit-bay",
+  "porsche-911-on-lift-hood-open",
+  "cybertruck-outside-shop",
+  "classic-chevrolet-pickup",
+  "carbureted-v8-engine-build",
+  "supercharged-hemi-engine-on-stand",
+  "intake-manifold-impact-wrench",
+  "engine-valvetrain-timing-chain-exposed",
+  "four-cylinder-engine-on-pallet",
+  "titanium-exhaust-under-car",
+  "dual-exhaust-under-car-on-lift",
+];
+const rank = (p: Photo) => {
+  const i = bestFirst.findIndex((f) => p.file === `/photos/${f}.webp`);
+  return i === -1 ? bestFirst.length + photos.indexOf(p) : i;
+};
+const inCategory = (category: PhotoCategory) =>
+  photos.filter((p) => p.category === category).sort((a, b) => rank(a) - rank(b));
 
 /** "All" view columns, left to right on desktop: Shop, Engine, Electrical. */
 export const photoColumns = {
@@ -77,14 +107,17 @@ export const photoColumns = {
 export const photosIn = (category: PhotoCategory | "all") =>
   category === "all" ? [...photoColumns.shop, ...photoColumns.engine, ...photoColumns.electrical] : inCategory(category);
 
-/** Six photos for the home-page preview (a spread of engine, electrical, shop and storefront). */
+/**
+ * Six photos for the home-page preview. The columns flow top to bottom, so on desktop the top row
+ * is the 1st, 3rd and 5th photo (BMW, Charger, Bentley); on phones the 1st leads the left column.
+ */
 const previewFiles = [
-  "engine-bay-wiring-repair",
-  "charger-hellcat-in-bay",
+  "bmw-m3-at-bay-door",
   "carbureted-v8-engine-build",
-  "s-class-at-shop-front",
+  "charger-hellcat-in-bay",
+  "blue-audi-r8-gold-wheels",
   "bentley-coupe-in-shop-bay",
-  "titanium-exhaust-under-car",
+  "bmw-sedan-glossy-hood-in-shop",
 ];
 export const previewPhotos: Photo[] = previewFiles.map(
   (f) => photos.find((p) => p.file === `/photos/${f}.webp`) as Photo,
