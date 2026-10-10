@@ -40,7 +40,11 @@ export function shopNow(date: Date = new Date()) {
 
 const dayHours = (dow: number) => week.find((d) => d.dow === dow);
 
-export type ShopStatus = { open: boolean; text: string };
+/** Minutes before closing when the badge turns from green to yellow. */
+const CLOSING_SOON_MINUTES = 60;
+
+/** progress = share of today's opening hours already gone (0 to 1); soon = inside the last hour. */
+export type ShopStatus = { open: boolean; text: string; progress: number; soon: boolean };
 
 /**
  * Open now · Closes 5 PM / Closed · Opens 9 AM today / Closed · Opens 9 AM tomorrow /
@@ -54,10 +58,15 @@ export function getShopStatus(date: Date = new Date()): ShopStatus {
     const opens = toMinutes(today.open);
     const closes = toMinutes(today.close);
     if (minutes >= opens && minutes < closes) {
-      return { open: true, text: `Open now · Closes ${fmt12(today.close)}` };
+      return {
+        open: true,
+        text: `Open now · Closes ${fmt12(today.close)}`,
+        progress: (minutes - opens) / (closes - opens),
+        soon: closes - minutes <= CLOSING_SOON_MINUTES,
+      };
     }
     if (minutes < opens) {
-      return { open: false, text: `Closed · Opens ${fmt12(today.open)} today` };
+      return { open: false, text: `Closed · Opens ${fmt12(today.open)} today`, progress: 1, soon: false };
     }
   }
 
@@ -69,10 +78,10 @@ export function getShopStatus(date: Date = new Date()): ShopStatus {
         step === 1 && today?.open
           ? `Closed · Opens ${fmt12(next.open)} tomorrow`
           : `Closed · Opens ${next.label} ${fmt12(next.open)}`;
-      return { open: false, text };
+      return { open: false, text, progress: 1, soon: false };
     }
   }
-  return { open: false, text: "Closed" };
+  return { open: false, text: "Closed", progress: 1, soon: false };
 }
 
 /** Static one-line summary, e.g. "Mon–Fri 9 AM – 5 PM · Sat–Sun Closed". Groups consecutive days with equal hours. */

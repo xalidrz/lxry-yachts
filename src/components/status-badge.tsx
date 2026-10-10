@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
  */
 export function StatusBadge({ variant = "pill", className }: { variant?: "pill" | "inline"; className?: string }) {
   const clock = useShopStatus();
-  const dot = clock === null ? "bg-steel" : clock.open ? "bg-[#2FBF71]" : "bg-signal";
+  const color = clock === null ? "#5b6168" : !clock.open ? "#E3262E" : clock.soon ? "#F2C230" : "#2FBF71";
+  const progress = clock === null ? 0 : clock.progress;
 
   return (
     <span
@@ -22,9 +23,31 @@ export function StatusBadge({ variant = "pill", className }: { variant?: "pill" 
       )}
       role="status"
     >
-      <span aria-hidden className={cn("size-2.5 shrink-0 rounded-full", dot)} />
+      <ProgressRing color={color} progress={progress} />
       {clock === null ? "Mon–Fri 9 AM – 5 PM" : clock.text}
     </span>
   );
 }
 
+
+/** Circle that fills clockwise as the day's opening hours pass. Closed = full red. */
+function ProgressRing({ color, progress }: { color: string; progress: number }) {
+  const r = 7;
+  const c = 2 * Math.PI * r;
+  const filled = Math.max(0, Math.min(1, progress));
+  return (
+    <svg aria-hidden viewBox="0 0 20 20" className="size-5 shrink-0 -rotate-90">
+      <circle cx="10" cy="10" r={r} fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="3" />
+      <circle
+        cx="10"
+        cy="10"
+        r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth="3"
+        strokeLinecap="butt"
+        strokeDasharray={`${c * filled} ${c}`}
+      />
+    </svg>
+  );
+}

@@ -16,7 +16,7 @@ export function useShopStatus(): ShopClock | null {
     const tick = () => {
       const now = new Date();
       const next = { ...getShopStatus(now), dow: shopNow(now).dow };
-      setClock((prev) => (prev && prev.text === next.text && prev.dow === next.dow ? prev : next));
+      setClock((prev) => (prev && prev.text === next.text && prev.dow === next.dow && prev.soon === next.soon && prev.progress === next.progress ? prev : next));
     };
     tick();
     const id = setInterval(tick, 30_000);
