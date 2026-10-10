@@ -1,5 +1,5 @@
 import { MapPin, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PearlButton } from "@/components/ui/pearl-button";
 import { Reveal } from "@/components/motion";
 import { links, site } from "@/config/site";
 
@@ -17,18 +17,18 @@ export function CtaBand({ title = "Bring it in. Talk to Goldy." }: { title?: str
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <Button asChild className="h-14 px-8 text-lg">
+          <PearlButton asChild>
             <a href={links.tel}>
               <Phone className="phone-icon size-5" aria-hidden />
               {site.phone.display}
             </a>
-          </Button>
-          <Button asChild variant="ghost" className="h-14 px-8 text-lg">
+          </PearlButton>
+          <PearlButton asChild variant="secondary">
             <a href={links.directions} target="_blank" rel="noopener noreferrer">
               <MapPin className="size-5" aria-hidden />
               Get Directions
             </a>
-          </Button>
+          </PearlButton>
         </div>
       </Reveal>
     </section>

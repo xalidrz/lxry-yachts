@@ -36,15 +36,23 @@ export function Footer() {
         <div>
           <h2 className="font-display text-sm font-bold uppercase tracking-[0.24em] text-signal">Address</h2>
           <address className="mt-3 text-sm not-italic leading-relaxed text-ink/90">
-            {site.address.street}
-            <br />
-            {site.address.city}, {site.address.region} {site.address.postalCode}
+            <a
+              href={links.place}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-signal decoration-1 underline-offset-4 hover:text-signal"
+            >
+              {site.address.street}
+              <br />
+              {site.address.city}, {site.address.region} {site.address.postalCode}
+              <span className="sr-only"> (opens in Google Maps)</span>
+            </a>
           </address>
         </div>
         <div>
           <h2 className="font-display text-sm font-bold uppercase tracking-[0.24em] text-signal">Phone</h2>
           <p className="mt-3 text-sm">
-            <a href={links.tel} className="text-ink/90 hover:text-signal">
+            <a href={links.tel} className="text-ink/90 underline decoration-signal decoration-1 underline-offset-4 hover:text-signal">
               {site.phone.display}
             </a>
           </p>

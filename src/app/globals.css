@@ -74,6 +74,126 @@ body {
   }
 }
 
+/* ---------- Pearl buttons ----------
+   Glossy pill. Layers (back to front): gradient base, top-half highlight (::before),
+   one-shot light streak on hover (::after), then the label. The pseudo-elements sit at
+   z-index -1 inside the button's own stacking context, so they paint above the
+   gradient and below the text. Hard edges only. */
+@layer components {
+  .pearl {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #e9eaec;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.6),
+      0 8px 20px rgba(0, 0, 0, 0.55);
+    transition:
+      transform 200ms ease-out,
+      box-shadow 200ms ease-out;
+  }
+  .pearl-secondary {
+    background: linear-gradient(180deg, #3a3d42 0%, #16181b 50%, #0b0c0e 100%);
+  }
+  .pearl-primary {
+    background: linear-gradient(180deg, #d32027 0%, #8e1116 50%, #5a0a0e 100%);
+    border-color: rgba(255, 120, 120, 0.35);
+    color: #ffffff;
+  }
+
+  /* gloss: thin highlight over the top half, fading out at 50% */
+  .pearl::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 50% 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+    opacity: 0.7333; /* 0.30 * 0.7333 = the 0.22 resting highlight */
+    transition: opacity 200ms ease-out;
+  }
+
+  /* light streak: narrow hard-edged band, parked off the left edge until hover */
+  .pearl::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 22%;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(-130%) skewX(-20deg);
+  }
+
+  .pearl:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.32),
+      inset 0 -2px 6px rgba(0, 0, 0, 0.6),
+      0 12px 24px rgba(0, 0, 0, 0.6);
+  }
+  .pearl:hover::before {
+    opacity: 1;
+  }
+  .pearl:hover::after {
+    animation: pearl-streak 600ms ease-out 1 both;
+  }
+
+  /* pressed in */
+  .pearl:active {
+    transform: translateY(1px);
+    box-shadow:
+      inset 0 2px 5px rgba(0, 0, 0, 0.75),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.12),
+      0 3px 8px rgba(0, 0, 0, 0.5);
+  }
+  .pearl:active::before {
+    opacity: 0.45;
+  }
+}
+
+/* keyboard focus ring: unlayered so it beats the global :focus-visible rule */
+.pearl:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* Lucide icons inside pearl buttons are 18px (unlayered so it wins over size-* utilities) */
+.pearl svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+@keyframes pearl-streak {
+  from {
+    transform: translateX(-130%) skewX(-20deg);
+  }
+  to {
+    transform: translateX(560%) skewX(-20deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pearl,
+  .pearl::before {
+    transition: none;
+  }
+  .pearl:hover,
+  .pearl:active {
+    transform: none;
+  }
+  .pearl:hover::after {
+    animation: none;
+  }
+}
+
 .nav-link {
   position: relative;
   display: inline-block;
