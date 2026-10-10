@@ -1,9 +1,9 @@
-import { Accessibility, Clock, MapPin, Navigation, Phone } from "lucide-react";
+import { Accessibility, CircleParking, Clock, CreditCard, MapPin, Navigation, Phone } from "lucide-react";
 import { PearlButton } from "@/components/ui/pearl-button";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionLink } from "@/components/section-link";
-import { hoursSummary } from "@/lib/hours";
+import { HoursTable } from "@/components/hours-table";
 import { links, site } from "@/config/site";
 
 /** preview = home-page version: address card only (no map), with a link to /location. */
@@ -57,19 +57,34 @@ export function Location({ preview = false }: { preview?: boolean }) {
                 <Clock className="mt-1 size-5 shrink-0 text-signal" aria-hidden />
                 <div>
                   <span className="sr-only">Hours: </span>
-                  <div className="text-ink">
-                    {hoursSummary()}
-                    {site.hours.confirmed ? null : (
-                      <span className="mt-1 block text-sm text-muted">Call to confirm today&rsquo;s opening time.</span>
-                    )}
-                  </div>
+                  <HoursTable />
                 </div>
               </li>
               <li className="flex gap-4">
                 <Accessibility className="mt-1 size-5 shrink-0 text-signal" aria-hidden />
                 <div>
                   <span className="sr-only">Accessibility: </span>
-                  <div className="text-ink">Wheelchair accessible</div>
+                  <div className="text-ink">
+                    {site.profile.accessibility.map((a) => (
+                      <span key={a} className="block">
+                        {a}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <CircleParking className="mt-1 size-5 shrink-0 text-signal" aria-hidden />
+                <div>
+                  <span className="sr-only">Parking: </span>
+                  <div className="text-ink">{site.profile.parking}</div>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <CreditCard className="mt-1 size-5 shrink-0 text-signal" aria-hidden />
+                <div>
+                  <span className="sr-only">Payments: </span>
+                  <div className="text-ink">{site.profile.payments.join(", ")}</div>
                 </div>
               </li>
               <li className="flex gap-4">

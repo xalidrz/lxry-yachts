@@ -1,5 +1,5 @@
 import { links, site } from "@/config/site";
-import { openingHoursSpec } from "@/lib/hours";
+import { openingHoursSpec, openingHoursText } from "@/lib/hours";
 import { siteUrl } from "@/lib/url";
 
 /** AutoRepair structured data, rendered on every page. */
@@ -27,8 +27,13 @@ export function JsonLd() {
       reviewCount: site.rating.count,
       bestRating: 5,
     },
+    openingHours: openingHoursText(),
     openingHoursSpecification: openingHoursSpec(),
-    amenityFeature: [{ "@type": "LocationFeatureSpecification", name: "Wheelchair accessible", value: true }],
+    paymentAccepted: site.profile.payments.join(", "),
+    amenityFeature: [
+      ...site.profile.accessibility.map((name) => ({ "@type": "LocationFeatureSpecification", name, value: true })),
+      { "@type": "LocationFeatureSpecification", name: site.profile.parking, value: true },
+    ],
     hasMap: links.directions,
   };
   return (
