@@ -1,9 +1,9 @@
 # Elite Motorsports: photo selection
 
-Source: 54 photos supplied as four merged PDFs (`pdf24_merged_1`–`4`), plus one extra shop photo supplied later for the hero. `p<n>-<i>` below = PDF *n*, page *i*+1.
+Source: 54 photos supplied as four merged PDFs (`pdf24_merged_1`–`4`), plus one extra shop photo supplied later for the hero, plus a second set of seven photos (`pdf24_merged_5`, shown as `r-<i>` below) and three Google Maps videos. `p<n>-<i>` below = PDF *n*, page *i*+1.
 Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothing else is edited.
 
-## Used (24)
+## Used (29)
 
 "Gallery" below is the `/work` page. Six of those photos (wiring repair, Charger, V8 build, S-Class at the shop front, Bentley, titanium exhaust) also appear in the Home page preview.
 
@@ -33,6 +33,11 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 | `charger-hellcat-in-bay.webp` | p1-011 | Gallery (Shop) |
 | `classic-chevrolet-pickup.webp` | p4-007 | Gallery (Shop) |
 | `bmw-m3-at-bay-door.webp` | p1-012 | Gallery (Shop) |
+| `black-sedan-hood-open-sunlit-bay.webp` | r-0 | Gallery (Shop) |
+| `engine-valvetrain-timing-chain-exposed.webp` | r-2 | Gallery (Engine) |
+| `four-cylinder-engine-on-pallet.webp` | r-4 | Gallery (Engine) |
+| `dual-exhaust-under-car-on-lift.webp` | r-5 | Gallery (Engine) |
+| `rear-axle-brake-rotor-and-shock-on-lift.webp` | r-6 | Gallery (Engine) |
 
 ## Dropped
 
@@ -54,6 +59,9 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 | p2-005 | Near-duplicate of p1-011 |
 | p2-007 | Near-duplicate of p2-003 |
 | p2-009 | Near-duplicate of p1-004 (same 350Z) |
+| r-1 (hand and wire over a carbureted engine) | Hand and wire out of focus (motion), and the same shot type as p2-008 |
+| r-3 (exhaust pipe under a car) | Near-duplicate of r-5 and p3-013, and softer |
+| Videos 1–3 (Google Maps) | Not used. The frames are soft from video compression and handheld motion (best frames score well below the photos on the same sharpness check), and two of the three are more under-car exhaust shots |
 
 ## Good quality, not selected (surplus beyond the best 24)
 

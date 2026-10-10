@@ -19,7 +19,8 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "shop", label: "Shop" },
 ];
 
-function Tile({ photo, onOpen }: { photo: Photo; onOpen: () => void }) {
+/** `first` = top of a column in the All view: loaded up front, since it is on screen when the page opens. */
+function Tile({ photo, onOpen, first = false }: { photo: Photo; onOpen: () => void; first?: boolean }) {
   return (
     <button
       type="button"
@@ -34,7 +35,8 @@ function Tile({ photo, onOpen }: { photo: Photo; onOpen: () => void }) {
         height={photo.height}
         sizes="(min-width: 1152px) 368px, (min-width: 768px) 33vw, 50vw"
         quality={75}
-        loading="lazy"
+        priority={first}
+        loading={first ? undefined : "lazy"}
         className="h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
       />
       <span className="absolute bottom-2 right-2 flex size-9 items-center justify-center rounded-full bg-graphite text-ink opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
@@ -103,24 +105,24 @@ export function Gallery({ preview = false }: { preview?: boolean }) {
              On phones (2 columns) Shop is left and Engine then Electrical stack on the right. */
           <div className="mt-8 grid grid-cols-2 items-start gap-3 md:grid-cols-3 md:gap-4">
             <ul className="flex flex-col gap-3 md:gap-4">
-              {photoColumns.shop.map((p) => (
+              {photoColumns.shop.map((p, n) => (
                 <li key={p.file}>
-                  <Tile photo={p} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                  <Tile photo={p} first={n === 0} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
                 </li>
               ))}
             </ul>
             <div className="flex flex-col gap-3 md:contents">
               <ul className="flex flex-col gap-3 md:gap-4">
-                {photoColumns.engine.map((p) => (
+                {photoColumns.engine.map((p, n) => (
                   <li key={p.file}>
-                    <Tile photo={p} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                    <Tile photo={p} first={n === 0} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
                   </li>
                 ))}
               </ul>
               <ul className="flex flex-col gap-3 md:gap-4">
-                {photoColumns.electrical.map((p) => (
+                {photoColumns.electrical.map((p, n) => (
                   <li key={p.file}>
-                    <Tile photo={p} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
+                    <Tile photo={p} first={n === 0} onOpen={() => setActive(indexOf.get(p.file) ?? 0)} />
                   </li>
                 ))}
               </ul>
