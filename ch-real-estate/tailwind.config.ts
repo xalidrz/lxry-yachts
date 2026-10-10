@@ -38,7 +38,10 @@ export default {
       boxShadow: {
         "gold-glow": "0 0 0 1px rgba(201,160,74,0.55), 0 18px 50px -12px rgba(201,160,74,0.35)",
       },
+      animation: { "accordion-down": "accordion-down 0.25s ease-out", "accordion-up": "accordion-up 0.25s ease-out" },
       keyframes: {
+        "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
+        "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
         shine: { "0%": { transform: "translateX(-120%) skewX(-20deg)" }, "100%": { transform: "translateX(260%) skewX(-20deg)" } },
       },
     },

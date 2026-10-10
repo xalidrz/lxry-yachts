@@ -1,0 +1,34 @@
+{
+  "/": {
+    "title": "CH Real Estate & Builder's | Buy, Sell & Build in Wah Cantt",
+    "description": "CH Real Estate & Builder's — verified houses, plots and commercial property for sale and rent in Wah Cantt, plus grey structure, turnkey construction, renovation and map approval. Book a free site visit."
+  },
+  "/buy": {
+    "title": "Properties for Sale in Wah Cantt | CH Real Estate & Builder's",
+    "description": "Browse verified houses, plots, apartments and commercial property for sale in Wah Cantt — New City Phase 2, Wah Model Town, Officers Colony and Main Boulevard. Prices in PKR."
+  },
+  "/rent": {
+    "title": "Properties for Rent in Wah Cantt | CH Real Estate & Builder's",
+    "description": "Houses, apartments and commercial spaces for rent in Wah Cantt. Verified listings with clear monthly rents in PKR from CH Real Estate & Builder's."
+  },
+  "/construction": {
+    "title": "Construction Services in Wah Cantt | Grey Structure, Turnkey & Renovation",
+    "description": "Grey structure, turnkey construction, renovation and remodeling, and architectural design with map approval in Wah Cantt. Request a free site visit and quote."
+  },
+  "/projects": {
+    "title": "Our Projects | Ongoing & Completed Builds | CH Real Estate & Builder's",
+    "description": "See our ongoing and completed residential and commercial construction projects across Wah Cantt."
+  },
+  "/about": {
+    "title": "About Us | CH Real Estate & Builder's, Wah Cantt",
+    "description": "One team for buying, selling, renting and building in Wah Cantt. Verified properties, transparent pricing, quality materials and on-time delivery."
+  },
+  "/contact": {
+    "title": "Contact Us | CH Real Estate & Builder's, Wah Cantt",
+    "description": "Call, WhatsApp or visit CH Real Estate & Builder's at Rehan Heights, Main Boulevard, Phase 2 New City, Wah Cantt. Book a site visit or request a quote."
+  },
+  "/marla-converter": {
+    "title": "Marla to Square Feet Converter | Marla, Kanal & Sq Ft Calculator",
+    "description": "Free Marla to square feet and Kanal converter. 1 Marla = 225 sq ft, 1 Kanal = 20 Marla = 4,500 sq ft. Includes a quick-reference size chart."
+  }
+}

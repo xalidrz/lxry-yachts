@@ -1,16 +1,24 @@
+import { Link } from "react-router-dom";
 import { Facebook, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { site } from "@/lib/site";
 
 const quick = [
-  { label: "Buy", href: "#properties" },
-  { label: "Rent", href: "#properties" },
-  { label: "Construction", href: "#construction" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Buy", href: "/buy" },
+  { label: "Rent", href: "/rent" },
+  { label: "Construction", href: "/construction" },
+  { label: "Projects", href: "/projects" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Marla Converter", href: "/marla-converter" },
 ];
-const services = ["Grey Structure", "Turnkey Construction", "Renovation & Remodeling", "Design & Map Approval", "Property Sales & Rentals"];
+const services = [
+  { label: "Grey Structure", href: "/construction#grey-structure" },
+  { label: "Turnkey Construction", href: "/construction#turnkey" },
+  { label: "Renovation & Remodeling", href: "/construction#renovation" },
+  { label: "Design & Map Approval", href: "/construction#design" },
+  { label: "Property Sales & Rentals", href: "/buy" },
+];
 const socials = [
   { icon: Facebook, label: "Facebook", href: site.social.facebook },
   { icon: Instagram, label: "Instagram", href: site.social.instagram },
@@ -25,9 +33,9 @@ export function Footer() {
     <footer className="border-t border-gold/25 bg-surface">
       <div className="container grid gap-12 py-20 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr_1.3fr]">
         <div>
-          <a href="#top" aria-label="Back to top">
+          <Link to="/" aria-label="CH Real Estate & Builder's — home">
             <Logo size={120} />
-          </a>
+          </Link>
           <p className="mt-5 max-w-xs text-[0.98rem] text-muted-foreground">
             Verified properties and quality construction in {site.city}. One trusted name for buying, selling and
             building.
@@ -53,9 +61,9 @@ export function Footer() {
           <ul className="space-y-3">
             {quick.map((l) => (
               <li key={l.label}>
-                <a href={l.href} className={link}>
+                <Link to={l.href} className={link}>
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -65,10 +73,10 @@ export function Footer() {
           <h2 className={heading}>Services</h2>
           <ul className="space-y-3">
             {services.map((s) => (
-              <li key={s}>
-                <a href={s.startsWith("Property") ? "#properties" : "#construction"} className={link}>
-                  {s}
-                </a>
+              <li key={s.label}>
+                <Link to={s.href} className={link}>
+                  {s.label}
+                </Link>
               </li>
             ))}
           </ul>

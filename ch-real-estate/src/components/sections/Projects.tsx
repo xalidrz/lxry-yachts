@@ -1,7 +1,8 @@
 import { useRef } from "react";
-import { ArrowLeft, ArrowRight, CircleCheck, Hammer } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { ProjectCard } from "@/components/ProjectCard";
 import { Gold, SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { projects } from "@/data/projects";
@@ -75,34 +76,18 @@ export function Projects() {
           className="scrollbar-gold flex cursor-grab snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-8 active:cursor-grabbing gutter-x"
         >
           {projects.map((p) => (
-            <article
-              key={p.id}
-              className="group relative aspect-[4/5] w-[78vw] max-w-[400px] shrink-0 snap-start overflow-hidden border border-gold/20 bg-ink transition-all duration-500 hover:border-gold/80 hover:shadow-gold-glow sm:w-[360px] lg:w-[390px]"
-            >
-              <img
-                src={p.image}
-                alt={`${p.name} — ${p.detail}`}
-                width={640}
-                height={800}
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-                className="size-full select-none object-cover transition-transform duration-[900ms] group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-transparent" />
-              <Badge variant={p.status === "Completed" ? "solid" : "outline"} className="absolute left-5 top-5">
-                {p.status === "Completed" ? <CircleCheck className="size-3.5" /> : <Hammer className="size-3.5" />}
-                {p.status}
-              </Badge>
-              <div className="absolute inset-x-0 bottom-0 p-7">
-                <p className="label mb-2 text-[0.8rem] text-gold-light">{p.detail}</p>
-                <h3 className="text-[1.7rem] text-cream">{p.name}</h3>
-                <p className="mt-1.5 text-[0.95rem] text-muted-foreground">{p.location}</p>
-              </div>
-            </article>
+            <ProjectCard key={p.id} p={p} className="w-[78vw] max-w-[400px] shrink-0 snap-start sm:w-[360px] lg:w-[390px]" />
           ))}
         </div>
       </Reveal>
+
+      <div className="container mt-6 text-center">
+        <Button asChild size="lg" variant="outline">
+          <Link to="/projects">
+            View all projects <ArrowRight />
+          </Link>
+        </Button>
+      </div>
     </section>
   );
 }

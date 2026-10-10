@@ -11,7 +11,7 @@ const points = [
 
 export function WhyChoose() {
   return (
-    <section id="about" aria-labelledby="about-title" className="scroll-mt-20 bg-ink py-28">
+    <section id="why-choose" aria-labelledby="about-title" className="scroll-mt-20 bg-ink py-28">
       <div className="container grid items-start gap-16 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
         <div className="lg:sticky lg:top-32">
           <SectionHeading
