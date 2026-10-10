@@ -50,9 +50,26 @@ site considerably. The OG/social card, favicon and apple-touch icon are generate
 (`scripts/logo-source.png` is the full-size copy). The source artwork was only ~200 px wide, so it is soft when shown
 large (footer). If you have the original vector / high-resolution logo, drop it in as `public/logo.png`.
 
+## Closing and reopening the site
+The whole site can be switched to a public **"We're closed for now"** page with one setting, `VITE_SITE_CLOSED`:
+
+| Value | Result |
+| --- | --- |
+| `true` (current default in `.env`) | **Every URL** (`/`, `/buy`, `/property/…`, anything) shows a single branded closed page with WhatsApp, phone, email and address. The build contains none of the site's pages or data (~60 KB JS), is marked `noindex, nofollow`, and writes no per-page HTML or sitemap. |
+| `false` | The full website. |
+
+- **On Vercel:** set an environment variable `VITE_SITE_CLOSED` = `false` (or `true`) in Project Settings → Environment
+  Variables, then redeploy. A real environment variable overrides `.env`, so no code change is needed to open or close.
+- **Locally:** edit `.env`, or run `VITE_SITE_CLOSED=false npm run build`.
+- The closed page lives in `src/ClosedApp.tsx`; the wording is easy to change there.
+- Limits of static hosting: the closed page is served with HTTP 200 (not 503) and `noindex` keeps it out of search results.
+  This is a public "closed" notice, **not access control** — it does not password-protect anything. If you need the
+  site to be private, use Vercel's Password Protection / Vercel Authentication instead.
+
 ## Deploying (Vercel)
 `vercel.json` pins the build (`npm run build` → `dist`) and sets `cleanUrls` plus an SPA fallback, so `/buy`,
-`/property/villa-10m` etc. all work as direct links and on refresh. Set **Root Directory** to `ch-real-estate`.
+`/property/villa-10m` etc. all work as direct links and on refresh. Set **Root Directory** to `ch-real-estate`. The site currently ships in **closed** mode (see above) — set
+`VITE_SITE_CLOSED=false` when you are ready to launch.
 Any static host works if it serves `<route>.html` for `/<route>` and falls back to `index.html` for unknown paths.
 
 ## SEO
