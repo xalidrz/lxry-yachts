@@ -49,6 +49,7 @@ const q = encodeURIComponent(`${site.shortName} ${addr}`);
 export const links = {
   tel: `tel:${site.phone.tel}`,
   addressLine: addr,
+  place: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,
   directions: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`,
   reviews: `https://www.google.com/maps/search/?api=1&query=${q}`,
   mapEmbed: `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`,

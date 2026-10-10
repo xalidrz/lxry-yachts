@@ -39,12 +39,18 @@ export function Location({ preview = false }: { preview?: boolean }) {
                 <MapPin className="mt-1 size-5 shrink-0 text-signal" aria-hidden />
                 <div>
                   <span className="sr-only">Address: </span>
-                  <div className="leading-relaxed text-ink">
+                  <a
+                    href={links.place}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block leading-relaxed text-ink underline decoration-signal decoration-2 underline-offset-4 hover:text-signal"
+                  >
                     {site.address.street}
                     <br />
                     {site.address.city}, {site.address.region} {site.address.postalCode}
-                    <span className="mt-1 block text-sm text-muted">Plus code: {site.address.plusCode}</span>
-                  </div>
+                    <span className="sr-only"> (opens in Google Maps)</span>
+                  </a>
+                  <span className="mt-1 block text-sm text-muted">Plus code: {site.address.plusCode}</span>
                 </div>
               </li>
               <li className="flex gap-4">
