@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PearlButton } from "@/components/ui/pearl-button";
 import { OpenBadge } from "@/components/open-badge";
 import { heroPhoto } from "@/data/photos";
 import { links, site } from "@/config/site";
@@ -32,18 +32,18 @@ export function Hero() {
           Honest repairs, fair prices, and an owner who explains the work.
         </p>
         <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:240ms]">
-          <Button asChild className="h-14 px-8 text-lg">
+          <PearlButton asChild>
             <a href={links.tel}>
               <Phone className="phone-icon size-5" aria-hidden />
               Call Now
             </a>
-          </Button>
-          <Button asChild variant="ghost" className="h-14 px-8 text-lg">
+          </PearlButton>
+          <PearlButton asChild variant="secondary">
             <a href={links.directions} target="_blank" rel="noopener noreferrer">
               <MapPin className="size-5" aria-hidden />
               Get Directions
             </a>
-          </Button>
+          </PearlButton>
         </div>
         <p className="animate-rise mt-6 text-sm text-muted [animation-delay:320ms]">
           {site.address.street}, {site.address.city}, {site.address.region} · Owner-run by {site.owner}

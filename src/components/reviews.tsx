@@ -1,5 +1,5 @@
 import { ExternalLink, MessageSquareQuote, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PearlButton } from "@/components/ui/pearl-button";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionLink } from "@/components/section-link";
@@ -117,12 +117,12 @@ export function Reviews({ preview = false }: { preview?: boolean }) {
 
         <Reveal className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
           <div className="flex flex-wrap gap-3">
-            <Button asChild variant="ghost" className="h-14 px-8 text-lg">
+            <PearlButton asChild variant="secondary">
               <a href={links.reviews} target="_blank" rel="noopener noreferrer">
                 Read all reviews on Google
                 <ExternalLink className="size-5" aria-hidden />
               </a>
-            </Button>
+            </PearlButton>
             {preview ? <SectionLink href="/reviews">All {googleReviews.length} reviews here</SectionLink> : null}
           </div>
           <p className="text-sm text-muted">

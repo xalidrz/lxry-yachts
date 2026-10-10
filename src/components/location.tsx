@@ -1,5 +1,5 @@
 import { Accessibility, Clock, MapPin, Navigation, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PearlButton } from "@/components/ui/pearl-button";
 import { Reveal } from "@/components/motion";
 import { SectionHeading } from "@/components/section-heading";
 import { SectionLink } from "@/components/section-link";
@@ -86,18 +86,18 @@ export function Location({ preview = false }: { preview?: boolean }) {
             </ul>
 
             <div className="mt-auto flex flex-wrap gap-3 pt-9">
-              <Button asChild className="h-12 flex-1 sm:flex-none">
+              <PearlButton asChild className="flex-1 sm:flex-none">
                 <a href={links.directions} target="_blank" rel="noopener noreferrer">
                   <Navigation className="size-4" aria-hidden />
                   Directions
                 </a>
-              </Button>
-              <Button asChild variant="ghost" className="h-12 flex-1 sm:flex-none">
+              </PearlButton>
+              <PearlButton asChild variant="secondary" className="flex-1 sm:flex-none">
                 <a href={links.tel}>
                   <Phone className="phone-icon size-4" aria-hidden />
                   Call
                 </a>
-              </Button>
+              </PearlButton>
             </div>
             {preview ? (
               <div className="mt-4">

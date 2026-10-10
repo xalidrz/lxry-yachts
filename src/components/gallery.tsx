@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PearlButton } from "@/components/ui/pearl-button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal } from "@/components/motion";
@@ -57,17 +57,17 @@ export function Gallery({ preview = false }: { preview?: boolean }) {
         ) : (
           <div role="tablist" aria-label="Photo categories" className="flex flex-wrap gap-2">
           {tabs.map((f) => (
-            <Button
+            <PearlButton
               key={f.id}
               role="tab"
               aria-selected={tab === f.id}
-              variant={tab === f.id ? "primary" : "ghost"}
+              variant={tab === f.id ? "primary" : "secondary"}
               size="sm"
               onClick={() => setTab(f.id)}
             >
               {f.label}
               <span className={cn("text-xs", tab === f.id ? "text-white" : "text-ink/80")}>{categoryCounts[f.id]}</span>
-            </Button>
+            </PearlButton>
           ))}
           </div>
         )}
@@ -114,9 +114,9 @@ export function Gallery({ preview = false }: { preview?: boolean }) {
               {active !== null ? active + 1 : 0} / {visible.length}
             </p>
             <DialogClose asChild>
-              <Button variant="ghost" size="icon" aria-label="Close photo viewer">
+              <PearlButton variant="secondary" size="icon" aria-label="Close photo viewer">
                 <X className="size-5" aria-hidden />
-              </Button>
+              </PearlButton>
             </DialogClose>
           </div>
           <div className="relative flex min-h-0 w-full flex-1 items-center justify-center px-3 sm:px-20">
@@ -135,12 +135,12 @@ export function Gallery({ preview = false }: { preview?: boolean }) {
             ) : null}
             {visible.length > 1 ? (
               <>
-                <Button variant="ghost" size="icon" aria-label="Previous photo" onClick={() => step(-1)} className="absolute left-2 top-1/2 -translate-y-1/2 sm:left-5">
+                <PearlButton variant="secondary" size="icon" aria-label="Previous photo" onClick={() => step(-1)} className="absolute left-2 top-1/2 -translate-y-1/2 sm:left-5">
                   <ChevronLeft className="size-6" aria-hidden />
-                </Button>
-                <Button variant="ghost" size="icon" aria-label="Next photo" onClick={() => step(1)} className="absolute right-2 top-1/2 -translate-y-1/2 sm:right-5">
+                </PearlButton>
+                <PearlButton variant="secondary" size="icon" aria-label="Next photo" onClick={() => step(1)} className="absolute right-2 top-1/2 -translate-y-1/2 sm:right-5">
                   <ChevronRight className="size-6" aria-hidden />
-                </Button>
+                </PearlButton>
               </>
             ) : null}
           </div>
