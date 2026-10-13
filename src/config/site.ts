@@ -6,7 +6,7 @@ export const site = {
   name: "ELITE MOTORSPORTS",
   shortName: "Elite Motorsports",
   type: "Auto repair shop",
-  owner: "Goldy",
+  owner: "Godly",
   tagline: "Honest Repairs. Hayward's 4.7★ Shop.",
   description:
     "Owner-run auto repair at 70 W Jackson St, Hayward, CA. Uber inspections, oil changes, diagnostics, electrical, clutch and mirror repair. 4.7★ from 51 Google reviews.",
