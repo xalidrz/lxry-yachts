@@ -1,21 +1,17 @@
 import { Hero } from "@/components/hero";
-import { TrustStrip } from "@/components/trust-strip";
-import { Services } from "@/components/services";
-import { Gallery } from "@/components/gallery";
-import { WhyElite } from "@/components/why-elite";
-import { Reviews } from "@/components/reviews";
-import { Location } from "@/components/location";
+import { Options } from "@/components/sections/options";
+import { Shop } from "@/components/sections/shop";
+import { Services } from "@/components/sections/services";
+import { CtaBand } from "@/components/sections/cta-band";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <TrustStrip />
+      <Options />
+      <Shop />
       <Services preview />
-      <Gallery preview />
-      <WhyElite />
-      <Reviews preview />
-      <Location preview />
+      <CtaBand />
     </>
   );
 }

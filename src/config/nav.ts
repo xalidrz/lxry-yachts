@@ -1,6 +1,8 @@
+/** Site pages, in nav order. The logo links home. */
 export const nav = [
   { label: "Services", href: "/services" },
-  { label: "Work", href: "/work" },
-  { label: "Reviews", href: "/reviews" },
+  { label: "Process", href: "/process" },
+  { label: "Hours", href: "/hours" },
   { label: "Location", href: "/location" },
+  { label: "Work", href: "/work" },
 ] as const;

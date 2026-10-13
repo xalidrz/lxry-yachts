@@ -5,3 +5,6 @@ out/
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# copied from node_modules by scripts/copy-maplibre-worker.mjs
+public/maplibre-gl-worker.mjs

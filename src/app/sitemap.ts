@@ -5,6 +5,10 @@ import { siteUrl } from "@/lib/url";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: siteUrl, changeFrequency: "monthly", priority: 1 },
-    ...nav.map((n) => ({ url: `${siteUrl}${n.href}`, changeFrequency: "monthly" as const, priority: 0.8 })),
+    ...[...nav.map((n) => n.href), "/book"].map((href) => ({
+      url: `${siteUrl}${href}`,
+      changeFrequency: "monthly" as const,
+      priority: href === "/book" ? 0.7 : 0.8,
+    })),
   ];
 }
