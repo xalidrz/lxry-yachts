@@ -4,6 +4,7 @@ import "./globals.css";
 import { site } from "@/config/site";
 import { siteUrl } from "@/lib/url";
 import { heroPhoto } from "@/data/photos";
+import { MotionProvider } from "@/components/motion";
 import { Nav } from "@/components/nav";
 import { Loader } from "@/components/loader";
 import { ScrollProgress } from "@/components/scroll-progress";
@@ -59,11 +60,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
+        <MotionProvider>
           <Loader />
           <ScrollProgress />
           <Nav />
           <main>{children}</main>
           <Footer />
+        </MotionProvider>
         <JsonLd />
       </body>
     </html>

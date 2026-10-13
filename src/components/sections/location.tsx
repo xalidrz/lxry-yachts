@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { HoursTable } from "@/components/hours-table";
 import { LocationMap } from "@/components/location-map";
+import { PhotoStack } from "@/components/photo-stack";
 import { Reveal } from "@/components/motion";
 import { SectionHead } from "@/components/section-head";
 import { exteriorStripFiles, photoByFile } from "@/data/photos";
@@ -80,13 +80,7 @@ export function Location({ h1 = false }: { h1?: boolean }) {
             </Reveal>
 
             <Reveal index={2}>
-              <div className="photo-stack" tabIndex={0} role="group" aria-label="Photos of the shop exterior">
-                {stack.map((p, i) => (
-                  <figure key={p.file} className={`p p${i + 1}`}>
-                    <Image src={p.file} alt={p.alt} fill sizes="(min-width: 1024px) 260px, 60vw" quality={75} className="object-cover" />
-                  </figure>
-                ))}
-              </div>
+              <PhotoStack photos={stack} />
             </Reveal>
           </div>
         </div>

@@ -1,120 +1,128 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, X } from "lucide-react";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { m, useScroll, useTransform } from "framer-motion";
+import { Lightbox } from "@/components/lightbox";
 import { SectionHead } from "@/components/section-head";
-import { galleryPhotos } from "@/data/photos";
+import { workColumns } from "@/data/photos";
+import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
+import { cn } from "@/lib/utils";
 
-const count = galleryPhotos.length;
+/** Parallax travel per column over the section's scroll, in px. Negative = up. Columns 1 and 3 rise, 2 sinks. */
+const TRAVEL = [-110, 80, -60];
+const GRID: Record<number, string> = { 2: "md:grid-cols-2", 3: "md:grid-cols-3", 4: "md:grid-cols-4" };
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export function Gallery({ h1 = false }: { h1?: boolean }) {
-  const strip = useRef<HTMLUListElement>(null);
-  const drag = useRef({ down: false, x: 0, left: 0, moved: false });
-  const [open, setOpen] = useState<number | null>(null);
-
-  const scrollBy = (dir: 1 | -1) =>
-    strip.current?.scrollBy({ left: dir * Math.min(strip.current.clientWidth * 0.8, 640), behavior: "smooth" });
-
-  const go = (dir: 1 | -1) => setOpen((i) => (i === null ? i : (i + dir + count) % count));
-  const photo = open === null ? null : galleryPhotos[open];
-
+function Column({
+  i,
+  active,
+  progress,
+  parallax,
+  onOpen,
+}: {
+  i: number;
+  active: boolean;
+  progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  parallax: boolean;
+  onOpen: (col: number, photo: number) => void;
+}) {
+  const col = workColumns[i];
+  const travel = TRAVEL[i % TRAVEL.length];
+  // travel < 0: the column drifts up as the page scrolls; travel > 0: it drifts down.
+  const y = useTransform(progress, [0, 1], [-travel / 2, travel / 2]);
   return (
-    <section id="gallery" className="border-b border-line bg-graphite py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHead n="08" title="The work" as={h1 ? "h1" : "h2"} />
-          <div className="flex items-center gap-3">
-            <span className="hidden font-mono text-xs uppercase tracking-[0.2em] text-muted sm:block">Drag or scroll</span>
-            <button type="button" onClick={() => scrollBy(-1)} aria-label="Scroll gallery left" className="grid size-11 place-items-center border border-line text-ink hover:border-signal">
-              <ArrowLeft className="size-5" aria-hidden />
-            </button>
-            <button type="button" onClick={() => scrollBy(1)} aria-label="Scroll gallery right" className="grid size-11 place-items-center border border-line text-ink hover:border-signal">
-              <ArrowRight className="size-5" aria-hidden />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <ul
-        ref={strip}
-        className="snap-scroll mt-10 flex cursor-grab gap-3 overflow-x-auto px-5 active:cursor-grabbing lg:px-8"
-        onPointerDown={(e) => {
-          if (e.pointerType !== "mouse" || !strip.current) return;
-          drag.current = { down: true, x: e.clientX, left: strip.current.scrollLeft, moved: false };
-        }}
-        onPointerMove={(e) => {
-          const d = drag.current;
-          if (!d.down || !strip.current) return;
-          const dx = e.clientX - d.x;
-          if (Math.abs(dx) > 5) d.moved = true;
-          strip.current.scrollLeft = d.left - dx;
-        }}
-        onPointerUp={() => (drag.current.down = false)}
-        onPointerLeave={() => (drag.current.down = false)}
-      >
-        {galleryPhotos.map((p, i) => (
-          <li key={p.file} className="shrink-0">
+    <div className={cn(active ? "block" : "hidden", "md:block")}>
+      <p className="mb-4 border-b border-line pb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted">
+        {pad(i + 1)} · {col.label.toUpperCase()}
+      </p>
+      <m.ul className="space-y-3" style={parallax ? { y } : undefined}>
+        {col.photos.map((p, k) => (
+          <li key={p.file}>
             <button
               type="button"
-              onClick={() => {
-                if (!drag.current.moved) setOpen(i);
-              }}
-              className="group relative block overflow-hidden border border-line"
-              aria-label={`Open photo ${i + 1} of ${count}: ${p.alt}`}
+              onClick={() => onOpen(i, k)}
+              aria-label={`Open photo ${k + 1} of ${col.photos.length} in ${col.label}: ${p.alt}`}
+              className="work-tile block w-full overflow-hidden border border-line bg-surface"
             >
               <Image
                 src={p.file}
                 alt=""
                 width={p.width}
                 height={p.height}
-                sizes="(min-width: 640px) 420px, 80vw"
+                sizes="(min-width: 1024px) 380px, (min-width: 768px) 30vw, 100vw"
                 quality={75}
-                draggable={false}
-                loading="lazy"
-                className="h-[19rem] w-auto max-w-none select-none object-cover sm:h-[24rem]"
+                priority={i === 0 && k === 0}
+                loading={k === 0 ? "eager" : "lazy"}
+                className="block h-auto w-full"
               />
-              <span className="absolute left-0 top-0 bg-graphite px-3 py-1.5 font-mono text-xs text-signal-bright">
-                {pad(i + 1)}/{pad(count)}
-              </span>
             </button>
           </li>
         ))}
-      </ul>
+      </m.ul>
+    </div>
+  );
+}
 
-      <Dialog open={open !== null} onOpenChange={(o) => !o && setOpen(null)}>
-        <DialogContent
-          onKeyDown={(e) => {
-            if (e.key === "ArrowRight") go(1);
-            if (e.key === "ArrowLeft") go(-1);
-          }}
+export function Gallery({ h1 = false }: { h1?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = usePrefersReducedMotion();
+  const [desktop, setDesktop] = useState(false);
+  const [tab, setTab] = useState(0);
+  const [open, setOpen] = useState<{ col: number; photo: number } | null>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const cols = workColumns;
+  const openCol = open ? cols[open.col] : null;
+
+  return (
+    <section id="gallery" className="border-b border-line bg-graphite py-20 sm:py-28">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <SectionHead n="08" title="The work" as={h1 ? "h1" : "h2"} intro="Photos from the shop floor, sorted by what they show." />
+
+        {/* Phones: one column at a time */}
+        <div role="tablist" aria-label="Photo categories" className="mt-10 flex gap-2 overflow-x-auto md:hidden">
+          {cols.map((c, i) => (
+            <button
+              key={c.id}
+              role="tab"
+              type="button"
+              aria-selected={tab === i}
+              onClick={() => setTab(i)}
+              className={cn(
+                "h-11 shrink-0 border px-4 font-mono text-xs uppercase tracking-[0.16em]",
+                tab === i ? "border-signal bg-signal-deep text-white" : "border-line text-muted hover:border-steel hover:text-ink",
+              )}
+            >
+              {c.tab}
+            </button>
+          ))}
+        </div>
+
+        <div
+          ref={ref}
+          className={cn("mt-8 grid gap-4 pb-28 md:mt-12 md:pb-32", GRID[cols.length] ?? "md:grid-cols-3")}
         >
-          <DialogTitle className="sr-only">Gallery photo</DialogTitle>
-          <DialogDescription className="sr-only">Use the left and right arrow keys to move between photos. Press Escape to close.</DialogDescription>
-          <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
-            <span className="font-mono text-sm tracking-[0.18em] text-ink">
-              {open !== null ? `${pad(open + 1)}/${pad(count)}` : ""}
-            </span>
-            <DialogClose asChild>
-              <button type="button" aria-label="Close" className="grid size-11 place-items-center border border-line text-ink hover:border-signal">
-                <X className="size-5" aria-hidden />
-              </button>
-            </DialogClose>
-          </div>
-          <div className="relative min-h-0 flex-1">
-            {photo ? <Image key={photo.file} src={photo.file} alt={photo.alt} fill sizes="100vw" quality={80} priority className="object-contain" /> : null}
-            <button type="button" onClick={() => go(-1)} aria-label="Previous photo" className="absolute left-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center border border-line bg-graphite text-ink hover:border-signal">
-              <ArrowLeft className="size-5" aria-hidden />
-            </button>
-            <button type="button" onClick={() => go(1)} aria-label="Next photo" className="absolute right-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center border border-line bg-graphite text-ink hover:border-signal">
-              <ArrowRight className="size-5" aria-hidden />
-            </button>
-          </div>
-          {photo ? <p className="shrink-0 border-t border-line px-5 py-3 text-sm text-muted">{photo.alt}</p> : null}
-        </DialogContent>
-      </Dialog>
+          {cols.map((c, i) => (
+            <Column key={c.id} i={i} active={tab === i} progress={scrollYProgress} parallax={desktop && !reduce} onOpen={(col, photo) => setOpen({ col, photo })} />
+          ))}
+        </div>
+      </div>
+
+      <Lightbox
+        photos={openCol?.photos ?? []}
+        index={open ? open.photo : null}
+        onIndexChange={(i) => setOpen((o) => (o && i !== null ? { col: o.col, photo: i } : null))}
+        label={openCol ? `${openCol.label} photos` : "Photos"}
+      />
     </section>
   );
 }

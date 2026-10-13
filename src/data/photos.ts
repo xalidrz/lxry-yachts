@@ -142,7 +142,55 @@ const shownElsewhere = new Set<string>([
   ...visibleServices.map((s) => `/photos/${s.photo}.webp`),
 ]);
 
-/** Gallery photos, strongest first, none of them used for the hero, shop, services or exterior strip. */
-export const galleryPhotos: Photo[] = photos
-  .filter((p) => !shownElsewhere.has(p.file))
-  .sort((a, b) => rank(a) - rank(b));
+const notShownElsewhere = (p: Photo) => !shownElsewhere.has(p.file);
+
+export type WorkColumn = { id: string; label: string; tab: string; photos: Photo[] };
+
+/**
+ * The Work page columns. Every photo was sorted by what it actually shows. A column only exists
+ * if it has at least three real photos, so there is no "Batteries & electrical" column: the shop
+ * has no battery photos and only two wiring photos (one of them already used on Services), and the
+ * remaining electrical-looking shot (a classic engine bay with a terminal kit) sits under Engines.
+ * Photos used on the hero, Home, Services or Location are left out.
+ */
+const columnSpec: { id: string; label: string; tab: string; files: string[] }[] = [
+  {
+    id: "cars",
+    label: "Cars",
+    tab: "Cars",
+    files: [
+      "bmw-m3-at-bay-door",
+      "blue-audi-r8-gold-wheels",
+      "charger-hellcat-in-bay",
+      "bentley-coupe-in-shop-bay",
+      "bmw-sedan-glossy-hood-in-shop",
+      "gold-350z-hood-open-in-bay",
+      "black-sedan-hood-open-sunlit-bay",
+      "classic-chevrolet-pickup",
+      "mustangs-in-shop-evening",
+      "hero-shop-wide-porsche-s-class",
+    ],
+  },
+  {
+    id: "engines",
+    label: "Engines",
+    tab: "Engines",
+    files: [
+      "carbureted-v8-engine-build",
+      "supercharged-hemi-engine-on-stand",
+      "intake-manifold-impact-wrench",
+      "four-cylinder-engine-on-pallet",
+      "classic-engine-bay-wiring-terminals",
+    ],
+  },
+  {
+    id: "under",
+    label: "Under the car",
+    tab: "Under the car",
+    files: ["titanium-exhaust-under-car", "dual-exhaust-under-car-on-lift", "front-suspension-brake-under-car", "drilled-brake-rotor"],
+  },
+];
+
+export const workColumns: WorkColumn[] = columnSpec
+  .map((c) => ({ id: c.id, label: c.label, tab: c.tab, photos: c.files.map(photoByFile).filter(notShownElsewhere) }))
+  .filter((c) => c.photos.length >= 3);

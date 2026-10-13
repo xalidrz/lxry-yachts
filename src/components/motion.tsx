@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, type ReactNode } from "react";
+import { LazyMotion } from "framer-motion";
 
 let observer: IntersectionObserver | null = null;
 const seen = (el: Element) => {
@@ -42,4 +43,9 @@ export function Reveal({
       {children}
     </Tag>
   );
+}
+
+/** Provides framer-motion's renderer to every `m` component (scroll progress, parallax, gauge). Features load async. */
+export function MotionProvider({ children }: { children: ReactNode }) {
+  return <LazyMotion features={() => import("@/lib/motion-features").then((mod) => mod.default)}>{children}</LazyMotion>;
 }

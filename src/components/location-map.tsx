@@ -1,47 +1,75 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Minus, Navigation, Plus, LocateFixed } from "lucide-react";
+import { LocateFixed, Maximize2, Minus, Navigation, Plus, X } from "lucide-react";
 import type { Map as MapLibreMap, StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { links, site } from "@/config/site";
 
 const { lat, lng } = site.geo;
-const ZOOM = 16;
-const START_ZOOM = 13;
+/** MapLibre zoom 15 shows Esri's most detailed tile level (16) at 1:1, so streets stay crisp. */
+const ZOOM = 15;
+const START_ZOOM = 12;
 const PLUS = site.address.plusCode.split(" ")[0];
+const ADDRESS = `${site.address.street}, ${site.address.city}`;
 
-/** CARTO dark-matter raster tiles: free, no API key. Attribution is shown on the map. */
-const style: StyleSpecification = {
+const bg = { id: "bg", type: "background", paint: { "background-color": "#0e0f11" } } as const;
+const ESRI = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas";
+const ESRI_ATTRIBUTION = "Esri, HERE, Garmin, &copy; OpenStreetMap contributors";
+
+/** Esri "World Dark Gray" base and street-name reference tiles: free, no API key. */
+const esriStyle: StyleSpecification = {
   version: 8,
   sources: {
-    carto: {
+    esri: {
       type: "raster",
-      tiles: ["a", "b", "c", "d"].map((s) => `https://${s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png`),
+      tiles: [`${ESRI}/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}`],
       tileSize: 256,
-      maxzoom: 20,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>',
+      maxzoom: 16,
+      attribution: ESRI_ATTRIBUTION,
+    },
+    "esri-labels": {
+      type: "raster",
+      tiles: [`${ESRI}/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}`],
+      tileSize: 256,
+      maxzoom: 16,
     },
   },
-  layers: [
-    { id: "bg", type: "background", paint: { "background-color": "#0e0f11" } },
-    { id: "carto", type: "raster", source: "carto" },
-  ],
+  layers: [bg, { id: "esri", type: "raster", source: "esri" }, { id: "esri-labels", type: "raster", source: "esri-labels" }],
+};
+
+/** Backup if Esri tiles cannot be loaded: standard OpenStreetMap tiles, darkened with plain colour operations on the canvas (see .osm-dark in globals.css). */
+const osmStyle: StyleSpecification = {
+  version: 8,
+  sources: {
+    osm: {
+      type: "raster",
+      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      tileSize: 256,
+      maxzoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors',
+    },
+  },
+  layers: [bg, { id: "osm", type: "raster", source: "osm" }],
 };
 
 const pill =
   "grid size-10 place-items-center rounded-full border border-line bg-graphite text-ink hover:border-signal focus-visible:border-signal";
+const chip = "border border-line bg-graphite px-2.5 py-1.5";
 
-/** Dark map centred on the shop with a target-reticle marker, crosshair lines and corner chips. */
-export function LocationMap() {
+/**
+ * Dark map centred on the shop: target reticle, crosshair lines, corner chips, zoom controls.
+ * `full` is the expanded version (drag and scroll-zoom on, address chip); the inline one opens it on click.
+ */
+function MapView({ full = false, onExpand }: { full?: boolean; onExpand?: () => void }) {
   const box = useRef<HTMLDivElement>(null);
   const hLine = useRef<HTMLDivElement>(null);
   const vLine = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const [failed, setFailed] = useState(false);
-  const [drawn, setDrawn] = useState(false);
+  const [drawn, setDrawn] = useState(full);
 
   useEffect(() => {
     const el = box.current;
@@ -50,12 +78,25 @@ export function LocationMap() {
     const coarse = window.matchMedia("(pointer: coarse)").matches;
     let cancelled = false;
     let map: MapLibreMap | null = null;
-    let inView = false;
-    let zoomed = false;
+    let inView = full;
+    let zoomed = full;
     let tilesOk = false;
     let errors = 0;
+    let provider: "esri" | "osm" = "esri";
     const timers: ReturnType<typeof setTimeout>[] = [];
-    const fail = () => !cancelled && !tilesOk && setFailed(true);
+
+    const giveUp = () => !cancelled && !tilesOk && setFailed(true);
+    const tilesFailed = () => {
+      if (cancelled || tilesOk) return;
+      if (provider === "esri" && map) {
+        provider = "osm";
+        tilesOk = false;
+        errors = 0;
+        el.classList.add("osm-dark");
+        map.setStyle(osmStyle);
+        timers.push(setTimeout(() => !tilesOk && giveUp(), 9000));
+      } else giveUp();
+    };
 
     const placeLines = () => {
       if (!map) return;
@@ -78,18 +119,18 @@ export function LocationMap() {
         maplibregl.setWorkerUrl(`${window.location.origin}/maplibre-gl-worker.mjs`);
         const m = new maplibregl.Map({
           container: el,
-          style,
+          style: esriStyle,
           center: [lng, lat],
-          zoom: reduce ? ZOOM : START_ZOOM,
-          minZoom: 11,
-          maxZoom: 19,
+          zoom: full || reduce ? ZOOM : START_ZOOM,
+          minZoom: 10,
+          maxZoom: full ? 18 : 17,
           attributionControl: false,
           dragRotate: false,
           pitchWithRotate: false,
           touchPitch: false,
-          scrollZoom: false,
-          // On phones one finger scrolls the page and two move the map, so the page never gets stuck.
-          cooperativeGestures: coarse,
+          scrollZoom: full,
+          // Inline on phones: one finger scrolls the page, two move the map.
+          cooperativeGestures: !full && coarse,
         });
         map = m;
         mapRef.current = m;
@@ -106,20 +147,21 @@ export function LocationMap() {
         m.on("resize", placeLines);
         m.on("load", placeLines);
         m.on("sourcedata", (e) => {
-          if (e.sourceId === "carto" && "tile" in e && e.tile) tilesOk = true;
+          if ("tile" in e && e.tile) tilesOk = true;
         });
-        m.on("error", (e) => {
-          if ((e as { sourceId?: string }).sourceId === "carto" && !tilesOk && ++errors >= 4) fail();
+        m.on("error", () => {
+          if (!tilesOk && ++errors >= 4) tilesFailed();
         });
-        // Scroll-zoom is off until the map is clicked, and off again when the pointer leaves.
-        m.on("click", () => m.scrollZoom.enable());
-        el.addEventListener("mouseleave", () => m.scrollZoom.disable());
-        timers.push(setTimeout(fail, 9000));
+        if (!full && onExpand) {
+          m.getCanvas().style.cursor = "pointer";
+          m.on("click", onExpand);
+        }
+        timers.push(setTimeout(() => !tilesOk && tilesFailed(), 9000));
+        requestAnimationFrame(() => m.resize());
         placeLines();
         intro();
       } catch {
-        fail();
-        if (!cancelled) setFailed(true);
+        setFailed(true);
       }
     };
 
@@ -144,7 +186,7 @@ export function LocationMap() {
       { threshold: 0.45 },
     );
     near.observe(el);
-    view.observe(el);
+    if (!full) view.observe(el);
 
     return () => {
       cancelled = true;
@@ -154,20 +196,22 @@ export function LocationMap() {
       map?.remove();
       mapRef.current = null;
     };
-  }, []);
+    // onExpand is a stable setter wrapper from the parent; the map is created once per mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [full]);
 
   const zoomBy = (d: number) => mapRef.current?.zoomTo(mapRef.current.getZoom() + d, { duration: 300 });
   const recenter = () => mapRef.current?.easeTo({ center: [lng, lat], zoom: ZOOM, duration: 700 });
 
   return (
-    <div className="relative h-[26rem] overflow-hidden rounded-2xl border border-line bg-graphite sm:h-[32rem] lg:h-full lg:min-h-[38rem]">
+    <div className={full ? "absolute inset-0 bg-graphite" : "relative h-[26rem] overflow-hidden rounded-2xl border border-line bg-graphite sm:h-[32rem] lg:h-full lg:min-h-[38rem]"}>
       {/* MapLibre's stylesheet sets position: relative on its container, so the sizing lives on this wrapper. */}
       <div className="absolute inset-0">
         <div
           ref={box}
           className="h-full w-full"
           role="region"
-          aria-label={`Map centred on ${site.address.street}, ${site.address.city}. Click the map to enable scroll zoom.`}
+          aria-label={`Map centred on ${site.address.street}, ${site.address.city}.${full ? "" : " Click to expand."}`}
         />
       </div>
 
@@ -180,12 +224,19 @@ export function LocationMap() {
         </div>
       </div>
 
-      <div className="pointer-events-none absolute left-3 top-3 flex flex-wrap gap-2 font-mono text-xs text-ink">
-        <span className="border border-line bg-graphite px-2.5 py-1.5">{PLUS}</span>
-        <span className="border border-line bg-graphite px-2.5 py-1.5 tabular-nums">
+      <div className={`pointer-events-none absolute left-3 top-3 flex flex-wrap gap-2 font-mono text-xs text-ink ${full ? "right-16" : ""}`}>
+        {full ? <span className={chip}>{ADDRESS}</span> : null}
+        <span className={chip}>{PLUS}</span>
+        <span className={`${chip} tabular-nums`}>
           {lat.toFixed(4)}, {lng.toFixed(4)}
         </span>
       </div>
+
+      {!full && !failed ? (
+        <button type="button" onClick={onExpand} aria-label="Expand map" className={`${pill} absolute right-3 top-3`}>
+          <Maximize2 className="size-4" aria-hidden />
+        </button>
+      ) : null}
 
       {failed ? null : (
         <div className="absolute bottom-3 right-3 flex flex-col gap-2">
@@ -219,5 +270,27 @@ export function LocationMap() {
         </div>
       ) : null}
     </div>
+  );
+}
+
+/** Inline map. Click it (or the expand button) to open a full-screen version with drag and scroll zoom. */
+export function LocationMap() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <MapView onExpand={() => setOpen(true)} />
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogTitle className="sr-only">Map of {site.shortName}</DialogTitle>
+          <DialogDescription className="sr-only">Drag to move the map and scroll to zoom. Press Escape to close.</DialogDescription>
+          {open ? <MapView full /> : null}
+          <DialogClose asChild>
+            <button type="button" aria-label="Close map" className="absolute right-3 top-3 z-10 grid size-11 place-items-center border border-line bg-graphite text-ink hover:border-signal">
+              <X className="size-5" aria-hidden />
+            </button>
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

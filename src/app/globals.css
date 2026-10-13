@@ -91,7 +91,7 @@ section[id] { scroll-margin-top: 4rem; }
     text-transform: uppercase;
     white-space: nowrap;
     color: #fff;
-    cursor: pointer;
+    
   }
   .btn-sm { height: 2.75rem; padding: 0 1.125rem; font-size: 0.9375rem; }
   .btn-primary { background: var(--color-signal-deep); border-color: var(--color-signal-deep); }
@@ -217,6 +217,7 @@ html[data-loader="on"] { overflow: hidden; }
 /* ---------- Fanned photo stack: hover or focus spreads it out ---------- */
 .photo-stack { position: relative; height: 17rem; }
 .photo-stack .p {
+  padding: 0;
   position: absolute;
   width: 58%;
   aspect-ratio: 4 / 3;
@@ -233,7 +234,19 @@ html[data-loader="on"] { overflow: hidden; }
 .photo-stack:hover .p2, .photo-stack:focus .p2 { transform: translateY(-3%) rotate(0deg); }
 .photo-stack:hover .p3, .photo-stack:focus .p3 { transform: translateX(7%) rotate(11deg); }
 @media (prefers-reduced-motion: reduce) {
-  .photo-stack .p { transition: none; }
+  .photo-stack .p {
+  padding: 0; transition: none; }
 }
 .daydot { transition: left 1s linear; }
 @media (prefers-reduced-motion: reduce) { .daydot { transition: none; } }
+
+/* ---------- Work page tiles ---------- */
+.work-tile { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s; position: relative; }
+.work-tile:hover, .work-tile:focus-visible { transform: scale(1.03); border-color: var(--color-signal); z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .work-tile { transition: none; }
+  .work-tile:hover, .work-tile:focus-visible { transform: none; }
+}
+
+/* Backup basemap (OpenStreetMap) darkened with a plain colour filter on the map canvas. */
+.osm-dark .maplibregl-canvas { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
