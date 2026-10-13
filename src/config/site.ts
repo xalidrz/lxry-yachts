@@ -64,6 +64,8 @@ export const links = {
   addressLine: addr,
   place: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,
   directions: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`,
+  // The business's own Google Maps listing (directions, photos, reviews).
+  business: "https://maps.app.goo.gl/9wLhfZWCG92QVbaA8",
   reviews: `https://www.google.com/maps/search/?api=1&query=${q}`,
   // Opens the Google Maps listing, where "Write a review" is one tap away. Swap in the direct
   // https://search.google.com/local/writereview?placeid=<PLACE_ID> link once you have the Place ID.
