@@ -1,3 +1,5 @@
+import { visibleServices } from "@/data/services";
+
 export type PhotoCategory = "engine" | "electrical" | "shop";
 
 export type Photo = {
@@ -129,5 +131,19 @@ export const photoByFile = (file: string) => {
   return found;
 };
 
-/** Sixteen strongest photos for the gallery strip, in display order. */
-export const galleryPhotos: Photo[] = bestFirst.slice(0, 16).map(photoByFile);
+/** Photos used outside the gallery: the shop section and the exterior strip in Location. */
+export const shopSectionFile = "hero-shop-bays-two-post-lifts";
+export const exteriorStripFiles = ["s-class-at-shop-front", "4runner-by-shop-sign", "cybertruck-outside-shop"];
+
+const shownElsewhere = new Set<string>([
+  heroPhoto.file,
+  `/photos/${shopSectionFile}.webp`,
+  ...exteriorStripFiles.map((f) => `/photos/${f}.webp`),
+  ...visibleServices.map((s) => `/photos/${s.photo}.webp`),
+]);
+
+/** Sixteen strongest photos for the gallery strip, none of them shown anywhere else on the page. */
+export const galleryPhotos: Photo[] = photos
+  .filter((p) => !shownElsewhere.has(p.file))
+  .sort((a, b) => rank(a) - rank(b))
+  .slice(0, 16);

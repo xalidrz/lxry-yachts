@@ -32,17 +32,19 @@ export function Nav() {
           <Button
             href={links.tel}
             size="sm"
+            label="Call"
+            icon={<Phone aria-hidden />}
+            aria-label={`Call ${site.phone.display}`}
+            className="sm:hidden"
+          />
+          <Button
+            href={links.tel}
+            size="sm"
             label={site.phone.display}
             icon={<Phone aria-hidden />}
+            aria-label={`Call ${site.phone.display}`}
             className="hidden sm:inline-flex"
           />
-          <a
-            href={links.tel}
-            aria-label={`Call ${site.phone.display}`}
-            className="grid size-11 place-items-center bg-signal-deep text-white sm:hidden"
-          >
-            <Phone className="size-5" aria-hidden />
-          </a>
 
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>

@@ -5,7 +5,7 @@ import { site } from "@/config/site";
 
 export const metadata = pageMetadata({
   title: "Request a Time",
-  description: `Request an appointment at Elite Motorsports in Hayward, CA. Open Mon\u2013Fri 9 AM \u2013 5 PM. ${site.profile.appointments}.`,
+  description: `Request an appointment at Elite Motorsports in Hayward, CA. ${site.profile.appointments}.`,
   path: "/book",
   alt: heroPhoto.alt,
 });

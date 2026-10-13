@@ -5,11 +5,11 @@ import Image from "next/image";
 import { m, useScroll, useTransform } from "framer-motion";
 import { SectionHead } from "@/components/section-head";
 import { Reveal } from "@/components/motion";
-import { photoByFile } from "@/data/photos";
+import { photoByFile, shopSectionFile } from "@/data/photos";
 import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 import { site } from "@/config/site";
 
-const photo = photoByFile("hero-shop-bays-two-post-lifts");
+const photo = photoByFile(shopSectionFile);
 
 export function Shop() {
   const ref = useRef<HTMLDivElement>(null);

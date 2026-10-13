@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Live open/closed badge in Los Angeles time. Shows a neutral placeholder
- * (the static hours) until the client has computed the real status.
+ * until the client has computed the real status.
  */
 export function StatusBadge({ className }: { variant?: "inline"; className?: string }) {
   const clock = useShopStatus();
@@ -15,7 +15,7 @@ export function StatusBadge({ className }: { variant?: "inline"; className?: str
   return (
     <span className={cn("inline-flex items-center gap-2.5 text-sm text-ink/90", className)} role="status">
       <ProgressRing color={color} progress={progress} />
-      {clock === null ? "Mon–Fri 9 AM – 5 PM" : clock.text}
+      {clock === null ? "Checking status…" : clock.text}
     </span>
   );
 }

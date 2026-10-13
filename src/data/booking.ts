@@ -1,3 +1,5 @@
+import { site } from "@/config/site";
+
 /** Appointment windows, in minutes since midnight (shop time). */
 export const timeSlots = [
   { id: "morning", label: "Morning", range: "9–12", start: 540, end: 720 },
@@ -7,4 +9,4 @@ export const timeSlots = [
 
 export type SlotId = (typeof timeSlots)[number]["id"];
 
-export const closedNotice = "We’re closed right now — Goldy will text you back next business day.";
+export const closedNotice = `We’re closed right now — ${site.owner} will text you back next business day.`;

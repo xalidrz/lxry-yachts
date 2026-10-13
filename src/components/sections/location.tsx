@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { HoursTable } from "@/components/hours-table";
 import { Reveal } from "@/components/motion";
 import { SectionHead } from "@/components/section-head";
-import { photoByFile } from "@/data/photos";
+import { exteriorStripFiles, photoByFile } from "@/data/photos";
 import { links, site } from "@/config/site";
 
-const strip = ["s-class-at-shop-front", "4runner-by-shop-sign", "cybertruck-outside-shop"].map(photoByFile);
+const strip = exteriorStripFiles.map(photoByFile);
 
 export function Location() {
   return (

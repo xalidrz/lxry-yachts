@@ -4,9 +4,8 @@ import { ArrowUpRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion";
 import { SectionHead } from "@/components/section-head";
-import { StatusBadge } from "@/components/status-badge";
 import { googleReviews } from "@/data/reviews";
-import { hoursSummary, openWindow, opensOn, shopNow } from "@/lib/hours";
+import { openWindow, opensOn, shopNow } from "@/lib/hours";
 import { useNow } from "@/lib/use-now";
 import { useShopStatus } from "@/lib/use-shop-status";
 import { links, site } from "@/config/site";
@@ -48,7 +47,7 @@ export function Hours() {
 
         <div className="mt-12 grid gap-4 lg:grid-cols-2">
           <Reveal className="border border-line bg-surface p-6 sm:p-8">
-            <svg viewBox="0 0 300 300" className="mx-auto w-full max-w-[22rem]" role="img" aria-label={`24-hour dial. The shop is open ${hoursSummary()}. Current Pacific time ${hh}.`}>
+            <svg viewBox="0 0 300 300" className="mx-auto w-full max-w-[22rem]" role="img" aria-label={`24-hour dial showing the shop\u2019s open window and the current Pacific time, ${hh}.`}>
               <circle cx={C} cy={C} r={R} fill="none" stroke="#262a30" strokeWidth="10" />
               <path d={OPEN_ARC} fill="none" stroke={openToday ? "#e3262e" : "#5a2326"} strokeWidth="10" />
               {hourTicks.map((t) => (
@@ -74,9 +73,7 @@ export function Hours() {
             </p>
 
             <div className="mt-6 border-t border-line pt-6">
-              <StatusBadge className="font-display text-3xl font-extrabold uppercase tracking-tight text-ink" />
-              <p className="mt-3 font-mono text-xs uppercase tracking-[0.16em] text-muted">{hoursSummary()}</p>
-              <p className="mt-4 text-sm text-ink/85">
+              <p className="text-sm text-ink/85">
                 {site.profile.appointments}. Pick a day and a time window and {site.owner} will text you back.
               </p>
               <div className="mt-5">

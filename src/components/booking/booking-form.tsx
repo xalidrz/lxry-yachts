@@ -118,7 +118,7 @@ export function BookingForm() {
       <div className="space-y-6">
         <fieldset>
           <legend className={label}>Day</legend>
-          <p className="mt-1 text-sm text-muted">Open {`Mon–Fri`}. Saturdays and Sundays aren&rsquo;t available.</p>
+          <p className="mt-1 text-sm text-muted">Saturdays and Sundays aren&rsquo;t available.</p>
           <div className="mt-3">
             {now ? (
               <DatePicker now={now} value={date} onChange={setDate} />

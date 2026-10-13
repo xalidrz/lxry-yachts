@@ -5,9 +5,8 @@ import { MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
 import { heroPhoto } from "@/data/photos";
-import { formatShopClock, opensOn } from "@/lib/hours";
+import { formatShopClock } from "@/lib/hours";
 import { useNow } from "@/lib/use-now";
-import { useShopStatus } from "@/lib/use-shop-status";
 import { links, site } from "@/config/site";
 
 function Cell({ label, children }: { label: string; children: React.ReactNode }) {
@@ -21,8 +20,6 @@ function Cell({ label, children }: { label: string; children: React.ReactNode })
 
 export function Hero() {
   const now = useNow(1000);
-  const clock = useShopStatus();
-  const tag = clock === null ? "Hayward, CA" : opensOn(clock.dow) ? "Open today · Hayward, CA" : "Closed today · Hayward, CA";
 
   return (
     <section id="top" aria-labelledby="hero-title" className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-graphite">
@@ -42,7 +39,7 @@ export function Hero() {
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-10 pt-24 lg:px-8 lg:pb-14">
         <p className="animate-rise inline-flex w-fit items-center gap-2.5 border border-line bg-graphite px-3.5 py-2 font-mono text-xs uppercase tracking-[0.2em] text-ink">
           <span className="size-2 rounded-full bg-signal" aria-hidden />
-          {tag}
+          Owner-run · Hayward, CA
         </p>
         <h1
           id="hero-title"
@@ -67,8 +64,7 @@ export function Hero() {
             <span className="flex items-start gap-2">
               <MapPin className="mt-0.5 size-4 shrink-0 text-signal-bright" aria-hidden />
               <span>
-                Hayward, CA
-                <span className="block text-xs text-muted">37.67°N 122.08°W</span>
+                {site.address.street} · {site.address.plusCode.split(" ")[0]}
               </span>
             </span>
           </Cell>

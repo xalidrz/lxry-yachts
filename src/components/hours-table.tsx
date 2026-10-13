@@ -4,15 +4,13 @@ import { fmt12 } from "@/lib/hours";
 import { useShopStatus } from "@/lib/use-shop-status";
 import { site } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { StatusBadge } from "@/components/status-badge";
 
 /** Full week, Monday first. Today's row is highlighted once the client knows the day in Los Angeles. */
 export function HoursTable() {
   const clock = useShopStatus();
   return (
     <div>
-      <StatusBadge className="font-medium text-ink" />
-      <table className="mt-3 w-full max-w-sm font-mono text-sm">
+      <table className="w-full max-w-sm font-mono text-sm">
         <caption className="sr-only">Opening hours</caption>
         <tbody>
           {site.hours.week.map((d) => {

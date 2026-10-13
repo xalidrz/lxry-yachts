@@ -1,5 +1,4 @@
 import { ArrowUp } from "lucide-react";
-import { StatusBadge } from "@/components/status-badge";
 import { Wordmark } from "@/components/wordmark";
 import { nav } from "@/config/nav";
 import { hoursSummary } from "@/lib/hours";
@@ -58,7 +57,6 @@ export function Footer() {
             </a>
           </address>
           <p className="mt-3 text-sm text-ink/90">{hoursSummary()}</p>
-          <StatusBadge className="mt-2" />
         </div>
       </div>
 
