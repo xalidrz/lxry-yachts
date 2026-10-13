@@ -23,6 +23,8 @@ export const site = {
   geo: { lat: 37.654312, lng: -122.088312 },
   phone: { display: "(510) 363-8275", tel: "+15103638275" },
   rating: { value: 4.7, count: 51 },
+  // From the oldest Google review (2017).
+  customersSince: 2017,
   wheelchairAccessible: true,
   // Facts from the shop's Google Business Profile.
   profile: {
@@ -63,4 +65,7 @@ export const links = {
   place: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,
   directions: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`,
   reviews: `https://www.google.com/maps/search/?api=1&query=${q}`,
+  // Opens the Google Maps listing, where "Write a review" is one tap away. Swap in the direct
+  // https://search.google.com/local/writereview?placeid=<PLACE_ID> link once you have the Place ID.
+  writeReview: `https://www.google.com/maps/search/?api=1&query=${q}`,
 };

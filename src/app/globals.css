@@ -250,3 +250,11 @@ html[data-loader="on"] { overflow: hidden; }
 
 /* Backup basemap (OpenStreetMap) darkened with a plain colour filter on the map canvas. */
 .osm-dark .maplibregl-canvas { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
+
+/* ---------- Review call to action: decorative stars fill red one by one on hover ---------- */
+.star-row .star { fill: transparent; transition: fill 0.25s ease-out; }
+.star-row:hover .star { fill: var(--color-signal); transition-delay: calc(var(--i) * 90ms); }
+@media (prefers-reduced-motion: reduce) {
+  .star-row .star { transition: none; }
+  .star-row:hover .star { transition-delay: 0ms; }
+}

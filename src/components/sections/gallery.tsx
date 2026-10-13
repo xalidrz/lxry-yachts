@@ -86,7 +86,7 @@ export function Gallery({ h1 = false }: { h1?: boolean }) {
   return (
     <section id="gallery" className="border-b border-line bg-graphite py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHead n="08" title="The work" as={h1 ? "h1" : "h2"} intro="Photos from the shop floor, sorted by what they show." />
+        <SectionHead n="09" title="The work" as={h1 ? "h1" : "h2"} intro="Photos from the shop floor, sorted by what they show." />
 
         {/* Phones: one column at a time */}
         <div role="tablist" aria-label="Photo categories" className="mt-10 flex gap-2 overflow-x-auto md:hidden">
