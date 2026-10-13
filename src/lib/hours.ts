@@ -128,3 +128,23 @@ export function openingHoursText() {
   });
   return groups.map((g) => `${g.days.length > 1 ? `${g.days[0]}-${g.days[g.days.length - 1]}` : g.days[0]} ${g.range}`);
 }
+
+/** Local time at the shop, e.g. "3:42:07 PM PDT". */
+export function formatShopClock(date: Date = new Date()) {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: site.hours.timeZone,
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZoneName: "short",
+  }).format(date);
+}
+
+/** Whether the shop opens at all on this weekday (0 = Sunday). */
+export const opensOn = (dow: number) => week.some((d) => d.dow === dow && d.open && d.close);
+
+/** Opening window in minutes since midnight (same Mon–Fri hours every open day). */
+export const openWindow = (() => {
+  const d = week.find((x) => x.open && x.close);
+  return d?.open && d.close ? { start: toMinutes(d.open), end: toMinutes(d.close) } : { start: 0, end: 0 };
+})();

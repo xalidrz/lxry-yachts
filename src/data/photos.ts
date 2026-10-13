@@ -122,3 +122,12 @@ const previewFiles = [
 export const previewPhotos: Photo[] = previewFiles.map(
   (f) => photos.find((p) => p.file === `/photos/${f}.webp`) as Photo,
 );
+
+export const photoByFile = (file: string) => {
+  const found = photos.find((p) => p.file === `/photos/${file}.webp`) ?? (heroPhoto.file === `/photos/${file}.webp` ? heroPhoto : undefined);
+  if (!found) throw new Error(`Unknown photo: ${file}`);
+  return found;
+};
+
+/** Sixteen strongest photos for the gallery strip, in display order. */
+export const galleryPhotos: Photo[] = bestFirst.slice(0, 16).map(photoByFile);

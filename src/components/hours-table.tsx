@@ -11,25 +11,25 @@ export function HoursTable() {
   const clock = useShopStatus();
   return (
     <div>
-      <StatusBadge variant="inline" className="font-medium text-ink" />
-      <table className="mt-3 w-full max-w-xs text-sm">
+      <StatusBadge className="font-medium text-ink" />
+      <table className="mt-3 w-full max-w-sm font-mono text-sm">
         <caption className="sr-only">Opening hours</caption>
         <tbody>
           {site.hours.week.map((d) => {
             const today = clock?.dow === d.dow;
             const closed = !d.open || !d.close;
             return (
-              <tr key={d.dow} className={cn(today && "bg-white/[0.07] text-ink")} aria-current={today ? "date" : undefined}>
+              <tr key={d.dow} className={cn(today && "bg-steel text-ink")} aria-current={today ? "date" : undefined}>
                 <th
                   scope="row"
                   className={cn(
-                    "rounded-l-md px-2.5 py-1.5 text-left font-normal",
+                    "px-2.5 py-1.5 text-left font-normal",
                     today ? "border-l-2 border-signal font-semibold text-ink" : "border-l-2 border-transparent text-ink/90",
                   )}
                 >
                   {d.label}
                 </th>
-                <td className={cn("rounded-r-md px-2.5 py-1.5 text-right", closed ? "text-muted" : today ? "font-semibold text-ink" : "text-ink/90")}>
+                <td className={cn("px-2.5 py-1.5 text-right", closed ? "text-muted" : today ? "font-semibold text-ink" : "text-ink/90")}>
                   {closed ? "Closed" : `${fmt12(d.open!)} – ${fmt12(d.close!)}`}
                 </td>
               </tr>

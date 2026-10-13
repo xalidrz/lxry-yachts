@@ -1,53 +1,93 @@
+"use client";
+
 import Image from "next/image";
-import { MapPin, Phone } from "lucide-react";
-import { PearlButton } from "@/components/ui/pearl-button";
+import { MapPin, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
 import { heroPhoto } from "@/data/photos";
+import { formatShopClock, opensOn } from "@/lib/hours";
+import { useNow } from "@/lib/use-now";
+import { useShopStatus } from "@/lib/use-shop-status";
 import { links, site } from "@/config/site";
 
-export function Hero() {
+function Cell({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <section id="top" className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-graphite">
+    <div className="border-l border-line px-4 py-4 first:border-l-0 sm:px-6 sm:py-5">
+      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-muted">{label}</p>
+      <div className="mt-1.5 font-mono text-sm text-ink sm:text-base">{children}</div>
+    </div>
+  );
+}
+
+export function Hero() {
+  const now = useNow(1000);
+  const clock = useShopStatus();
+  const tag = clock === null ? "Hayward, CA" : opensOn(clock.dow) ? "Open today · Hayward, CA" : "Closed today · Hayward, CA";
+
+  return (
+    <section id="top" aria-labelledby="hero-title" className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-graphite">
       <Image
         src={heroPhoto.file}
         alt={heroPhoto.alt}
         fill
         priority
         fetchPriority="high"
-        sizes="100vw"
         quality={75}
-        className="hero-zoom -z-20 animate-hero-zoom object-cover object-[64%_50%] lg:object-center"
+        sizes="100vw"
+        className="object-cover object-[64%_50%] lg:object-center"
       />
-      <div className="hero-shade absolute inset-0 -z-10" aria-hidden />
+      <div className="hero-shade absolute inset-0" aria-hidden />
+      <div className="grid-lines absolute inset-0 opacity-60" aria-hidden />
 
-      <div className="mx-auto w-full max-w-6xl px-5 pb-16 pt-32 sm:pb-20 lg:px-8 lg:pb-24">
-        <div className="animate-rise">
-          <StatusBadge />
-        </div>
-        <h1 className="animate-rise mt-6 max-w-5xl font-display text-[3.4rem] font-extrabold uppercase leading-[0.9] tracking-tight text-ink [animation-delay:80ms] sm:text-7xl lg:text-[6.25rem]">
-          Honest Repairs.
-          <span className="block text-signal">Hayward&rsquo;s 4.7<span className="font-sans text-[0.72em] font-black">★</span> Shop.</span>
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-10 pt-24 lg:px-8 lg:pb-14">
+        <p className="animate-rise inline-flex w-fit items-center gap-2.5 border border-line bg-graphite px-3.5 py-2 font-mono text-xs uppercase tracking-[0.2em] text-ink">
+          <span className="size-2 rounded-full bg-signal" aria-hidden />
+          {tag}
+        </p>
+        <h1
+          id="hero-title"
+          className="animate-rise mt-6 max-w-5xl font-display text-[clamp(3.25rem,10.5vw,8.5rem)] font-extrabold uppercase leading-[0.88] tracking-tight text-ink [animation-delay:80ms]"
+        >
+          Every car.
+          <br />
+          Diagnosed right the first time.
         </h1>
-        <p className="animate-rise mt-6 max-w-xl text-lg leading-relaxed text-ink/85 [animation-delay:160ms] sm:text-xl">
-          Honest repairs, fair prices, and an owner who explains the work.
+        <p className="animate-rise mt-6 max-w-xl text-lg leading-relaxed text-ink/85 [animation-delay:160ms]">
+          Honest, fast auto repair in Hayward, run by {site.owner}. Come by the shop or call before you drive over.
         </p>
-        <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:240ms]">
-          <PearlButton asChild>
-            <a href={links.tel}>
-              <Phone className="phone-icon size-5" aria-hidden />
-              Call Now
-            </a>
-          </PearlButton>
-          <PearlButton asChild variant="secondary">
-            <a href={links.directions} target="_blank" rel="noopener noreferrer">
-              <MapPin className="size-5" aria-hidden />
-              Get Directions
-            </a>
-          </PearlButton>
+        <div className="animate-rise mt-8 flex flex-wrap gap-3 [animation-delay:240ms]">
+          <Button href={links.tel} label="Call the shop" />
+          <Button href="#location" variant="outline" label="Find us" />
         </div>
-        <p className="animate-rise mt-6 text-sm text-muted [animation-delay:320ms]">
-          {site.address.street}, {site.address.city}, {site.address.region} · Owner-run by {site.owner}
-        </p>
+      </div>
+
+      <div className="relative border-t border-line bg-graphite">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 lg:grid-cols-4">
+          <Cell label="Location">
+            <span className="flex items-start gap-2">
+              <MapPin className="mt-0.5 size-4 shrink-0 text-signal-bright" aria-hidden />
+              <span>
+                Hayward, CA
+                <span className="block text-xs text-muted">37.67°N 122.08°W</span>
+              </span>
+            </span>
+          </Cell>
+          <Cell label="Google rating">
+            <span className="flex items-center gap-2">
+              <Star className="size-4 fill-ink text-ink" aria-hidden />
+              {site.rating.value.toFixed(1)}★
+              <span className="text-xs text-muted">{site.rating.count} reviews</span>
+            </span>
+          </Cell>
+          <Cell label="Local time · Pacific">
+            <span className="tabular-nums" suppressHydrationWarning>
+              {now ? formatShopClock(now) : "--:--:--"}
+            </span>
+          </Cell>
+          <Cell label="Status">
+            <StatusBadge className="font-mono text-sm text-ink sm:text-base" />
+          </Cell>
+        </div>
       </div>
     </section>
   );

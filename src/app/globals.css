@@ -5,34 +5,37 @@
 @theme inline {
   --color-graphite: #0e0f11;
   --color-surface: #17191c;
-  --color-nav: #131518;
   --color-steel: #2a2e33;
+  --color-line: #262a30;
   --color-ink: #ededed;
   --color-muted: #a4a9af;
   --color-signal: #e3262e;
   --color-signal-bright: #f4434a;
+  --color-signal-deep: #d0202a;
   --font-display: var(--font-barlow), "Arial Narrow", sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
-  --animate-phone-shake: phone-shake 0.6s ease-in-out;
-  --animate-hero-zoom: hero-zoom 24s ease-out forwards;
-  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --font-mono: var(--font-mono-jb), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --animate-rise: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes phone-shake {
-  0%, 100% { transform: rotate(0); }
-  15% { transform: rotate(-16deg); }
-  30% { transform: rotate(14deg); }
-  45% { transform: rotate(-12deg); }
-  60% { transform: rotate(10deg); }
-  75% { transform: rotate(-6deg); }
-}
-@keyframes hero-zoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
-}
 @keyframes rise {
-  from { transform: translateY(18px); }
+  from { transform: translateY(22px); }
   to { transform: translateY(0); }
+}
+@keyframes letter-in {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes loader-out {
+  to { transform: translateY(-100%); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 
 html {
@@ -44,191 +47,130 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
+section[id] { scroll-margin-top: 4rem; }
 :focus-visible {
   outline: 2px solid var(--color-signal-bright);
   outline-offset: 3px;
 }
 ::selection { background: var(--color-signal); color: #fff; }
 
-/* Diagonal-line carbon texture: pure CSS gradients only. */
-.bg-carbon {
-  background-color: var(--color-graphite);
+/* ---------- Technical grid motif: thin 1px lines ---------- */
+.grid-lines {
   background-image:
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
-    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 7px);
-}
-.bg-carbon-surface {
-  background-color: var(--color-surface);
-  background-image:
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 7px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
-/* Hero: solid-colour linear gradient, darker on the left for text readability. */
+/* Hero: solid-colour linear gradient for text legibility. */
 .hero-shade {
-  background: linear-gradient(90deg, rgba(14, 15, 17, 0.9) 0%, rgba(14, 15, 17, 0.72) 50%, rgba(14, 15, 17, 0.3) 100%);
-}
-@media (min-width: 1024px) {
-  .hero-shade {
-    background: linear-gradient(90deg, rgba(14, 15, 17, 0.94) 0%, rgba(14, 15, 17, 0.84) 38%, rgba(14, 15, 17, 0.42) 66%, rgba(14, 15, 17, 0.06) 100%);
-  }
+  background:
+    linear-gradient(to top, rgba(14, 15, 17, 0.96) 0%, rgba(14, 15, 17, 0.55) 38%, rgba(14, 15, 17, 0.25) 100%),
+    linear-gradient(90deg, rgba(14, 15, 17, 0.75) 0%, rgba(14, 15, 17, 0.2) 70%);
 }
 
-/* ---------- Pearl buttons ----------
-   Glossy pill. Layers (back to front): gradient base, top-half highlight (::before),
-   one-shot light streak on hover (::after), then the label. The pseudo-elements sit at
-   z-index -1 inside the button's own stacking context, so they paint above the
-   gradient and below the text. Hard edges only. */
+/* ---------- Buttons: label slides up, arrow nudges, red fill sweeps in ---------- */
 @layer components {
-  .pearl {
+  .btn {
     position: relative;
     isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
     overflow: hidden;
+    height: 3rem;
+    padding: 0 1.5rem;
+    border: 1px solid transparent;
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #fff;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #e9eaec;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      inset 0 -2px 6px rgba(0, 0, 0, 0.6),
-      0 8px 20px rgba(0, 0, 0, 0.55);
-    transition:
-      transform 200ms ease-out,
-      box-shadow 200ms ease-out;
   }
-  .pearl-secondary {
-    background: linear-gradient(180deg, #3a3d42 0%, #16181b 50%, #0b0c0e 100%);
-  }
-  .pearl-primary {
-    background: linear-gradient(180deg, #d32027 0%, #8e1116 50%, #5a0a0e 100%);
-    border-color: rgba(255, 120, 120, 0.35);
-    color: #ffffff;
-  }
-
-  /* gloss: thin highlight over the top half, fading out at 50% */
-  .pearl::before {
-    content: "";
+  .btn-sm { height: 2.75rem; padding: 0 1.125rem; font-size: 0.9375rem; }
+  .btn-primary { background: var(--color-signal-deep); border-color: var(--color-signal-deep); }
+  .btn-outline { background: transparent; border-color: rgba(255, 255, 255, 0.3); }
+  .btn-fill {
     position: absolute;
-    inset: 0 0 50% 0;
+    inset: 0;
     z-index: -1;
-    pointer-events: none;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
-    opacity: 0.7333; /* 0.30 * 0.7333 = the 0.22 resting highlight */
-    transition: opacity 200ms ease-out;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
-  /* light streak: narrow hard-edged band, parked off the left edge until hover */
-  .pearl::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 22%;
-    z-index: -1;
-    pointer-events: none;
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateX(-130%) skewX(-20deg);
+  .btn-primary .btn-fill { background: #8f151b; }
+  .btn-outline .btn-fill { background: var(--color-signal-deep); }
+  .btn-outline:hover { border-color: var(--color-signal-deep); }
+  .btn:hover .btn-fill, .btn:focus-visible .btn-fill { transform: scaleX(1); }
+  .btn-text { display: block; overflow: hidden; height: 1.25em; line-height: 1.25em; }
+  .btn-text > span {
+    display: block;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
-  .pearl:hover {
-    transform: translateY(-2px);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.32),
-      inset 0 -2px 6px rgba(0, 0, 0, 0.6),
-      0 12px 24px rgba(0, 0, 0, 0.6);
-  }
-  .pearl:hover::before {
-    opacity: 1;
-  }
-  .pearl:hover::after {
-    animation: pearl-streak 600ms ease-out 1 both;
-  }
-
-  /* pressed in */
-  .pearl:active {
-    transform: translateY(1px);
-    box-shadow:
-      inset 0 2px 5px rgba(0, 0, 0, 0.75),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.12),
-      0 3px 8px rgba(0, 0, 0, 0.5);
-  }
-  .pearl:active::before {
-    opacity: 0.45;
-  }
+  .btn:hover .btn-text > span, .btn:focus-visible .btn-text > span { transform: translateY(-100%); }
+  .btn svg { width: 1.125rem; height: 1.125rem; flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+  .btn:hover .btn-arrow, .btn:focus-visible .btn-arrow { transform: translateX(5px); }
+  .btn:disabled { opacity: 0.5; pointer-events: none; }
 }
 
-/* keyboard focus ring: unlayered so it beats the global :focus-visible rule */
-.pearl:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.6);
-  outline-offset: 2px;
-}
+/* ---------- Loader (visible only when the head script marks this as a first visit) ---------- */
+.loader { display: none; }
+html[data-loader="on"] .loader { display: grid; }
+html[data-loader="on"] { overflow: hidden; }
+.loader-out { animation: loader-out 0.55s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
+.letter { display: inline-block; overflow: hidden; vertical-align: top; }
+.letter > span { display: block; animation: letter-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* Lucide icons inside pearl buttons are 18px (unlayered so it wins over size-* utilities) */
-.pearl svg {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
+/* ---------- Scroll reveal (transform + opacity only) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms);
 }
+[data-reveal].in { opacity: 1; transform: none; }
 
-@keyframes pearl-streak {
-  from {
-    transform: translateX(-130%) skewX(-20deg);
-  }
-  to {
-    transform: translateX(560%) skewX(-20deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pearl,
-  .pearl::before {
-    transition: none;
-  }
-  .pearl:hover,
-  .pearl:active {
-    transform: none;
-  }
-  .pearl:hover::after {
-    animation: none;
-  }
-}
-
-.nav-link {
-  position: relative;
-  display: inline-block;
-  padding: 0.5rem 0;
-  transition: color 0.2s;
-}
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 2px;
-  height: 1px;
-  background: var(--color-signal);
+/* ---------- Cards ---------- */
+.option-card .underline-sweep {
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.25s ease;
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.nav-link:hover { color: var(--color-signal); }
-.nav-link[aria-current="page"]::after { transform: scaleX(1); }
-.nav-link:hover::after { transform: scaleX(1); }
+.option-card:hover .underline-sweep, .option-card:focus-visible .underline-sweep { transform: scaleX(1); }
+.option-card { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s; }
+.option-card:hover { transform: translateY(-6px); border-color: #3a4048; }
 
-.snap-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-steel) var(--color-graphite);
+/* Checkered flag, used twice at most: the tracker's final stage and the footer. */
+.checker {
+  background-color: #ededed;
+  background-image:
+    linear-gradient(45deg, #0e0f11 25%, transparent 25%, transparent 75%, #0e0f11 75%),
+    linear-gradient(45deg, #0e0f11 25%, transparent 25%, transparent 75%, #0e0f11 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 6px 6px;
 }
 
-.phone-icon { display: inline-block; }
-.group:hover .phone-icon,
-.group:focus-visible .phone-icon { animation: var(--animate-phone-shake); }
+/* Big outlined wordmark: transparent fill, red fill on hover. */
+.outline-word {
+  color: transparent;
+  -webkit-text-stroke: 1px #4a515a;
+  transition: color 0.5s ease, -webkit-text-stroke-color 0.5s ease;
+}
+.outline-word:hover { color: var(--color-signal); -webkit-text-stroke-color: var(--color-signal); }
+
+.snap-scroll { scrollbar-width: none; }
+.snap-scroll::-webkit-scrollbar { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-zoom, .animate-rise { animation: none !important; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
-  .group:hover .phone-icon { animation: none; }
-  .nav-link::after { transition: none; }
+  .animate-rise, .letter > span { animation: none; }
+  .btn-fill, .btn-text > span, .btn svg, .option-card, .option-card .underline-sweep { transition: none; }
+  .option-card:hover { transform: none; }
+  .loader-out { animation: none; display: none; }
 }

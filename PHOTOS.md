@@ -5,7 +5,7 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 
 ## Used (30)
 
-"Gallery" below is the `/work` page. Six of those photos (wiring repair, Charger, V8 build, S-Class at the shop front, Bentley, titanium exhaust) also appear in the Home page preview.
+"Gallery" below is the horizontal strip at the bottom of the one-page site (16 strongest photos, `galleryPhotos` in `src/data/photos.ts`). The hero, the shop section, the six service cards and the exterior strip in Location also use photos from this folder.
 
 | File in `public/photos/` | Source | Where |
 |---|---|---|

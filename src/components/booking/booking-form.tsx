@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Check, Copy, MessageSquare, Phone } from "lucide-react";
-import { PearlButton } from "@/components/ui/pearl-button";
+import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/booking/date-picker";
 import { closedNotice, timeSlots } from "@/data/booking";
 import { visibleServices } from "@/data/services";
@@ -14,8 +14,8 @@ import { cn } from "@/lib/utils";
 
 const NOT_SURE = "Not sure";
 const field =
-  "mt-2 block h-12 w-full rounded-xl border border-white/15 bg-carbon px-4 text-base text-ink placeholder:text-muted/70 focus:border-signal";
-const label = "block font-display text-sm font-bold uppercase tracking-[0.2em] text-ink";
+  "mt-2 block h-12 w-full border border-line bg-surface px-4 text-base text-ink placeholder:text-muted/70 focus:border-signal";
+const label = "block font-mono text-xs uppercase tracking-[0.2em] text-muted";
 
 type Errors = Partial<Record<"name" | "phone" | "vehicle" | "date" | "slot", string>>;
 
@@ -123,7 +123,7 @@ export function BookingForm() {
             {now ? (
               <DatePicker now={now} value={date} onChange={setDate} />
             ) : (
-              <div className="h-[22rem] max-w-sm rounded-2xl border border-white/10 bg-carbon" aria-hidden />
+              <div className="h-[22rem] max-w-sm  border border-white/10 bg-carbon" aria-hidden />
             )}
           </div>
           {date ? <p className="mt-3 text-sm text-ink">{longDay(date)}</p> : null}
@@ -148,8 +148,8 @@ export function BookingForm() {
                   />
                   <span
                     className={cn(
-                      "block rounded-xl border border-white/15 bg-carbon px-4 py-3 text-center peer-checked:border-signal peer-checked:bg-signal/15 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-signal-bright",
-                      disabled ? "text-muted/50" : "text-ink hover:border-white/40",
+                      "block border border-line bg-surface px-4 py-3 text-center peer-checked:border-signal peer-checked:bg-signal/15 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-signal-bright",
+                      disabled ? "text-muted/50" : "text-ink hover:border-steel",
                     )}
                   >
                     <span className="block font-display text-base font-bold uppercase tracking-wide">{s.label}</span>
@@ -163,10 +163,7 @@ export function BookingForm() {
         </fieldset>
 
         <div>
-          <PearlButton type="submit" className="w-full sm:w-auto">
-            <MessageSquare className="size-4" aria-hidden />
-            Send request by text
-          </PearlButton>
+          <Button type="submit" label="Send request by text" icon={<MessageSquare aria-hidden />} className="w-full sm:w-auto" />
           {status?.open === false ? (
             <p className="mt-3 text-sm text-ink" role="status">
               {closedNotice}
@@ -178,20 +175,19 @@ export function BookingForm() {
         </div>
 
         {sent ? (
-          <div className="rounded-2xl border border-white/15 bg-surface p-5" role="region" aria-label="Your request">
-            <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-signal">Didn&rsquo;t open your messages?</p>
+          <div className=" border border-line bg-surface p-5" role="region" aria-label="Your request">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-signal-bright">Didn&rsquo;t open your messages?</p>
             <pre className="mt-3 whitespace-pre-wrap break-words font-sans text-sm text-ink/90">{sent}</pre>
             <div className="mt-4 flex flex-wrap gap-3">
-              <PearlButton type="button" variant="secondary" size="sm" onClick={copy}>
-                {copied ? <Check className="size-4" aria-hidden /> : <Copy className="size-4" aria-hidden />}
-                {copied ? "Copied" : "Copy message"}
-              </PearlButton>
-              <PearlButton asChild size="sm">
-                <a href={links.tel}>
-                  <Phone className="phone-icon size-4" aria-hidden />
-                  Call {site.phone.display}
-                </a>
-              </PearlButton>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={copy}
+                label={copied ? "Copied" : "Copy message"}
+                icon={copied ? <Check aria-hidden /> : <Copy aria-hidden />}
+              />
+              <Button href={links.tel} size="sm" label={`Call ${site.phone.display}`} icon={<Phone aria-hidden />} />
             </div>
           </div>
         ) : null}
