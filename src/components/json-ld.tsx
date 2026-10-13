@@ -34,6 +34,7 @@ export function JsonLd() {
       ...site.profile.accessibility.map((name) => ({ "@type": "LocationFeatureSpecification", name, value: true })),
       { "@type": "LocationFeatureSpecification", name: site.profile.parking, value: true },
     ],
+    geo: { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng },
     hasMap: links.directions,
   };
   return (

@@ -174,3 +174,66 @@ html[data-loader="on"] { overflow: hidden; }
   .option-card:hover { transform: none; }
   .loader-out { animation: none; display: none; }
 }
+
+/* ---------- Hours clock: ticks draw in clockwise, then the needle sweeps ---------- */
+.clock .tick { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.clock.in .tick {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.35s ease-out calc(var(--i) * 7ms);
+}
+.clock .band { opacity: 0; }
+.clock.in .band { opacity: 1; transition: opacity 0.6s ease-out 0.7s; }
+@media (prefers-reduced-motion: reduce) {
+  .clock .tick { stroke-dashoffset: 0; }
+  .clock .band { opacity: 1; }
+  .clock.in .tick, .clock.in .band { transition: none; }
+}
+
+/* ---------- Target-reticle map marker: scale and fade only ---------- */
+.reticle { width: 0; height: 0; }
+.reticle > span { position: absolute; left: 0; top: 0; border-radius: 9999px; transform: translate(-50%, -50%); }
+.reticle-ring { width: 34px; height: 34px; border: 2px solid var(--color-signal); }
+.reticle-dot { width: 9px; height: 9px; background: var(--color-signal); }
+.reticle-pulse {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--color-signal);
+  animation: reticle-pulse 2s ease-out infinite;
+}
+@keyframes reticle-pulse {
+  from { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+  to { transform: translate(-50%, -50%) scale(3.2); opacity: 0; }
+}
+.xhair { transform: scale(0); transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1); }
+.xhair-x { transform-origin: center; }
+.drawn .xhair { transform: scale(1); }
+.maplibregl-ctrl-attrib { background: var(--color-graphite) !important; color: var(--color-muted) !important; font-family: var(--font-mono); font-size: 10px; }
+.maplibregl-ctrl-attrib a { color: var(--color-muted) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .reticle-pulse { animation: none; opacity: 0; }
+  .xhair { transform: scale(1); transition: none; }
+}
+
+/* ---------- Fanned photo stack: hover or focus spreads it out ---------- */
+.photo-stack { position: relative; height: 17rem; }
+.photo-stack .p {
+  position: absolute;
+  width: 58%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-surface);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.photo-stack .p1 { left: 0; top: 2rem; transform: rotate(-7deg); z-index: 1; }
+.photo-stack .p2 { left: 21%; top: 0.25rem; transform: rotate(1.5deg); z-index: 3; }
+.photo-stack .p3 { right: 0; top: 2.75rem; transform: rotate(7deg); z-index: 2; }
+.photo-stack:hover .p1, .photo-stack:focus .p1 { transform: translateX(-7%) rotate(-11deg); }
+.photo-stack:hover .p2, .photo-stack:focus .p2 { transform: translateY(-3%) rotate(0deg); }
+.photo-stack:hover .p3, .photo-stack:focus .p3 { transform: translateX(7%) rotate(11deg); }
+@media (prefers-reduced-motion: reduce) {
+  .photo-stack .p { transition: none; }
+}
+.daydot { transition: left 1s linear; }
+@media (prefers-reduced-motion: reduce) { .daydot { transition: none; } }

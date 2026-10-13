@@ -18,6 +18,9 @@ export const site = {
     country: "US",
     plusCode: "MW36+PM Hayward",
   },
+  // Centre of the Plus Code cell 849VMW36+PM (MW36+PM Hayward), about 14 m across. Replace with a
+  // surveyed pin if you have one.
+  geo: { lat: 37.654312, lng: -122.088312 },
   phone: { display: "(510) 363-8275", tel: "+15103638275" },
   rating: { value: 4.7, count: 51 },
   wheelchairAccessible: true,
@@ -60,5 +63,4 @@ export const links = {
   place: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,
   directions: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`,
   reviews: `https://www.google.com/maps/search/?api=1&query=${q}`,
-  mapEmbed: `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed`,
 };
