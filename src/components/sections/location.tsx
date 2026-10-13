@@ -29,10 +29,10 @@ export function Location({ h1 = false }: { h1?: boolean }) {
                   <div>
                     <span className="sr-only">Address: </span>
                     <a
-                      href={links.place}
+                      href={links.business}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block leading-relaxed text-ink underline decoration-signal decoration-2 underline-offset-4 hover:text-signal-bright"
+                      className="block leading-relaxed text-ink hover:underline hover:underline-offset-4"
                     >
                       {site.address.street}
                       <br />
@@ -68,7 +68,7 @@ export function Location({ h1 = false }: { h1?: boolean }) {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button
-                  href={links.place}
+                  href={links.business}
                   target="_blank"
                   rel="noopener noreferrer"
                   label="Open in Google Maps"

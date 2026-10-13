@@ -46,10 +46,10 @@ export function Footer() {
           <h2 className={col}>Visit</h2>
           <address className="mt-3 text-sm not-italic leading-relaxed text-ink/90">
             <a
-              href={links.place}
+              href={links.business}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline decoration-signal decoration-1 underline-offset-4 hover:text-signal-bright"
+              className="hover:underline hover:underline-offset-4"
             >
               {site.address.street}
               <br />
