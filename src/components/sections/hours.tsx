@@ -32,7 +32,7 @@ const hourTicks = Array.from({ length: 24 }, (_, h) => {
 
 const featured = ["Ashwin Kumar", "Maria Naranjo", "Arav Parmar"].map((n) => googleReviews.find((r) => r.author === n)!);
 
-export function Hours() {
+export function Hours({ h1 = false }: { h1?: boolean }) {
   const now = useNow(1000);
   const clock = useShopStatus();
   const here = now ? shopNow(now) : null;
@@ -43,7 +43,7 @@ export function Hours() {
   return (
     <section id="hours" className="border-b border-line bg-graphite py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHead n="06" title="Hours" />
+        <SectionHead n="06" title="Hours" as={h1 ? "h1" : "h2"} intro="The dial shows the shop\u2019s open window against the current Pacific time. The full week is on the Location page." />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-2">
           <Reveal className="border border-line bg-surface p-6 sm:p-8">

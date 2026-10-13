@@ -5,7 +5,7 @@ Photos are resized and compressed to WebP (quality 80, EXIF/GPS stripped). Nothi
 
 ## Used (30)
 
-"Gallery" below is the horizontal strip at the bottom of the one-page site (16 strongest photos, `galleryPhotos` in `src/data/photos.ts`). The hero, the shop section, the six service cards and the exterior strip in Location also use photos from this folder.
+"Gallery" below is the horizontal strip on the Work page (every photo not used for the hero, shop, service cards or exterior strip; `galleryPhotos` in `src/data/photos.ts`). The hero, the shop section (Home), the six service cards (Services) and the exterior strip (Location) also use photos from this folder.
 
 | File in `public/photos/` | Source | Where |
 |---|---|---|

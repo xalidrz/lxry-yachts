@@ -22,7 +22,7 @@ export function Hero() {
   const now = useNow(1000);
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-graphite">
+    <section aria-labelledby="hero-title" className="relative flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-graphite">
       <Image
         src={heroPhoto.file}
         alt={heroPhoto.alt}
@@ -54,7 +54,7 @@ export function Hero() {
         </p>
         <div className="animate-rise mt-8 flex flex-wrap gap-3 [animation-delay:240ms]">
           <Button href={links.tel} label="Call the shop" />
-          <Button href="#location" variant="outline" label="Find us" />
+          <Button href="/location" variant="outline" label="Find us" />
         </div>
       </div>
 

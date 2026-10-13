@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import { Wordmark } from "@/components/wordmark";
 import { Button } from "@/components/ui/button";
@@ -10,20 +12,26 @@ import { nav } from "@/config/nav";
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const current = (href: string) => (pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined);
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-graphite">
       <nav aria-label="Main" className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 lg:px-8">
-        <a href="/#top" className="shrink-0">
+        <Link href="/" className="shrink-0">
           <Wordmark className="h-6 lg:h-7" />
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 font-mono text-xs uppercase tracking-[0.18em] text-muted lg:flex">
           {nav.map((n) => (
             <li key={n.href}>
-              <a href={n.href} className="py-2 hover:text-ink">
+              <Link
+                href={n.href}
+                aria-current={current(n.href)}
+                className="border-b-2 border-transparent py-2 hover:text-ink aria-[current=page]:border-signal aria-[current=page]:text-ink"
+              >
                 {n.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -75,10 +83,14 @@ export function Nav() {
                     style={{ animation: `menu-in 0.5s cubic-bezier(0.22,1,0.36,1) ${120 + i * 70}ms forwards` }}
                   >
                     <DialogClose asChild>
-                      <a href={n.href} className="flex items-baseline gap-4 py-5 font-display text-5xl font-extrabold uppercase tracking-tight text-ink hover:text-signal-bright">
+                      <Link
+                        href={n.href}
+                        aria-current={current(n.href)}
+                        className="flex items-baseline gap-4 py-5 font-display text-5xl font-extrabold uppercase tracking-tight text-ink hover:text-signal-bright aria-[current=page]:text-signal-bright"
+                      >
                         <span className="font-mono text-xs tracking-[0.2em] text-muted">0{i + 1}</span>
                         {n.label}
-                      </a>
+                      </Link>
                     </DialogClose>
                   </li>
                 ))}

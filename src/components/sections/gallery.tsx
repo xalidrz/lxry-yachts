@@ -10,7 +10,7 @@ import { galleryPhotos } from "@/data/photos";
 const count = galleryPhotos.length;
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export function Gallery() {
+export function Gallery({ h1 = false }: { h1?: boolean }) {
   const strip = useRef<HTMLUListElement>(null);
   const drag = useRef({ down: false, x: 0, left: 0, moved: false });
   const [open, setOpen] = useState<number | null>(null);
@@ -25,7 +25,7 @@ export function Gallery() {
     <section id="gallery" className="border-b border-line bg-graphite py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHead n="08" title="The work" />
+          <SectionHead n="08" title="The work" as={h1 ? "h1" : "h2"} />
           <div className="flex items-center gap-3">
             <span className="hidden font-mono text-xs uppercase tracking-[0.2em] text-muted sm:block">Drag or scroll</span>
             <button type="button" onClick={() => scrollBy(-1)} aria-label="Scroll gallery left" className="grid size-11 place-items-center border border-line text-ink hover:border-signal">

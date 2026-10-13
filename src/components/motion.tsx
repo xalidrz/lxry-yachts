@@ -24,15 +24,19 @@ export function Reveal({
   index = 0,
   className,
   as: Tag = "div",
+  eager = false,
 }: {
   children: ReactNode;
   index?: number;
   className?: string;
   as?: "div" | "li" | "article";
+  /** Above the fold: render visible straight away so it is never hidden waiting for JavaScript. */
+  eager?: boolean;
 }) {
   const ref = useCallback((el: HTMLElement | null) => {
     if (el) seen(el);
   }, []);
+  if (eager) return <Tag className={className}>{children}</Tag>;
   return (
     <Tag ref={ref as never} className={className} data-reveal style={{ "--d": `${Math.min(index, 8) * 80}ms` } as React.CSSProperties}>
       {children}

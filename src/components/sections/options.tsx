@@ -6,8 +6,8 @@ import { links } from "@/config/site";
 const options: { n: string; title: string; line: string; href: string; icon: LucideIcon; external?: boolean }[] = [
   { n: "01", title: "Call the shop", line: "Talk to the shop directly and describe what the car is doing.", href: links.tel, icon: Phone },
   { n: "02", title: "Find the shop", line: "70 W Jackson St, Hayward. Opens in Google Maps.", href: links.place, icon: MapPin, external: true },
-  { n: "03", title: "See how a repair works", line: "Five steps from drop-off to pick-up.", href: "#process", icon: Route },
-  { n: "04", title: "Check your repair status", line: "A concept demo of a repair tracker.", href: "#demo", icon: ScanLine },
+  { n: "03", title: "See how a repair works", line: "Five steps from drop-off to pick-up.", href: "/process", icon: Route },
+  { n: "04", title: "Check your repair status", line: "A concept demo of a repair tracker.", href: "/process#demo", icon: ScanLine },
 ];
 
 export function Options() {

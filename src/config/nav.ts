@@ -1,8 +1,8 @@
-/** One-page anchors, in page order. */
+/** Site pages, in nav order. The logo links home. */
 export const nav = [
-  { label: "Your options", href: "/#options" },
-  { label: "Services", href: "/#services" },
-  { label: "Process", href: "/#process" },
-  { label: "Hours", href: "/#hours" },
-  { label: "Location", href: "/#location" },
+  { label: "Services", href: "/services" },
+  { label: "Process", href: "/process" },
+  { label: "Hours", href: "/hours" },
+  { label: "Location", href: "/location" },
+  { label: "Work", href: "/work" },
 ] as const;

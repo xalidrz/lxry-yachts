@@ -142,8 +142,7 @@ const shownElsewhere = new Set<string>([
   ...visibleServices.map((s) => `/photos/${s.photo}.webp`),
 ]);
 
-/** Sixteen strongest photos for the gallery strip, none of them shown anywhere else on the page. */
+/** Gallery photos, strongest first, none of them used for the hero, shop, services or exterior strip. */
 export const galleryPhotos: Photo[] = photos
   .filter((p) => !shownElsewhere.has(p.file))
-  .sort((a, b) => rank(a) - rank(b))
-  .slice(0, 16);
+  .sort((a, b) => rank(a) - rank(b));

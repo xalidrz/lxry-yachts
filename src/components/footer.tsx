@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUp } from "lucide-react";
 import { Wordmark } from "@/components/wordmark";
 import { nav } from "@/config/nav";
@@ -11,9 +12,9 @@ export function Footer() {
     <footer className="bg-graphite pt-16">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8">
         <div>
-          <a href="/#top" className="inline-block">
+          <Link href="/" className="inline-block">
             <Wordmark className="h-8" />
-          </a>
+          </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">{site.tagline}</p>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">Owner-run auto repair in Hayward, California.</p>
         </div>
@@ -21,11 +22,11 @@ export function Footer() {
         <nav aria-label="Footer">
           <h2 className={col}>Pages</h2>
           <ul className="mt-3 space-y-2 text-sm">
-            {[...nav, { label: "Request a time", href: "/book" }].map((n) => (
+            {[{ label: "Home", href: "/" }, ...nav, { label: "Request a time", href: "/book" }].map((n) => (
               <li key={n.href}>
-                <a href={n.href} className="text-ink/90 hover:text-signal-bright">
+                <Link href={n.href} className="text-ink/90 hover:text-signal-bright">
                   {n.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -63,7 +64,7 @@ export function Footer() {
       <div className="mx-auto mt-12 flex max-w-7xl items-center justify-between gap-4 px-5 lg:px-8">
         <div className="checker h-3 w-24 border border-line" aria-hidden />
         <a
-          href="/#top"
+          href="#"
           className="inline-flex h-11 items-center gap-2 border border-line px-4 font-mono text-xs uppercase tracking-[0.2em] text-ink hover:border-signal"
         >
           Back to top

@@ -9,11 +9,11 @@ import { links, site } from "@/config/site";
 
 const strip = exteriorStripFiles.map(photoByFile);
 
-export function Location() {
+export function Location({ h1 = false }: { h1?: boolean }) {
   return (
     <section id="location" className="grid-lines border-b border-line bg-graphite py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHead n="07" title="Location" />
+        <SectionHead n="07" title="Location" as={h1 ? "h1" : "h2"} />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-[1.35fr_1fr]">
           <Reveal className="overflow-hidden border border-line bg-surface">

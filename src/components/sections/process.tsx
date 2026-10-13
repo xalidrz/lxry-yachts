@@ -60,16 +60,16 @@ function Tachometer({ progress, active }: { progress: MotionValue<number>; activ
   );
 }
 
-function StepRow({ i, active }: { i: number; active: boolean }) {
+function StepRow({ i, active, Title }: { i: number; active: boolean; Title: "h2" | "h3" }) {
   const s = steps[i];
   return (
     <li className={cn("border-l-2 py-4 pl-6", active ? "border-signal" : "border-line")}>
       <p className={cn("font-mono text-xs tracking-[0.2em]", active ? "text-signal-bright" : "text-muted")}>
         {String(i + 1).padStart(2, "0")}
       </p>
-      <h3 className={cn("mt-1 font-display text-3xl font-extrabold uppercase leading-none tracking-tight", active ? "text-ink" : "text-muted")}>
+      <Title className={cn("mt-1 font-display text-3xl font-extrabold uppercase leading-none tracking-tight", active ? "text-ink" : "text-muted")}>
         {s.title}
-      </h3>
+      </Title>
       <p className={cn("mt-2 max-w-md text-sm leading-relaxed", active ? "text-ink/85" : "text-muted/70")}>{s.text}</p>
     </li>
   );
@@ -77,7 +77,8 @@ function StepRow({ i, active }: { i: number; active: boolean }) {
 
 const stepFor = (p: number) => Math.min(steps.length - 1, Math.floor(p * steps.length));
 
-export function Process() {
+export function Process({ h1 = false }: { h1?: boolean }) {
+  const Title = h1 ? "h2" : "h3"; // no skipped heading level under the page h1
   const pinRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const [active, setActive] = useState(0);
@@ -92,7 +93,7 @@ export function Process() {
   return (
     <section id="process" className="border-b border-line bg-graphite">
       <div className="mx-auto max-w-7xl px-5 pt-20 sm:pt-28 lg:px-8">
-        <SectionHead n="04" title="How a repair works" intro="Five steps from the moment you hand over the keys." />
+        <SectionHead n="04" as={h1 ? "h1" : "h2"} title="How a repair works" intro="Five steps from the moment you hand over the keys." />
       </div>
 
       {/* Tablet and desktop: pinned, scroll-linked tachometer */}
@@ -102,7 +103,7 @@ export function Process() {
             <Tachometer progress={pin} active={active} />
             <ol className="space-y-2" aria-label="Repair steps">
               {steps.map((_, i) => (
-                <StepRow key={i} i={i} active={i === active} />
+                <StepRow key={i} i={i} active={i === active} Title={Title} />
               ))}
             </ol>
           </div>
@@ -121,7 +122,7 @@ export function Process() {
                 className={cn("absolute -left-8 top-1.5 size-[15px] border-2", i <= mobileActive ? "border-signal bg-signal" : "border-line bg-graphite")}
               />
               <p className="font-mono text-xs tracking-[0.2em] text-signal-bright">{String(i + 1).padStart(2, "0")} / 05</p>
-              <h3 className="mt-1 font-display text-3xl font-extrabold uppercase leading-none tracking-tight text-ink">{s.title}</h3>
+              <Title className="mt-1 font-display text-3xl font-extrabold uppercase leading-none tracking-tight text-ink">{s.title}</Title>
               <p className="mt-2 text-sm leading-relaxed text-muted">{s.text}</p>
             </Reveal>
           ))}
