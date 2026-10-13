@@ -12,7 +12,7 @@ const options: { n: string; title: string; line: string; href: string; icon: Luc
 
 export function Options() {
   return (
-    <section id="options" className="grid-lines border-b border-line bg-graphite py-20 sm:py-28">
+    <section id="options" className="grid-lines border-b border-line bg-graphite pb-20 pt-6 sm:pb-28 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead n="01" title="Choose your move" />
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

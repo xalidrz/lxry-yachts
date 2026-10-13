@@ -6,7 +6,7 @@ import { links, site } from "@/config/site";
 /** Sends people to Google to write a review. There is deliberately no form here: feedback on our own site would go nowhere. */
 export function ReviewCta() {
   return (
-    <section aria-labelledby="review-cta-title" className="border-b border-line grid-lines bg-graphite py-16 sm:py-24">
+    <section aria-labelledby="review-cta-title" className="border-b border-line grid-lines bg-graphite pb-16 pt-6 sm:pb-24 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <Reveal className="grid gap-10 border border-line bg-surface p-8 sm:p-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:p-14">
           <div>

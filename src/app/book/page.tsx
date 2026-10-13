@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
 export default function BookPage() {
   return (
     <>
-      <header className="grid-lines border-b border-line bg-graphite pb-12 pt-16 sm:pb-16 sm:pt-24">
+      <header className="grid-lines border-b border-line bg-graphite pb-12 pt-6 sm:pb-16 sm:pt-8">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.22em] text-signal-bright">Book —</p>
           <h1 className="mt-3 font-display text-5xl font-extrabold uppercase leading-[0.92] tracking-tight text-ink sm:text-6xl lg:text-7xl">
@@ -24,7 +24,7 @@ export default function BookPage() {
           </p>
         </div>
       </header>
-      <section className="bg-graphite py-12 sm:py-16">
+      <section className="bg-graphite pb-12 pt-6 sm:pb-16 sm:pt-8">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <BookingForm />
         </div>

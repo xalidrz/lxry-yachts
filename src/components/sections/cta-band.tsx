@@ -6,7 +6,7 @@ import { links, site } from "@/config/site";
 /** Closing call to action on the home page. No hours here: they live in the hero, Location and footer. */
 export function CtaBand() {
   return (
-    <section className="grid-lines bg-graphite py-20 sm:py-24">
+    <section className="grid-lines bg-graphite pb-20 pt-6 sm:pb-24 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <Reveal className="flex flex-col gap-8 border border-line bg-surface p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
           <div>

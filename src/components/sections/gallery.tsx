@@ -84,7 +84,7 @@ export function Gallery({ h1 = false }: { h1?: boolean }) {
   const openCol = open ? cols[open.col] : null;
 
   return (
-    <section id="gallery" className="border-b border-line bg-graphite py-20 sm:py-28">
+    <section id="gallery" className="border-b border-line bg-graphite pb-20 pt-6 sm:pb-28 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead n="09" title="The work" as={h1 ? "h1" : "h2"} intro="Photos from the shop floor, sorted by what they show." />
 

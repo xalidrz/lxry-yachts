@@ -9,7 +9,7 @@ export function Services({ h1 = false, preview = false }: { h1?: boolean; previe
   const Title = h1 ? "h2" : "h3"; // no skipped heading level under the page h1
   const list = preview ? visibleServices.slice(0, 3) : visibleServices;
   return (
-    <section id="services" className="grid-lines border-b border-line bg-graphite py-20 sm:py-28">
+    <section id="services" className="grid-lines border-b border-line bg-graphite pb-20 pt-6 sm:pb-28 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead n="03" title="Services" as={h1 ? "h1" : "h2"} intro="What the shop does, confirmed by customer reviews and the shop's Google listing." />
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

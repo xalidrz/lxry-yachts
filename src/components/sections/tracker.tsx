@@ -57,7 +57,7 @@ export function Tracker() {
   const done = stage === stages.length - 1;
 
   return (
-    <section id="demo" className="grid-lines border-b border-line bg-graphite py-20 sm:py-28">
+    <section id="demo" className="grid-lines border-b border-line bg-graphite pb-20 pt-6 sm:pb-28 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead n="05" title="Repair tracker" />
         <Reveal index={1} className="mt-5">

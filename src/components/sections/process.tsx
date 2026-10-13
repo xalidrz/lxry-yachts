@@ -143,7 +143,7 @@ export function Process({ h1 = false }: { h1?: boolean }) {
 
   return (
     <section id="process" className="border-b border-line bg-graphite">
-      <div className="mx-auto max-w-7xl px-5 pt-20 sm:pt-28 lg:px-8">
+      <div className="mx-auto max-w-7xl px-5 pt-6 sm:pt-8 lg:px-8">
         <SectionHead n="04" as={h1 ? "h1" : "h2"} title="How a repair works" intro="Five steps from the moment you hand over the keys." />
       </div>
 

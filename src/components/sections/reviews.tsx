@@ -142,7 +142,7 @@ export function Reviews() {
   const list = reviewsForTopic(topic);
 
   return (
-    <section id="reviews" className="grid-lines border-b border-line bg-graphite py-16 sm:py-24">
+    <section id="reviews" className="grid-lines border-b border-line bg-graphite pb-16 pt-6 sm:pb-24 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead n="06" title="What our customers say" as="h1" />
         <Reveal index={1} className="mt-6">

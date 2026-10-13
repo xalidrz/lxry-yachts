@@ -18,7 +18,7 @@ export function Shop() {
   const y = useTransform(scrollYProgress, [0, 1], ["-7%", "7%"]);
 
   return (
-    <section id="shop" className="border-b border-line bg-graphite py-20 sm:py-28">
+    <section id="shop" className="border-b border-line bg-graphite pb-20 pt-6 sm:pb-28 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-end">
           <SectionHead n="02" title="The shop" />

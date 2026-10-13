@@ -12,7 +12,7 @@ const stack = exteriorStripFiles.map(photoByFile);
 
 export function Location({ h1 = false }: { h1?: boolean }) {
   return (
-    <section id="location" className="grid-lines border-b border-line bg-graphite py-20 sm:py-28">
+    <section id="location" className="grid-lines border-b border-line bg-graphite pb-20 pt-6 sm:pb-28 sm:pt-8">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead n="08" title="Location" as={h1 ? "h1" : "h2"} />
 

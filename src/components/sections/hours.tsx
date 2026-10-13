@@ -7,8 +7,8 @@ import { site } from "@/config/site";
 /** 06: the 24-hour clock. The week table lives on the Location page and the summary in the footer. */
 export function Hours({ h1 = false }: { h1?: boolean }) {
   return (
-    <section id="hours" className="grid-lines border-b border-line bg-graphite py-16 sm:py-24">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-8">
+    <section id="hours" className="grid-lines border-b border-line bg-graphite pb-16 pt-6 sm:pb-24 sm:pt-8">
+      <div className="mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-8">
         <div className="space-y-8">
           <SectionHead
             n="07"
