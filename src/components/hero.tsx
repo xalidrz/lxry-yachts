@@ -65,10 +65,10 @@ export function Hero() {
               href={links.business}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start gap-2 hover:text-signal-bright"
+              className="flex items-start gap-2 hover:underline hover:underline-offset-4"
             >
               <MapPin className="mt-0.5 size-4 shrink-0 text-signal-bright" aria-hidden />
-              <span className="underline decoration-signal decoration-1 underline-offset-4">
+              <span>
                 {site.address.street} · {site.address.plusCode.split(" ")[0]}
                 <span className="sr-only"> (opens in Google Maps)</span>
               </span>

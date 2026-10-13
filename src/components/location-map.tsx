@@ -264,7 +264,7 @@ function MapView({ full = false, onExpand }: { full?: boolean; onExpand?: () => 
             </p>
             <p className="mt-2 font-mono text-xs text-muted">The map could not load.</p>
             <div className="mt-6">
-              <Button href={links.place} target="_blank" rel="noopener noreferrer" label="Open in Google Maps" className="rounded-full" />
+              <Button href={links.business} target="_blank" rel="noopener noreferrer" label="Open in Google Maps" className="rounded-full" />
             </div>
           </div>
         </div>
