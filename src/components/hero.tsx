@@ -61,12 +61,18 @@ export function Hero() {
       <div className="relative border-t border-line bg-graphite">
         <div className="mx-auto grid max-w-7xl grid-cols-2 lg:grid-cols-4">
           <Cell label="Location">
-            <span className="flex items-start gap-2">
+            <a
+              href={links.business}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-start gap-2 hover:text-signal-bright"
+            >
               <MapPin className="mt-0.5 size-4 shrink-0 text-signal-bright" aria-hidden />
-              <span>
+              <span className="underline decoration-signal decoration-1 underline-offset-4">
                 {site.address.street} · {site.address.plusCode.split(" ")[0]}
+                <span className="sr-only"> (opens in Google Maps)</span>
               </span>
-            </span>
+            </a>
           </Cell>
           <Cell label="Google rating">
             <span className="flex items-center gap-2">
