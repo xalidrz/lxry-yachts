@@ -20,7 +20,7 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-background font-sans text-base text-foreground antialiased;
+    @apply overflow-x-clip bg-background font-sans text-base text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";
   }
   h1, h2, h3, h4 {
@@ -60,30 +60,62 @@
     @apply font-display text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl;
   }
 
-  /* Scroll reveal — see components/Reveal.tsx */
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: var(--reveal-delay, 0ms);
-  }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* Vehicle card: hover lift + image zoom */
+  /* Vehicle card: hover lift 6px, photo zoom, price bar */
   .lift {
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .lift:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -16px rgb(11 13 16 / 0.28); }
-    .lift:hover .zoom { transform: scale(1.05); }
-  }
   .zoom {
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .price-bar {
+    @apply mt-1 block h-0.5 w-10 origin-left scale-x-0 bg-brand;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .lift:hover { transform: translateY(-6px); box-shadow: 0 20px 36px -18px rgb(11 13 16 / 0.32); }
+    .lift:hover .zoom { transform: scale(1.05); }
+    .lift:hover .price-bar { transform: scaleX(1); }
+  }
+
+  /* Skeleton shimmer: a gradient sweep on a transform (no blur, no layout work) */
+  .shimmer { position: relative; overflow: hidden; background: rgb(var(--line)); }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.6), transparent);
+    animation: shimmer 2.4s ease-in-out infinite;
+  }
+  @keyframes shimmer { to { transform: translateX(100%); } }
+
+  /* Hero photo: slow 12s Ken Burns, 1.0 -> 1.06, once */
+  .kenburns { animation: kenburns 12s linear both; transform-origin: 68% 50%; will-change: transform; }
+  @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+  /* Brand marquee: slow, pauses on hover/focus */
+  .marquee { display: flex; width: max-content; animation: marquee 48s linear infinite; }
+  .marquee:hover, .marquee:focus-within { animation-play-state: paused; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* Pulsing ring behind the main Ankauf CTA (transform + opacity only) */
+  .pulse-ring { position: relative; }
+  .pulse-ring::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    border: 2px solid rgb(var(--brand));
+    pointer-events: none;
+    animation: pulse-ring 2.6s ease-out infinite;
+  }
+  @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.7; } 70%, 100% { transform: scale(1.08, 1.22); opacity: 0; } }
+
+  /* Everything above is switched off for visitors who ask for reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .shimmer::after, .kenburns, .marquee, .pulse-ring::before { animation: none !important; }
+    .marquee { width: auto; flex-wrap: wrap; justify-content: center; }
+    .marquee [data-dup] { display: none; }
+    .lift, .zoom, .price-bar { transition: none; }
   }
 }

@@ -1,54 +1,37 @@
+import { Info } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
-import { site } from "@/data/site";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useI18n } from "@/i18n";
 
-const pages = {
-  "ueber-uns": {
-    title: "Über uns",
-    lead: "Inhabergeführt, familiär, seit 1995.",
-    body: [
-      "Die Firma Kallies Automobile e.K. ist ein inhabergeführtes Familienunternehmen mit geballter Erfahrung in den Bereichen Automobilhandel, Gebrauchtwagen-Ankauf und Werkstattservice.",
-      "Seit dem Jahr 1995 sind wir das freie Autohaus für den Verkauf von Neu-, Gebrauchtwagen und Nutzfahrzeugen mit Fokus auf die Marken Nissan, Renault und Dacia. Mit unserem Ehrgeiz wecken wir jeden Tag die Begeisterung am Thema Mobilität.",
-      "Unsere Kunden stehen bei uns im Mittelpunkt. Wir möchten, dass jeder unserer Kunden unser Autohaus glücklich verlässt.",
-    ],
-  },
-  impressum: {
-    title: "Impressum",
-    lead: "Angaben gemäß § 5 DDG.",
-    body: [
-      `${site.legalName}, ${site.address.street}, ${site.address.zip} ${site.address.city}`,
-      `Telefon: ${site.phone} · E-Mail: ${site.email}`,
-      "Weitere Pflichtangaben (Inhaber, Umsatzsteuer-ID, Handelsregister, Aufsichtsbehörde) bitte aus dem bestehenden Impressum übernehmen und hier ergänzen.",
-    ],
-  },
-  datenschutz: {
-    title: "Datenschutz",
-    lead: "Informationen zur Verarbeitung Ihrer Daten.",
-    body: [
-      "Platzhalter: Die rechtsverbindliche Datenschutzerklärung des Betreibers ist hier einzufügen.",
-      "Hinweis zur Technik dieser Seite: Schriften werden lokal ausgeliefert (keine Verbindung zu Google Fonts). Die Karte wird erst nach Ihrem Klick von Google Maps geladen. Formulare öffnen Ihr E-Mail-Programm oder werden – sofern konfiguriert – an den eingerichteten Formular-Dienst übertragen.",
-    ],
-  },
-  agb: {
-    title: "AGB",
-    lead: "Allgemeine Geschäftsbedingungen.",
-    body: ["Platzhalter: Die geltenden Allgemeinen Geschäftsbedingungen des Betreibers sind hier einzufügen."],
-  },
-} as const;
+const metaKey = { "ueber-uns": "about", impressum: "imprint", datenschutz: "privacy", agb: "terms" } as const;
+export type LegalSlug = keyof typeof metaKey;
 
-export type LegalSlug = keyof typeof pages;
-
+/**
+ * Legal texts are never machine-translated: in English they stay German and are labelled as such.
+ * "Über uns" is ordinary marketing copy and is translated.
+ */
 export default function LegalPage({ slug }: { slug: LegalSlug }) {
-  const p = pages[slug];
-  usePageMeta(`${p.title} | Kallies Automobile Zeitz`, p.lead);
+  const { t, lang } = useI18n();
+  const key = metaKey[slug];
+  const page = t.pages.legal[key];
+  usePageMeta(t.meta[key].title, t.meta[key].desc);
+  const germanOnly = lang === "en" && slug !== "ueber-uns";
   return (
     <>
-      <PageHeader title={p.title} lead={p.lead} />
+      <PageHeader title={page.title} lead={page.lead} />
       <section className="section">
         <div className="container max-w-3xl space-y-5 text-lg leading-relaxed text-grey">
-          {p.body.map((t) => (
-            <p key={t}>{t}</p>
-          ))}
+          {germanOnly && (
+            <p className="flex items-center gap-3 rounded-lg border border-line bg-white p-4 text-base font-medium text-ink" lang="de">
+              <Info className="size-5 shrink-0 text-brand-ink" aria-hidden />
+              {t.pages.legal.germanOnly}
+            </p>
+          )}
+          <div className="space-y-5" {...(germanOnly ? { lang: "de" } : {})}>
+            {page.body.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
         </div>
       </section>
     </>

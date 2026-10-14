@@ -1,21 +1,23 @@
 import { PageHeader } from "@/components/PageHeader";
 import { PostCard } from "@/components/sections/MagazinTeaser";
-import { Reveal } from "@/components/Reveal";
-import { posts } from "@/data/content";
+import { Reveal } from "@/lib/motion";
+import { postMeta } from "@/data/content";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useI18n } from "@/i18n";
 
 export default function MagazinPage() {
-  usePageMeta("Kallies Magazin | Kallies Automobile Zeitz", "Kaufberatung, Ankauf-Tipps und aktuelle Themen rund um Mobilität.");
+  const { t } = useI18n();
+  usePageMeta(t.meta.magazin.title, t.meta.magazin.desc);
   return (
     <>
-      <PageHeader eyebrow="Kallies Magazin" title="Wissen rund ums Auto." lead="Welches Zubehör ist das richtige? Was ist im Straßenverkehr zu beachten? Kaufberatung und aktuelle Themen – mit Fokus auf geländegängige Fahrzeuge." />
+      <PageHeader eyebrow={t.magazin.eyebrow} title={t.magazin.page.title} lead={t.magazin.page.lead} />
       <section className="section">
-        <h2 className="sr-only">Aktuelle Beiträge</h2>
+        <h2 className="sr-only">{t.magazin.recent}</h2>
         <ul className="container grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((p, i) => (
+          {postMeta.map((p, i) => (
             <li key={p.slug}>
-              <Reveal delay={(i % 3) * 90} className="h-full">
-                <PostCard post={p} />
+              <Reveal delay={(i % 3) * 0.08} className="h-full">
+                <PostCard index={i} />
               </Reveal>
             </li>
           ))}

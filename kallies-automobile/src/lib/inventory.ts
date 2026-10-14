@@ -36,13 +36,7 @@ export const defaultFilters = (): Filters => ({
 });
 
 export type SortKey = "price-asc" | "price-desc" | "km-asc" | "year-desc" | "ps-desc";
-export const sortOptions: { value: SortKey; label: string }[] = [
-  { value: "price-asc", label: "Preis: aufsteigend" },
-  { value: "price-desc", label: "Preis: absteigend" },
-  { value: "year-desc", label: "Erstzulassung: neueste zuerst" },
-  { value: "km-asc", label: "Kilometer: niedrigste zuerst" },
-  { value: "ps-desc", label: "Leistung: höchste zuerst" },
-];
+export const sortKeys: SortKey[] = ["price-asc", "price-desc", "year-desc", "km-asc", "ps-desc"];
 
 /** Vehicles without Erstzulassung are new cars: they count as the current year. */
 const yearOf = (v: Vehicle) => v.ez?.year ?? bounds.year[1];
@@ -123,7 +117,7 @@ export const filtersFromParams = (p: URLSearchParams, preset?: Partial<Filters>)
   const ps = num("psAb"); if (ps != null) f.psMin = clamp(ps, bounds.ps);
   const ya = num("ezAb"); if (ya != null) f.year = [clamp(ya, bounds.year), f.year[1]];
   const sort = (p.get("sort") as SortKey) ?? "price-asc";
-  return { filters: f, sort: sortOptions.some((o) => o.value === sort) ? sort : "price-asc" };
+  return { filters: f, sort: sortKeys.includes(sort) ? sort : "price-asc" };
 };
 
 export const paramsFromFilters = (f: Filters, sort: SortKey, preset?: Partial<Filters>) => {

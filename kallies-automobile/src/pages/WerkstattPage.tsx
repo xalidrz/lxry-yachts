@@ -4,17 +4,20 @@ import { PageHeader } from "@/components/PageHeader";
 import { WerkstattGrid } from "@/components/sections/WerkstattGrid";
 import { Standort } from "@/components/sections/Standort";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useI18n } from "@/i18n";
 
 export default function WerkstattPage() {
-  usePageMeta("Werkstattservice | Kallies Automobile Zeitz", "HU/AU, Reifenwechsel, Reparatur und Nissan-Vertragswerkstatt in Zeitz.");
+  const { t } = useI18n();
+  const p = t.werkstatt.page;
+  usePageMeta(t.meta.werkstatt.title, t.meta.werkstatt.desc);
   return (
     <>
-      <PageHeader eyebrow="Werkstattservice" title="Ihr Auto in guten Händen." lead="HU/AU, Reifenwechsel, Reparatur und Service für Nissan – bei uns in Zeitz.">
+      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead}>
         <Button asChild variant="brand" size="lg">
-          <Link to="/kontakt?betreff=Werkstatttermin">Termin anfragen</Link>
+          <Link to="/kontakt?betreff=Werkstatttermin">{p.cta}</Link>
         </Button>
       </PageHeader>
-      <h2 className="sr-only">Unsere Leistungen</h2>
+      <h2 className="sr-only">{p.srHeading}</h2>
       <WerkstattGrid withHeading={false} />
       <Standort />
     </>
