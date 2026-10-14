@@ -11,6 +11,8 @@ npm run build      # type-checks, outputs ./dist
 npm run preview
 ```
 
+`npm run build` also pre-renders one `index.html` per route (`scripts/postbuild.mjs`), so every page is a real, separately addressable page with its own title and description.
+
 Deploy with the Vercel project root set to `kallies-automobile/` (`vercel.json` adds the SPA rewrite and cache headers).
 
 ## Design system
