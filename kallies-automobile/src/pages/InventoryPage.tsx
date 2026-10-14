@@ -45,11 +45,24 @@ export default function InventoryPage({ variant = "all", preset }: Props) {
 
   return (
     <>
-      <section className="on-dark bg-ink text-white">
-        <div className="container py-12 md:py-16">
+      <section className="on-dark relative isolate overflow-hidden bg-ink text-white">
+        {/* Photo background: showroom for the vehicle stock, Harley tank for the Harley-Davidson page */}
+        <img
+          src={variant === "harley" ? "/images/harley-bg.webp" : "/images/vehicles-bg.webp"}
+          alt=""
+          width={variant === "harley" ? 500 : 1376}
+          height={variant === "harley" ? 333 : 768}
+          fetchPriority="high"
+          className={`absolute inset-0 -z-20 size-full object-cover ${variant === "harley" ? "object-[50%_40%]" : "object-[50%_62%]"}`}
+        />
+        {/* Solid scrims keep the heading readable (no blur): left-to-right for the text, bottom fade into the page */}
+        <div className="absolute inset-0 -z-10 bg-[#05080f]/55" aria-hidden />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#05080f]/90 via-[#05080f]/70 to-transparent" aria-hidden />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-[#05080f]/80 to-transparent" aria-hidden />
+        <div className="container flex min-h-[260px] flex-col justify-center py-12 md:min-h-[340px] md:py-16">
           <p className="eyebrow">{eyebrow}</p>
           <h1 className="display-2 mt-4" translate={variant === "harley" ? "no" : undefined}>{copy.title}</h1>
-          <p className="mt-4 max-w-xl text-white/85">{copy.lead}</p>
+          <p className="mt-4 max-w-xl text-white/90">{copy.lead}</p>
         </div>
       </section>
 
