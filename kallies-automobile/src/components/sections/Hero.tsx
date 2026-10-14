@@ -39,16 +39,22 @@ export function Hero() {
   return (
     <section className="on-dark relative isolate overflow-hidden bg-ink text-white" aria-labelledby="hero-title">
       <img
-        src="/images/hero.webp"
+        src="/images/hero-car.webp"
         alt=""
-        width={1000}
-        height={400}
+        width={2000}
+        height={668}
         fetchPriority="high"
-        className="kenburns absolute inset-0 -z-20 size-full object-cover object-[68%_center]"
+        className="kenburns absolute inset-0 -z-20 size-full object-cover object-[62%_center]"
       />
       {/* Solid gradients only — no blur or filters. */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/25 md:via-ink/70" aria-hidden />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-ink to-transparent" aria-hidden />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#05080f]/90 via-[#05080f]/55 to-transparent md:via-[#05080f]/35" aria-hidden />
+      {/* Low mist along the ground, built from soft radial gradients */}
+      <div
+        className="absolute inset-x-0 bottom-0 -z-10 h-2/5"
+        style={{ background: "radial-gradient(ellipse 55% 60% at 18% 100%, rgb(214 220 232 / 0.38), transparent 70%), radial-gradient(ellipse 45% 50% at 62% 100%, rgb(214 220 232 / 0.3), transparent 70%), radial-gradient(ellipse 40% 55% at 96% 100%, rgb(230 234 242 / 0.4), transparent 72%)" }}
+        aria-hidden
+      />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-1/4 bg-gradient-to-t from-ink to-transparent" aria-hidden />
 
       <div className="container flex flex-col justify-center pb-10 pt-16 md:pb-14 md:pt-24">
         <p className="eyebrow">{t.hero.eyebrow(site.since)}</p>
@@ -62,11 +68,13 @@ export function Hero() {
         <motion.div {...rise(0.6)} className="mt-10 flex flex-col gap-3 sm:flex-row">
           <Button asChild variant="brand" size="lg">
             <Link to="/fahrzeuge">
-              {t.hero.ctaCars} <ArrowRight aria-hidden />
+              <ArrowRight aria-hidden /> {t.hero.ctaCars}
             </Link>
           </Button>
-          <Button asChild variant="outline-light" size="lg">
-            <Link to="/ankauf">{t.hero.ctaSell}</Link>
+          <Button asChild variant="line" size="lg">
+            <Link to="/ankauf">
+              {t.hero.ctaSell} <ArrowRight aria-hidden />
+            </Link>
           </Button>
         </motion.div>
         <motion.div {...rise(0.75)} className="mt-12 md:mt-16">

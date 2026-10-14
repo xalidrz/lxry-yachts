@@ -1,0 +1,276 @@
+/*
+ * HUD navigation bar — chamfered (cut-corner) panels.
+ * Every shape is a clip-path polygon; borders are a clipped "border" layer with a slightly smaller clipped "fill"
+ * layer on top. No blur, backdrop-filter or box-shadow glow anywhere: highlights are hard-edged gradient lines.
+ * Swap the accent by overriding --accent, --accent-a, --accent-b and --accent-hi on .hud (or any ancestor).
+ */
+.hud {
+  --accent: #ff7a1a;
+  --accent-a: #ff8a1f;
+  --accent-b: #ff5a00;
+  --accent-hi: #ffa040;
+  --accent-spark: #ffe0c2;
+  --bg-0: #05080f;
+  --bg-1: #0a1220;
+  --steel-a: #3a4558;
+  --steel-b: #1a2230;
+  --edge: #2a3650;
+  --fill-a: #0d1524;
+  --fill-b: #080d18;
+  --muted: #8f9bb3;
+  --text: #fff;
+  /* Text on the filled orange language chip. #fff would be only ~2.6:1 on orange, so the default is near-black (≈7:1). */
+  --chip-text: #05080f;
+  font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  color: var(--text);
+}
+
+/* ---------- generic chamfered panel (4 cut corners) ---------- */
+.hud-panel {
+  --cut: 10px;
+  --bw: 1px;
+  --bwn: 1;
+  position: relative;
+  isolation: isolate;
+}
+.hud-panel > .hud-bd,
+.hud-panel > .hud-bg {
+  position: absolute;
+  pointer-events: none;
+}
+.hud-panel > .hud-bd {
+  inset: 0;
+  z-index: -2;
+  background: var(--bd, linear-gradient(180deg, var(--steel-a), var(--steel-b)));
+  clip-path: polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)), 0 var(--cut));
+}
+.hud-panel > .hud-bg {
+  --ci: calc(var(--cut) - 0.41px * var(--bwn));
+  inset: var(--bw);
+  z-index: -1;
+  background: var(--fill, linear-gradient(180deg, var(--fill-a), var(--fill-b)));
+  clip-path: polygon(var(--ci) 0, calc(100% - var(--ci)) 0, 100% var(--ci), 100% calc(100% - var(--ci)), calc(100% - var(--ci)) 100%, var(--ci) 100%, 0 calc(100% - var(--ci)), 0 var(--ci));
+}
+
+/* ---------- the bar ---------- */
+.hud-bar {
+  --cut: 20px;
+  --bd: linear-gradient(180deg, var(--steel-a), var(--steel-b));
+  --fill: linear-gradient(180deg, var(--bg-0), var(--bg-1));
+  height: 72px;
+}
+.hud-bar-line {
+  position: absolute;
+  left: var(--cut);
+  right: var(--cut);
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(190 210 245 / 0.55) 20%, rgb(190 210 245 / 0.75) 50%, rgb(190 210 245 / 0.55) 80%, transparent);
+  pointer-events: none;
+}
+
+/* ---------- side panels: logo, language, phone, hamburger ---------- */
+.hud-logo { --cut: 14px; height: 52px; }
+.hud-phone { --cut: 10px; height: 48px; }
+.hud-capsule { --cut: 9px; height: 40px; }
+.hud-burger { --cut: 10px; width: 48px; height: 48px; }
+
+.hud-wordmark {
+  font-family: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+/* ---------- language toggle ---------- */
+.hud-chip {
+  position: relative;
+  min-width: 40px;
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  transition: color 200ms;
+  isolation: isolate;
+}
+.hud-chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent);
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.hud-chip:hover { color: #fff; }
+.hud-chip[aria-pressed="true"] { color: var(--chip-text); }
+.hud-chip[aria-pressed="true"]::before { opacity: 1; }
+
+/* ---------- phone ---------- */
+.hud-phone-text { font-size: 12px; font-weight: 600; line-height: 1.15; letter-spacing: 0.02em; color: #fff; text-align: left; white-space: nowrap; }
+.hud-phone:hover { --bd: linear-gradient(135deg, var(--accent-a), var(--accent-b)); }
+
+/* ---------- CTA ---------- */
+.hud-cta {
+  --cut: 12px;
+  --bw: 2px;
+  --bwn: 2;
+  --bd: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+  --fill: linear-gradient(180deg, #070b14, #05080f);
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 22px 0 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #fff;
+  white-space: nowrap;
+}
+.hud-cta > .hud-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgb(255 138 31 / 0.28), rgb(255 90 0 / 0.1));
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.hud-cta:hover > .hud-bg::after,
+.hud-cta:focus-visible > .hud-bg::after { opacity: 1; }
+.hud-cta-halo { position: absolute; inset: -10px -14px; z-index: -3; pointer-events: none; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgb(255 122 26 / 0.3), rgb(255 122 26 / 0.1) 55%, transparent 75%); }
+.hud-cta svg { transition: transform 200ms; }
+.hud-cta:hover svg,
+.hud-cta:focus-visible svg { transform: translateX(4px); }
+
+/* ---------- nav buttons: hexagon ---------- */
+.hud-btn {
+  --c: 14px;
+  --bw: 1px;
+  --bwn: 1;
+  --hex: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% 50%, calc(100% - var(--c)) 100%, var(--c) 100%, 0 50%);
+  --ci: calc(var(--c) - 0.45px * var(--bwn));
+  --hexi: polygon(var(--ci) 0, calc(100% - var(--ci)) 0, 100% 50%, calc(100% - var(--ci)) 100%, var(--ci) 100%, 0 50%);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  hyphens: manual;
+  overflow-wrap: break-word;
+  transition: color 200ms;
+}
+.hud-btn > i { position: absolute; pointer-events: none; }
+.hud-btn .hud-l-bd { inset: 0; z-index: -4; background: var(--edge); clip-path: var(--hex); }
+.hud-btn .hud-l-hot { inset: 0; z-index: -3; background: linear-gradient(135deg, var(--accent-a), var(--accent-b)); clip-path: var(--hex); opacity: 0; transition: opacity 200ms; }
+.hud-btn .hud-l-bg { inset: var(--bw); z-index: -2; background: linear-gradient(180deg, var(--fill-a), var(--fill-b)); clip-path: var(--hexi); }
+/* thin orange lines on the top and bottom edges (inside the border) */
+.hud-btn .hud-l-ln {
+  inset: 0;
+  z-index: -1;
+  clip-path: var(--hex);
+  opacity: 0;
+  transition: opacity 200ms;
+  background:
+    linear-gradient(90deg, transparent, var(--accent) 25%, var(--accent) 75%, transparent) center var(--bw) / calc(100% - 2 * var(--c)) 1px no-repeat,
+    linear-gradient(90deg, transparent, var(--accent) 25%, var(--accent) 75%, transparent) center calc(100% - var(--bw)) / calc(100% - 2 * var(--c)) 1px no-repeat;
+}
+/* outer glow made of a gradient (not a blur): spills past the button edge, only on the active button */
+.hud-btn .hud-l-halo { inset: -9px -12px; z-index: -5; background: radial-gradient(ellipse 60% 70% at 50% 50%, rgb(255 122 26 / 0.34), rgb(255 122 26 / 0.12) 55%, transparent 75%); opacity: 0; }
+.hud-btn[aria-current="page"] .hud-l-halo { opacity: 1; }
+/* active-only layers */
+.hud-btn .hud-l-glow,
+.hud-btn .hud-l-ring,
+.hud-btn .hud-l-hl,
+.hud-btn .hud-l-spark { opacity: 0; }
+
+.hud-btn:hover .hud-l-hot,
+.hud-btn:focus-visible .hud-l-hot { opacity: 1; }
+.hud-btn:hover .hud-l-ln,
+.hud-btn:focus-visible .hud-l-ln { opacity: 1; }
+
+.hud-btn:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; }
+
+/* ----- active ----- */
+.hud-btn[aria-current="page"] {
+  --bw: 2px;
+  --bwn: 2;
+  color: var(--accent-hi);
+  font-weight: 600;
+}
+.hud-btn[aria-current="page"] .hud-l-hot { opacity: 1; }
+.hud-btn[aria-current="page"] .hud-l-ln { opacity: 1; }
+/* soft orange-to-transparent gradient rising from the bottom edge (a gradient, not a blur) */
+.hud-btn .hud-l-glow {
+  inset: var(--bw);
+  z-index: -1;
+  clip-path: var(--hexi);
+  background: radial-gradient(ellipse 85% 100% at 50% 100%, rgb(255 122 26 / 0.42), rgb(255 122 26 / 0.12) 45%, transparent 72%);
+}
+/* thin inner outline: a second ring just inside the border */
+.hud-btn .hud-l-ring {
+  inset: calc(var(--bw) + 2px);
+  z-index: -1;
+  padding: 1px;
+  background: rgb(255 138 31 / 0.55);
+  clip-path: polygon(calc(var(--c) - 3px) 0, calc(100% - var(--c) + 3px) 0, 100% 50%, calc(100% - var(--c) + 3px) 100%, calc(var(--c) - 3px) 100%, 0 50%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+/* bright highlights where the top/bottom edges meet the corners */
+.hud-btn .hud-l-hl {
+  inset: 0;
+  z-index: -1;
+  clip-path: var(--hex);
+  background:
+    linear-gradient(90deg, var(--accent-spark), transparent) var(--c) 0 / 22px 2px no-repeat,
+    linear-gradient(270deg, var(--accent-spark), transparent) calc(100% - var(--c)) 0 / 22px 2px no-repeat,
+    linear-gradient(90deg, var(--accent-spark), transparent) var(--c) 100% / 22px 2px no-repeat,
+    linear-gradient(270deg, var(--accent-spark), transparent) calc(100% - var(--c)) 100% / 22px 2px no-repeat;
+}
+/* small bright spark at the top-left corner: a hard-edged 4-point star */
+.hud-btn .hud-l-spark {
+  top: -3px;
+  left: calc(var(--c) - 6px);
+  width: 12px;
+  height: 12px;
+  background: var(--accent-spark);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+.hud-btn[aria-current="page"] .hud-l-glow,
+.hud-btn[aria-current="page"] .hud-l-ring,
+.hud-btn[aria-current="page"] .hud-l-hl,
+.hud-btn[aria-current="page"] .hud-l-spark { opacity: 1; }
+
+/* ---------- nav row: buttons interlock with a small gap ---------- */
+.hud-nav { display: flex; align-items: center; justify-content: center; min-width: 0; }
+.hud-nav > li { flex: 1 1 0; min-width: 84px; max-width: 150px; }
+.hud-nav > li + li { margin-left: -8px; }
+
+/* ---------- full-screen menu ---------- */
+.hud-menu {
+  --cut: 20px;
+  --bd: linear-gradient(180deg, var(--steel-a), var(--steel-b));
+  --fill: linear-gradient(180deg, var(--bg-0), var(--bg-1));
+}
+.hud-menu .hud-btn { min-height: 56px; font-size: 16px; width: 100%; }
+.hud-menu-list > li + li { margin-top: -4px; }
+.hud-menu .hud-cta { width: 100%; justify-content: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-btn, .hud-btn i, .hud-chip, .hud-chip::before, .hud-cta svg, .hud-cta > .hud-bg::after { transition: none; }
+}

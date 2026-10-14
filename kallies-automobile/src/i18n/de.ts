@@ -31,6 +31,7 @@ export const de = {
     discover: "Entdecken", company: "Unternehmen", contact: "Kontakt", hours: "Mo–Fr 8:30–18:00 · Sa 9:00–12:00",
     rights: (since: number) => `© ${since}–2026 Kallies Automobile e.K. Alle Rechte vorbehalten.`,
     note: "Preise inkl. MwSt. Irrtümer und Zwischenverkauf vorbehalten.",
+    sound: { on: "Klickgeräusche: an", off: "Klickgeräusche: aus", toggle: "Klickgeräusche ein- oder ausschalten" },
     links: { about: "Über uns", careers: "Karriere", contact: "Kontakt", magazine: "Magazin", imprint: "Impressum", privacy: "Datenschutz", terms: "AGB" },
   },
   hero: {
@@ -117,7 +118,7 @@ export const de = {
     range: (o: string, c: string) => `${o} – ${c} Uhr`,
     name: "Kallies Automobile e.K. – Zeitz", openingHours: "Öffnungszeiten", today: "Heute", closed: "Geschlossen",
     days: { weekdays: "Montag – Freitag", saturday: "Samstag", sunday: "Sonntag" }, whatsapp: "WhatsApp", newTab: " (öffnet in neuem Tab)",
-    loadMap: "Karte laden", mapNote: "Mit dem Laden der Karte werden Daten an Google übertragen.", mapTitle: "Karte: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz",
+    loadMap: "Karte laden", mapNote: "Karte von Google Maps. Beim Anzeigen werden Daten an Google übertragen.", mapTitle: "Karte: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz",
   },
   directions: {
     plan: "Route planen", openInMaps: "Route in Google Maps öffnen", more: "Weitere Optionen",

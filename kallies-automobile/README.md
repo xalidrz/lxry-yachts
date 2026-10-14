@@ -42,6 +42,10 @@ All visible text lives in `src/i18n/de.ts` (source of truth, defines the `Dict` 
 
 `motion/react` plus CSS, all gated on `prefers-reduced-motion` (`MotionConfig reducedMotion="user"`, `useMotionOk()` and a CSS media query that switches off Ken Burns, marquee, shimmer and the CTA pulse). Highlights: clip-path headline reveal, count-up trust numbers (final text is reserved invisibly so nothing shifts), one shared nav indicator (`layoutId`), scroll reveals (`Reveal`), card hover lift + price bar, layout-animated inventory grid, shimmer skeletons, brand marquee, 3-step Ankauf progress, footer stagger + divider, 200 ms page transition. Only `transform` and `opacity` are animated. No blur or backdrop-filter anywhere.
 
+## HUD navigation bar
+
+`src/components/hud/HudNav.tsx` + `hud.css`: a sci-fi bar built from clip-path polygons (20px chamfered bar, hexagon nav buttons, chamfered logo/language/phone/CTA panels). No blur, backdrop-filter or glow shadows: highlights are hard-edged gradient lines, an inner ring and a small star-shaped spark. Colours are CSS variables on `.hud` (`--accent`, `--accent-a`, `--accent-b`, `--accent-hi`, `--chip-text`). `HudHeader.tsx` wires it to the router and the DE/EN dictionary; preview it at `/hud`. It is not wired into the live layout: swap `<Header />` for `<HudHeader />` in `components/Layout.tsx` to use it. It collapses into a full-screen chamfered menu below 1280px (`collapseBelow="lg"` for 1024px, only sensible with fewer nav items).
+
 ## Structure
 
 ```

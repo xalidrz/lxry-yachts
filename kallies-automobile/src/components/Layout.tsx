@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
-import { Header } from "@/components/Header";
+import { HudHeader } from "@/components/hud/HudHeader";
 import { Footer } from "@/components/Footer";
 import { PageSkeleton } from "@/components/PageSkeleton";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -21,7 +21,7 @@ export function Layout() {
       >
         {t.header.skip}
       </a>
-      <Header />
+      <HudHeader />
       {/* Page transition: 200ms fade + 8px rise on every route change */}
       <motion.main
         key={pathname}

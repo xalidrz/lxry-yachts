@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { DirectionsActions } from "@/components/DirectionsActions";
 import { Logo } from "@/components/Logo";
+import { SoundToggle } from "@/components/SoundToggle";
 import { footerLinks, nav, site } from "@/data/site";
 import { useI18n } from "@/i18n";
 import { useMotionOk } from "@/lib/motion";
@@ -92,6 +93,7 @@ export function Footer() {
         <div className="container flex flex-col gap-2 py-6 text-xs text-white/80 sm:flex-row sm:justify-between">
           <p translate="no">{t.footer.rights(site.since)}</p>
           <p>{t.footer.note}</p>
+          <SoundToggle />
         </div>
       </div>
     </footer>

@@ -13,6 +13,7 @@ const KarrierePage = lazy(() => import("@/pages/KarrierePage"));
 const KontaktPage = lazy(() => import("@/pages/KontaktPage"));
 const LegalPage = lazy(() => import("@/pages/LegalPage"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const HudDemo = lazy(() => import("@/pages/HudDemo"));
 
 /** Stable reference so the inventory memoization is not reset on every render. */
 const HARLEY = { makes: ["Harley-Davidson"] };
@@ -20,7 +21,8 @@ const HARLEY = { makes: ["Harley-Davidson"] };
 export default function App() {
   return (
     <Routes>
-        <Route element={<Layout />}>
+        <Route path="hud" element={<HudDemo />} />
+      <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="fahrzeuge" element={<InventoryPage />} />
           <Route
