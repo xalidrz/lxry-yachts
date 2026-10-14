@@ -1,35 +1,37 @@
+import { BadgeEuro, FileCheck2, Gauge } from "lucide-react";
 import { AnkaufPanel } from "@/components/sections/AnkaufPanel";
 import { Faq } from "@/components/sections/Faq";
 import { PageHeader } from "@/components/PageHeader";
-import { Reveal } from "@/components/Reveal";
+import { Reveal } from "@/lib/motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { BadgeEuro, FileCheck2, Gauge } from "lucide-react";
+import { useI18n } from "@/i18n";
 
-const perks = [
-  { icon: Gauge, title: "Schnelle & professionelle Preisschätzung", text: "Ein transparenter, fairer Preis dank Experteneinschätzung." },
-  { icon: BadgeEuro, title: "Top-Preise", text: "Dank großem Netzwerk und jahrelanger Erfahrung im Autohandel." },
-  { icon: FileCheck2, title: "Reibungslose Abmeldung", text: "Nach dem Verkauf übernehmen wir die Abmeldung und sämtliche Formalitäten." },
-];
+const icons = [Gauge, BadgeEuro, FileCheck2];
 
 export default function AnkaufPage() {
-  usePageMeta("Auto verkaufen – Gebrauchtwagen-Ankauf | Kallies Automobile Zeitz", "Verkaufen Sie Ihr Auto sicher, einfach und schnell: kostenlose Online-Bewertung, faire Preise, Abmeldung inklusive.");
+  const { t } = useI18n();
+  const p = t.ankauf.page;
+  usePageMeta(t.meta.ankauf.title, t.meta.ankauf.desc);
   return (
     <>
-      <PageHeader eyebrow="Gebrauchtwagen-Ankauf" title="Verkaufen Sie Ihr Auto sicher, einfach, schnell." lead="Einfach und stressfrei ein Angebot für Ihren Gebrauchtwagen erhalten – für fast alle Marken und Modelle, unabhängig vom Zustand." />
+      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
       <AnkaufPanel />
       <section className="section bg-white">
         <div className="container">
-          <h2 className="display-2 max-w-2xl">Deshalb sollten Sie an uns verkaufen</h2>
+          <h2 className="display-2 max-w-2xl">{p.perksTitle}</h2>
           <ul className="mt-12 grid gap-8 md:grid-cols-3">
-            {perks.map((p, i) => (
-              <li key={p.title}>
-                <Reveal delay={i * 90} className="h-full border-t border-ink pt-8">
-                  <p.icon className="size-8 text-brand-ink" strokeWidth={1.5} aria-hidden />
-                  <h3 className="mt-6 font-display text-xl font-bold">{p.title}</h3>
-                  <p className="mt-3 text-grey">{p.text}</p>
-                </Reveal>
-              </li>
-            ))}
+            {p.perks.map((perk, i) => {
+              const Icon = icons[i];
+              return (
+                <li key={perk.title}>
+                  <Reveal delay={i * 0.08} className="h-full border-t border-ink pt-8">
+                    <Icon className="size-8 text-brand-ink" strokeWidth={1.5} aria-hidden />
+                    <h3 className="mt-6 font-display text-xl font-bold">{perk.title}</h3>
+                    <p className="mt-3 text-grey">{perk.text}</p>
+                  </Reveal>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>

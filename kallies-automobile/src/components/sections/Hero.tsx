@@ -1,17 +1,41 @@
 import { Link } from "react-router-dom";
+import { motion, type MotionProps } from "motion/react";
 import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { QuickSearch } from "@/components/sections/QuickSearch";
 import { site } from "@/data/site";
+import { useI18n } from "@/i18n";
+import { CountUp, useMotionOk } from "@/lib/motion";
 
-const trust = [
-  { value: `${site.rating.value}/${site.rating.outOf}`, label: "Sterne", stars: true },
-  { value: String(site.rating.count), label: "Bewertungen" },
-  { value: site.customers, label: "Kunden" },
-  { value: `seit ${site.since}`, label: "Erfahrung" },
-];
+const LINE_STAGGER = 0.06;
+const hidden = { clipPath: "inset(0 0 100% 0)", y: 28 };
+const shown = { clipPath: "inset(-20% -2% -20% -2%)", y: 0 };
+
+/** One headline line, revealed through a clip-path mask. */
+function Line({ children, index }: { children: React.ReactNode; index: number }) {
+  const ok = useMotionOk();
+  return (
+    <motion.span
+      className="block"
+      {...(ok ? { initial: hidden, animate: shown, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 + index * LINE_STAGGER } } : {})}
+    >
+      {children}
+    </motion.span>
+  );
+}
 
 export function Hero() {
+  const { t, fmt } = useI18n();
+  const ok = useMotionOk();
+  const rise = (delay: number): MotionProps => (ok ? { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.6, ease: "easeOut", delay } } : {});
+
+  const trust = [
+    { node: <CountUp to={site.rating.value} format={(n) => `${fmt.decimal(n)}/${site.rating.outOf}`} />, label: t.hero.stars, stars: true },
+    { node: <CountUp to={site.rating.count} format={fmt.int} />, label: t.hero.reviews },
+    { node: <CountUp to={site.customers} format={(n) => `${fmt.int(Math.round(n))}+`} />, label: t.hero.customers },
+    { node: (<><span>{t.hero.since}</span>&nbsp;<CountUp to={site.since} format={(n) => String(Math.round(n))} /></>), label: t.hero.experience },
+  ];
+
   return (
     <section className="on-dark relative isolate overflow-hidden bg-ink text-white" aria-labelledby="hero-title">
       <img
@@ -20,44 +44,52 @@ export function Hero() {
         width={1000}
         height={400}
         fetchPriority="high"
-        className="absolute inset-0 -z-20 size-full object-cover object-[68%_center]"
+        className="kenburns absolute inset-0 -z-20 size-full object-cover object-[68%_center]"
       />
       {/* Solid gradients only — no blur or filters. */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/25 md:via-ink/70" aria-hidden />
       <div className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-ink to-transparent" aria-hidden />
 
       <div className="container flex flex-col justify-center pb-10 pt-16 md:pb-14 md:pt-24">
-        <p className="eyebrow">Autohaus Zeitz · seit {site.since}</p>
+        <p className="eyebrow">{t.hero.eyebrow(site.since)}</p>
         <h1 id="hero-title" className="display-1 mt-5 max-w-4xl">
-          <span className="block">Das richtige Auto.</span>
-          <span className="block">Mit Erfahrung seit {site.since}.</span>
+          <Line index={0}>{t.hero.line1}</Line>
+          <Line index={1}>{t.hero.line2(site.since)}</Line>
         </h1>
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80 md:text-xl">
-          Das freie Autohaus für junge Gebrauchte, Neufahrzeuge und Oldtimer – inhabergeführt, ehrlich beraten und fair bepreist.
-        </p>
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+        <motion.p {...rise(0.45)} className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 md:text-xl">
+          {t.hero.lead}
+        </motion.p>
+        <motion.div {...rise(0.6)} className="mt-10 flex flex-col gap-3 sm:flex-row">
           <Button asChild variant="brand" size="lg">
             <Link to="/fahrzeuge">
-              Fahrzeuge ansehen <ArrowRight aria-hidden />
+              {t.hero.ctaCars} <ArrowRight aria-hidden />
             </Link>
           </Button>
           <Button asChild variant="outline-light" size="lg">
-            <Link to="/ankauf">Auto verkaufen</Link>
+            <Link to="/ankauf">{t.hero.ctaSell}</Link>
           </Button>
-        </div>
-        <div className="mt-12 md:mt-16">
+        </motion.div>
+        <motion.div {...rise(0.75)} className="mt-12 md:mt-16">
           <QuickSearch />
-        </div>
+        </motion.div>
       </div>
 
       <div className="border-t border-white/15 bg-ink">
         <div className="container">
-          <ul className="grid grid-cols-2 gap-px bg-white/15 md:grid-cols-4" aria-label="Warum Kunden uns vertrauen">
-            {trust.map((t) => (
-              <li key={t.label} className="flex flex-wrap items-baseline gap-x-2 bg-ink px-4 py-5 md:justify-center">
-                {t.stars && <Star className="size-4 translate-y-0.5 fill-brand text-brand" aria-hidden />}
-                <span className="whitespace-nowrap font-display text-xl font-bold md:text-2xl">{t.value}</span>
-                <span className="text-sm text-white/75">{t.label}</span>
+          <ul className="grid grid-cols-2 gap-px bg-white/15 md:grid-cols-4" aria-label={t.hero.trustAria}>
+            {trust.map((item, i) => (
+              <li key={item.label} className="relative flex flex-wrap items-baseline gap-x-2 bg-ink px-4 py-5 md:justify-center">
+                {item.stars && <Star className="size-4 translate-y-0.5 fill-brand text-brand" aria-hidden />}
+                <span className="whitespace-nowrap font-display text-xl font-bold md:text-2xl" translate="no">
+                  {item.node}
+                </span>
+                <span className="text-sm text-white/85">{item.label}</span>
+                {/* Thin orange line draws under each number once */}
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-x-4 bottom-0 h-0.5 origin-left bg-brand md:inset-x-8"
+                  {...(ok ? { initial: { scaleX: 0 }, whileInView: { scaleX: 1 }, viewport: { once: true }, transition: { duration: 0.9, ease: "easeOut", delay: 0.2 + i * 0.1 } } : {})}
+                />
               </li>
             ))}
           </ul>

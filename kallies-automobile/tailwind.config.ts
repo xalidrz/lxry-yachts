@@ -5,6 +5,8 @@ const rgb = (v: string) => `rgb(var(--${v}) / <alpha-value>)`;
 
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  // The scanner mistakes the motion `transition` prop for the utility, which lists backdrop-filter. Nothing uses it.
+  blocklist: ["transition"],
   theme: {
     container: { center: true, padding: { DEFAULT: "1rem", md: "2rem", xl: "3rem" }, screens: { "2xl": "1440px" } },
     extend: {

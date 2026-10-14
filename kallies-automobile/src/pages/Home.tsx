@@ -10,12 +10,11 @@ import { Standort } from "@/components/sections/Standort";
 import { MagazinTeaser } from "@/components/sections/MagazinTeaser";
 import { Faq } from "@/components/sections/Faq";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useI18n } from "@/i18n";
 
 export default function Home() {
-  usePageMeta(
-    "Kallies Automobile Zeitz – Autohaus für Neu-, Gebraucht- und Oldtimer-Fahrzeuge",
-    "Kallies Automobile in Zeitz: Neu- und Gebrauchtwagen, Oldtimer, Gebrauchtwagen-Ankauf und Werkstattservice. Inhabergeführt seit 1995 – 4,7/5 Sterne bei 623 Bewertungen.",
-  );
+  const { t } = useI18n();
+  usePageMeta(t.meta.home.title, t.meta.home.desc);
   return (
     <>
       <Hero />

@@ -67,15 +67,15 @@ const CarouselItem = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
   <div role="group" aria-roledescription="slide" className={cn("min-w-0 shrink-0 grow-0 basis-full pl-4", className)} {...props} />
 );
 
-const CarouselControls = ({ className, dark }: { className?: string; dark?: boolean }) => {
+const CarouselControls = ({ className, dark, prevLabel, nextLabel }: { className?: string; dark?: boolean; prevLabel: string; nextLabel: string }) => {
   const { prev, next, canPrev, canNext } = useCarousel();
   const variant = dark ? "outline-light" : "outline";
   return (
     <div className={cn("flex gap-2", className)}>
-      <Button variant={variant} size="icon" onClick={prev} disabled={!canPrev} aria-label="Vorherige Bewertung">
+      <Button variant={variant} size="icon" onClick={prev} disabled={!canPrev} aria-label={prevLabel}>
         <ArrowLeft aria-hidden />
       </Button>
-      <Button variant={variant} size="icon" onClick={next} disabled={!canNext} aria-label="Nächste Bewertung">
+      <Button variant={variant} size="icon" onClick={next} disabled={!canNext} aria-label={nextLabel}>
         <ArrowRight aria-hidden />
       </Button>
     </div>

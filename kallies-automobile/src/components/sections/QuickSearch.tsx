@@ -4,26 +4,26 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { useI18n } from "@/i18n";
 import { ALL, allFuels, allMakes, modelsFor } from "@/lib/inventory";
-import { formatNumber } from "@/lib/format";
 
 const ANY = "alle";
 const PRICES = [5000, 10000, 15000, 20000, 30000, 50000];
 
-function Labeled({ label, children }: { label: string; children: (id: string) => React.ReactNode }) {
-  const id = `qs-${label.toLowerCase()}`;
+function Labeled({ label, id, children }: { label: string; id: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2">
       <Label htmlFor={id} className="text-xs font-semibold uppercase tracking-[0.14em] text-grey">
         {label}
       </Label>
-      {children(id)}
+      {children}
     </div>
   );
 }
 
 /** Hero search: Marke, Modell, Preis, Kraftstoff → /fahrzeuge with the matching query. */
 export function QuickSearch() {
+  const { t, fmt } = useI18n();
   const navigate = useNavigate();
   const [make, setMake] = useState(ANY);
   const [model, setModel] = useState(ANY);
@@ -51,55 +51,47 @@ export function QuickSearch() {
   };
 
   return (
-    <form onSubmit={submit} aria-label="Fahrzeugsuche" className="rounded-lg bg-white p-5 text-ink shadow-lift md:p-6">
+    <form onSubmit={submit} aria-label={t.search.aria} className="rounded-lg bg-white p-5 text-ink shadow-lift md:p-6">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-[repeat(4,1fr)_auto] lg:items-end">
-        <Labeled label="Marke">
-          {(id) => (
-            <Select value={make} onValueChange={(v) => { setMake(v); setModel(ANY); }}>
-              <SelectTrigger id={id}><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ANY}>Alle Marken</SelectItem>
-                {allMakes().map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          )}
+        <Labeled label={t.search.make} id="qs-make">
+          <Select value={make} onValueChange={(v) => { setMake(v); setModel(ANY); }}>
+            <SelectTrigger id="qs-make"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ANY}>{t.search.allMakes}</SelectItem>
+              {allMakes().map((m) => <SelectItem key={m} value={m} translate="no">{m}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </Labeled>
-        <Labeled label="Modell">
-          {(id) => (
-            <Select value={model} onValueChange={setModel}>
-              <SelectTrigger id={id}><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ANY}>Alle Modelle</SelectItem>
-                {models.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          )}
+        <Labeled label={t.search.model} id="qs-model">
+          <Select value={model} onValueChange={setModel}>
+            <SelectTrigger id="qs-model"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ANY}>{t.search.allModels}</SelectItem>
+              {models.map((m) => <SelectItem key={m} value={m} translate="no">{m}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </Labeled>
-        <Labeled label="Preis">
-          {(id) => (
-            <Select value={price} onValueChange={setPrice}>
-              <SelectTrigger id={id}><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ANY}>Beliebig</SelectItem>
-                {PRICES.map((p) => <SelectItem key={p} value={String(p)}>bis {formatNumber(p)} €</SelectItem>)}
-              </SelectContent>
-            </Select>
-          )}
+        <Labeled label={t.search.price} id="qs-price">
+          <Select value={price} onValueChange={setPrice}>
+            <SelectTrigger id="qs-price"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ANY}>{t.search.anyPrice}</SelectItem>
+              {PRICES.map((p) => <SelectItem key={p} value={String(p)}>{t.search.upTo(fmt.price(p))}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </Labeled>
-        <Labeled label="Kraftstoff">
-          {(id) => (
-            <Select value={fuel} onValueChange={setFuel}>
-              <SelectTrigger id={id}><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value={ANY}>Alle Kraftstoffe</SelectItem>
-                {allFuels().map((f) => <SelectItem key={f} value={f}>{f}</SelectItem>)}
-              </SelectContent>
-            </Select>
-          )}
+        <Labeled label={t.search.fuel} id="qs-fuel">
+          <Select value={fuel} onValueChange={setFuel}>
+            <SelectTrigger id="qs-fuel"><SelectValue /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ANY}>{t.search.allFuels}</SelectItem>
+              {allFuels().map((f) => <SelectItem key={f} value={f}>{t.vehicle.fuels[f] ?? f}</SelectItem>)}
+            </SelectContent>
+          </Select>
         </Labeled>
         <Button type="submit" variant="brand" size="lg" className="sm:col-span-2 lg:col-span-1">
           <Search aria-hidden />
-          {hits} {hits === 1 ? "Fahrzeug" : "Fahrzeuge"} anzeigen
+          {t.search.show(hits)}
         </Button>
       </div>
     </form>

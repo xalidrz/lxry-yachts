@@ -2,7 +2,7 @@
 
 Premium redesign of [kallies-automobile.de](https://kallies-automobile.de) (Autohaus Zeitz). Content in German, same business and pages.
 
-**Stack:** React 18 · Vite · Tailwind CSS 3 · shadcn/ui (Radix) · Lucide icons (the only icon set) · React Router. Fonts (Schibsted Grotesk, Inter) are self-hosted via `@fontsource`, so no request goes to Google Fonts.
+**Stack:** React 18 · Vite · Tailwind CSS 3 · shadcn/ui (Radix) · Lucide icons (the only icon set) · React Router · `motion` (framer-motion) for animation. Fonts (Schibsted Grotesk, Inter) are self-hosted via `@fontsource`, so no request goes to Google Fonts.
 
 ```bash
 npm install
@@ -29,6 +29,18 @@ Deploy with the Vercel project root set to `kallies-automobile/` (`vercel.json` 
 Tokens live in `src/index.css` (RGB channels) and `tailwind.config.ts`. No blur, `backdrop-filter` or glass anywhere; scrims are plain gradients. Axe-core (WCAG 2.1 AA + best practice) reports no violations on every page at 1440 px and 390 px.
 
 Motion is limited to scroll-reveal (`components/Reveal.tsx`), card hover lift, and image zoom on hover; all of it is disabled under `prefers-reduced-motion`.
+
+## Directions
+
+`src/lib/maps.ts` holds `LAT`/`LNG` and the three URLs (Google Maps, Apple Maps, OpenStreetMap). **The coordinates are approximate — verify them in Google Maps (right-click the entrance → copy the lat/lng) and update the two constants.** Every "Route planen" button is `DirectionsActions`: a plain `<a href target="_blank" rel="noopener noreferrer">` plus a "Weitere Optionen" popover (Google / Apple / OSM / copy address). If a click does not open a tab (popup blocker) the popover opens automatically.
+
+## Language (DE | EN)
+
+All visible text lives in `src/i18n/de.ts` (source of truth, defines the `Dict` type) and `src/i18n/en.ts` (must match it — TypeScript enforces this). `useI18n()` returns `{ t, lang, setLang, fmt }`; `fmt` formats prices, km, power, first registration and dates with `Intl` for the active locale (`2.390 €` / `114.355 km` / `69 PS` in German, `€2,390` / `114,355 km` / `69 hp` in English). The choice is stored in `localStorage` (try/catch) and `<html lang>` follows it. German is the default and the only language in the pre-rendered HTML. Legal pages are never machine-translated: in English they stay German and are labelled "Nur auf Deutsch verfügbar". Vehicle listing titles (e.g. "Klima / Tempomat") come from the dealer's German feed and are not translated. Brand names and prices carry `translate="no"`.
+
+## Motion
+
+`motion/react` plus CSS, all gated on `prefers-reduced-motion` (`MotionConfig reducedMotion="user"`, `useMotionOk()` and a CSS media query that switches off Ken Burns, marquee, shimmer and the CTA pulse). Highlights: clip-path headline reveal, count-up trust numbers (final text is reserved invisibly so nothing shifts), one shared nav indicator (`layoutId`), scroll reveals (`Reveal`), card hover lift + price bar, layout-animated inventory grid, shimmer skeletons, brand marquee, 3-step Ankauf progress, footer stagger + divider, 200 ms page transition. Only `transform` and `opacity` are animated. No blur or backdrop-filter anywhere.
 
 ## Structure
 

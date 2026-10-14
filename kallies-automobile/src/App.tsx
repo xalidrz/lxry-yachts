@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import Home from "@/pages/Home";
@@ -19,14 +19,13 @@ const HARLEY = { makes: ["Harley-Davidson"] };
 
 export default function App() {
   return (
-    <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
-      <Routes>
+    <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="fahrzeuge" element={<InventoryPage />} />
           <Route
             path="harley-davidson"
-            element={<InventoryPage title="Harley-Davidson" eyebrow="Motorräder" lead="Harley-Davidson im Bestand – ein Stück amerikanische Freiheit." preset={HARLEY} />}
+            element={<InventoryPage variant="harley" preset={HARLEY} />}
           />
           <Route path="oldtimer" element={<OldtimerPage />} />
           <Route path="marken" element={<MarkenPage />} />
@@ -41,7 +40,6 @@ export default function App() {
           <Route path="agb" element={<LegalPage slug="agb" />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-      </Routes>
-    </Suspense>
+    </Routes>
   );
 }

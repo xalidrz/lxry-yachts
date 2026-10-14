@@ -8,10 +8,13 @@ import { FormNotice } from "@/components/forms/FormNotice";
 import { PageHeader } from "@/components/PageHeader";
 import { Standort } from "@/components/sections/Standort";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useI18n } from "@/i18n";
 import { formDataToObject, submitLead, type LeadKind, type LeadResult } from "@/lib/forms";
 
 export default function KontaktPage() {
-  usePageMeta("Kontakt | Kallies Automobile Zeitz", "Kontakt zu Kallies Automobile in Zeitz: Telefon +49 3441 86030, E-Mail, Öffnungszeiten und Anfahrt.");
+  const { t } = useI18n();
+  const p = t.pages.kontakt;
+  usePageMeta(t.meta.kontakt.title, t.meta.kontakt.desc);
   const [params] = useSearchParams();
   const betreff = params.get("betreff") ?? "";
   const [result, setResult] = useState<LeadResult | null>(null);
@@ -26,7 +29,7 @@ export default function KontaktPage() {
       const kind: LeadKind = betreff === "Suchanfrage" ? "Suchanfrage" : "Kontaktanfrage";
       setResult(await submitLead(kind, formDataToObject(e.currentTarget)));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Die Nachricht konnte nicht gesendet werden.");
+      setError(err instanceof Error ? err.message : p.genericError);
     } finally {
       setBusy(false);
     }
@@ -34,20 +37,20 @@ export default function KontaktPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Kontakt" title="Wir sind für Sie da." lead="Rufen Sie an, schreiben Sie uns oder kommen Sie vorbei – wir freuen uns auf Ihren Besuch." />
+      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
       <section className="section pb-0">
         <div className="container max-w-3xl">
           <form onSubmit={onSubmit} className="space-y-5 rounded-lg border border-line bg-white p-6 md:p-10">
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Name"><Input name="Name" autoComplete="name" required /></Field>
-              <Field label="Betreff"><Input name="Betreff" defaultValue={betreff} placeholder="Worum geht es?" /></Field>
-              <Field label="E-Mail"><Input name="E-Mail" type="email" autoComplete="email" required /></Field>
-              <Field label="Telefon (optional)"><Input name="Telefon" type="tel" autoComplete="tel" /></Field>
+              <Field label={p.name}><Input name="Name" autoComplete="name" required /></Field>
+              <Field label={p.subject}><Input name="Betreff" defaultValue={betreff} placeholder={p.subjectPh} /></Field>
+              <Field label={p.email}><Input name="E-Mail" type="email" autoComplete="email" required /></Field>
+              <Field label={p.phone}><Input name="Telefon" type="tel" autoComplete="tel" /></Field>
             </div>
-            <Field label="Nachricht"><Textarea name="Nachricht" required /></Field>
+            <Field label={p.message}><Textarea name="Nachricht" required /></Field>
             <ConsentCheck />
             <FormNotice result={result} error={error} />
-            <Button type="submit" variant="brand" size="lg" disabled={busy}>{busy ? "Wird gesendet …" : "Nachricht senden"}</Button>
+            <Button type="submit" variant="brand" size="lg" disabled={busy}>{busy ? p.sending : p.send}</Button>
           </form>
         </div>
       </section>
