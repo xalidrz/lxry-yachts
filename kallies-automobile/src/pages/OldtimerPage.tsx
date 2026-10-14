@@ -10,7 +10,7 @@ export default function OldtimerPage() {
   usePageMeta(t.meta.oldtimer.title, t.meta.oldtimer.desc);
   return (
     <>
-      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
+      <PageHeader image="/images/oldtimer-photo.webp" light eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
       <section className="section">
         <div className="container grid gap-8 md:grid-cols-2">
           <div className="rounded-lg border border-line bg-white p-8 md:p-10">

@@ -13,7 +13,7 @@ export default function MarkenPage() {
   const makes = allMakes().map((m) => [m, ALL.filter((v) => v.make === m).length] as const).sort((a, b) => b[1] - a[1]);
   return (
     <>
-      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
+      <PageHeader image="/images/marken-bg.webp" eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
       <section className="section">
         <ul className="container grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {makes.map(([make, n], i) => (
