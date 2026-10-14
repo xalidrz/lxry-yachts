@@ -3,10 +3,10 @@
  * Border = a clipped ring (mask), fill = a clipped inner layer, both as pseudo-elements, so the button itself is never
  * clipped (focus outlines stay visible) and transparent fills work. Glows are gradients; no blur, no filter, no shadow.
  */
-@property --bd-a { syntax: "<color>"; inherits: false; initial-value: #ff8a1f; }
-@property --bd-b { syntax: "<color>"; inherits: false; initial-value: #ff5a00; }
-@property --glow { syntax: "<number>"; inherits: false; initial-value: 0.28; }
-@property --ln { syntax: "<number>"; inherits: false; initial-value: 0; }
+@property --bd-a { syntax: "<color>"; inherits: true; initial-value: #ff8a1f; }
+@property --bd-b { syntax: "<color>"; inherits: true; initial-value: #ff5a00; }
+@property --glow { syntax: "<number>"; inherits: true; initial-value: 0.28; }
+@property --ln { syntax: "<number>"; inherits: true; initial-value: 0; }
 
 .hbtn {
   --c: 14px;
@@ -78,20 +78,29 @@
 .hbtn-outline-light { --bd-a: rgb(255 255 255 / 0.5); --bd-b: rgb(255 255 255 / 0.22); --glow: 0; --ln: 0; --fill-base: transparent; }
 .hbtn-outline-light:hover, .hbtn-outline-light:focus-visible { --bd-a: #ff8a1f; --bd-b: #ff5a00; --glow: 0.3; --ln: 0.8; --fill-base: linear-gradient(180deg, #121a2a, #080d18); }
 
-/* ----- line: text with thin orange lines above and below (secondary hero action) ----- */
-.hbtn-line { --c: 0px; padding-inline: 4px 2px; }
-.hbtn-line::before { display: none; }
-.hbtn-line::after {
-  inset: 0;
+/* ----- line: ghost button framed by a thin orange line above and below (secondary hero action) ----- */
+.hbtn.hbtn-line {
+  --c: 0px;
+  --ln: 0.8;
+  --ext: 4px;
+  gap: 12px;
+  padding-inline: 28px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: --ln 200ms ease-out;
+}
+.hbtn.hbtn-line::before { display: none; }
+.hbtn.hbtn-line::after {
+  inset: 0 calc(var(--ext) * -1);
   clip-path: none;
   background:
-    linear-gradient(90deg, rgb(255 138 31 / 0.95), rgb(255 138 31 / 0.15)) top / 100% 1px no-repeat,
-    linear-gradient(90deg, rgb(255 138 31 / 0.5), transparent) bottom / 100% 1px no-repeat;
-  transition: opacity 200ms;
+    linear-gradient(90deg, transparent, rgb(255 122 26 / var(--ln)) 50%, transparent) top / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent, rgb(255 122 26 / var(--ln)) 50%, transparent) bottom / 100% 1px no-repeat;
+  transition: inset 200ms ease-out;
 }
-.hbtn-line:hover { color: #ffa040; }
-.hbtn-line svg { transition: transform 200ms; }
-.hbtn-line:hover svg { transform: translateX(4px); }
+.hbtn.hbtn-line:hover, .hbtn.hbtn-line:focus-visible { --ln: 1; --ext: 12px; }
+.hbtn-line svg { transition: transform 200ms ease-out; }
+.hbtn-line:hover svg, .hbtn-line:focus-visible svg { transform: translateX(4px); }
 
 /* compact: icon buttons get smaller points */
 .hbtn-icon { --c: 10px; padding-inline: 0; }
@@ -110,4 +119,3 @@
 .hbtn.h-10 { padding-inline: calc(var(--c) + 8px); font-size: 13px; }
 .hbtn.h-14 { padding-inline: calc(var(--c) + 22px); }
 .hbtn-icon, .hbtn-icon.h-12 { padding-inline: 0; }
-.hbtn-line { padding-inline: 4px 2px; }
