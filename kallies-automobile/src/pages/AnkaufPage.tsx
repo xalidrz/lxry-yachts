@@ -14,7 +14,7 @@ export default function AnkaufPage() {
   usePageMeta(t.meta.ankauf.title, t.meta.ankauf.desc);
   return (
     <>
-      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
+      <PageHeader image="/images/ankauf-bg.webp" eyebrow={p.eyebrow} title={p.title} lead={p.lead} />
       <AnkaufPanel />
       <section className="section bg-white">
         <div className="container">

@@ -10,7 +10,7 @@ export default function MagazinPage() {
   usePageMeta(t.meta.magazin.title, t.meta.magazin.desc);
   return (
     <>
-      <PageHeader eyebrow={t.magazin.eyebrow} title={t.magazin.page.title} lead={t.magazin.page.lead} />
+      <PageHeader image="/images/magazin-bg.webp" eyebrow={t.magazin.eyebrow} title={t.magazin.page.title} lead={t.magazin.page.lead} />
       <section className="section">
         <h2 className="sr-only">{t.magazin.recent}</h2>
         <ul className="container grid gap-6 md:grid-cols-2 lg:grid-cols-3">

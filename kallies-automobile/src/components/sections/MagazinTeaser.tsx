@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/lib/motion";
+import { PhotoBg } from "@/components/PhotoBg";
 import { SectionHeading } from "@/components/SectionHeading";
 import { postMeta } from "@/data/content";
 import { useI18n } from "@/i18n";
@@ -34,11 +35,12 @@ export function PostCard({ index }: { index: number }) {
 export function MagazinTeaser() {
   const { t } = useI18n();
   return (
-    <section className="section bg-white" aria-labelledby="magazin-title">
+    <section className="on-dark section relative isolate overflow-hidden bg-ink" aria-labelledby="magazin-title">
+      <PhotoBg src="/images/magazin-bg.webp" position="low" strength="strong" />
       <div className="container">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading eyebrow={t.magazin.eyebrow} title={<span id="magazin-title">{t.magazin.title}</span>} lead={t.magazin.lead} />
-          <Button asChild variant="outline" className="self-start md:self-auto">
+          <Button asChild variant="outline-light" className="self-start md:self-auto">
             <Link to="/magazin">
               {t.magazin.all} <ArrowRight aria-hidden />
             </Link>

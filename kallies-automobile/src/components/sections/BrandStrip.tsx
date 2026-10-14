@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { PhotoBg } from "@/components/PhotoBg";
 import { brands } from "@/data/site";
 import { useI18n } from "@/i18n";
 
@@ -12,7 +13,7 @@ export function BrandStrip() {
           to={`/fahrzeuge?marke=${encodeURIComponent(b)}`}
           translate="no"
           tabIndex={dup ? -1 : undefined}
-          className="font-display text-lg font-bold uppercase tracking-[0.12em] text-grey transition-colors hover:text-ink md:text-xl"
+          className="font-display text-lg font-bold uppercase tracking-[0.12em] text-white/85 transition-colors hover:text-brand md:text-xl"
         >
           {b}
         </Link>
@@ -20,8 +21,9 @@ export function BrandStrip() {
     ));
 
   return (
-    <section aria-label={t.brandStrip.aria} className="border-y border-line bg-white">
-      <div className="container py-10 md:py-12">
+    <section aria-label={t.brandStrip.aria} className="on-dark relative isolate overflow-hidden bg-ink">
+      <PhotoBg src="/images/marken-bg.webp" strength="strong" />
+      <div className="container py-12 md:py-16">
         <p className="eyebrow mb-6 text-center">{t.brandStrip.label}</p>
         <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
           <div className="marquee">

@@ -1,4 +1,5 @@
 import { BadgeCheck, ClipboardCheck, FileCheck2, Timer } from "lucide-react";
+import { PhotoBg } from "@/components/PhotoBg";
 import { Reveal } from "@/lib/motion";
 import { ValuationForm } from "@/components/sections/ValuationForm";
 import { useI18n } from "@/i18n";
@@ -12,7 +13,8 @@ export function AnkaufPanel() {
     <section className="section" aria-labelledby="ankauf-title">
       <div className="container">
         <Reveal>
-          <div className="on-dark overflow-hidden rounded-lg bg-ink text-white shadow-lift">
+          <div className="on-dark relative isolate overflow-hidden rounded-lg bg-ink text-white shadow-lift">
+            <PhotoBg src="/images/ankauf-bg.webp" strength="strong" />
             <div className="grid gap-12 p-6 sm:p-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:p-16">
               <div>
                 <p className="eyebrow">{t.ankauf.eyebrow}</p>
