@@ -17,7 +17,6 @@ export const site = {
 } as const;
 
 export const mapsEmbedUrl = "https://www.google.com/maps?q=Am+Herrmannschacht+1,+06712+Zeitz&output=embed&hl=de";
-export const mapsLink = "https://www.google.com/maps/search/?api=1&query=Am+Herrmannschacht+1,+06712+Zeitz";
 
 export const nav = [
   { label: "Fahrzeuge", to: "/fahrzeuge" },

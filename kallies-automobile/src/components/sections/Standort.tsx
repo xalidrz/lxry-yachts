@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
-import { mapsEmbedUrl, mapsLink, site } from "@/data/site";
+import { DirectionsButton } from "@/components/DirectionsButton";
+import { mapsEmbedUrl, site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
 /** Mo=0 … So=6, matching site.hours order (Mo–Fr, Sa, So). */
@@ -16,7 +17,7 @@ const todayIndex = () => {
 function MapEmbed() {
   const [loaded, setLoaded] = useState(false);
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-line bg-line lg:aspect-auto lg:h-full lg:min-h-[420px]">
+    <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-line bg-line lg:aspect-auto lg:h-[420px]">
       {loaded ? (
         <iframe title="Karte: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz" src={mapsEmbedUrl} className="absolute inset-0 size-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
       ) : (
@@ -82,11 +83,7 @@ export function Standort() {
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild>
-                <a href={mapsLink} target="_blank" rel="noopener noreferrer">
-                  <Navigation aria-hidden /> Route planen<span className="sr-only"> (öffnet in neuem Tab)</span>
-                </a>
-              </Button>
+              <DirectionsButton>Route planen</DirectionsButton>
               <Button asChild variant="outline">
                 <a href={site.whatsapp} target="_blank" rel="noopener noreferrer">
                   <MessageCircle aria-hidden /> WhatsApp<span className="sr-only"> (öffnet in neuem Tab)</span>
@@ -95,8 +92,11 @@ export function Standort() {
             </div>
           </Reveal>
 
-          <Reveal delay={120} className="lg:h-full">
+          <Reveal delay={120}>
             <MapEmbed />
+            <DirectionsButton variant="outline" className="mt-4 w-full sm:w-auto">
+              Route in Google Maps öffnen
+            </DirectionsButton>
           </Reveal>
         </div>
       </div>

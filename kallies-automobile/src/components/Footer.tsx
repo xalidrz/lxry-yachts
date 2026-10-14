@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { DirectionsButton } from "@/components/DirectionsButton";
 import { Logo } from "@/components/Logo";
 import { footerLinks, nav, site } from "@/data/site";
 
@@ -64,6 +65,9 @@ export function Footer() {
               <span>Mo–Fr 8:30–18:00 · Sa 9:00–12:00</span>
             </p>
           </address>
+          <DirectionsButton variant="outline-light" size="sm" className="mt-6">
+            Route planen
+          </DirectionsButton>
         </div>
       </div>
       <div className="border-t border-white/10">
