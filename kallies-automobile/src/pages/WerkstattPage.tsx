@@ -12,7 +12,7 @@ export default function WerkstattPage() {
   usePageMeta(t.meta.werkstatt.title, t.meta.werkstatt.desc);
   return (
     <>
-      <PageHeader eyebrow={p.eyebrow} title={p.title} lead={p.lead}>
+      <PageHeader photo="/images/werkstatt-photo.webp" eyebrow={p.eyebrow} title={p.title} lead={p.lead}>
         <Button asChild variant="brand" size="lg">
           <Link to="/kontakt?betreff=Werkstatttermin">{p.cta}</Link>
         </Button>
