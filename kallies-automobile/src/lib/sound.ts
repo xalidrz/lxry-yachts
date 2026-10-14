@@ -77,10 +77,10 @@ export function play(kind: Kind) {
   }
 }
 
-const BUTTONISH = 'button, [role="button"], [role="checkbox"], [role="combobox"], [role="option"], a.hbtn, a.hud-btn, a.hud-cta, a.hud-phone';
+const BUTTONISH = 'button, [role="button"], [role="checkbox"], [role="combobox"], [role="option"], a.hbtn, a.gbtn, a.hud-btn, a.hud-cta, a.hud-phone';
 
 const kindFor = (el: Element): Kind => {
-  if (el.closest(".hbtn-brand, .hud-cta")) return "confirm";
+  if (el.closest(".hbtn-brand, .gbtn, .hud-cta")) return "confirm";
   if (el.closest(".hud-chip, [role=checkbox], [role=combobox], [role=option], [data-radix-collection-item], .hud-burger")) return "soft";
   return "tick";
 };

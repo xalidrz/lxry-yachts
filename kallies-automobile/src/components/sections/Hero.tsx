@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion, type MotionProps } from "motion/react";
 import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { GlowButton } from "@/components/ui/GlowButton";
 import { QuickSearch } from "@/components/sections/QuickSearch";
 import { site } from "@/data/site";
 import { useI18n } from "@/i18n";
@@ -66,11 +67,9 @@ export function Hero() {
           {t.hero.lead}
         </motion.p>
         <motion.div {...rise(0.6)} className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-6">
-          <Button asChild variant="brand" className="text-base">
-            <Link to="/fahrzeuge">
-              <ArrowRight aria-hidden /> {t.hero.ctaCars}
-            </Link>
-          </Button>
+          <GlowButton>
+            <Link to="/fahrzeuge">{t.hero.ctaCars}</Link>
+          </GlowButton>
           <Button asChild variant="line">
             <Link to="/ankauf">
               {t.hero.ctaSell} <ArrowRight aria-hidden />
