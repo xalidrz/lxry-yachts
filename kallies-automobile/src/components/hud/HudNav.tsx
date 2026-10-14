@@ -87,10 +87,12 @@ function PhoneButton({ phone, Link }: { phone: HudNavProps["phone"]; Link: HudLi
 
 function CtaButton({ cta, Link, onClick }: { cta: HudNavProps["cta"]; Link: HudLink; onClick?: () => void }) {
   return (
-    <Link href={cta.href} className="hud-panel hud-cta" onClick={onClick}>
-      <i className="hud-cta-halo" aria-hidden />
-      <Frame />
-      {cta.label}
+    <Link href={cta.href} className="hud-cta" onClick={onClick}>
+      <i className="hud-cta-bd" aria-hidden />
+      <i className="hud-cta-fill" aria-hidden />
+      <i className="hud-cta-ln hud-cta-ln-t" aria-hidden />
+      <i className="hud-cta-ln hud-cta-ln-b" aria-hidden />
+      <span>{cta.label}</span>
       <ArrowRight className="size-4" aria-hidden />
     </Link>
   );
