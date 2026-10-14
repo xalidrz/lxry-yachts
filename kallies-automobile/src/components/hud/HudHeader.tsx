@@ -20,10 +20,9 @@ export function HudHeader({ activeHref }: { activeHref?: string } = {}) {
   return (
     <HudNav
       logo={
-        <a href="/" className="hud-wordmark flex flex-col text-white" aria-label={t.header.home} translate="no">
-          <span className="text-[22px] leading-none">Kallies</span>
-          <span className="mt-0.5 text-[10px] tracking-[0.34em]" style={{ color: "var(--accent)" }}>Automobile</span>
-        </a>
+        <RouterLink to="/" className="flex items-center" aria-label={t.header.home}>
+          <img src="/images/logo-hud.png" alt="Kallies Automobile" translate="no" width={150} height={50} className="h-10 w-auto" />
+        </RouterLink>
       }
       items={nav.map((n) => ({ label: hyphenate(t.nav[n.key]), href: n.to }))}
       activeHref={activeHref ?? pathname}

@@ -44,6 +44,7 @@ const Frame = () => (
 function NavButton({ item, active, Link, onClick }: { item: HudItem; active: boolean; Link: HudLink; onClick?: () => void }) {
   return (
     <Link href={item.href} className="hud-btn" aria-current={active ? "page" : undefined} onClick={onClick}>
+      <i className="hud-l-halo" aria-hidden />
       <i className="hud-l-bd" aria-hidden />
       <i className="hud-l-hot" aria-hidden />
       <i className="hud-l-bg" aria-hidden />
@@ -87,6 +88,7 @@ function PhoneButton({ phone, Link }: { phone: HudNavProps["phone"]; Link: HudLi
 function CtaButton({ cta, Link, onClick }: { cta: HudNavProps["cta"]; Link: HudLink; onClick?: () => void }) {
   return (
     <Link href={cta.href} className="hud-panel hud-cta" onClick={onClick}>
+      <i className="hud-cta-halo" aria-hidden />
       <Frame />
       {cta.label}
       <ArrowRight className="size-4" aria-hidden />
@@ -102,7 +104,7 @@ export function HudNav({ logo, items, activeHref, lang, languages, onLangChange,
   const isActive = (href: string) => activeHref !== undefined && (activeHref === href || activeHref.startsWith(`${href}/`));
 
   return (
-    <header className="hud sticky top-0 z-50 px-2 pt-2">
+    <header className="hud sticky top-0 z-50 bg-[#05080f] px-2 pb-1.5 pt-2">
       <div className="hud-panel hud-bar">
         <Frame />
         <span className="hud-bar-line" aria-hidden />
