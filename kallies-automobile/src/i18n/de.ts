@@ -31,6 +31,7 @@ export const de = {
     discover: "Entdecken", company: "Unternehmen", contact: "Kontakt", hours: "Mo–Fr 8:30–18:00 · Sa 9:00–12:00",
     rights: (since: number) => `© ${since}–2026 Kallies Automobile e.K. Alle Rechte vorbehalten.`,
     note: "Preise inkl. MwSt. Irrtümer und Zwischenverkauf vorbehalten.",
+    sound: { on: "Klickgeräusche: an", off: "Klickgeräusche: aus", toggle: "Klickgeräusche ein- oder ausschalten" },
     links: { about: "Über uns", careers: "Karriere", contact: "Kontakt", magazine: "Magazin", imprint: "Impressum", privacy: "Datenschutz", terms: "AGB" },
   },
   hero: {

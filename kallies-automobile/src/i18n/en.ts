@@ -32,6 +32,7 @@ export const en: Dict = {
     discover: "Explore", company: "Company", contact: "Contact", hours: "Mon–Fri 8:30 am–6 pm · Sat 9 am–12 pm",
     rights: (since) => `© ${since}–2026 Kallies Automobile e.K. All rights reserved.`,
     note: "Prices include VAT. Errors and prior sale excepted.",
+    sound: { on: "Click sounds: on", off: "Click sounds: off", toggle: "Turn click sounds on or off" },
     links: { about: "About us", careers: "Careers", contact: "Contact", magazine: "Magazine", imprint: "Impressum", privacy: "Datenschutz", terms: "AGB" },
   },
   hero: {
