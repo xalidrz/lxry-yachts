@@ -118,7 +118,7 @@ export const en: Dict = {
     range: (o, c) => `${o} – ${c}`,
     name: "Kallies Automobile e.K. – Zeitz", openingHours: "Opening hours", today: "Today", closed: "Closed",
     days: { weekdays: "Monday – Friday", saturday: "Saturday", sunday: "Sunday" }, whatsapp: "WhatsApp", newTab: " (opens in a new tab)",
-    loadMap: "Load map", mapNote: "Loading the map transfers data to Google.", mapTitle: "Map: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz",
+    loadMap: "Load map", mapNote: "Map by Google Maps. Displaying it transfers data to Google.", mapTitle: "Map: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz",
   },
   directions: {
     plan: "Get directions", openInMaps: "Open route in Google Maps", more: "More options",

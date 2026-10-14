@@ -14,11 +14,17 @@ const todayIndex = () => {
   return d <= 4 ? 0 : d === 5 ? 1 : 2;
 };
 
-/** The map loads only after a click, so no data goes to Google before the visitor chooses it (DSGVO). */
+/**
+ * The map is shown straight away. Set to true to hide it behind a "Karte laden" click instead, so no data reaches
+ * Google before the visitor chooses it (the stricter DSGVO option; recommended unless a cookie banner covers Google Maps).
+ */
+const MAP_REQUIRES_CLICK = false;
+
 function MapEmbed() {
   const { t } = useI18n();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(!MAP_REQUIRES_CLICK);
   return (
+    <div>
     <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-line bg-line lg:aspect-auto lg:h-[420px]">
       {loaded ? (
         <iframe title={t.standort.mapTitle} src={mapsEmbedUrl} className="absolute inset-0 size-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
@@ -34,6 +40,8 @@ function MapEmbed() {
           <Button onClick={() => setLoaded(true)}>{t.standort.loadMap}</Button>
         </div>
       )}
+    </div>
+    {loaded && !MAP_REQUIRES_CLICK && <p className="mt-2 text-xs text-grey">{t.standort.mapNote}</p>}
     </div>
   );
 }

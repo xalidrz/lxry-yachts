@@ -117,7 +117,7 @@ export const de = {
     range: (o: string, c: string) => `${o} – ${c} Uhr`,
     name: "Kallies Automobile e.K. – Zeitz", openingHours: "Öffnungszeiten", today: "Heute", closed: "Geschlossen",
     days: { weekdays: "Montag – Freitag", saturday: "Samstag", sunday: "Sonntag" }, whatsapp: "WhatsApp", newTab: " (öffnet in neuem Tab)",
-    loadMap: "Karte laden", mapNote: "Mit dem Laden der Karte werden Daten an Google übertragen.", mapTitle: "Karte: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz",
+    loadMap: "Karte laden", mapNote: "Karte von Google Maps. Beim Anzeigen werden Daten an Google übertragen.", mapTitle: "Karte: Kallies Automobile, Am Herrmannschacht 1, 06712 Zeitz",
   },
   directions: {
     plan: "Route planen", openInMaps: "Route in Google Maps öffnen", more: "Weitere Optionen",
