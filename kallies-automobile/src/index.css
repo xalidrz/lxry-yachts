@@ -1,0 +1,89 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/schibsted-grotesk";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* #0B0D10 near-black · #F6F6F4 off-white · #F2790F brand accent (fills) · #B34700 brand accent (text on light) */
+    --ink: 11 13 16;
+    --paper: 246 246 244;
+    --brand: 242 121 15;
+    --brand-ink: 179 71 0;
+    --grey: 90 95 102; /* #5A5F66 — 6:1 on paper */
+    --line: 222 223 219; /* #DEDFDB — dividers */
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background font-sans text-base text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1, h2, h3, h4 {
+    @apply font-display font-bold tracking-tight;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--ink));
+    outline-offset: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: rgb(var(--brand));
+  }
+  ::selection {
+    background: rgb(var(--brand));
+    color: rgb(var(--ink));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand-ink;
+  }
+  .on-dark .eyebrow, .eyebrow-dark {
+    @apply text-brand;
+  }
+  .section {
+    @apply py-16 md:py-24;
+  }
+  .display-1 {
+    @apply font-display text-[2.5rem] font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl;
+  }
+  .display-2 {
+    @apply font-display text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl;
+  }
+
+  /* Scroll reveal — see components/Reveal.tsx */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* Vehicle card: hover lift + image zoom */
+  .lift {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -16px rgb(11 13 16 / 0.28); }
+    .lift:hover .zoom { transform: scale(1.05); }
+  }
+  .zoom {
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
