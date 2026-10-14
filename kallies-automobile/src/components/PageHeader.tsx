@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 import { PhotoBg } from "@/components/PhotoBg";
 
 /** Dark page intro used on every inner page. */
-export function PageHeader({ eyebrow, title, lead, children, image, photo }: { photo?: string; image?: string; eyebrow?: string; title: string; lead?: ReactNode; children?: ReactNode }) {
+export function PageHeader({ eyebrow, title, lead, children, image, photo, light }: { light?: boolean; photo?: string; image?: string; eyebrow?: string; title: string; lead?: ReactNode; children?: ReactNode }) {
   return (
     <section className="on-dark relative isolate overflow-hidden bg-ink text-white">
-      {image && <PhotoBg src={image} position="low" />}
+      {image && <PhotoBg src={image} position="low" strength={light ? "light" : "normal"} />}
       <div className={photo ? "container grid items-center gap-10 py-14 md:py-20 lg:grid-cols-[1.05fr_1fr] lg:gap-14" : "container py-14 md:py-20"}>
         <div>
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
