@@ -3,7 +3,7 @@ import { haversineKm } from "./geo";
 import { labelFromTags } from "./categories";
 import type { Business, GeocodeResult } from "./types";
 
-export type SearchErrorKind = "not-found" | "timeout" | "busy" | "network" | "cancelled" | "unknown";
+export type SearchErrorKind = "not-found" | "too-broad" | "offline" | "timeout" | "busy" | "network" | "cancelled" | "unknown";
 
 export class SearchError extends Error {
   constructor(public kind: SearchErrorKind, message: string) {
@@ -39,7 +39,7 @@ export function markSearchStarted(now = Date.now()): void {
 
 /* -------------------------------- caches -------------------------------- */
 
-const GEO_KEY = "nosite-finder:geocode:v1";
+const GEO_KEY = "nosite-finder:geocode:v2";
 const RESULT_TTL_MS = 15 * 60 * 1000;
 const resultCache = new Map<string, { at: number; value: SearchOutcome }>();
 
@@ -54,11 +54,45 @@ function readGeoCache(): Record<string, GeocodeResult> {
 /* ------------------------------- geocoding ------------------------------ */
 
 const NOMINATIM = "https://nominatim.openstreetmap.org/search";
+const MAX_AREA_KM = 50;
+/** Nominatim place types that are a whole country or state, however the box looks. */
+const HUGE_TYPES = new Set(["country", "state"]);
+/** Place types that are a single settlement: a large city box (e.g. Karachi) is fine. */
+const SETTLEMENT_TYPES = new Set(["city", "town", "village", "hamlet", "suburb", "neighbourhood", "quarter", "city_district", "borough", "municipality"]);
+
+const TOO_BROAD = "That area is too big. Enter a city or town, like Wah Cantt or Lahore.";
+const NOT_FOUND = "We couldn't find that place. Try a city or town name.";
+
+function isOffline(): boolean {
+  return typeof navigator !== "undefined" && navigator.onLine === false;
+}
+
+function offlineError(): SearchError {
+  return new SearchError("offline", "You seem to be offline. Check your connection and retry.");
+}
+
+function bboxSizeKm(bb: number[]): number {
+  const [south, north, west, east] = bb;
+  const midLat = (south + north) / 2;
+  return Math.max(haversineKm(south, west, north, west), haversineKm(midLat, west, midLat, east));
+}
+
+/** Throws when the geocoded place is a country/state or too wide to search sensibly. */
+function assertSearchable(geo: GeocodeResult): void {
+  const kinds = [geo.placeType, geo.addressType].filter(Boolean) as string[];
+  if (kinds.some((k) => HUGE_TYPES.has(k))) throw new SearchError("too-broad", TOO_BROAD);
+  if (kinds.some((k) => SETTLEMENT_TYPES.has(k))) return;
+  if (geo.bboxKm !== undefined && geo.bboxKm > MAX_AREA_KM) throw new SearchError("too-broad", TOO_BROAD);
+}
 
 export async function geocode(city: string, signal: AbortSignal): Promise<GeocodeResult & { cached: boolean }> {
   const key = city.trim().toLowerCase();
   const cache = readGeoCache();
-  if (cache[key]) return { ...cache[key], cached: true };
+  if (cache[key]) {
+    assertSearchable(cache[key]);
+    return { ...cache[key], cached: true };
+  }
+  if (isOffline()) throw offlineError();
 
   const url = `${NOMINATIM}?${new URLSearchParams({
     q: city.trim(),
@@ -74,18 +108,32 @@ export async function geocode(city: string, signal: AbortSignal): Promise<Geocod
   } catch (e) {
     throw wrapFetchError(e);
   }
-  if (res.status === 429) throw new SearchError("busy", "The place lookup service is busy. Wait a few seconds and try again.");
-  if (!res.ok) throw new SearchError("network", `The place lookup service answered with an error (${res.status}).`);
+  if (res.status === 429) throw new SearchError("busy", BUSY);
+  if (!res.ok) throw new SearchError("network", "The place lookup service had a problem. Please retry.");
 
-  const json = (await res.json()) as Array<{ lat: string; lon: string; display_name: string; address?: { country_code?: string } }>;
-  if (!json.length) throw new SearchError("not-found", `We couldn't find "${city.trim()}". Check the spelling or add the country, e.g. "Lahore, Pakistan".`);
+  const json = (await res.json()) as Array<{
+    lat: string;
+    lon: string;
+    display_name: string;
+    type?: string;
+    addresstype?: string;
+    boundingbox?: string[];
+    address?: { country_code?: string };
+  }>;
+  if (!json.length) throw new SearchError("not-found", NOT_FOUND);
 
+  const r = json[0];
+  const bb = r.boundingbox?.map(Number);
   const hit: GeocodeResult = {
-    lat: Number(json[0].lat),
-    lon: Number(json[0].lon),
-    displayName: json[0].display_name,
-    countryCode: json[0].address?.country_code,
+    lat: Number(r.lat),
+    lon: Number(r.lon),
+    displayName: r.display_name,
+    countryCode: r.address?.country_code,
+    placeType: r.type,
+    addressType: r.addresstype,
+    bboxKm: bb && bb.length === 4 && bb.every(Number.isFinite) ? bboxSizeKm(bb) : undefined,
   };
+  // Cache before the size check so a repeat of the same text is rejected without another request.
   try {
     const next = { ...cache, [key]: hit };
     const keys = Object.keys(next);
@@ -94,19 +142,26 @@ export async function geocode(city: string, signal: AbortSignal): Promise<Geocod
   } catch {
     /* ignore */
   }
+  assertSearchable(hit);
   return { ...hit, cached: false };
 }
 
 /* -------------------------------- overpass ------------------------------ */
 
-const OVERPASS_MIRRORS = [
+const BUSY = "The map server is busy. Wait 30 seconds and retry.";
+const TIMEOUT = "This search took too long. Try a smaller radius or a more specific area.";
+
+/** Tried in order. Each gets 25 s, then we silently move on to the next. */
+const OVERPASS_SERVERS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
-  "https://overpass.private.coffee/api/interpreter",
+  "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ];
-const ATTEMPT_TIMEOUT_MS = 30_000;
-const TOTAL_BUDGET_MS = 70_000;
+const ATTEMPT_TIMEOUT_MS = 25_000;
 const MAX_ELEMENTS = 600;
+
+/** Where the next search starts. Advances after a total failure so "Retry" begins on a different server. */
+let startIndex = 0;
 
 export function buildQuery(lat: number, lon: number, radiusKm: number, filters: string[]): string {
   const around = `(around:${Math.round(radiusKm * 1000)},${lat.toFixed(5)},${lon.toFixed(5)})`;
@@ -127,15 +182,18 @@ interface OsmElement {
 function wrapFetchError(e: unknown): SearchError {
   if (e instanceof SearchError) return e;
   if (e instanceof DOMException && e.name === "AbortError") return new SearchError("cancelled", "Search cancelled.");
-  return new SearchError("network", "Couldn't reach the server. Check your internet connection and try again.");
+  if (isOffline()) return offlineError();
+  return new SearchError("network", "Couldn't reach the map servers. Please try again.");
 }
 
-async function overpassRequest(query: string, signal: AbortSignal): Promise<OsmElement[]> {
-  const started = Date.now();
-  let lastKind: SearchErrorKind = "timeout";
+type Failure = "timeout" | "busy" | "network";
 
-  for (const endpoint of OVERPASS_MIRRORS) {
-    if (Date.now() - started > TOTAL_BUDGET_MS) break;
+async function overpassRequest(query: string, signal: AbortSignal): Promise<OsmElement[]> {
+  if (isOffline()) throw offlineError();
+  const failures: Failure[] = [];
+
+  for (let n = 0; n < OVERPASS_SERVERS.length; n++) {
+    const index = (startIndex + n) % OVERPASS_SERVERS.length;
     const ctrl = new AbortController();
     const onAbort = () => ctrl.abort();
     signal.addEventListener("abort", onAbort);
@@ -146,42 +204,39 @@ async function overpassRequest(query: string, signal: AbortSignal): Promise<OsmE
     }, ATTEMPT_TIMEOUT_MS);
 
     try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        body: new URLSearchParams({ data: query }),
-        signal: ctrl.signal,
-      });
+      const res = await fetch(OVERPASS_SERVERS[index], { method: "POST", body: new URLSearchParams({ data: query }), signal: ctrl.signal });
       if (res.status === 429) {
-        lastKind = "busy";
-        continue;
-      }
-      if (res.status >= 500) {
-        lastKind = "timeout";
+        failures.push("busy");
         continue;
       }
       if (!res.ok) {
-        lastKind = "unknown";
+        failures.push("timeout"); // 5xx from Overpass is almost always an overloaded/timed-out query
         continue;
       }
       const json = (await res.json()) as { elements?: OsmElement[]; remark?: string };
       // Overpass reports a server-side timeout / out-of-memory as a 200 with a "remark".
       if (json.remark && /timed out|out of memory|runtime error/i.test(json.remark)) {
-        lastKind = "timeout";
+        failures.push("timeout");
         continue;
       }
+      startIndex = index; // stick with the server that worked
       return json.elements ?? [];
-    } catch (e) {
+    } catch {
       if (signal.aborted) throw new SearchError("cancelled", "Search cancelled.");
-      lastKind = timedOut ? "timeout" : "network";
+      failures.push(timedOut ? "timeout" : "network");
     } finally {
       clearTimeout(timer);
       signal.removeEventListener("abort", onAbort);
     }
   }
 
-  if (lastKind === "network") throw new SearchError("network", "Couldn't reach the map data servers. Check your internet connection and retry.");
-  if (lastKind === "busy") throw new SearchError("busy", "The free map data servers are busy right now (too many requests). Wait a minute and retry.");
-  throw new SearchError("timeout", "The map data server timed out. Big radius + broad category is slow on the free servers - retry, or shrink the radius.");
+  // Every server failed: the next attempt (Retry) starts on the following one.
+  startIndex = (startIndex + 1) % OVERPASS_SERVERS.length;
+
+  if (isOffline()) throw offlineError();
+  if (failures.includes("timeout")) throw new SearchError("timeout", TIMEOUT);
+  if (failures.includes("busy")) throw new SearchError("busy", BUSY);
+  throw new SearchError("network", "Couldn't reach the map servers. Please try again.");
 }
 
 function formatAddress(t: Record<string, string>): string | undefined {
