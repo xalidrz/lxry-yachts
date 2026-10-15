@@ -6,9 +6,13 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { CATEGORIES, CUSTOM_CATEGORY_ID, resolveCategory } from "@/lib/categories";
+import { CountrySelect } from "@/components/CountrySelect";
+import { countryByCode } from "@/lib/countries";
 import { isCached, msUntilNextSearch, type SearchParams } from "@/lib/search";
 
 export interface SearchForm {
+  /** ISO 3166-1 alpha-2, uppercase; empty until chosen */
+  country: string;
   city: string;
   categoryId: string;
   customText: string;
@@ -16,12 +20,13 @@ export interface SearchForm {
 }
 
 const FORM_KEY = "nosite-finder:form:v1";
-export const DEFAULT_FORM: SearchForm = { city: "", categoryId: "restaurant", customText: "", radiusKm: 5 };
+export const DEFAULT_FORM: SearchForm = { country: "", city: "", categoryId: "restaurant", customText: "", radiusKm: 5 };
 
 export function loadForm(): SearchForm {
   try {
     const f = { ...DEFAULT_FORM, ...JSON.parse(localStorage.getItem(FORM_KEY) ?? "{}") } as SearchForm;
     f.radiusKm = Math.min(90, Math.max(1, Number(f.radiusKm) || 5));
+    if (!countryByCode(f.country)) f.country = "";
     return f;
   } catch {
     return DEFAULT_FORM;
@@ -30,8 +35,9 @@ export function loadForm(): SearchForm {
 
 export function toParams(f: SearchForm): SearchParams | null {
   const cat = resolveCategory(f.categoryId, f.customText);
-  if (f.city.trim().length < 2 || !cat) return null;
-  return { city: f.city.trim(), radiusKm: f.radiusKm, categoryLabel: cat.label, filters: cat.filters };
+  const country = countryByCode(f.country);
+  if (!country || f.city.trim().length < 2 || !cat) return null;
+  return { countryCode: country.code, countryName: country.name, city: f.city.trim(), radiusKm: f.radiusKm, categoryLabel: cat.label, filters: cat.filters };
 }
 
 /** Seconds left on the polite-use cooldown; re-renders while it counts down. */
@@ -96,7 +102,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
               <span className="font-semibold">{catLabel}</span>
               <span className="text-muted-foreground">
                 {" "}
-                · {form.city.trim()} · {form.radiusKm} km
+                · {form.city.trim()}, {form.country} · {form.radiusKm} km
               </span>
             </span>
             <span className="flex items-center gap-1.5 text-sm font-medium text-primary">
@@ -106,7 +112,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
         )}
 
         <form
-          className={(expanded ? "grid" : "hidden md:grid") + " gap-3 md:grid-cols-[1.2fr_1fr_1fr_auto] md:items-start"}
+          className={(expanded ? "grid" : "hidden md:grid") + " gap-3 md:grid-cols-2 lg:grid-cols-[1fr_1.2fr_1fr_1fr_auto] lg:items-start"}
           onSubmit={(e) => {
             e.preventDefault();
             if (params && !disabled) {
@@ -116,6 +122,11 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
           }}
         >
           <div className="grid gap-1.5">
+            <Label htmlFor="country">Country</Label>
+            <CountrySelect id="country" value={form.country} onChange={(code) => set({ country: code })} />
+          </div>
+
+          <div className="grid gap-1.5">
             <Label htmlFor="city">City / Area</Label>
             <div className="relative">
               <MapPin className="pointer-events-none absolute left-3 top-1/2 size-[18px] -translate-y-1/2 text-muted-foreground" />
@@ -123,7 +134,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
                 id="city"
                 value={form.city}
                 onChange={(e) => set({ city: e.target.value })}
-                placeholder="e.g. Lahore, Pakistan"
+                placeholder="e.g. Wah Cantt"
                 autoComplete="off"
                 enterKeyHint="search"
                 aria-describedby="city-hint"
@@ -175,7 +186,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
             <Slider id="radius" aria-label="Search radius in kilometres" min={1} max={90} step={1} value={[form.radiusKm]} onValueChange={([v]) => set({ radiusKm: v })} />
           </div>
 
-          <Button type="submit" size="lg" disabled={disabled} className="w-full md:mt-[1.625rem] md:w-auto md:min-w-32">
+          <Button type="submit" size="lg" disabled={disabled} className="w-full md:col-span-2 lg:col-span-1 lg:mt-[1.625rem] lg:w-auto lg:min-w-32">
             {loading ? <LoaderCircle className="animate-spin" /> : <Search />}
             {buttonLabel}
           </Button>

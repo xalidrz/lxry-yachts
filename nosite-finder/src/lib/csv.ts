@@ -8,14 +8,16 @@ function cell(value: string | number | undefined): string {
 }
 
 export function leadsToCsv(leads: Lead[]): string {
-  const header = ["Name", "Status", "Category", "Phone", "Address", "City searched", "Latitude", "Longitude", "OpenStreetMap link", "Saved"];
+  const header = ["Name", "Status", "Category", "Phone", "Other phones", "Address", "City searched", "Country", "Latitude", "Longitude", "OpenStreetMap link", "Saved"];
   const rows = leads.map((l) => [
     l.name,
     l.status,
     l.category,
     l.phone,
+    l.phones?.slice(1).join("; "),
     l.address,
     l.city,
+    l.country,
     l.lat,
     l.lon,
     `https://www.openstreetmap.org/${l.id}`,
