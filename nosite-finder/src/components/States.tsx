@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Bookmark, Hourglass, Inbox, MapPin, RefreshCw, SearchX, ServerCrash, ShieldCheck, TriangleAlert, WifiOff, X, Radar } from "lucide-react";
+import { Bookmark, Hourglass, Inbox, MapPin, MapPinOff, RefreshCw, SearchX, ServerCrash, ShieldCheck, TriangleAlert, WifiOff, X, Radar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -126,14 +126,18 @@ export function ErrorState({ error, radiusKm, onRetry, onShrink }: { error: Sear
       ? { icon: <Hourglass />, title: "The map server timed out" }
       : kind === "busy"
         ? { icon: <ServerCrash />, title: "The free servers are busy" }
-        : kind === "network"
+        : kind === "offline"
           ? { icon: <WifiOff />, title: "You seem to be offline" }
-          : kind === "not-found"
-            ? { icon: <SearchX />, title: "Place not found" }
-            : { icon: <TriangleAlert />, title: "Something went wrong" };
+          : kind === "network"
+            ? { icon: <ServerCrash />, title: "Couldn't reach the map servers" }
+            : kind === "not-found"
+              ? { icon: <SearchX />, title: "Place not found" }
+              : kind === "too-broad"
+                ? { icon: <MapPinOff />, title: "That area is too big" }
+                : { icon: <TriangleAlert />, title: "Something went wrong" };
 
-  const canShrink = (kind === "timeout" || kind === "busy") && radiusKm > 20;
-  const shrinkTo = Math.max(10, Math.round(radiusKm / 3));
+  const canShrink = kind === "timeout" && radiusKm > 5;
+  const shrinkTo = Math.max(5, Math.round(radiusKm / 3));
 
   return (
     <section role="alert" className="py-8">
@@ -144,7 +148,7 @@ export function ErrorState({ error, radiusKm, onRetry, onShrink }: { error: Sear
           <p className="mt-2 max-w-xl text-lg text-muted-foreground">{error.message}</p>
         </div>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-          {kind !== "not-found" && (
+          {kind !== "not-found" && kind !== "too-broad" && (
             <Button size="lg" onClick={onRetry}>
               <RefreshCw /> Retry search
             </Button>
@@ -155,15 +159,14 @@ export function ErrorState({ error, radiusKm, onRetry, onShrink }: { error: Sear
             </Button>
           )}
         </div>
-        {kind === "timeout" && <p className="text-sm text-muted-foreground">Tip: a smaller radius or a narrower category is much faster.</p>}
-      </Card>
+              </Card>
     </section>
   );
 }
 
 /* ------------------------------- empty results ---------------------------- */
 
-export function NoResultsState({ radiusKm, filtered }: { radiusKm: number; filtered: boolean }) {
+export function NoResultsState({ filtered }: { filtered: boolean }) {
   return (
     <section className="py-8">
       <Card className="flex flex-col items-start gap-5 p-5 sm:p-7">
@@ -171,11 +174,11 @@ export function NoResultsState({ radiusKm, filtered }: { radiusKm: number; filte
           <Inbox />
         </IconTile>
         <div>
-          <h2 className="text-2xl font-bold">{filtered ? "None of these have a phone number" : "No website-less businesses here"}</h2>
+          <h2 className="text-2xl font-bold">{filtered ? "None of these have a phone number" : "No results here"}</h2>
           <p className="mt-2 max-w-xl text-lg text-muted-foreground">
             {filtered
               ? "Turn off “Only with phone” to see businesses that only list an address."
-              : `Nothing matched within ${radiusKm} km. Either everyone here already has a website, or OpenStreetMap has few entries for this trade.`}
+              : "No businesses without a website found here. Try a larger radius or another category."}
           </p>
         </div>
         {!filtered && (

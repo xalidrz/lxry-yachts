@@ -61,7 +61,7 @@ export function FindPage({ state, form, onFormChange, onSearch, onCancel }: Prop
         {state.status === "success" && (
           <section className="pt-5" aria-label="Results">
             {businesses.length === 0 ? (
-              <NoResultsState radiusKm={state.params.radiusKm} filtered={false} />
+              <NoResultsState filtered={false} />
             ) : (
               <Tabs value={view} onValueChange={setView}>
                 <div className="flex flex-col gap-4">
@@ -95,7 +95,7 @@ export function FindPage({ state, form, onFormChange, onSearch, onCancel }: Prop
 
                 <TabsContent value="list">
                   {visible.length === 0 ? (
-                    <NoResultsState radiusKm={state.params.radiusKm} filtered />
+                    <NoResultsState filtered />
                   ) : (
                     <>
                       <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -16,12 +16,12 @@ export interface SearchForm {
 }
 
 const FORM_KEY = "nosite-finder:form:v1";
-export const DEFAULT_FORM: SearchForm = { city: "", categoryId: "restaurant", customText: "", radiusKm: 10 };
+export const DEFAULT_FORM: SearchForm = { city: "", categoryId: "restaurant", customText: "", radiusKm: 5 };
 
 export function loadForm(): SearchForm {
   try {
     const f = { ...DEFAULT_FORM, ...JSON.parse(localStorage.getItem(FORM_KEY) ?? "{}") } as SearchForm;
-    f.radiusKm = Math.min(90, Math.max(1, Number(f.radiusKm) || 10));
+    f.radiusKm = Math.min(90, Math.max(1, Number(f.radiusKm) || 5));
     return f;
   } catch {
     return DEFAULT_FORM;
@@ -106,7 +106,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
         )}
 
         <form
-          className={(expanded ? "grid" : "hidden md:grid") + " gap-3 md:grid-cols-[1.2fr_1fr_1fr_auto] md:items-end"}
+          className={(expanded ? "grid" : "hidden md:grid") + " gap-3 md:grid-cols-[1.2fr_1fr_1fr_auto] md:items-start"}
           onSubmit={(e) => {
             e.preventDefault();
             if (params && !disabled) {
@@ -126,9 +126,13 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
                 placeholder="e.g. Lahore, Pakistan"
                 autoComplete="off"
                 enterKeyHint="search"
+                aria-describedby="city-hint"
                 className="pl-10"
               />
             </div>
+            <p id="city-hint" className="text-sm text-muted-foreground">
+              Use a city or town name.
+            </p>
           </div>
 
           <div className="grid gap-1.5">
@@ -161,7 +165,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
             )}
           </div>
 
-          <div className="grid gap-1">
+          <div className="grid gap-1.5">
             <div className="flex items-baseline justify-between">
               <Label htmlFor="radius">Radius</Label>
               <output htmlFor="radius" className="text-base font-semibold tabular-nums">
@@ -171,7 +175,7 @@ export function SearchBar({ form, onFormChange, onSearch, loading, hasSearched }
             <Slider id="radius" aria-label="Search radius in kilometres" min={1} max={90} step={1} value={[form.radiusKm]} onValueChange={([v]) => set({ radiusKm: v })} />
           </div>
 
-          <Button type="submit" size="lg" disabled={disabled} className="w-full md:w-auto md:min-w-32">
+          <Button type="submit" size="lg" disabled={disabled} className="w-full md:mt-[1.625rem] md:w-auto md:min-w-32">
             {loading ? <LoaderCircle className="animate-spin" /> : <Search />}
             {buttonLabel}
           </Button>

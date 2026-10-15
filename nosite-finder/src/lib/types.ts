@@ -30,4 +30,8 @@ export interface GeocodeResult {
   lon: number;
   displayName: string;
   countryCode?: string;
+  /** Nominatim `type` / `addresstype` and bounding-box size, used to refuse countries and states. */
+  placeType?: string;
+  addressType?: string;
+  bboxKm?: number;
 }
