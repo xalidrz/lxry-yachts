@@ -1,11 +1,9 @@
 import { useMemo, useState } from "react";
-import { List, Map as MapIcon, Phone } from "lucide-react";
+import { List, Map as MapIcon } from "lucide-react";
 import { LeadCard } from "@/components/LeadCard";
 import { MapView } from "@/components/MapView";
 import { ErrorState, IntroState, LoadingState, NoResultsState } from "@/components/States";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SearchBar, toParams, type SearchForm } from "@/components/SearchBar";
 import type { SearchState } from "@/hooks/useSearch";
@@ -25,11 +23,11 @@ interface Props {
 export function FindPage({ state, form, onFormChange, onSearch, onCancel }: Props) {
   const leads = useLeads();
   const [view, setView] = useState("list");
-  const [phoneOnly, setPhoneOnly] = useState(false);
   const [shown, setShown] = useState(PAGE);
 
   const businesses = state.status === "success" ? state.outcome.businesses : [];
-  const visible = useMemo(() => (phoneOnly ? businesses.filter((b) => !!b.phone) : businesses), [businesses, phoneOnly]);
+  const visible = businesses;
+  const hidden = state.status === "success" ? state.outcome.hiddenNoPhone : 0;
   const savedIds = useMemo(() => new Set(Object.keys(leads)), [leads]);
 
   const retry = () => {
@@ -61,16 +59,17 @@ export function FindPage({ state, form, onFormChange, onSearch, onCancel }: Prop
         {state.status === "success" && (
           <section className="pt-5" aria-label="Results">
             {businesses.length === 0 ? (
-              <NoResultsState filtered={false} />
+              <NoResultsState hidden={hidden} />
             ) : (
               <Tabs value={view} onValueChange={setView}>
                 <div className="flex flex-col gap-4">
                   <div>
                     <h2 className="text-2xl font-bold">
-                      {visible.length} {visible.length === 1 ? "business" : "businesses"} with no website
+                      {visible.length} {visible.length === 1 ? "business" : "businesses"} with no website and a phone number
                     </h2>
-                    <p className="mt-1 text-base text-muted-foreground">
-                      {state.params.categoryLabel} within {state.params.radiusKm} km of {state.params.city}. OpenStreetMap is incomplete, so hit <strong className="font-semibold text-foreground">Verify</strong> before you pitch.
+                    {hidden > 0 && <p className="mt-1 text-sm text-muted-foreground">{hidden} hidden because they had no phone number.</p>}
+                    <p className="mt-2 text-base text-muted-foreground">
+                      {state.params.categoryLabel} within {state.params.radiusKm} km of {state.params.city}, {state.params.countryName}. OpenStreetMap is incomplete, so hit <strong className="font-semibold text-foreground">Verify</strong> before you pitch.
                     </p>
                     {state.outcome.truncated && <p className="mt-1 text-sm text-muted-foreground">Showing the first {businesses.length}. Shrink the radius to see the rest.</p>}
                   </div>
@@ -84,20 +83,11 @@ export function FindPage({ state, form, onFormChange, onSearch, onCancel }: Prop
                         <MapIcon /> Map
                       </TabsTrigger>
                     </TabsList>
-                    <div className="flex items-center gap-3">
-                      <Switch id="phone-only" checked={phoneOnly} onCheckedChange={(v) => { setPhoneOnly(v); setShown(PAGE); }} />
-                      <Label htmlFor="phone-only" className="flex items-center gap-1.5 text-base text-foreground">
-                        <Phone className="size-4 text-muted-foreground" /> Only with phone
-                      </Label>
-                    </div>
                   </div>
                 </div>
 
                 <TabsContent value="list">
-                  {visible.length === 0 ? (
-                    <NoResultsState filtered />
-                  ) : (
-                    <>
+                  <>
                       <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {visible.slice(0, shown).map((b) => (
                           <li key={b.id}>
@@ -112,8 +102,7 @@ export function FindPage({ state, form, onFormChange, onSearch, onCancel }: Prop
                           </Button>
                         </div>
                       )}
-                    </>
-                  )}
+                  </>
                 </TabsContent>
 
                 <TabsContent value="map">

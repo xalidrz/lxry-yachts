@@ -36,7 +36,7 @@ export function IntroState() {
         <div>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl">Find businesses that need a website.</h2>
           <p className="mt-3 max-w-xl text-lg text-muted-foreground">
-            Search any city for local businesses with a name and a phone or address, but no website listed. Free, no sign-up, nothing leaves your browser except the map search.
+            Pick a country and a city to see local businesses that list a phone number but no website. Free, no sign-up, nothing leaves your browser except the map search.
           </p>
         </div>
       </div>
@@ -166,7 +166,7 @@ export function ErrorState({ error, radiusKm, onRetry, onShrink }: { error: Sear
 
 /* ------------------------------- empty results ---------------------------- */
 
-export function NoResultsState({ filtered }: { filtered: boolean }) {
+export function NoResultsState({ hidden }: { hidden: number }) {
   return (
     <section className="py-8">
       <Card className="flex flex-col items-start gap-5 p-5 sm:p-7">
@@ -174,20 +174,15 @@ export function NoResultsState({ filtered }: { filtered: boolean }) {
           <Inbox />
         </IconTile>
         <div>
-          <h2 className="text-2xl font-bold">{filtered ? "None of these have a phone number" : "No results here"}</h2>
-          <p className="mt-2 max-w-xl text-lg text-muted-foreground">
-            {filtered
-              ? "Turn off “Only with phone” to see businesses that only list an address."
-              : "No businesses without a website found here. Try a larger radius or another category."}
-          </p>
+          <h2 className="text-2xl font-bold">No results here</h2>
+          <p className="mt-2 max-w-xl text-lg text-muted-foreground">No businesses with a phone number and no website found. Try a bigger radius or a different category.</p>
+          {hidden > 0 && <p className="mt-2 text-sm text-muted-foreground">{hidden} hidden because they had no phone number.</p>}
         </div>
-        {!filtered && (
-          <ul className="list-disc space-y-1 pl-5 text-base text-muted-foreground">
-            <li>Widen the radius (up to 90 km).</li>
-            <li>Try a nearby bigger city, or a broader category like “Shop (any)”.</li>
-            <li>Use a custom category, e.g. “tailor” or “tuition”.</li>
-          </ul>
-        )}
+        <ul className="list-disc space-y-1 pl-5 text-base text-muted-foreground">
+          <li>Widen the radius (up to 90 km).</li>
+          <li>Try a broader category like “Shop (any)”.</li>
+          <li>Use a custom category, e.g. “tailor” or “tuition”.</li>
+        </ul>
       </Card>
     </section>
   );

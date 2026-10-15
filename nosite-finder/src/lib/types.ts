@@ -17,6 +17,12 @@ export interface Business {
   countryCode?: string;
   /** Distance from the search centre, km. */
   distanceKm?: number;
+  /** Country name the search was restricted to. */
+  country?: string;
+  /** Every cleaned number found (the first is `phone`). */
+  phones?: string[];
+  /** Primary number is a mobile (sorted first). */
+  isMobile?: boolean;
 }
 
 export interface Lead extends Business {

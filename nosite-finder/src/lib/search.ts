@@ -1,4 +1,5 @@
-import { firstPhone } from "./phone";
+import { phoneInfoFromTags } from "./phone";
+import { STATIC_BOXES, inBox, type Box } from "./countries";
 import { haversineKm } from "./geo";
 import { labelFromTags } from "./categories";
 import type { Business, GeocodeResult } from "./types";
@@ -39,7 +40,8 @@ export function markSearchStarted(now = Date.now()): void {
 
 /* -------------------------------- caches -------------------------------- */
 
-const GEO_KEY = "nosite-finder:geocode:v2";
+const GEO_KEY = "nosite-finder:geocode:v3";
+const BOX_KEY = "nosite-finder:countrybox:v1";
 const RESULT_TTL_MS = 15 * 60 * 1000;
 const resultCache = new Map<string, { at: number; value: SearchOutcome }>();
 
@@ -61,7 +63,7 @@ const HUGE_TYPES = new Set(["country", "state"]);
 const SETTLEMENT_TYPES = new Set(["city", "town", "village", "hamlet", "suburb", "neighbourhood", "quarter", "city_district", "borough", "municipality"]);
 
 const TOO_BROAD = "That area is too big. Enter a city or town, like Wah Cantt or Lahore.";
-const NOT_FOUND = "We couldn't find that place. Try a city or town name.";
+const notFound = (country: string) => `We couldn't find that place in ${country}. Check the spelling or pick another city.`;
 
 function isOffline(): boolean {
   return typeof navigator !== "undefined" && navigator.onLine === false;
@@ -85,8 +87,8 @@ function assertSearchable(geo: GeocodeResult): void {
   if (geo.bboxKm !== undefined && geo.bboxKm > MAX_AREA_KM) throw new SearchError("too-broad", TOO_BROAD);
 }
 
-export async function geocode(city: string, signal: AbortSignal): Promise<GeocodeResult & { cached: boolean }> {
-  const key = city.trim().toLowerCase();
+export async function geocode(city: string, countryCode: string, countryName: string, signal: AbortSignal): Promise<GeocodeResult & { cached: boolean }> {
+  const key = `${countryCode.toLowerCase()}|${city.trim().toLowerCase()}`;
   const cache = readGeoCache();
   if (cache[key]) {
     assertSearchable(cache[key]);
@@ -96,6 +98,7 @@ export async function geocode(city: string, signal: AbortSignal): Promise<Geocod
 
   const url = `${NOMINATIM}?${new URLSearchParams({
     q: city.trim(),
+    countrycodes: countryCode.toLowerCase(),
     format: "jsonv2",
     limit: "1",
     addressdetails: "1",
@@ -120,9 +123,9 @@ export async function geocode(city: string, signal: AbortSignal): Promise<Geocod
     boundingbox?: string[];
     address?: { country_code?: string };
   }>;
-  if (!json.length) throw new SearchError("not-found", NOT_FOUND);
-
-  const r = json[0];
+  // countrycodes already limits Nominatim to the country; double-check the hit says the same.
+  const r = json.find((x) => !x.address?.country_code || x.address.country_code.toLowerCase() === countryCode.toLowerCase());
+  if (!r) throw new SearchError("not-found", notFound(countryName));
   const bb = r.boundingbox?.map(Number);
   const hit: GeocodeResult = {
     lat: Number(r.lat),
@@ -158,16 +161,17 @@ const OVERPASS_SERVERS = [
   "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ];
 const ATTEMPT_TIMEOUT_MS = 25_000;
-const MAX_ELEMENTS = 600;
+const MAX_ELEMENTS = 800;
 
 /** Where the next search starts. Advances after a total failure so "Retry" begins on a different server. */
 let startIndex = 0;
 
-export function buildQuery(lat: number, lon: number, radiusKm: number, filters: string[]): string {
+export function buildQuery(lat: number, lon: number, radiusKm: number, filters: string[], countryCode: string): string {
   const around = `(around:${Math.round(radiusKm * 1000)},${lat.toFixed(5)},${lon.toFixed(5)})`;
-  // Must have a name and must NOT have any website-like tag.
-  const lines = filters.map((flt) => `  nwr${around}${flt}["name"][!"website"][!"contact:website"][!"url"];`);
-  return `[out:json][timeout:25];\n(\n${lines.join("\n")}\n);\nout center tags ${MAX_ELEMENTS};`;
+  // Only inside the chosen country's area, and only within the radius around the city.
+  // Must have a name and must NOT have any website-like tag. Phones are checked after fetching so we can count the ones hidden.
+  const lines = filters.map((flt) => `  nwr(area.c)${around}${flt}["name"][!"website"][!"contact:website"][!"url"];`);
+  return `[out:json][timeout:25];\narea["ISO3166-1"="${countryCode.toUpperCase()}"][admin_level=2]->.c;\n(\n${lines.join("\n")}\n);\nout center tags ${MAX_ELEMENTS};`;
 }
 
 interface OsmElement {
@@ -247,46 +251,107 @@ function formatAddress(t: Record<string, string>): string | undefined {
   return out || undefined;
 }
 
-export function toBusinesses(elements: OsmElement[], origin: { lat: number; lon: number }, city: string, countryCode?: string): Business[] {
-  const seen = new Set<string>();
+export interface Region {
+  code: string;
+  name: string;
+}
+
+export function toBusinesses(
+  elements: OsmElement[],
+  origin: { lat: number; lon: number },
+  city: string,
+  country: Region,
+  box: Box | null,
+): { businesses: Business[]; hiddenNoPhone: number } {
+  const seenIds = new Set<string>();
+  const seenNamePhone = new Set<string>();
   const out: Business[] = [];
+  let hiddenNoPhone = 0;
+
   for (const el of elements) {
     const t = el.tags;
     if (!t?.name) continue;
     // Belt and braces: Overpass already excluded these, but keep the rule in one obvious place.
     if (t.website || t["contact:website"] || t.url) continue;
-    const phone = firstPhone(t.phone ?? t["contact:phone"] ?? t.mobile ?? t["contact:mobile"]);
-    const address = formatAddress(t);
-    if (!phone && !address) continue;
 
     const lat = el.lat ?? el.center?.lat;
     const lon = el.lon ?? el.center?.lon;
     if (lat === undefined || lon === undefined) continue;
+    // Must really be inside the country
+    if (box && !inBox(lat, lon, box)) continue;
 
     const id = `${el.type}/${el.id}`;
-    if (seen.has(id)) continue;
-    seen.add(id);
+    if (seenIds.has(id)) continue;
+    seenIds.add(id);
+
+    const phones = phoneInfoFromTags(t, country.code);
+    if (!phones) {
+      hiddenNoPhone++;
+      continue;
+    }
+    const name = t.name.trim();
+    const dupKey = `${name.toLowerCase()}|${phones.primary}`;
+    if (seenNamePhone.has(dupKey)) continue;
+    seenNamePhone.add(dupKey);
 
     out.push({
       id,
-      name: t.name.trim(),
+      name,
       category: labelFromTags(t),
-      address,
-      phone,
+      address: formatAddress(t),
+      phone: phones.primary,
+      phones: phones.all,
+      isMobile: phones.mobile,
       lat,
       lon,
       city,
-      countryCode,
+      country: country.name,
+      countryCode: country.code.toLowerCase(),
       distanceKm: haversineKm(origin.lat, origin.lon, lat, lon),
     });
   }
-  // Reachable-by-phone first, then nearest.
-  return out.sort((a, b) => Number(!!b.phone) - Number(!!a.phone) || (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
+  // Mobile numbers first, then landlines; nearest first within each group.
+  out.sort((a, b) => Number(!!b.isMobile) - Number(!!a.isMobile) || (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
+  return { businesses: out, hiddenNoPhone };
+}
+
+/** Country bounding box: built in for the common countries, otherwise fetched once from Nominatim and cached. */
+export async function countryBox(code: string, name: string, signal: AbortSignal): Promise<Box | null> {
+  const upper = code.toUpperCase();
+  if (STATIC_BOXES[upper]) return STATIC_BOXES[upper];
+  let cache: Record<string, Box> = {};
+  try {
+    cache = JSON.parse(localStorage.getItem(BOX_KEY) ?? "{}");
+  } catch {
+    /* ignore */
+  }
+  if (cache[upper]) return cache[upper];
+  try {
+    const url = `${NOMINATIM}?${new URLSearchParams({ q: name, countrycodes: code.toLowerCase(), featuretype: "country", format: "jsonv2", limit: "1", "accept-language": "en" })}`;
+    const res = await fetch(url, { signal, headers: { Accept: "application/json" } });
+    if (!res.ok) return null;
+    const bb = ((await res.json()) as Array<{ boundingbox?: string[] }>)[0]?.boundingbox?.map(Number);
+    if (!bb || bb.length !== 4 || !bb.every(Number.isFinite)) return null;
+    const [south, north, west, east] = bb;
+    if (west > east) return null; // crosses the antimeridian: skip rather than reject good results
+    const box: Box = [south, west, north, east];
+    try {
+      localStorage.setItem(BOX_KEY, JSON.stringify({ ...cache, [upper]: box }));
+    } catch {
+      /* ignore */
+    }
+    return box;
+  } catch {
+    if (signal.aborted) throw new SearchError("cancelled", "Search cancelled.");
+    return null; // the Overpass country-area filter still applies
+  }
 }
 
 /* --------------------------------- driver ------------------------------- */
 
 export interface SearchParams {
+  countryCode: string;
+  countryName: string;
   city: string;
   radiusKm: number;
   categoryLabel: string;
@@ -295,6 +360,8 @@ export interface SearchParams {
 
 export interface SearchOutcome {
   businesses: Business[];
+  /** No-website businesses dropped because they list no phone number. */
+  hiddenNoPhone: number;
   center: { lat: number; lon: number };
   placeName: string;
   truncated: boolean;
@@ -302,30 +369,36 @@ export interface SearchOutcome {
 
 export type Stage = "locating" | "searching";
 
+const geoKey = (p: SearchParams) => `${p.countryCode.toLowerCase()}|${p.city.trim().toLowerCase()}`;
+
 /** True when running this search would be answered from cache (so it needs no cooldown). */
 export function isCached(p: SearchParams): boolean {
-  const geo = readGeoCache()[p.city.trim().toLowerCase()];
+  const geo = readGeoCache()[geoKey(p)];
   if (!geo) return false;
   const hit = resultCache.get(cacheKey(geo, p));
   return !!hit && Date.now() - hit.at < RESULT_TTL_MS;
 }
 
 function cacheKey(geo: { lat: number; lon: number }, p: SearchParams): string {
-  return [geo.lat.toFixed(3), geo.lon.toFixed(3), p.radiusKm, p.filters.join("")].join("|");
+  return [p.countryCode, geo.lat.toFixed(3), geo.lon.toFixed(3), p.radiusKm, p.filters.join("")].join("|");
 }
 
 export async function runSearch(p: SearchParams, signal: AbortSignal, onStage: (s: Stage) => void): Promise<SearchOutcome> {
   onStage("locating");
-  const geo = await geocode(p.city, signal);
+  const geo = await geocode(p.city, p.countryCode, p.countryName, signal);
 
   const key = cacheKey(geo, p);
   const cached = resultCache.get(key);
   if (cached && Date.now() - cached.at < RESULT_TTL_MS) return cached.value;
 
+  const box = await countryBox(p.countryCode, p.countryName, signal);
+
   onStage("searching");
-  const elements = await overpassRequest(buildQuery(geo.lat, geo.lon, p.radiusKm, p.filters), signal);
+  const elements = await overpassRequest(buildQuery(geo.lat, geo.lon, p.radiusKm, p.filters, p.countryCode), signal);
+  const { businesses, hiddenNoPhone } = toBusinesses(elements, geo, p.city.trim(), { code: p.countryCode, name: p.countryName }, box);
   const value: SearchOutcome = {
-    businesses: toBusinesses(elements, geo, p.city.trim(), geo.countryCode),
+    businesses,
+    hiddenNoPhone,
     center: { lat: geo.lat, lon: geo.lon },
     placeName: geo.displayName,
     truncated: elements.length >= MAX_ELEMENTS,

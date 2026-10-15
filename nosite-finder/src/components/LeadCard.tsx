@@ -89,11 +89,27 @@ export function LeadCard({ business: b, lead, mode = "result" }: Props) {
           <Phone className="mt-1 size-[18px] shrink-0 text-muted-foreground" aria-hidden />
           <dd className={cn(!b.phone && "text-muted-foreground")}>
             {b.phone ? (
-              <a href={telHref(b.phone)} className="font-medium underline decoration-border underline-offset-4 hover:decoration-primary">
-                {b.phone}
-              </a>
+              <>
+                <a href={telHref(b.phone)} className="font-medium underline decoration-border underline-offset-4 hover:decoration-primary">
+                  {b.phone}
+                </a>
+                {b.isMobile && <span className="ml-2 text-sm text-muted-foreground">Mobile</span>}
+                {b.phones && b.phones.length > 1 && (
+                  <span className="mt-1 block text-sm text-muted-foreground">
+                    Also:{" "}
+                    {b.phones.slice(1, 3).map((n, i) => (
+                      <span key={n}>
+                        {i > 0 && ", "}
+                        <a href={telHref(n)} className="underline decoration-border underline-offset-4">
+                          {n}
+                        </a>
+                      </span>
+                    ))}
+                  </span>
+                )}
+              </>
             ) : (
-              "No phone listed - Verify to find one"
+              "No phone listed"
             )}
           </dd>
         </div>
