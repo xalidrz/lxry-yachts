@@ -12,16 +12,16 @@ npm run build    # type-checks, outputs ./dist
 ## Editing content
 
 All text, the phone number, address, hours, prices, review and photo alt texts live in **`src/content.ts`**.
-The three "Nos soins & cours" cards are placeholders (`price: "Tarif sur demande"`): replace title, description and price there.
+The three "Soins" cards are placeholders (`price: "Tarif sur demande"`): replace title, description and price there.
 Only "Fermeture 20h" is shown for hours until real opening hours are confirmed.
 
 ## Hero photo
 
-The hero background is `public/photos/hero.jpg`. Replace that file with your own photo (subject on the right works best; keep it under about 400 KB). The current file is a temporary stand-in.
+The hero background is `public/photos/hero.jpg`. Replace that file with your own photo (subject on the right works best; keep it under about 400 KB). The current file is a temporary placeholder (no photo of the studio yet).
 
-## Photos
+## Gallery photos
 
-`npm run photos -- <folder>` regenerates the resized WebP files in `public/photos` from the originals.
+TODO: replace with real photos of the studio. `public/photos/gallery-1.jpg` to `gallery-3.jpg` are temporary placeholders.
 
 ## Notes
 

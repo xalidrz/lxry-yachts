@@ -33,7 +33,7 @@ export function Offers() {
         ))}
       </ul>
       <Reveal className="mt-14 text-center">
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="h-auto min-h-12 whitespace-normal py-3 text-center">
           <a href={links.tel}>
             <Phone aria-hidden="true" strokeWidth={1.5} />
             {offers.cta}

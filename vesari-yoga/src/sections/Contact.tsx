@@ -47,7 +47,7 @@ export function Contact() {
           </InfoRow>
 
           <div className="flex flex-col gap-4 pt-2">
-            <Button asChild size="lg" variant="dark" className="w-full sm:w-auto">
+            <Button asChild size="lg" variant="dark" className="h-auto min-h-14 w-full whitespace-normal px-6 py-3 sm:w-auto sm:px-9">
               <a href={links.tel}>
                 <Phone aria-hidden="true" strokeWidth={1.5} />
                 {contact.callLabel} {site.phoneDisplay}
