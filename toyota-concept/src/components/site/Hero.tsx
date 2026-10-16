@@ -20,7 +20,8 @@ export function Hero() {
             "radial-gradient(70% 38% at 68% 74%, color-mix(in srgb, var(--steel) 34%, var(--graphite)) 0%, transparent 70%), linear-gradient(180deg, transparent 62%, var(--ink) 100%)",
         }}
       />
-      <div className="grid-12 relative flex-1 pt-6 lg:pt-10">
+      {/* top padding reserves room for the floating navbar (the only hero change) */}
+      <div className="grid-12 relative flex-1 pt-[calc(var(--nav-clear)+var(--s-3))] lg:pt-[calc(var(--nav-clear)+var(--s-5))]">
         <div className="col-span-12 flex flex-col gap-3 lg:col-span-6">
           <p className="t-eyebrow text-muted">Concept redesign</p>
           <h1 id="hero-title" className="headline t-display">
