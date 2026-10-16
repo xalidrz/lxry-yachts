@@ -17,11 +17,11 @@ Only "Fermeture 20h" is shown for hours until real opening hours are confirmed.
 
 ## Hero photo
 
-The hero background is `public/photos/hero.jpg`. Replace that file with your own photo (subject on the right works best; keep it under about 400 KB). The current file is a temporary placeholder (no photo of the studio yet).
+The hero background is `public/photos/hero.jpg`. Replace that file with your own photo (subject on the right works best; keep it under about 400 KB). The current file is a stand-in.
 
-## Gallery photos
+## Photos
 
-TODO: replace with real photos of the studio. `public/photos/gallery-1.jpg` to `gallery-3.jpg` are temporary placeholders.
+TODO: replace with real photos of the studio. The gallery uses stand-in photos in `public/photos`; `npm run photos -- <folder>` regenerates the resized WebP files from originals.
 
 ## Notes
 

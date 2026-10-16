@@ -38,7 +38,7 @@ export const hero = {
   directionsLabel: "Voir l'itinéraire",
   /** Photo file: drop your own picture at public/photos/hero.jpg. */
   image: "/photos/hero.jpg",
-  imageAlt: "Salle de pratique calme et lumineuse, avec un parquet en bois et la lumière douce du soleil",
+  imageAlt: "Pratiquant en posture de yoga sur un tapis rouge, dans une salle lumineuse au parquet en bois",
   scrollLabel: "DÉCOUVRIR",
   trust: [
     { icon: User, lines: ["Cours pour", "tous les niveaux"] },
@@ -89,14 +89,13 @@ export const gallery = {
   title: "L'esprit du *lieu*",
   /**
    * TODO: replace with real photos of the studio.
-   * The files below are temporary placeholders in public/photos (gallery-1.jpg … gallery-3.jpg).
-   * Keep the same file names, or change `src` here. Portraits and poses are cropped from the top,
-   * so faces and shoulders stay in frame.
+   * These are stand-in photos in public/photos (each has a -640 and a -1100 WebP version).
+   * Photos are cropped from the top, so faces and shoulders stay in frame.
    */
   photos: [
-    { src: "/photos/gallery-1.jpg", width: 1000, height: 1000, alt: "Coin de détente baigné de lumière douce, avec un parquet en bois" },
-    { src: "/photos/gallery-2.jpg", width: 1100, height: 733, alt: "Rayons de soleil sur un mur clair et un parquet chaleureux" },
-    { src: "/photos/gallery-3.jpg", width: 1100, height: 733, alt: "Ambiance calme et apaisante dans la salle, avec une plante verte" },
+    { src: "forward-fold", width: 1100, height: 1100, alt: "Femme penchée en avant en posture de yoga sur un tapis, sur fond sombre" },
+    { src: "childs-pose", width: 1100, height: 733, alt: "Participantes en posture de l'enfant sur des tapis verts pendant un cours de yoga" },
+    { src: "studio-balance", width: 1100, height: 734, alt: "Pratiquant en équilibre sur les mains sur un tapis de yoga rouge, dans une salle lumineuse" },
   ],
 };
 
