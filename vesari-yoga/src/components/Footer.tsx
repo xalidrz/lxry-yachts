@@ -4,29 +4,29 @@ import { Mandala } from "@/components/Mandala";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-paper px-5 pb-28 pt-16 sm:px-8 md:pb-14">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 text-center md:flex-row md:items-center md:justify-between md:text-left">
+    <footer data-tone="dark" className="bg-espresso px-5 pb-28 pt-16 text-cream sm:px-8 md:pb-14">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
         <div>
-          <p className="font-serif text-3xl font-semibold tracking-wide">{site.name}</p>
-          <p className="mt-1 text-charcoal-soft">{site.tagline}</p>
+          <p className="font-serif text-3xl font-medium tracking-[0.3em]">VESARI</p>
+          <p className="mt-2 text-sm tracking-[0.2em] text-cream-dim">{site.tagline.toUpperCase()}</p>
         </div>
-        <div className="flex flex-col gap-3 text-charcoal-soft">
+        <div className="flex flex-col gap-3 text-cream-dim">
           <p className="flex items-center justify-center gap-3 md:justify-start">
-            <MapPin aria-hidden="true" strokeWidth={1.5} className="size-5 shrink-0 text-sage-deep" />
+            <MapPin aria-hidden="true" strokeWidth={1.25} className="size-5 shrink-0 text-gold" />
             <span>
               {site.address.street}, {site.address.postalCode} {site.address.city}
             </span>
           </p>
           <p className="flex items-center justify-center gap-3 md:justify-start">
-            <Phone aria-hidden="true" strokeWidth={1.5} className="size-5 shrink-0 text-sage-deep" />
-            <a href={links.tel} className="hover:text-sage-deep">
+            <Phone aria-hidden="true" strokeWidth={1.25} className="size-5 shrink-0 text-gold" />
+            <a href={links.tel} className="transition-colors duration-500 hover:text-gold">
               {site.phoneDisplay}
             </a>
           </p>
         </div>
-        <Mandala className="size-24 text-sage" />
+        <Mandala className="size-24 text-gold/70" />
       </div>
-      <p className="mx-auto mt-10 max-w-6xl text-center text-sm text-charcoal-soft md:text-left">
+      <p className="mx-auto mt-10 max-w-7xl border-t border-gold/15 pt-6 text-center text-sm text-cream-dim md:text-left">
         © {new Date().getFullYear()} {site.name}
       </p>
     </footer>

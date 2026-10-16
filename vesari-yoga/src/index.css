@@ -2,21 +2,34 @@
 @import "@fontsource/cormorant-garamond/400.css";
 @import "@fontsource/cormorant-garamond/500.css";
 @import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/400-italic.css";
+@import "@fontsource/cormorant-garamond/500-italic.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
-  body {
-    @apply bg-paper font-sans text-charcoal antialiased;
-  }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; background: #1b1410; }
+  body { @apply bg-cream font-sans text-espresso antialiased; }
   h1, h2, h3 { @apply font-serif font-medium tracking-tight; }
-  :focus-visible { @apply outline-none ring-2 ring-sage-deep ring-offset-2 ring-offset-paper; }
+  :focus-visible { outline: 2px solid #8a5a22; outline-offset: 3px; }
+  [data-tone="dark"] :focus-visible, [data-tone="dark"]:focus-visible { outline-color: #f2c887; }
 }
 
-/* Scroll reveal: a short fade-up. Disabled for people who prefer reduced motion. */
+/* Hero overlay: dark brown from the left (about 70%) fading to clear on the right. Flat gradients, no blur. */
+.hero-overlay {
+  background:
+    linear-gradient(180deg, rgba(20, 13, 9, 0.6) 0%, rgba(20, 13, 9, 0) 22%, rgba(20, 13, 9, 0) 70%, rgba(20, 13, 9, 0.7) 100%),
+    linear-gradient(90deg, rgba(20, 13, 9, 0.92) 0%, rgba(20, 13, 9, 0.7) 40%, rgba(20, 13, 9, 0.2) 70%, rgba(20, 13, 9, 0) 100%);
+}
+@media (max-width: 767px) {
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(20, 13, 9, 0.7) 0%, rgba(20, 13, 9, 0.62) 50%, rgba(20, 13, 9, 0.85) 100%);
+  }
+}
+
+/* Scroll reveal: a short fade-up. */
 .reveal {
   opacity: 0;
   transform: translateY(18px);

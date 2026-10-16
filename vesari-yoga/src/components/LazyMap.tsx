@@ -26,7 +26,7 @@ export function LazyMap({ src, title }: { src: string; title: string }) {
   }, []);
 
   return (
-    <div ref={ref} className="h-full min-h-[320px] overflow-hidden rounded-3xl border border-line bg-mist shadow-soft">
+    <div ref={ref} className="h-full min-h-[320px] overflow-hidden rounded-3xl border border-espresso/15 bg-espresso-soft shadow-soft">
       {show ? (
         <iframe
           src={src}
@@ -37,8 +37,8 @@ export function LazyMap({ src, title }: { src: string; title: string }) {
           className="h-full min-h-[320px] w-full border-0"
         />
       ) : (
-        <div className="flex h-full min-h-[320px] items-center justify-center text-sage-deep">
-          <MapPin aria-hidden="true" strokeWidth={1.5} className="size-8" />
+        <div className="flex h-full min-h-[320px] items-center justify-center text-gold">
+          <MapPin aria-hidden="true" strokeWidth={1.25} className="size-8" />
         </div>
       )}
     </div>

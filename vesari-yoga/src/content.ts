@@ -2,7 +2,7 @@
  * Everything the visitor reads on the site lives in this one file.
  * Edit the text, phone number, address or prices here; no other file needs to change.
  */
-import { Heart, Leaf, Sparkles, type LucideIcon } from "lucide-react";
+import { Flower2, Heart, Leaf, Sparkles, User, type LucideIcon } from "lucide-react";
 
 export const site = {
   name: "Vesari Yoga",
@@ -29,16 +29,27 @@ export const links = {
 };
 
 export const hero = {
-  title: "Prenez un vrai moment pour vous.",
-  subtitle: "Espace bien-être & détente à Orléans",
-  callLabel: "Appeler",
+  eyebrow: "YOGA & BIEN-ÊTRE",
+  titleLine1: "Plus qu’un sport,",
+  titleLine2: "un mode de vie.",
+  subtitle:
+    "Développez votre force, votre souplesse et votre confiance grâce au yoga, dans un espace bien-être à Orléans.",
+  callLabel: "Réserver un cours",
   directionsLabel: "Voir l'itinéraire",
-  imageAlt: "Une personne en posture de yoga sur un tapis rouge, dans une pièce lumineuse au sol en bois",
+  /** Photo file: drop your own picture at public/photos/hero.jpg. */
+  image: "/photos/hero.jpg",
+  imageAlt: "Une femme en posture de yoga sur un tapis, dans une salle baignée de lumière chaude",
+  scrollLabel: "DÉCOUVRIR",
+  trust: [
+    { icon: User, lines: ["Cours pour", "tous les niveaux"] },
+    { icon: Flower2, lines: ["Un espace calme", "et apaisant"] },
+    { icon: Heart, lines: ["Un accueil", "chaleureux"] },
+  ] satisfies { icon: LucideIcon; lines: [string, string] }[],
 };
 
 export const about = {
   eyebrow: "À propos",
-  title: "Un lieu pour ralentir",
+  title: "Un lieu pour *ralentir*",
   paragraphs: [
     "Chez Vesari Yoga, tout est pensé pour vous aider à relâcher la pression du quotidien : une atmosphère apaisante, une lumière douce et un accueil chaleureux dès la porte franchie.",
     "Que vous veniez pour bouger en douceur, respirer ou simplement faire une pause, cet espace de bien-être et de détente est le vôtre, au cœur d'Orléans.",
@@ -48,7 +59,7 @@ export const about = {
 export type Offer = { icon: LucideIcon; title: string; description: string; price: string };
 export const offers = {
   eyebrow: "Nos soins & cours",
-  title: "Prendre soin de soi",
+  title: "Prendre *soin* de soi",
   /** PLACEHOLDERS: replace each title, description and price with the real offer. */
   items: [
     {
@@ -75,7 +86,7 @@ export const offers = {
 
 export const gallery = {
   eyebrow: "Galerie",
-  title: "L'esprit du lieu",
+  title: "L'esprit du *lieu*",
   photos: [
     { src: "forward-fold", width: 1100, height: 1100, alt: "Femme penchée en avant en posture de yoga sur un tapis, sur fond sombre" },
     { src: "childs-pose", width: 1100, height: 733, alt: "Participantes en posture de l'enfant sur des tapis verts pendant un cours de yoga" },
@@ -85,7 +96,7 @@ export const gallery = {
 
 export const reviews = {
   eyebrow: "Avis",
-  title: "Ce qu'ils en disent",
+  title: "Ce qu'ils en *disent*",
   rating: "5,0",
   count: "1 avis",
   source: "Avis Google",
@@ -100,16 +111,19 @@ export const reviews = {
 
 export const contact = {
   eyebrow: "Contact & accès",
-  title: "Venez nous voir",
+  title: "Venez nous *voir*",
   intro: "Un appel suffit pour poser vos questions ou réserver votre moment.",
   callLabel: "Appeler",
   directionsLabel: "Voir l'itinéraire",
   mapTitle: "Carte Google Maps : Vesari Yoga, 5 Rue Vieille Levée, Orléans",
 };
 
+/** Caption under the logo in the navbar. */
+export const navCaption = "YOGA & BIEN-ÊTRE";
+
 export const nav = [
   { href: "#apropos", label: "À propos" },
-  { href: "#soins", label: "Soins & cours" },
+  { href: "#soins", label: "Cours" },
   { href: "#galerie", label: "Galerie" },
   { href: "#avis", label: "Avis" },
   { href: "#contact", label: "Contact" },
