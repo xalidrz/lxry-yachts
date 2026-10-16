@@ -66,8 +66,23 @@
 
   /* chrome */
   --utility-h: 36px;
-  --nav-h: 72px;
-  --chrome-h: calc(var(--utility-h) + var(--nav-h));
+  --nav-h: 64px; /* floating pill height */
+  --nav-top: 20px; /* stuck distance from the top of the viewport */
+  --nav-inset: 24px; /* distance from left/right edges */
+  --nav-gap: 12px; /* pill offset below the utility bar at scroll 0 */
+  --nav-clear: calc(var(--nav-gap) + var(--nav-h)); /* space the hero reserves under the pill */
+  --chrome-h: var(--utility-h);
+
+  /* floating navbar (values from the brief, held as tokens) */
+  --nav-base: rgba(14, 15, 18, 0.78);
+  --nav-base-scrolled: rgba(14, 15, 18, 0.92);
+  --nav-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  --nav-border: rgba(255, 255, 255, 0.14);
+  --nav-highlight: rgba(255, 255, 255, 0.08);
+  --nav-link: #c9cbd0;
+  --red-hi: #ff2a3c;
+  --red-deep: #b80010;
+  --beam-dur: 7s;
   --dealerbar-h: 80px;
 
   /* motion */
@@ -81,6 +96,11 @@
 @media (min-width: 1024px) {
   :root {
     --section-gap: var(--s-15); /* 120 desktop */
+  }
+}
+@media (max-width: 1023px) {
+  :root {
+    --beam-dur: 10s; /* slower running light on mobile */
   }
 }
 
@@ -109,7 +129,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--nav-h) + var(--s-2));
+    scroll-padding-top: calc(var(--nav-top) + var(--nav-h) + var(--s-2));
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -340,4 +360,150 @@
   .lift:focus-within .zoom {
     transform: none;
   }
+}
+
+/* =========================================================================
+   5. FLOATING NAVBAR  (gradient + border "glass": no backdrop-filter, no blur)
+   ========================================================================= */
+.nav-pill {
+  background: var(--nav-sheen), var(--nav-base);
+  box-shadow: inset 0 1px 0 var(--nav-highlight);
+  transition: background-color 200ms var(--ease-out);
+  color: var(--white);
+}
+.nav-pill[data-scrolled="true"] {
+  background: var(--nav-sheen), var(--nav-base-scrolled);
+}
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--nav-border);
+  flex-shrink: 0;
+}
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding-inline: 8px;
+  gap: 4px;
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--nav-link);
+  transition: color 200ms var(--ease-out);
+}
+@media (min-width: 1280px) {
+  .nav-link {
+    padding-inline: 14px;
+  }
+}
+.nav-link:hover,
+.nav-link[data-state="open"],
+.nav-link[data-active="true"] {
+  color: var(--white);
+}
+/* active underline: 2px x 56px, red; glow is a plain radial gradient behind it */
+.nav-link[data-active="true"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 56px;
+  height: 2px;
+  margin-left: -28px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--red-hi) 18%, var(--red) 50%, var(--red-hi) 82%, transparent 100%);
+}
+.nav-link[data-active="true"]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 88px;
+  height: 14px;
+  margin-left: -44px;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(235, 10, 30, 0.45) 0%, rgba(235, 10, 30, 0) 100%);
+  pointer-events: none;
+}
+.btn-gloss {
+  height: 44px;
+  padding-inline: 20px;
+  background: linear-gradient(180deg, var(--red-hi) 0%, var(--red) 55%, var(--red-deep) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 20px -6px rgba(235, 10, 30, 0.55);
+  transition:
+    filter 200ms var(--ease-out),
+    transform 120ms var(--ease-out);
+}
+@media (min-width: 1280px) {
+  .btn-gloss {
+    padding-inline: 28px;
+  }
+}
+.btn-gloss:hover {
+  filter: brightness(1.06);
+}
+.btn-gloss:active {
+  transform: scale(0.98);
+}
+.btn-gloss .arrow {
+  transition: transform 200ms var(--ease-out);
+}
+.btn-gloss:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* running light: only stroke-dashoffset is animated. pathLength=100 keeps speed constant. */
+.beam {
+  fill: none;
+  stroke-linecap: round;
+  animation-duration: var(--beam-dur);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  /* start with the head just past the left edge, beside the logo */
+  animation-delay: calc(var(--beam-dur) * -0.82);
+}
+.nav-pill[data-paused="true"] .beam {
+  animation-play-state: paused;
+}
+@keyframes beam-0 {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -100; }
+}
+@keyframes beam-1 {
+  from { stroke-dashoffset: -5; }
+  to { stroke-dashoffset: -105; }
+}
+@keyframes beam-2 {
+  from { stroke-dashoffset: -9; }
+  to { stroke-dashoffset: -109; }
+}
+@keyframes beam-3 {
+  from { stroke-dashoffset: -12.4; }
+  to { stroke-dashoffset: -112.4; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .beam {
+    display: none; /* static red mark only */
+  }
+  .btn-gloss:hover .arrow,
+  .btn-gloss:active {
+    transform: none;
+  }
+}
+
+/* inline search reveal */
+.nav-search {
+  clip-path: inset(0 0 0 100% round 999px);
+  transition: clip-path 260ms var(--ease-out);
+  pointer-events: none;
+}
+.nav-search[data-open="true"] {
+  clip-path: inset(0 0 0 0 round 999px);
+  pointer-events: auto;
 }

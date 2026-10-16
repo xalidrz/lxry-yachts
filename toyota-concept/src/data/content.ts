@@ -23,32 +23,38 @@ export const utilityBar = {
 };
 
 export const nav = {
+  emblemLabel: "Toyota (concept emblem)",
   items: [
     { id: "vehicles", label: "Vehicles", mega: true, href: "#finder" },
+    { id: "discover", label: "Discover", href: "#efficiency", active: true },
     { id: "tools", label: "Shopping Tools", href: "#finder" },
     { id: "offers", label: "Offers", href: "#offers" },
     { id: "owners", label: "Owners", href: "#owners" },
   ],
   cta: { label: "Build & Price", href: "#finder" },
+  search: { label: "Search", open: "Open search", close: "Close search", placeholder: "Search vehicles, offers, service…" },
+  language: {
+    label: "Select language",
+    options: [
+      { code: "EN", label: "English", lang: "en" },
+      { code: "ES", label: "Español", lang: "es" },
+    ],
+  },
+  menu: { open: "Open menu", close: "Close menu" },
 };
 
-/** mega menu columns reference vehicle ids below */
+/** Vehicles dropdown: six categories, each shown with a representative vehicle */
 export const megaMenu = {
+  label: "Vehicle categories",
   viewAll: { label: "View all vehicles", href: "#finder" },
-  compare: { label: "Compare vehicles", href: "#finder" },
-  columns: [
-    { title: "Sedans & hatchbacks", vehicles: ["arden-sedan", "lumen-hatch"] },
-    { title: "SUVs & crossovers", vehicles: ["corso-suv", "lumen-ev"] },
-    { title: "Trucks", vehicles: ["ridgeway-truck", "ridgeway-hybrid"] },
-    { title: "Electrified & performance", vehicles: ["lumen-ev-sedan", "vector-gt"] },
-  ],
-};
-
-export const searchDialog = {
-  title: "Search",
-  placeholder: "Search vehicles, offers, service…",
-  popularLabel: "Popular searches",
-  popular: ["Hybrid vehicles", "Lease offers", "Schedule service", "Trade-in estimate"],
+  categories: [
+    { id: "sedans", label: "Sedans", vehicle: "arden-sedan" },
+    { id: "suvs", label: "SUVs", vehicle: "corso-suv" },
+    { id: "trucks", label: "Trucks", vehicle: "ridgeway-truck" },
+    { id: "hybrids", label: "Hybrids", vehicle: "lumen-hatch" },
+    { id: "electric", label: "Electric", vehicle: "lumen-ev" },
+    { id: "performance", label: "Performance", vehicle: "vector-gt" },
+  ] as { id: string; label: string; vehicle: string }[],
 };
 
 /* ---------- hero ---------- */

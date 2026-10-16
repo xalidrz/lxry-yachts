@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Root is intentionally `static` so the full-width viewport can anchor to the sticky <header>.
+ * Root is intentionally `static` so the dropdown viewport anchors to the floating pill.
  */
 export const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -12,8 +12,12 @@ export const NavigationMenu = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Root ref={ref} className={cn("static", className)} {...props}>
     {children}
-    <div className="absolute left-0 top-full w-full">
-      <NavigationMenuPrimitive.Viewport className="h-[var(--radix-navigation-menu-viewport-height)] w-full border-b border-line bg-white text-ink data-[state=closed]:hidden" />
+    {/* anchors to the nearest positioned ancestor (the floating pill) */}
+    <div className="absolute left-0 top-[calc(100%+8px)] w-full">
+      <NavigationMenuPrimitive.Viewport
+        data-surface="ink"
+        className="h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-[24px] border border-line bg-ink text-fg data-[state=closed]:hidden"
+      />
     </div>
   </NavigationMenuPrimitive.Root>
 ));
@@ -29,8 +33,7 @@ NavigationMenuList.displayName = "NavigationMenuList";
 
 export const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
-const itemClass =
-  "inline-flex h-6 items-center gap-0.5 rounded-pill border border-transparent px-2 text-body font-medium text-ink transition-colors duration-200 ease-out hover:border-line data-[state=open]:border-ink";
+const itemClass = "nav-link";
 
 export const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
