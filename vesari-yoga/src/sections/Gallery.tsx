@@ -28,7 +28,9 @@ function Photo({ src, width, height, alt, className }: { src: string; width: num
   return (
     <figure className={`overflow-hidden rounded-3xl bg-espresso-soft shadow-soft ${className ?? ""}`}>
       <img
-        src={src}
+        src={`/photos/${src}-1100.webp`}
+        srcSet={`/photos/${src}-640.webp 640w, /photos/${src}-1100.webp 1100w`}
+        sizes="(min-width: 768px) 50vw, 100vw"
         alt={alt}
         width={width}
         height={height}
