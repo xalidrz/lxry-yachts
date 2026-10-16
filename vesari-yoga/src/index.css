@@ -1,0 +1,32 @@
+@import "@fontsource-variable/inter";
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+  body {
+    @apply bg-paper font-sans text-charcoal antialiased;
+  }
+  h1, h2, h3 { @apply font-serif font-medium tracking-tight; }
+  :focus-visible { @apply outline-none ring-2 ring-sage-deep ring-offset-2 ring-offset-paper; }
+}
+
+/* Scroll reveal: a short fade-up. Disabled for people who prefer reduced motion. */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
