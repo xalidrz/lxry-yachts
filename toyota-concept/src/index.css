@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   1. DESIGN TOKENS — the only place raw values live.
+   ========================================================================= */
+:root {
+  /* palette (no yellow, gold or orange anywhere) */
+  --ink: #0b0b0c;
+  --graphite: #17181a;
+  --steel: #6b7077;
+  --mist: #e7e8ea;
+  --paper: #f6f6f4;
+  --white: #ffffff;
+  --red: #eb0a1e; /* primary buttons + tiny accents only */
+  --red-press: color-mix(in srgb, var(--red) 86%, var(--ink));
+
+  /* derived (mixed from the palette, no new hues) */
+  --line-dark: color-mix(in srgb, var(--steel) 42%, var(--graphite));
+
+  /* semantic surface tokens (light by default) */
+  --surface: var(--paper);
+  --fg: var(--ink);
+  --fg-muted: var(--steel); /* 4.6:1 on paper, 5.0:1 on white. Never use on mist or dark. */
+  --line: var(--mist);
+  --focus: var(--ink);
+
+  /* type */
+  --font-display: "Inter Tight Variable", "Inter Tight", system-ui, sans-serif;
+  --font-body: "Inter Variable", Inter, system-ui, sans-serif;
+  --fs-72: 72px;
+  --fs-56: 56px;
+  --fs-40: 40px;
+  --fs-28: 28px;
+  --fs-20: 20px;
+  --fs-16: 16px;
+  --fs-14: 14px;
+  --lh-display: 1.05;
+  --lh-body: 1.6;
+  --tracking-display: -0.02em;
+  --measure: 62ch;
+
+  /* spacing — 8px scale */
+  --s-1: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 32px;
+  --s-5: 40px;
+  --s-6: 48px;
+  --s-7: 56px;
+  --s-8: 64px;
+  --s-9: 72px;
+  --s-10: 80px;
+  --s-12: 96px;
+  --s-15: 120px;
+  --section-gap: var(--s-9); /* 72 mobile */
+
+  /* grid */
+  --container: 1280px;
+  --gutter: var(--s-3);
+
+  /* shape */
+  --radius-card: 12px;
+  --radius-pill: 999px;
+
+  /* chrome */
+  --utility-h: 36px;
+  --nav-h: 72px;
+  --chrome-h: calc(var(--utility-h) + var(--nav-h));
+  --dealerbar-h: 80px;
+
+  /* motion */
+  --dur-reveal: 400ms;
+  --dur-slow: 700ms;
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --lift: 4px;
+  --zoom: 1.03;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-gap: var(--s-15); /* 120 desktop */
+  }
+}
+
+/* dark surfaces re-point the semantic tokens; components never branch on theme */
+[data-surface="dark"] {
+  --surface: var(--graphite);
+  --fg: var(--white);
+  --fg-muted: var(--mist);
+  --line: var(--line-dark);
+  --focus: var(--white);
+}
+[data-surface="ink"] {
+  --surface: var(--ink);
+  --fg: var(--white);
+  --fg-muted: var(--mist);
+  --line: var(--line-dark);
+  --focus: var(--white);
+}
+[data-surface="white"] {
+  --surface: var(--white);
+}
+
+/* =========================================================================
+   2. BASE
+   ========================================================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-h) + var(--s-2));
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--fs-16);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  img,
+  svg {
+    display: block;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  /* components that sit on a coloured fill need the ring on the *surface* they live on */
+  ::selection {
+    background: var(--ink);
+    color: var(--white);
+  }
+  /* lucide: one style, 1.5 stroke, everywhere */
+  svg.lucide {
+    stroke-width: 1.5;
+    flex-shrink: 0;
+  }
+}
+
+/* =========================================================================
+   3. TYPE + LAYOUT PRIMITIVES
+   ========================================================================= */
+@layer components {
+  .headline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--lh-display);
+    text-wrap: balance;
+  }
+  /* 72 / 56 / 40 / 28 scale, stepping down one notch per breakpoint */
+  .t-display {
+    font-size: var(--fs-40);
+  }
+  .t-h1 {
+    font-size: var(--fs-40);
+  }
+  .t-h2 {
+    font-size: var(--fs-28);
+  }
+  .t-h3 {
+    font-size: var(--fs-20);
+  }
+  @media (min-width: 768px) {
+    .t-display {
+      font-size: var(--fs-56);
+    }
+    .t-h1 {
+      font-size: var(--fs-56);
+    }
+    .t-h2 {
+      font-size: var(--fs-40);
+    }
+    .t-h3 {
+      font-size: var(--fs-20);
+    }
+  }
+  @media (min-width: 1024px) {
+    .t-display {
+      font-size: var(--fs-72);
+    }
+  }
+  .t-lead {
+    text-wrap: balance;
+    font-size: var(--fs-20);
+    line-height: var(--lh-body);
+    max-width: var(--measure);
+  }
+  .t-body {
+    font-size: var(--fs-16);
+    line-height: var(--lh-body);
+    max-width: var(--measure);
+  }
+  .t-small {
+    font-size: var(--fs-14);
+    line-height: var(--lh-body);
+  }
+  .t-eyebrow {
+    font-size: var(--fs-14);
+    line-height: var(--lh-body);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .grid-12 {
+    width: 100%;
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+  }
+  .grid-12 > * {
+    min-width: 0; /* grid children must be able to shrink below content width (carousels) */
+  }
+  .section {
+    padding-top: var(--section-gap);
+    background: var(--surface);
+    color: var(--fg);
+  }
+  .section-pad {
+    padding-block: var(--section-gap);
+    background: var(--surface);
+    color: var(--fg);
+  }
+
+  /* hide scrollbars on snap rails (arrows + keyboard + touch still work) */
+  .rail {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* =========================================================================
+   4. MOTION
+   ========================================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* card: 4px lift + slow zoom to 1.03 on the image */
+.lift {
+  transition:
+    transform 240ms var(--ease-out),
+    border-color 240ms var(--ease-out);
+}
+.lift:hover,
+.lift:focus-within {
+  transform: translateY(calc(var(--lift) * -1));
+}
+.lift .zoom {
+  transition: transform var(--dur-slow) var(--ease-out);
+  transform-origin: 50% 60%;
+}
+.lift:hover .zoom,
+.lift:focus-within .zoom {
+  transform: scale(var(--zoom));
+}
+
+/* skeleton shimmer: flat gradient sweep, no blur */
+.skeleton {
+  background: linear-gradient(90deg, var(--mist) 0%, var(--paper) 50%, var(--mist) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes cue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+.cue {
+  animation: cue 1.8s var(--ease-out) infinite;
+}
+
+/* tray slide-up */
+.tray {
+  transform: translateY(100%);
+  visibility: hidden;
+  transition:
+    transform var(--dur-reveal) var(--ease-out),
+    visibility 0s linear var(--dur-reveal);
+}
+.tray[data-open="true"] {
+  transform: none;
+  visibility: visible;
+  transition:
+    transform var(--dur-reveal) var(--ease-out),
+    visibility 0s;
+}
+
+/* Reduced motion: everything off, content visible. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .lift:hover,
+  .lift:focus-within,
+  .lift:hover .zoom,
+  .lift:focus-within .zoom {
+    transform: none;
+  }
+}
