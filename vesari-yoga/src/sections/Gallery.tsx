@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 export function Gallery() {
   const [tall, ...rest] = gallery.photos;
   return (
-    <section id="galerie" className="px-5 py-24 sm:px-8 md:py-32">
+    <section id="galerie" className="bg-cream px-5 py-24 sm:px-8 md:py-36">
       <Reveal>
         <SectionHeading eyebrow={gallery.eyebrow} title={gallery.title} />
       </Reveal>
@@ -25,7 +25,7 @@ export function Gallery() {
 
 function Photo({ src, width, height, alt, className }: { src: string; width: number; height: number; alt: string; className?: string }) {
   return (
-    <figure className={`overflow-hidden rounded-3xl bg-mist shadow-soft ${className ?? ""}`}>
+    <figure className={`overflow-hidden rounded-3xl bg-espresso-soft shadow-soft ${className ?? ""}`}>
       <img
         src={`/photos/${src}-1100.webp`}
         srcSet={`/photos/${src}-640.webp 640w, /photos/${src}-1100.webp 1100w`}

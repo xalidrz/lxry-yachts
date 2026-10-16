@@ -4,22 +4,26 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-all duration-500 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-deep focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-[1.1em] [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-full font-medium transition-all duration-500 ease-out disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-[1.15em] [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-terracotta text-white shadow-soft hover:-translate-y-0.5 hover:bg-terracotta-dark hover:shadow-lift",
-        outline: "border border-sage-deep/40 bg-transparent text-sage-deep hover:-translate-y-0.5 hover:bg-mist",
-        // Used on top of the hero photo.
-        light: "border border-white/70 bg-transparent text-white hover:-translate-y-0.5 hover:bg-white hover:text-charcoal",
+        // Soft gold pill, dark text. Used on dark backgrounds.
+        gold: "bg-gold text-espresso shadow-soft hover:-translate-y-0.5 hover:bg-[#f7d8a6] hover:shadow-lift",
+        // White outline pill for dark backgrounds.
+        outline: "border border-white/80 bg-transparent text-white hover:-translate-y-0.5 hover:bg-white hover:text-espresso",
+        // Espresso pill for cream backgrounds.
+        dark: "bg-espresso text-gold shadow-soft hover:-translate-y-0.5 hover:bg-espresso-soft hover:shadow-lift",
+        // Outline for cream backgrounds.
+        "outline-dark": "border border-espresso/50 bg-transparent text-espresso hover:-translate-y-0.5 hover:bg-espresso hover:text-cream",
       },
       size: {
         default: "h-12 px-7 text-[0.95rem]",
         lg: "h-14 px-9 text-base",
-        sm: "h-10 px-5 text-sm",
+        sm: "h-11 px-6 text-sm",
       },
     },
-    defaultVariants: { variant: "default", size: "default" },
+    defaultVariants: { variant: "gold", size: "default" },
   },
 );
 
