@@ -30,15 +30,15 @@ export const links = {
 
 export const hero = {
   eyebrow: "YOGA & BIEN-ÊTRE",
-  titleLine1: "Plus qu’un sport,",
-  titleLine2: "un mode de vie.",
+  titleLine1: "Un moment de calme,",
+  titleLine2: "rien que pour vous.",
   subtitle:
-    "Développez votre force, votre souplesse et votre confiance grâce au yoga, dans un espace bien-être à Orléans.",
-  callLabel: "Réserver un cours",
+    "Un espace bien-être et détente à Orléans, pour relâcher la pression et vous ressourcer.",
+  callLabel: "Nous appeler",
   directionsLabel: "Voir l'itinéraire",
   /** Photo file: drop your own picture at public/photos/hero.jpg. */
   image: "/photos/hero.jpg",
-  imageAlt: "Une femme en posture de yoga sur un tapis, dans une salle baignée de lumière chaude",
+  imageAlt: "Salle de pratique calme et lumineuse, avec un parquet en bois et la lumière douce du soleil",
   scrollLabel: "DÉCOUVRIR",
   trust: [
     { icon: User, lines: ["Cours pour", "tous les niveaux"] },
@@ -58,7 +58,7 @@ export const about = {
 
 export type Offer = { icon: LucideIcon; title: string; description: string; price: string };
 export const offers = {
-  eyebrow: "Nos soins & cours",
+  eyebrow: "Soins",
   title: "Prendre *soin* de soi",
   /** PLACEHOLDERS: replace each title, description and price with the real offer. */
   items: [
@@ -87,10 +87,16 @@ export const offers = {
 export const gallery = {
   eyebrow: "Galerie",
   title: "L'esprit du *lieu*",
+  /**
+   * TODO: replace with real photos of the studio.
+   * The files below are temporary placeholders in public/photos (gallery-1.jpg … gallery-3.jpg).
+   * Keep the same file names, or change `src` here. Portraits and poses are cropped from the top,
+   * so faces and shoulders stay in frame.
+   */
   photos: [
-    { src: "forward-fold", width: 1100, height: 1100, alt: "Femme penchée en avant en posture de yoga sur un tapis, sur fond sombre" },
-    { src: "childs-pose", width: 1100, height: 733, alt: "Participantes en posture de l'enfant sur des tapis verts pendant un cours de yoga" },
-    { src: "studio-balance", width: 1100, height: 734, alt: "Pratiquant en équilibre sur les mains sur un tapis de yoga rouge, dans une salle lumineuse" },
+    { src: "/photos/gallery-1.jpg", width: 1000, height: 1000, alt: "Coin de détente baigné de lumière douce, avec un parquet en bois" },
+    { src: "/photos/gallery-2.jpg", width: 1100, height: 733, alt: "Rayons de soleil sur un mur clair et un parquet chaleureux" },
+    { src: "/photos/gallery-3.jpg", width: 1100, height: 733, alt: "Ambiance calme et apaisante dans la salle, avec une plante verte" },
   ],
 };
 
@@ -123,7 +129,7 @@ export const navCaption = "YOGA & BIEN-ÊTRE";
 
 export const nav = [
   { href: "#apropos", label: "À propos" },
-  { href: "#soins", label: "Cours" },
+  { href: "#soins", label: "Soins" },
   { href: "#galerie", label: "Galerie" },
   { href: "#avis", label: "Avis" },
   { href: "#contact", label: "Contact" },

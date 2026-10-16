@@ -12,7 +12,7 @@ export function Hero() {
         height={1080}
         fetchPriority="high"
         decoding="async"
-        className="absolute inset-0 -z-20 h-full w-full object-cover object-[68%_center] md:object-right"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-[75%_center] md:object-right"
       />
       <div aria-hidden="true" className="hero-overlay absolute inset-0 -z-10" />
 
@@ -23,7 +23,7 @@ export function Hero() {
             <span aria-hidden="true" className="h-px w-14 bg-gold" />
           </p>
           <h1
-            className="mt-6 animate-fade-up text-[clamp(3.25rem,8vw,6.75rem)] leading-[1.02] text-cream"
+            className="mt-6 animate-fade-up text-[clamp(2rem,10.8vw,3.5rem)] leading-[1.05] md:text-[clamp(3.5rem,6.2vw,5.5rem)] md:leading-[1.02] text-cream"
             style={{ animationDelay: "120ms" }}
           >
             {hero.titleLine1}

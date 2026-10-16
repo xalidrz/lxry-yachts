@@ -23,19 +23,18 @@ export function Gallery() {
   );
 }
 
+// TODO: replace with real photos of the studio (see src/content.ts).
 function Photo({ src, width, height, alt, className }: { src: string; width: number; height: number; alt: string; className?: string }) {
   return (
     <figure className={`overflow-hidden rounded-3xl bg-espresso-soft shadow-soft ${className ?? ""}`}>
       <img
-        src={`/photos/${src}-1100.webp`}
-        srcSet={`/photos/${src}-640.webp 640w, /photos/${src}-1100.webp 1100w`}
-        sizes="(min-width: 768px) 50vw, 100vw"
+        src={src}
         alt={alt}
         width={width}
         height={height}
         loading="lazy"
         decoding="async"
-        className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out hover:scale-[1.03]"
+        className="h-full w-full object-cover object-[center_25%] transition-transform duration-[1400ms] ease-out hover:scale-[1.03]"
       />
     </figure>
   );
