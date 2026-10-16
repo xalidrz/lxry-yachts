@@ -7,10 +7,10 @@ import { Img } from "./Img";
 import { Reveal } from "./Reveal";
 
 function Stat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const [ref, seen] = useInViewOnce<HTMLDivElement>("0px 0px -12% 0px");
+  const [ref, seen] = useInViewOnce<HTMLLIElement>("0px 0px -12% 0px");
   const n = useCountUp(value, seen);
   return (
-    <div ref={ref} className="flex flex-col gap-1">
+    <li ref={ref} className="flex flex-col gap-1">
       <p className="headline flex items-baseline gap-0.5 text-[40px] md:text-[56px]">
         <span aria-hidden="true" className="tabular-nums">
           {n}
@@ -21,7 +21,7 @@ function Stat({ value, suffix, label }: { value: number; suffix: string; label: 
       <p className="t-small text-muted">
         {label} <span className="whitespace-nowrap">{efficiency.concept}</span>
       </p>
-    </div>
+    </li>
   );
 }
 
@@ -56,11 +56,11 @@ export function EfficiencyFeature() {
             sizes="(min-width: 1280px) 600px, (min-width: 1024px) 45vw, 100vw"
             className="rounded-card border border-line"
           />
-          <dl className="m-0 grid grid-cols-3 gap-2 md:gap-3">
+          <ul className="m-0 grid list-none grid-cols-3 gap-2 p-0 md:gap-3">
             {efficiency.stats.map((s) => (
               <Stat key={s.label} {...s} />
             ))}
-          </dl>
+          </ul>
         </Reveal>
       </div>
     </section>
